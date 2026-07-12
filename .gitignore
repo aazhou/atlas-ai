@@ -6,3 +6,27 @@ __pycache__/
 *.log
 .cursorrules
 AGENTS.md
+
+# Databases (large files)
+*.duckdb
+*.db
+*.db.wal
+
+# Node
+node_modules/
+.vercel
+
+# Python
+*.pyc
+__pycache__/
+*.egg-info/
+
+# System
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/
+
