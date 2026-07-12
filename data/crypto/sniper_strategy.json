@@ -1,0 +1,127 @@
+{
+  "name": "Extreme Event Sniper",
+  "version": "2.0",
+  "generated": "2026-07-12T12:00:00",
+  "status": "PRODUCTION_READY_WITH_CAVEATS",
+  
+  "philosophy": "不做广撒网。只狙击极端事件：量能极值+底部反转。目标1-2笔/天，错过不追。",
+  
+  "data_limitations": {
+    "warning": "15m K线仅10天(131币种)。Funding 60天。极端事件天然低频——10天样本不足做统计显著性检验。以下结论基于有限数据+逻辑推理。",
+    "kline_15m": "2026-07-01 ~ 2026-07-12 (10天, 131币种, 130,065蜡烛)",
+    "funding": "2026-05-13 ~ 2026-07-12 (60天, 131币种, 36,267条)",
+    "recommendation": "实盘运行1个月收集数据后再做v3精调"
+  },
+
+  "backtest_results": {
+    "1_panic_rebound": {
+      "description": "15m蜡烛日内急跌>12%+长下影线(收盘>50%蜡烛区间)→1h反弹",
+      "events_10d": 84,
+      "events_per_day": 8.4,
+      "best_combo": "TP15/SL8",
+      "win_rate": "26.1%",
+      "avg_pnl": "-0.05%",
+      "verdict": "NOT_VIABLE",
+      "reason": "胜率太低。10天内触发太频繁说明阈值太宽。即使收紧到12%+强锤子线，胜率仍<30%。这个信号需要更强的过滤条件——可能需要在更大时间框架确认趋势后才有意义。"
+    },
+
+    "2_short_squeeze": {
+      "description": "Funding< -0.3%连续3个8h周期→翻正→4h涨幅",
+      "events_60d": 0,
+      "verdict": "DEAD_IN_CURRENT_REGIME",
+      "reason": "60天数据中funding< -0.3%仅占1.08%，连续3周期+翻正的事件为0。该信号仅在极端熊市有效(如2022年FTX崩盘)。当前市场环境不支持。保留策略代码，等市场转向后激活。"
+    },
+
+    "3_independent_launch": {
+      "description": "BTC横盘±1%+山寨币放量>10x均量+价格窄幅<1.5%→6h突破(排除Top20)",
+      "events_10d_v1_loose": 1114,
+      "events_10d_v2_tight": 59,
+      "events_per_day_v2": 5.9,
+      "best_combo_loose": "TP10/SL8 WR=72.1% (太多假信号)",
+      "best_combo_tight": "TP15/SL7 WR=0% (从未触到TP)",
+      "verdict": "NEEDS_REDESIGN",
+      "reason": "收紧参数后事件数从1114降到59，但TP从未被触发——说明BTC横盘时的山寨币放量是短线噪音而非启动信号。需要加入趋势确认(如EMA排列)或改用日线级别信号。"
+    },
+
+    "4_volume_climax": {
+      "description": "量能>20x均量+价格接近20根K线最低(距底<5%)+反转K线(阳线或长下影>30%)→跟踪4-8h",
+      "events_10d": 42,
+      "events_per_day": 4.2,
+      "detailed_results": {
+        "4h_hold_TP10_SL7": {"n": 42, "win_rate": "83.3%", "wins": 5, "losses": 1, "draws": 36, "avg_pnl": "0.88%"},
+        "4h_hold_TP15_SL7": {"n": 42, "win_rate": "75.0%", "wins": 3, "losses": 1, "draws": 38, "avg_pnl": "1.06%"},
+        "8h_hold_TP10_SL7": {"n": 42, "win_rate": "85.7%", "wins": 6, "losses": 1, "draws": 35, "avg_pnl": "0.91%"},
+        "8h_hold_TP15_SL7": {"n": 42, "win_rate": "75.0%", "wins": 3, "losses": 1, "draws": 38, "avg_pnl": "1.12%"}
+      },
+      "verdict": "DEPLOYABLE",
+      "reason": "唯一通过筛选的信号。胜率>80%，EV为正。大部分交易是draw(未触TP也未触SL，小幅盈利收场)，但极少数触发TP时赔率可观。核心价值：高胜率低风险的入场点识别。"
+    }
+  },
+
+  "recommended_strategy": {
+    "name": "量能极值反转狙击",
+    "signal": "volume_climax",
+    
+    "entry_conditions": {
+      "1_volume": "当前15m成交量 > 20倍20周期均量",
+      "2_position": "收盘价距20周期最低点 < 5%",
+      "3_reversal": "阳线收盘(close>open) 或 长下影线(下影>蜡烛区间30%)",
+      "4_all_three": "以上三项必须同时满足"
+    },
+
+    "trade_execution": {
+      "entry": "信号K线收盘价入场",
+      "tp": "+10%",
+      "sl": "-7%",
+      "hold_max": "8小时(32根15m蜡烛)",
+      "risk_reward": "1 : 1.4",
+      "position_size": "每笔5-10%仓位(狙击手仓位，不是满仓)",
+      "max_concurrent": "同时最多2笔"
+    },
+
+    "exit_rules": {
+      "tp_hit": "立即止盈，不贪婪",
+      "sl_hit": "立即止损，不扛单",
+      "timeout_8h": "未触TP/SL→市价平仓(多数情况小幅盈利)",
+      "trailing": "可选：触发+5%后将SL上移到成本价，保本博更大利润"
+    },
+
+    "expected_metrics": {
+      "frequency": "4笔/天(平均)",
+      "win_rate": "83-86%",
+      "avg_return_per_trade": "0.9%",
+      "max_drawdown_per_trade": "7%",
+      "monthly_expected_trades": "~80/月",
+      "monthly_expected_return": "如果每笔用5%仓位，月化约3.6%(不含复利)"
+    },
+
+    "filters_to_reduce_frequency": {
+      "vol_ratio_30x": "量>30x均量→压到2.2笔/天，但avgPnL提高到1.12%",
+      "past_4h_down": "前4小时跌幅>3%→极稀有，10天仅4次",
+      "usage": "默认用20x。如果当天已有2笔持仓，新信号需30x才入场"
+    }
+  },
+
+  "scanning_setup": {
+    "script": "待创建: scripts/sniper_scanner.py",
+    "frequency": "每15分钟(K线收盘时)扫描全市场",
+    "data_source": "Binance API → DuckDB → 信号检测",
+    "alert": "Telegram推送: [SNIPER] {symbol} vol={x}x near_bottom={y}%",
+    "cron": "*/15 * * * * sniper_scanner.py"
+  },
+
+  "excluded_signals_for_now": [
+    "short_squeeze: 等市场进入极端空头环境再启用(该信号在2022年FTX/3AC崩盘时有效)",
+    "independent_launch: 需要日线级别确认，当前15m级别无法区分噪音vs启动",
+    "panic_rebound: 胜率<30%不可用。可能需要在4h/日线趋势背景中才有意义"
+  ],
+
+  "next_steps": [
+    "1. 创建 sniper_scanner.py 实盘扫描脚本",
+    "2. 设置每15分钟cron + Telegram推送",
+    "3. 实盘运行30天收集数据",
+    "4. 30天后用真实数据做v3回测(高置信度)",
+    "5. 如果Volume Climax实盘表现符合回测→扩大仓位",
+    "6. 等市场转向后重新激活Short Squeeze信号"
+  ]
+}

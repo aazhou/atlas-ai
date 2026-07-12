@@ -1,0 +1,47 @@
+{
+  "home": "Switzerland",
+  "away": "Colombia",
+  "has_h2h": true,
+  "has_spreads": true,
+  "has_totals": true,
+  "h2h_avg": {
+    "home": 3.59,
+    "draw": 3.08,
+    "away": 2.24
+  },
+  "h2h_count": 46,
+  "pinnacle_h2h": {
+    "Colombia": 2.27,
+    "Switzerland": 3.68,
+    "Draw": 3.12
+  },
+  "pinnacle_spread": [
+    {
+      "name": "Colombia",
+      "price": 1.93,
+      "point": -0.25
+    },
+    {
+      "name": "Switzerland",
+      "price": 1.98,
+      "point": 0.25
+    }
+  ],
+  "pinnacle_totals": [
+    {
+      "name": "Over",
+      "price": 2.12,
+      "point": 2.25
+    },
+    {
+      "name": "Under",
+      "price": 1.79,
+      "point": 2.25
+    }
+  ],
+  "consensus_totals_line": 2.5,
+  "consensus_totals": {
+    "over": 2.344,
+    "under": 1.586
+  }
+}

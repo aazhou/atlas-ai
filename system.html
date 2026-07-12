@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas AI · 看板</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+  @media (max-width: 480px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card { background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 10px; padding: 16px; text-align: center; }
+  .stat-card .val { font-family: 'JetBrains Mono',monospace; font-size: 28px; font-weight: 700; }
+  .stat-card .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .stat-card.ok .val { color: var(--accent-emerald); }
+  .stat-card.err .val { color: var(--accent-rose); }
+  .stat-card.paused .val { color: #f59e0b; }
+
+  .cat-section { margin-bottom: 24px; }
+  .cat-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .cat-header h2 { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .cat-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .cat-badge-ok { background: rgba(34,197,94,0.12); color: var(--accent-emerald); }
+  .cat-badge-err { background: rgba(248,113,113,0.12); color: var(--accent-rose); }
+
+  .job-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .job-table th { text-align: left; font-size: 10px; font-weight: 600; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--hairline); text-transform: uppercase; letter-spacing: 0.5px; }
+  .job-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top; }
+  .job-table tr:hover { background: rgba(255,255,255,0.02); }
+  .job-name { font-weight: 600; color: var(--ink); }
+  .job-sched { font-family: 'JetBrains Mono',monospace; color: var(--primary); font-size: 11px; }
+  .job-time { font-family: 'JetBrains Mono',monospace; font-size: 10px; color: var(--muted-soft); }
+  .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .badge-ok { background: rgba(34,197,94,0.12); color: var(--accent-emerald); }
+  .badge-err { background: rgba(248,113,113,0.12); color: var(--accent-rose); }
+  .badge-paused { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .badge-unknown { background: rgba(255,255,255,0.06); color: var(--muted); }
+  .badge-ai { background: rgba(250,255,105,0.1); color: var(--primary); }
+  .badge-script { background: rgba(129,140,248,0.1); color: #818cf8; }
+  .updated { font-size: 11px; color: var(--muted-soft); margin-bottom: 20px; }
+
+  .page-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); }
+  .page-header h1 { font-size: 22px; font-weight: 700; }
+  @media (max-width: 480px) {
+    .job-table { font-size: 10px; }
+    .job-table th, .job-table td { padding: 6px 4px; }
+    .job-sched { font-size: 9px; }
+    .job-time { display: none; }
+  }
+</style>
+<script src="header.js"></script>
+</head>
+<body>
+
+<div class="main" id="main"></div>
+<footer class="footer">Atlas<span style="color:var(--muted-soft);font-weight:400;"> AI · A股</span></footer>
+
+<script>
+function renderTable(jobs) {
+  let html = `<table class="job-table">
+    <thead><tr><th>任务</th><th>频率</th><th>类型</th><th>上次</th><th>状态</th></tr></thead><tbody>`;
+  for (const j of jobs) {
+    const statusBadge = j.status === 'ok' ? '<span class="badge badge-ok">正常</span>'
+      : j.status === 'error' ? '<span class="badge badge-err">异常</span>'
+      : j.state === 'paused' ? '<span class="badge badge-paused">暂停</span>'
+      : '<span class="badge badge-unknown">—</span>';
+    const typeBadge = j.type === 'AI' ? '<span class="badge badge-ai">AI</span>'
+      : '<span class="badge badge-script">脚本</span>';
+    const lastTime = j.last ? j.last.replace('T',' ').slice(0,16) : '—';
+    html += `<tr>
+      <td><div class="job-name">${j.name || j.id}</div></td>
+      <td><span class="job-sched">${j.schedule || '—'}</span></td>
+      <td>${typeBadge}</td>
+      <td><span class="job-time">${lastTime}</span></td>
+      <td>${statusBadge}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+async function load() {
+  let data;
+  try {
+    const r = await fetch('../data/stock/cron_status.json');
+    if (!r.ok) throw new Error('no data');
+    data = await r.json();
+  } catch(e) {
+    document.getElementById('main').innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">暂无数据，等待首次采集…</div>';
+    return;
+  }
+
+  let html = `<div class="updated">🕐 更新于 ${data.updated} · ${data.total}个任务</div>`;
+
+  // Stats
+  html += `<div class="stats-row">
+    <div class="stat-card ok"><div class="val">${data.active}</div><div class="lbl">运行中</div></div>
+    <div class="stat-card ok"><div class="val">${data.ok}</div><div class="lbl">正常</div></div>
+    <div class="stat-card err"><div class="val">${data.error}</div><div class="lbl">异常</div></div>
+    <div class="stat-card paused"><div class="val">${data.paused}</div><div class="lbl">暂停</div></div>
+  </div>`;
+
+  // Categories
+  const cats = data.categories || {};
+  for (const [cat, cdata] of Object.entries(cats)) {
+    const jobs = cdata.jobs || [];
+    const errCount = cdata.error || 0;
+    const pausedCount = cdata.paused || 0;
+    let badgeHtml = '';
+    if (errCount > 0) badgeHtml = `<span class="cat-badge cat-badge-err">${errCount}异常</span>`;
+    else if (pausedCount > 0) badgeHtml = `<span class="cat-badge cat-badge-err">${pausedCount}暂停</span>`;
+    else badgeHtml = `<span class="cat-badge cat-badge-ok">${jobs.length}正常</span>`;
+
+    html += `<div class="cat-section">
+      <div class="cat-header"><h2>${cat}</h2>${badgeHtml}</div>
+      ${renderTable(jobs)}
+    </div>`;
+  }
+
+  document.getElementById('main').innerHTML = html;
+}
+
+load();
+</script>
+</body>
+</html>

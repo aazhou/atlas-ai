@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas AI · 加密回测</title>
+<link rel="stylesheet" href="../style.css">
+<script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  /* ---- Backtest table ---- */
+  .bt-expand-btn { cursor: pointer; user-select: none; width: 22px; text-align: center; color: var(--muted); font-size: 10px; }
+  .bt-expand-btn:hover { color: var(--ink); }
+  .bt-detail-row td { padding: 0 14px 14px 36px; border-bottom: none; }
+  .detail-table { width: 100%; border-collapse: collapse; margin-top: 2px; }
+  .detail-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted-soft); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--hairline); text-align: left; }
+  .detail-table td { padding: 6px 10px; border-bottom: none; font-size: 12px; }
+  .bt-col-strategy { font-size: 11px; color: var(--muted-soft); white-space: nowrap; }
+  .bt-col-symbol { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .bt-col-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .sort-arrow { color: var(--muted-soft); font-size: 10px; }
+  .sort-arrow.on { color: var(--primary); }
+  .bt-row { cursor: pointer; }
+
+  /* ---- Chart (unchanged) ---- */
+  .chart-section { margin-top: 20px; }
+  .chart-bar-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+  .chart-bar-label { font-size: 12px; color: var(--muted); margin-right: 4px; }
+  .chart-bar-group { display: flex; gap: 4px; align-items: center; }
+  .chart-btn { padding: 5px 14px; border: 1px solid var(--hairline-strong); border-radius: 6px; background: var(--surface-card); color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.12s; }
+  .chart-btn:hover { color: var(--ink); background: var(--surface-elevated); }
+  .chart-btn.active { color: var(--primary); border-color: var(--primary); background: rgba(250,255,105,0.06); }
+  #chartContainer { width: 100%; height: 500px; background: var(--surface-card); border-radius: 8px; border: 1px solid var(--hairline); overflow: hidden; }
+  .chart-legend { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+  .chart-legend span { display: flex; align-items: center; gap: 4px; }
+  .chart-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .chart-legend .dot.green { background: #22c55e; }
+  .chart-legend .dot.red { background: #ef4444; }
+  .chart-loading { display: flex; align-items: center; justify-content: center; height: 500px; color: var(--muted); }
+</style>
+</head>
+<body>
+<script src="../header.js"></script>
+<div class="main">
+
+  <div class="page-header">
+    <h1>策略回测</h1>
+    <span class="round" id="updateTime">---</span>
+  </div>
+
+  <div class="picks-section" id="backtestCard">
+    <div class="info-row" id="dbStats">
+      <span><b class="ink mono">162K</b> K线</span>
+      <span><b class="ink mono">50</b> 币种</span>
+      <span><b class="ink mono">22K</b> 费率</span>
+      <span>信号 <b class="ink mono" id="sigCount">---</b></span>
+    </div>
+    <div id="filterBar"></div>
+    <div id="backtestView">
+      <div class="loading">加载中...</div>
+    </div>
+  </div>
+
+  <div class="picks-section chart-section">
+    <h2>K线验证</h2>
+    <div class="subtitle">多周期K线 + 回测交易点位可视化 — 绿色▲入场 / 红色▼出场</div>
+    <div class="chart-bar-row">
+      <div class="chart-bar-group">
+        <span class="chart-bar-label">币种</span>
+        <button class="chart-btn active" data-coin="T">T</button>
+        <button class="chart-btn" data-coin="VANRY">VANRY</button>
+      </div>
+      <div class="chart-bar-group">
+        <span class="chart-bar-label">周期</span>
+        <button class="chart-btn active" data-interval="5m">5m</button>
+        <button class="chart-btn" data-interval="15m">15m</button>
+        <button class="chart-btn" data-interval="1h">1h</button>
+      </div>
+    </div>
+    <div id="chartContainer"><div class="chart-loading">加载中...</div></div>
+    <div class="chart-legend">
+      <span><span class="dot green"></span> 入场 LONG</span>
+      <span><span class="dot green"></span> 盈利出场</span>
+      <span><span class="dot red"></span> 亏损出场</span>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    费率极值反转策略：当资金费率触及历史极端分位时反向入场。历史回测不代表未来收益。
+  </div>
+
+</div>
+
+<script>
+/* ===== Backtest Table ===== */
+var BT = { sortCol: 'sharpe', sortDir: -1, filter: 'all', expanded: {} };
+
+fetch('/data/crypto/backtest_detailed.json?' + Date.now())
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    BT.data = d;
+    document.getElementById('sigCount').textContent = d.length;
+    document.getElementById('updateTime').textContent = new Date().toLocaleString('zh-CN');
+    renderBacktest();
+  })
+  .catch(function(e) {
+    document.getElementById('backtestView').innerHTML = '<div class="loading">加载失败: ' + e.message + '</div>';
+  });
+
+function renderBacktest() {
+  var d = BT.data, el = document.getElementById('backtestView');
+  if (!d || !d.length) { el.innerHTML = '<div class="loading">暂无回测数据</div>'; return; }
+
+  /* sort */
+  var col = BT.sortCol, dir = BT.sortDir;
+  var sorted = d.slice().sort(function(a, b) {
+    var va = a[col] || 0, vb = b[col] || 0;
+    return typeof va === 'string' ? dir * va.localeCompare(vb) : dir * (va - vb);
+  });
+
+  /* filter */
+  var f = BT.filter, filtered = sorted;
+  if (f === 'funding_extreme') filtered = sorted.filter(function(r) { return r.strategy === 'funding_extreme'; });
+  else if (f === 'multifactor') filtered = sorted.filter(function(r) { return r.strategy === 'multifactor'; });
+  else if (f === 'win') filtered = sorted.filter(function(r) { return r.win_rate >= 60; });
+  else if (f === 'lose') filtered = sorted.filter(function(r) { return r.win_rate < 60; });
+
+  /* filter pills */
+  var pills = [
+    { k: 'all',              l: '全部' },
+    { k: 'funding_extreme',  l: '费率极值' },
+    { k: 'multifactor',      l: '多因子' },
+    { k: 'win',              l: '胜率≥60%' },
+    { k: 'lose',             l: '胜率<60%' }
+  ];
+  document.getElementById('filterBar').innerHTML = pills.map(function(p) {
+    return '<span class="an-league-pill' + (BT.filter === p.k ? ' active' : '') + '" data-filter="' + p.k + '">' + p.l + '</span>';
+  }).join('');
+  document.getElementById('filterBar').onclick = function(e) {
+    if (e.target.dataset.filter) { BT.filter = e.target.dataset.filter; renderBacktest(); }
+  };
+
+  /* helpers */
+  function sArrow(k) {
+    if (BT.sortCol !== k) return ' <span class="sort-arrow">▿</span>';
+    return ' <span class="sort-arrow on">' + (BT.sortDir === -1 ? '▾' : '▴') + '</span>';
+  }
+  function fmtPct(v) { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+  function color(v, t) {
+    if (t === 'pnl') return v >= 0 ? 'up' : 'down';
+    if (t === 'win') return v >= 60 ? 'up' : 'down';
+    if (t === 'dd')  return v > 20 ? 'down' : '';
+    return '';
+  }
+  var strategyLabel = { funding_extreme: '费率极值', multifactor: '多因子' };
+
+  /* render table */
+  var h = '<table class="picks-table"><thead><tr>';
+  h += '<th></th>';
+  h += '<th data-sort="strategy">策略' + sArrow('strategy') + '</th>';
+  h += '<th data-sort="symbol">币种' + sArrow('symbol') + '</th>';
+  h += '<th data-sort="date_range">日期范围' + sArrow('date_range') + '</th>';
+  h += '<th data-sort="trades">交易' + sArrow('trades') + '</th>';
+  h += '<th data-sort="win_rate">胜率' + sArrow('win_rate') + '</th>';
+  h += '<th data-sort="avg_pnl">均收益' + sArrow('avg_pnl') + '</th>';
+  h += '<th data-sort="max_dd">最大回撤' + sArrow('max_dd') + '</th>';
+  h += '<th data-sort="sharpe">夏普' + sArrow('sharpe') + '</th>';
+  h += '<th data-sort="total_return">累计收益' + sArrow('total_return') + '</th>';
+  h += '</tr></thead><tbody>';
+
+  filtered.forEach(function(r, ri) {
+    var key = r.symbol + '_' + ri, ex = BT.expanded[key];
+    h += '<tr class="bt-row" data-expand="' + key + '">';
+    h += '<td class="bt-expand-btn mono">' + (ex ? '▼' : '▶') + '</td>';
+    h += '<td class="bt-col-strategy">' + (strategyLabel[r.strategy] || r.strategy) + '</td>';
+    h += '<td class="bt-col-symbol">' + r.symbol + '</td>';
+    h += '<td class="bt-col-date">' + (r.date_range || '') + '</td>';
+    h += '<td class="mono">' + r.trades + '</td>';
+    h += '<td class="mono ' + color(r.win_rate, 'win') + '">' + r.win_rate + '%</td>';
+    h += '<td class="mono ' + color(r.avg_pnl, 'pnl') + '">' + fmtPct(r.avg_pnl) + '</td>';
+    h += '<td class="mono ' + color(r.max_dd, 'dd') + '">' + r.max_dd + '%</td>';
+    h += '<td class="mono">' + (r.sharpe || 0).toFixed(2) + '</td>';
+    h += '<td class="mono ' + color(r.total_return, 'pnl') + '">' + fmtPct(r.total_return) + '</td>';
+    h += '</tr>';
+
+    if (ex && r.trades_detail && r.trades_detail.length) {
+      h += '<tr class="bt-detail-row"><td colspan="10">';
+      h += '<table class="detail-table"><thead><tr>';
+      h += '<th>#</th><th>入场时间</th><th>出场时间</th><th>持仓</th><th>入场价</th><th>出场价</th><th>PnL%</th>';
+      h += '</tr></thead><tbody>';
+      r.trades_detail.forEach(function(t, i) {
+        h += '<tr>';
+        h += '<td class="mono">' + (i + 1) + '</td>';
+        h += '<td>' + String(t.entry_time || '').substring(0, 16) + '</td>';
+        h += '<td>' + String(t.exit_time || '').substring(0, 16) + '</td>';
+        h += '<td class="mono">' + (t.duration || '') + '</td>';
+        h += '<td class="mono">' + t.entry + '</td>';
+        h += '<td class="mono">' + t.exit + '</td>';
+        h += '<td class="mono ' + color(t.pnl, 'pnl') + '">' + (t.pnl >= 0 ? '+' : '') + t.pnl + '%</td>';
+        h += '</tr>';
+      });
+      h += '</tbody></table>';
+      h += '</td></tr>';
+    }
+  });
+  h += '</tbody></table>';
+  el.innerHTML = h;
+
+  /* click: expand row | sort column */
+  el.onclick = function(e) {
+    var row = e.target.closest('.bt-row');
+    if (row && row.dataset.expand) {
+      BT.expanded[row.dataset.expand] = !BT.expanded[row.dataset.expand];
+      renderBacktest();
+      return;
+    }
+    var th = e.target.closest('th[data-sort]');
+    if (th) {
+      var k = th.dataset.sort;
+      BT.sortCol === k ? BT.sortDir = -BT.sortDir : (BT.sortCol = k, BT.sortDir = -1);
+      renderBacktest();
+    }
+  };
+}
+</script>
+
+<script>
+/* ===== K-line Chart Module (unchanged) ===== */
+(function(){
+  var chart = null, candleSeries = null;
+  var cache = {};
+  var currentCoin = 'T';
+  var currentInterval = '5m';
+  var container = document.getElementById('chartContainer');
+
+  function fmtPrice(v) {
+    if (v == null) return '';
+    return Math.abs(v) < 1 ? v.toFixed(6) : v.toFixed(2);
+  }
+
+  function transformData(raw) {
+    var klines = [];
+    var markers = [];
+    if (raw.prices && raw.prices.length) {
+      raw.prices.forEach(function(p) {
+        if (p.t && p.o != null) {
+          klines.push({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c });
+        }
+      });
+    }
+    if (raw.markers && raw.markers.length) {
+      raw.markers.forEach(function(m) {
+        var ts;
+        if (typeof m.time === 'number') {
+          ts = m.time;
+        } else if (m.time && typeof m.time === 'string' && m.time.length > 0) {
+          ts = Math.floor(new Date(m.time.replace(' ','T') + 'Z').getTime() / 1000);
+        }
+        if (!ts || !isFinite(ts)) return;
+        var isEntry = m.type === 'entry';
+        markers.push({
+          time: ts,
+          position: isEntry ? 'belowBar' : 'aboveBar',
+          color: isEntry ? '#22c55e' : (m.text === '止盈' ? '#22c55e' : '#ef4444'),
+          shape: isEntry ? 'arrowUp' : 'arrowDown',
+          text: m.text || (isEntry ? '开多' : '×'),
+          size: 2
+        });
+      });
+    }
+    return { klines: klines, markers: markers };
+  }
+
+  function createChart() {
+    if (chart) { chart.remove(); chart = null; candleSeries = null; }
+    chart = LightweightCharts.createChart(container, {
+      layout: { background: { color: '#1a1a1a' }, textColor: '#cccccc', fontSize: 12 },
+      grid: { vertLines: { color: '#2a2a2a' }, horzLines: { color: '#2a2a2a' } },
+      crosshair: {
+        mode: LightweightCharts.CrosshairMode.Normal,
+        vertLine: { color: '#555', style: 2, labelVisible: true, labelBackgroundColor: '#333' },
+        horzLine: { color: '#555', style: 2, labelVisible: true, labelBackgroundColor: '#333' },
+      },
+      rightPriceScale: { borderColor: '#2a2a2a', scaleMargins: { top: 0.1, bottom: 0.1 } },
+      timeScale: { borderColor: '#2a2a2a', timeVisible: true, secondsVisible: false, barSpacing: 6 },
+      handleScroll: { vertTouchDrag: true, horzTouchDrag: true },
+      handleScale: { axisPressedMouseMove: true, mouseWheel: true },
+      width: container.clientWidth,
+      height: 500,
+    });
+
+    candleSeries = chart.addCandlestickSeries({
+      upColor: '#22c55e', downColor: '#ef4444',
+      borderUpColor: '#22c55e', borderDownColor: '#ef4444',
+      wickUpColor: '#22c55e', wickDownColor: '#ef4444',
+      priceFormat: {
+        type: 'custom',
+        formatter: fmtPrice,
+        minMove: 0.000001,
+      },
+    });
+  }
+
+  function setData() {
+    var key = currentCoin + '_' + currentInterval;
+    var d = cache[key];
+    if (!d || !d.klines || !d.klines.length) return;
+    createChart();
+    candleSeries.setData(d.klines);
+    if (d.markers && d.markers.length) {
+      candleSeries.setMarkers(d.markers);
+    }
+  }
+
+  function loadData(coin, interval) {
+    var key = coin + '_' + interval;
+    if (cache[key]) { setData(); return; }
+    container.innerHTML = '<div class="chart-loading">加载 '+coin+' '+interval+' ...</div>';
+    fetch('../data/crypto/chart_' + coin + '_' + interval + '.json?' + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(raw){
+        cache[key] = transformData(raw);
+        if (currentCoin === coin && currentInterval === interval) {
+          container.innerHTML = '';
+          setData();
+        }
+      })
+      .catch(function(e){
+        container.innerHTML = '<div class="chart-loading">加载失败: '+coin+' '+interval+' — '+e.message+'</div>';
+      });
+  }
+
+  document.querySelector('.chart-bar-row').addEventListener('click', function(e){
+    var btn = e.target.closest('.chart-btn');
+    if (!btn) return;
+    if (btn.dataset.coin) {
+      var coin = btn.dataset.coin;
+      if (coin === currentCoin) return;
+      document.querySelectorAll('[data-coin]').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCoin = coin;
+      loadData(currentCoin, currentInterval);
+    }
+    if (btn.dataset.interval) {
+      var intv = btn.dataset.interval;
+      if (intv === currentInterval) return;
+      document.querySelectorAll('[data-interval]').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentInterval = intv;
+      loadData(currentCoin, currentInterval);
+    }
+  });
+
+  window.addEventListener('resize', function(){
+    if (chart && container) chart.applyOptions({ width: container.clientWidth, height: 500 });
+  });
+
+  loadData('T', '5m');
+})();
+</script>
+</body>
+</html>

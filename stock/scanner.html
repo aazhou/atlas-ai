@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas AI · A股</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .result-list { display: flex; flex-direction: column; gap: 10px; }
+  .stock-row {
+    display: grid; grid-template-columns: 80px 1fr 140px 80px;
+    align-items: center; gap: 12px;
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 10px; padding: 14px 16px;
+    border-left: 4px solid var(--hairline);
+  }
+  .stock-row.buy { border-left-color: var(--accent-emerald); }
+  .stock-row.watch { border-left-color: var(--warning); }
+  .stock-row.hold { border-left-color: var(--muted-soft); }
+
+  .sr-rec {
+    font-size: 12px; font-weight: 700; text-align: center;
+    padding: 4px 0; border-radius: 4px;
+  }
+  .sr-rec.buy { background: rgba(34,197,94,0.1); color: var(--accent-emerald); }
+  .sr-rec.watch { background: rgba(245,158,11,0.1); color: var(--warning); }
+  .sr-rec.hold { background: rgba(255,255,255,0.04); color: var(--muted); }
+
+  .sr-info {}
+  .sr-info .sr-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .sr-info .sr-tags { display: flex; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
+  .sr-tag {
+    font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+    background: var(--hairline); color: var(--muted);
+  }
+  .sr-tag.pattern { background: rgba(250,255,105,0.08); color: var(--primary); }
+  .sr-tag.sector { background: rgba(59,130,246,0.08); color: var(--accent-blue); }
+
+  .sr-price {
+    text-align: right;
+  }
+  .sr-price .price { font-family: 'JetBrains Mono',monospace; font-size: 15px; font-weight: 700; color: var(--ink); }
+  .sr-price .pe { font-size: 11px; color: var(--muted-soft); }
+
+  .sr-score { font-family: 'JetBrains Mono',monospace; font-size: 18px; font-weight: 700; text-align: center; color: var(--primary); }
+
+  .sr-reason {
+    grid-column: 1 / -1; font-size: 12px; color: var(--body); line-height: 1.5;
+    padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: flex-start; gap: 6px;
+  }
+  .sr-reason .icon { flex-shrink: 0; }
+
+  .scanner-header { margin-bottom: 20px; }
+  .scanner-header h2 { font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .scanner-header .sub { font-size: 12px; color: var(--muted-soft); }
+  .no-results { text-align: center; padding: 48px 0; color: var(--muted); font-size: 14px; }
+  .legend { display: flex; gap: 16px; margin-bottom: 16px; font-size: 11px; color: var(--muted); flex-wrap: wrap; }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .legend .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .legend .dot.buy { background: var(--accent-emerald); }
+  .legend .dot.watch { background: var(--warning); }
+
+  @media (max-width: 640px) {
+    .stock-row { grid-template-columns: 60px 1fr 60px; padding: 12px; }
+    .sr-price { display: none; }
+    .sr-score { font-size: 15px; }
+    .sr-rec { font-size: 10px; }
+    .sr-info .sr-name { font-size: 13px; }
+  }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+
+<div class="main">
+  <div class="scanner-header">
+    <h2>🔍 智能选股</h2>
+    <div class="sub" id="subtitle">综合形态+板块热度+基本面自动筛选</div>
+  </div>
+  <div class="legend">
+    <span><span class="dot buy"></span> 可介入</span>
+    <span><span class="dot watch"></span> 关注</span>
+    <span>评分=形态50%+量价30%+基本面20%</span>
+  </div>
+  <div class="result-list" id="results"></div>
+</div>
+
+<footer class="footer">Atlas<span style="color:var(--muted-soft);font-weight:400;"> AI · A股</span></footer>
+
+<script>
+async function load() {
+  let data;
+  try {
+    const r = await fetch('../data/stock/scanner.json');
+    data = await r.json();
+  } catch(e) {
+    document.getElementById('subtitle').textContent = '暂无扫描数据';
+    return;
+  }
+
+  const dt = new Date();
+  const now = dt.getHours()*100 + dt.getMinutes();
+  const inSession = (now >= 930 && now <= 1130) || (now >= 1300 && now <= 1500);
+
+  document.getElementById('subtitle').innerHTML = `
+    更新 ${data.updated} · 扫描 ${data.scanned} 只 · ${data.sectors?.length||0} 个热点板块
+    · 下次更新盘前9:00${inSession ? ' / 盘中10:00' : ''}
+  `;
+
+  if (!data.results || data.results.length === 0) {
+    document.getElementById('results').innerHTML = `
+      <div class="no-results">
+        <div style="font-size:32px;margin-bottom:8px;">🔍</div>
+        暂未发现符合条件的标的<br>
+        <span style="font-size:12px;color:var(--muted-soft);">严格筛选：形态确认 + 放量突破 + PE<100</span>
+      </div>`;
+    return;
+  }
+
+  let html = '';
+  for (const r of data.results) {
+    const rec = r.recommend || (r.score >= 7 ? 'buy' : r.score >= 5 ? 'watch' : 'hold');
+    const recText = rec === 'buy' ? '🟢 可介入' : rec === 'watch' ? '🟡 关注' : '⚪ 观望';
+
+    html += `<div class="stock-row ${rec}">
+      <div class="sr-rec ${rec}">${recText}</div>
+      <div class="sr-info">
+        <div class="sr-name">${r.cname} <span style="font-size:11px;color:var(--muted-soft);font-weight:400;">${r.code}</span></div>
+        <div class="sr-tags">
+          <span class="sr-tag pattern">${r.pattern||'信号'}</span>
+          <span class="sr-tag sector">${r.sector}</span>
+          ${r.pe ? `<span class="sr-tag">PE${r.pe}</span>` : ''}
+          ${r.fcf_pos ? `<span class="sr-tag" style="background:rgba(34,197,94,0.06);color:var(--accent-emerald);">FCF+</span>` : ''}
+        </div>
+      </div>
+      <div class="sr-price">
+        <div class="price">${r.price.toFixed(2)}</div>
+        ${r.pe ? `<div class="pe">PE ${r.pe}</div>` : ''}
+      </div>
+      <div class="sr-score">${r.score}分</div>
+      <div class="sr-reason">
+        <span class="icon">💡</span>
+        <span>${r.reason || r.detail || ''}${rec === 'buy' ? ' — 形态确认，可分批建仓' : rec === 'watch' ? ' — 关注突破确认，不追高' : ''}</span>
+      </div>
+    </div>`;
+  }
+  document.getElementById('results').innerHTML = html;
+}
+
+load();
+setInterval(load, 120000);
+</script>
+</body>
+</html>

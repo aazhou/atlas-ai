@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas ｜ 持仓管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .lock-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; gap: 16px;
+  }
+  .lock-screen h2 { font-size: 20px; color: var(--ink); }
+  .lock-screen p { font-size: 13px; color: var(--muted); }
+  .lock-input {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    color: var(--ink); font-size: 18px; padding: 10px 16px; border-radius: 8px;
+    width: 200px; text-align: center; font-family: 'JetBrains Mono',monospace;
+    letter-spacing: 4px;
+  }
+  .lock-input:focus { outline: none; border-color: var(--primary); }
+  .lock-btn {
+    background: var(--primary); color: #000; border: none;
+    padding: 10px 32px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .lock-btn:hover { opacity: 0.85; }
+  .lock-err { font-size: 12px; color: var(--accent-rose); min-height: 18px; }
+
+  .updated { font-size: 11px; color: var(--muted-soft); margin-bottom: 20px; }
+
+  /* Market card */
+  .mkt-card {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 16px; margin-bottom: 20px;
+  }
+  .mkt-card h3 { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+  .mkt-dir { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .mkt-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mkt-tag { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
+  .mkt-tag.up { background: rgba(34,197,94,0.1); color: var(--accent-emerald); }
+  .mkt-tag.down { background: rgba(239,68,68,0.1); color: var(--accent-rose); }
+
+  /* Holding card */
+  .holding-card {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    border-left: 3px solid transparent;
+  }
+  .holding-card.warn { border-left-color: var(--accent-rose); }
+  .holding-card.watch { border-left-color: var(--warning); }
+  .holding-card.hold { border-left-color: var(--accent-emerald); }
+  .holding-card.sold { border-left-color: var(--muted-soft); }
+
+  .hc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .hc-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .hc-code { font-size: 11px; color: var(--muted-soft); font-family: 'JetBrains Mono',monospace; margin-left: 6px; }
+  .hc-status {
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;
+  }
+  .hc-status.warn { background: rgba(239,68,68,0.12); color: var(--accent-rose); }
+  .hc-status.watch { background: rgba(245,158,11,0.12); color: var(--warning); }
+  .hc-status.hold { background: rgba(34,197,94,0.1); color: var(--accent-emerald); }
+
+  .hc-mid { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .hc-metric { font-size: 12px; color: var(--muted); }
+  .hc-metric b { color: var(--body); font-family: 'JetBrains Mono',monospace; }
+  .hc-metric .up { color: var(--accent-emerald); }
+  .hc-metric .down { color: var(--accent-rose); }
+
+  .hc-action {
+    font-size: 13px; color: var(--body); line-height: 1.5;
+    padding: 8px 12px; background: rgba(255,255,255,0.02); border-radius: 6px;
+  }
+  .hc-alert {
+    font-size: 11px; margin-top: 6px; padding: 4px 8px; border-radius: 4px;
+    display: inline-block;
+  }
+  .hc-alert.red { background: rgba(239,68,68,0.08); color: var(--accent-rose); }
+  .hc-alert.yellow { background: rgba(245,158,11,0.08); color: var(--warning); }
+
+  /* Watchlist card */
+  .wl-card {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 14px; margin-bottom: 8px;
+  }
+  .wl-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .wl-row:last-child { border-bottom: none; }
+  .wl-name { font-size: 13px; font-weight: 500; color: var(--body); min-width: 64px; }
+  .wl-price { font-family: 'JetBrains Mono',monospace; font-size: 13px; color: var(--ink); }
+  .wl-chg { font-family: 'JetBrains Mono',monospace; font-size: 12px; }
+  .wl-chg.up { color: var(--accent-emerald); }
+  .wl-chg.down { color: var(--accent-rose); }
+  .wl-note { font-size: 11px; color: var(--muted); margin-left: auto; text-align: right; max-width: 200px; }
+
+  .ana-card { background: var(--surface-card); border: 1px solid rgba(250,255,105,0.15); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .ana-card h3 { font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+  .ana-tag { display: inline-block; background: rgba(250,255,105,0.1); color: var(--primary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin: 2px 4px 2px 0; }
+
+  @media (max-width: 480px) {
+    .holding-card { padding: 14px; }
+    .hc-mid { gap: 10px; }
+    .hc-metric { font-size: 11px; }
+    .hc-action { font-size: 12px; }
+    .wl-note { max-width: 140px; font-size: 10px; }
+  }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+
+<div class="main" id="main"></div>
+<footer class="footer">Atlas<span style="color:var(--muted-soft);font-weight:400;"> AI · A股</span></footer>
+
+<script>
+const PASSWORD = '223388';
+
+function getToday() { const d = new Date(); return d.toISOString().slice(0,10); }
+
+function renderLock() {
+  return `<div class="lock-screen">
+    <h2>🔒 持仓管理</h2>
+    <p>请输入访问密码</p>
+    <input type="password" class="lock-input" id="pwInput" maxlength="12" placeholder="······" autofocus>
+    <button class="lock-btn" onclick="unlock()">解锁</button>
+    <div class="lock-err" id="lockErr"></div>
+  </div>`;
+}
+
+function unlock() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASSWORD) {
+    sessionStorage.setItem('pf_unlocked', '1');
+    load();
+  } else {
+    document.getElementById('lockErr').textContent = '密码错误，请重试';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+document.getElementById('pwInput')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') unlock();
+});
+
+async function load() {
+  // Check unlock
+  if (sessionStorage.getItem('pf_unlocked') !== '1') {
+    document.getElementById('main').innerHTML = renderLock();
+    setTimeout(() => document.getElementById('pwInput')?.focus(), 100);
+    return;
+  }
+
+  const date = getToday();
+  let data;
+  try {
+    let r = await fetch(`data/portfolio.json`);
+    if (!r.ok) {
+      const yd = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+      r = await fetch(`data/portfolio-${yd}.json`);
+    }
+    data = await r.json();
+  } catch(e) {
+    document.getElementById('main').innerHTML = '<div class="updated">数据加载失败，请稍后再试</div>';
+    return;
+  }
+
+  // ── Build HTML ──
+  let html = '<div class="updated">更新于 ' + (data.updated || '--') + '</div>';
+
+  // Market direction
+  if (data.market) {
+    html += `<div class="mkt-card">
+      <h3>📊 市场方向</h3>
+      <div class="mkt-dir">${data.market.direction}</div>
+      <div class="mkt-tags">
+        ${(data.market.top_sectors||[]).map(s => `<span class="mkt-tag up">🔥 ${s}</span>`).join('')}
+        ${(data.market.worst_sectors||[]).map(s => `<span class="mkt-tag down">🔻 ${s}</span>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Portfolio Analysis
+  if (data.analysis) {
+    const a = data.analysis;
+    html += `<div class="ana-card">
+      <h3>🧠 持仓分析 · ${a.verdict}</h3>
+      <p style="font-size:13px;color:var(--body);margin:8px 0 6px;line-height:1.6;">${a.portfolio}</p>
+      ${a.actions?.length ? `<div style="margin:8px 0;">${a.actions.map(x => `<span class="ana-tag">${x}</span>`).join('')}</div>` : ''}
+    </div>`;
+  }
+
+  // Holdings
+  if (data.holdings?.length > 0) {
+    html += '<h3 style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;">💼 当前持仓</h3>';
+    for (const h of data.holdings) {
+      const cls = h.status === 'warn' ? 'warn' : h.status === 'watch' ? 'watch' : 'hold';
+      const sign = h.chg > 0 ? '+' : '';
+      const chgCls = h.chg > 0 ? 'up' : 'down';
+      const posText = h.position || '—';
+      const costText = h.cost ? ` | 成本 ${h.cost}` : '';
+      const pnlSign = (h.pnl || 0) > 0 ? '+' : '';
+      const pnlCls = (h.pnl || 0) > 0 ? 'up' : 'down';
+
+      html += `<div class="holding-card ${cls}">
+        <div class="hc-top">
+          <div><span class="hc-name">${h.name}</span><span class="hc-code">${h.code} · ${h.sector}</span></div>
+          <span class="hc-status ${cls}">${h.status === 'warn' ? '⚠️ 警戒' : h.status === 'watch' ? '👀 观察' : '✅ 持有'}</span>
+        </div>
+        <div class="hc-mid">
+          <span class="hc-metric">仓位 <b>${posText}</b>${costText}</span>
+          <span class="hc-metric">现价 <b>${h.price.toFixed(2)}</b></span>
+          <span class="hc-metric">今日 <b class="${chgCls}">${sign}${h.chg.toFixed(2)}%</b></span>
+          <span class="hc-metric">盈亏 <b class="${pnlCls}">${pnlSign}${(h.pnl||0).toFixed(1)}%</b></span>
+          <span class="hc-metric">RSI <b>${h.rsi}</b></span>
+          <span class="hc-metric">PE <b>${h.pe}</b></span>
+        </div>
+        <div class="hc-action">${h.action}</div>
+        ${h.alert ? `<div class="hc-alert ${h.status === 'warn' ? 'red' : 'yellow'}">⚠ ${h.alert}</div>` : ''}
+      </div>`;
+    }
+  }
+
+  // Watchlist
+  if (data.watchlist?.length > 0) {
+    html += '<h3 style="font-size:13px;font-weight:600;color:var(--muted);margin:20px 0 10px;">👀 观察列表</h3>';
+    html += '<div class="wl-card">';
+    for (const w of data.watchlist) {
+      const sign = w.chg > 0 ? '+' : '';
+      const chgCls = w.chg > 0 ? 'up' : 'down';
+      html += `<div class="wl-row">
+        <span class="wl-name">${w.name}</span>
+        <span class="wl-price">${w.price.toFixed(2)}</span>
+        <span class="wl-chg ${chgCls}">${sign}${w.chg.toFixed(1)}%</span>
+        <span style="font-size:10px;color:var(--muted-soft);">RSI${w.rsi}</span>
+        <span class="wl-note">${w.note}</span>
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  // Logout button
+  html += `<div style="text-align:center;margin-top:24px;">
+    <button onclick="sessionStorage.removeItem('pf_unlocked');load();" 
+      style="background:transparent;border:1px solid var(--hairline);color:var(--muted);padding:6px 16px;border-radius:6px;font-size:12px;cursor:pointer;">
+      🔒 锁定页面
+    </button>
+  </div>`;
+
+  document.getElementById('main').innerHTML = html;
+}
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+{
+  "date": "2026-07-10",
+  "round": "1/4决赛",
+  "updated": "7/10 09:45",
+  "status": "finished",
+  "matches": [
+    {
+      "home": "France",
+      "home_cn": "法国",
+      "home_emoji": "🇫🇷",
+      "away": "Morocco",
+      "away_cn": "摩洛哥",
+      "away_emoji": "🇲🇦",
+      "time": "04:00",
+      "venue": "波士顿体育场",
+      "route_home": "小组赛3-1塞内加尔 → 1/16决赛3-0瑞典 → 1/8决赛1-0巴拉圭",
+      "route_away": "小组赛1-1巴西 → 1/16决赛1-1荷兰(点球3-2) → 1/8决赛3-0加拿大",
+      "live_score": "2-0",
+      "live_status": "FT",
+      "live_clock": "FT",
+      "stats": {
+        "possession": "48-52",
+        "shots": "22-5",
+        "shots_on_target": "8-1",
+        "corners": "5-5",
+        "fouls": "10-13"
+      },
+      "odds_h2h": {
+        "home": 1.579,
+        "draw": 3.899,
+        "away": 6.464
+      },
+      "odds_spread": {
+        "line": "-1.0",
+        "price": 2.1
+      },
+      "odds_totals": {
+        "line": "2.5",
+        "over": 1.982,
+        "under": 1.825
+      },
+      "odds_live_h2h": {
+        "home": "OFF",
+        "draw": "26.00",
+        "away": "201.00",
+        "source": "DraftKings"
+      },
+      "odds_live_totals": {
+        "line": "2.5",
+        "over": 1.53,
+        "under": 2.29,
+        "source": "DraftKings"
+      },
+      "odds_live_spread": {
+        "line": "-2.5",
+        "home_price": 2.45,
+        "away_price": 1.54
+      },
+      "odds_pinnacle": {
+        "h2h": {
+          "France": 1.62,
+          "Morocco": 6.85,
+          "Draw": 3.9
+        },
+        "spreads": [
+          {
+            "name": "France",
+            "point": -1.0,
+            "price": 2.1
+          },
+          {
+            "name": "Morocco",
+            "point": 1.0,
+            "price": 1.84
+          }
+        ],
+        "totals": [
+          {
+            "name": "Over",
+            "point": 2.5,
+            "price": 2.06
+          },
+          {
+            "name": "Under",
+            "point": 2.5,
+            "price": 1.85
+          }
+        ]
+      },
+      "upset_signals": 3,
+      "upset_risk": "mid",
+      "upset_details": [
+        "摩洛哥1-1巴西(FIFA#6) · 小组赛逼平豪门",
+        "摩洛哥1-1荷兰(FIFA#8)(点球3-2胜) · 已淘汰两大强敌",
+        "法国卫冕冠军心理压力 · 淘汰赛背负期望"
+      ],
+      "pred_h2h": "法国独赢 63.6% · 胜率有优势但不稳",
+      "pred_spread": "摩洛哥 +1.0 @1.85 — Pinnacle 锐价 · 法国穿盘无信心",
+      "pred_totals": "小 2.5 @1.825 — 双方防守坚固 · QF保守",
+      "pred_scores": [
+        "1-0",
+        "2-0",
+        "1-1"
+      ],
+      "tier": "B",
+      "reason": "法国FIFA#3 vs 摩洛哥#7，排名差仅4位。法国淘汰赛3场零封但进攻火力递减(3→3→1球)。摩洛哥逼平巴西+淘汰荷兰，防守体系经顶级考验。Pinnacle让1球@2.08无信心，摩洛哥+1.0@1.85是核心价值点。QF淘汰赛压力下预计低比分。",
+      "factors": [
+        {
+          "icon": "🛡️",
+          "label": "摩洛哥逼平巴西+淘汰荷兰，防守体系顶级",
+          "severity": "high"
+        },
+        {
+          "icon": "⚽",
+          "label": "法国淘汰赛3场零封 · 7进球1失球",
+          "severity": "high"
+        },
+        {
+          "icon": "⚠️",
+          "label": "Pinnacle让1球@2.08无信心 · 穿盘赔率高",
+          "severity": "high"
+        },
+        {
+          "icon": "📊",
+          "label": "法国#3 vs 摩洛哥#7 · 排名差仅4位",
+          "severity": "medium"
+        }
+      ],
+      "status": "finished",
+      "odds_movement": "9h盘口基本稳定 · France H2H 1.573→1.579(持平) · Pinnacle Morocco+1.0 1.85→1.84(微紧) · 大小球未动",
+      "goals": [
+        {
+          "time": "60'",
+          "player": "Kylian Mbappé",
+          "team": "法国",
+          "score": "1-0"
+        },
+        {
+          "time": "66'",
+          "player": "Ousmane Dembélé",
+          "team": "法国",
+          "score": "2-0"
+        }
+      ],
+      "review": {
+        "verdicts": [
+          {
+            "pick": "摩洛哥 +1.0 (亚盘)",
+            "odds": 1.85,
+            "hit": false,
+            "note": "法国2-0净胜2球 · 穿盘失败"
+          },
+          {
+            "pick": "法国 独赢",
+            "odds": 1.57,
+            "hit": true,
+            "note": "法国2-0 · 全收"
+          },
+          {
+            "pick": "小 2.5",
+            "odds": 1.825,
+            "hit": true,
+            "note": "总进球2球 · 全收"
+          }
+        ],
+        "summary": "Tier A翻车🥇摩洛哥+1.0赔1单位 · Tier B双收🥈小2.5+法国独赢各收0.825/0.57单位 · 净收益+0.395单位",
+        "tier_a_hit": false,
+        "tier_b_hits": 2,
+        "tier_b_total": 2
+      }
+    }
+  ],
+  "top_picks": [
+    {
+      "rank": "🥇",
+      "pick": "摩洛哥 +1.0",
+      "odds": 1.85,
+      "tier": "A",
+      "logic": "🔴亏 · 法国2-0净胜2球 · 摩洛哥+1.0穿盘失败",
+      "hit": false
+    },
+    {
+      "rank": "🥈",
+      "pick": "小 2.5",
+      "odds": 1.825,
+      "tier": "B",
+      "logic": "🟢收 · 总进球2球 · 小2.5全收@1.825",
+      "hit": true
+    },
+    {
+      "rank": "🥈",
+      "pick": "法国 独赢",
+      "odds": 1.57,
+      "tier": "B",
+      "logic": "🟢收 · 法国2-0 · 独赢@1.57",
+      "hit": true
+    }
+  ],
+  "timeline": [
+    {
+      "time": "7/10 06:10",
+      "event": "FT复盘 | 法国 2-0 摩洛哥",
+      "detail": "A级🥇摩洛哥+1.0❌ · B级🥈小2.5✅@1.825 · 法国独赢✅@1.57 · 净收益+0.395单位 · 法国控球48%射门22-5 · 姆巴佩60' · 登贝莱66'",
+      "type": "review"
+    },
+    {
+      "time": "7/10 06:10",
+      "event": "FT | 法国 2-0 摩洛哥",
+      "detail": "全场比赛结束 · 法国2-0晋级半决赛 · 姆巴佩60' · 登贝莱66' · 法国22射8正 vs 摩洛哥5射1正",
+      "type": "goal"
+    },
+    {
+      "time": "7/10 05:16",
+      "event": "法国连入两球",
+      "detail": "60' Mbappé破门1-0 · 66' Dembélé再下一城2-0 · 63' 摩洛哥Diop黄牌 · 法国17射6正碾压 · 摩洛哥0射正 · 大小球2.5 OVER降至-153(↓35%)",
+      "type": "goal"
+    },
+    {
+      "time": "7/10 04:45",
+      "event": "半场盘口剧变",
+      "detail": "法国0-0摩洛哥半场 · 大小球从2.5崩塌至1.5(↓40%) · 平局赔率3.90→3.05(↓22%) · 摩洛哥6.46→9.0(↑39%) · 法国射门13-1碾压但0射正 · 摩洛哥控球51%略优",
+      "type": "odds_alert"
+    },
+    {
+      "time": "7/9 21:00",
+      "event": "盘口复核",
+      "detail": "9小时无变化 · 47家初盘→47家终盘 · 法国H2H持平@1.579 · 摩洛哥+1.0微紧至1.84 · 大小球维持2.5/1.982/1.825 · 维持中午初盘判断",
+      "type": "system"
+    },
+    {
+      "time": "7/9 12:00",
+      "event": "赛前预测发布",
+      "detail": "六维分析完成 · 明日1场1/4决赛：法国vs摩洛哥 · 冷门风险🟡中(3/8信号) · 摩洛哥+1.0核心价值点",
+      "type": "system"
+    }
+  ]
+}

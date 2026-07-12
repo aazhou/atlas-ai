@@ -1,0 +1,47 @@
+{
+  "home": "Argentina",
+  "away": "Egypt",
+  "has_h2h": true,
+  "has_spreads": true,
+  "has_totals": true,
+  "h2h_avg": {
+    "home": 1.36,
+    "draw": 4.77,
+    "away": 9.82
+  },
+  "h2h_count": 46,
+  "pinnacle_h2h": {
+    "Argentina": 1.37,
+    "Egypt": 9.7,
+    "Draw": 4.85
+  },
+  "pinnacle_spread": [
+    {
+      "name": "Argentina",
+      "price": 1.9,
+      "point": -1.25
+    },
+    {
+      "name": "Egypt",
+      "price": 2.0,
+      "point": 1.25
+    }
+  ],
+  "pinnacle_totals": [
+    {
+      "name": "Over",
+      "price": 2.07,
+      "point": 2.5
+    },
+    {
+      "name": "Under",
+      "price": 1.83,
+      "point": 2.5
+    }
+  ],
+  "consensus_totals_line": 2.5,
+  "consensus_totals": {
+    "over": 1.998,
+    "under": 1.81
+  }
+}

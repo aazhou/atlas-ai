@@ -1,0 +1,8 @@
+node_modules/
+.vercel
+*.pyc
+__pycache__/
+.DS_Store
+*.log
+.cursorrules
+AGENTS.md

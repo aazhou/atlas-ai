@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas AI · A股</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  .updated { font-size: 11px; color: var(--muted-soft); margin-bottom: 16px; }
+
+  /* ── Layout ── */
+  .dashboard { display: grid; gap: 24px; }
+  @media (min-width: 900px) {
+    .dashboard { grid-template-columns: 1fr 360px; }
+    .dash-left { min-width: 0; }
+    .dash-right { min-width: 0; }
+  }
+
+  /* ── Surge Hero ── */
+  .surge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .surge-card {
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--hairline); background: var(--surface-card);
+  }
+  .surge-card.up { border-color: rgba(34,197,94,0.2); background: linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.01) 100%); }
+  .surge-card.down { border-color: rgba(239,68,68,0.2); background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, rgba(239,68,68,0.01) 100%); }
+  .surge-card .sc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .surge-card .sc-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .surge-card .sc-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .surge-card.up .sc-tag { background: rgba(34,197,94,0.12); color: var(--accent-emerald); }
+  .surge-card.down .sc-tag { background: rgba(239,68,68,0.15); color: var(--accent-rose); }
+  .surge-card .sc-chg { font-family: 'JetBrains Mono',monospace; font-size: 30px; font-weight: 700; line-height: 1.1; margin-bottom: 4px; }
+  .surge-card.up .sc-chg { color: var(--accent-emerald); }
+  .surge-card.down .sc-chg { color: var(--accent-rose); }
+  .surge-card .sc-detail { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .surge-card .sc-detail b { color: var(--body); }
+  @media (max-width: 480px) { .surge-card { padding: 16px; } .surge-card .sc-chg { font-size: 24px; } .surge-grid { gap: 8px; } }
+
+  /* ── Chart ── */
+  .chart-wrap {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 20px;
+  }
+  .chart-wrap h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
+  @media (max-width: 640px) { .chart-wrap { padding: 16px; } }
+
+  /* ── Ranking Table ── */
+  .rank-panel {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 16px; overflow: hidden;
+  }
+  .rank-panel h3 { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+  .rank-table { width: 100%; border-collapse: collapse; }
+  .rank-table td {
+    padding: 5px 8px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .rank-table .rt-rank { font-family: 'JetBrains Mono',monospace; font-size: 10px; color: var(--muted-soft); width: 24px; text-align: right; }
+  .rank-table .rt-name { color: var(--body); font-weight: 500; }
+  .rank-table .rt-chg { font-family: 'JetBrains Mono',monospace; font-size: 12px; text-align: right; width: 60px; }
+  .rank-table tr.up .rt-chg { color: var(--accent-emerald); }
+  .rank-table tr.down .rt-chg { color: var(--accent-rose); }
+  @media (max-width: 640px) { .rank-panel { padding: 12px; } }
+
+  /* Mobile */
+  @media (max-width: 899px) { .dashboard { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) {
+    .surge-grid { grid-template-columns: 1fr; }
+    .surge-card { padding: 16px; }
+    .surge-card .sc-chg { font-size: 24px; }
+  }
+
+  .no-surge { color: var(--muted); font-size: 13px; text-align: center; padding: 20px; }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+
+<div class="main">
+  <div class="updated" id="updated">加载中...</div>
+  <div class="dashboard" id="dashboard"></div>
+</div>
+
+<footer class="footer">Atlas<span style="color:var(--muted-soft);font-weight:400;"> AI · A股</span></footer>
+
+<script>
+const COLORS = ['#faff69','#22c55e','#3b82f6','#f59e0b','#ef4444','#8b5cf6',
+  '#06b6d4','#ec4899','#84cc16','#f97316','#6366f1','#14b8a6',
+  '#eab308','#a855f7','#22d3ee','#fb7185','#a3e635','#c084fc',
+  '#2dd4bf','#f87171','#818cf8','#4ade80','#e879f9','#38bdf8',
+  '#fb923c','#34d399','#f472b6','#60a5fa','#a78bfa','#fbbf24'];
+
+function getToday() { const d = new Date(); return d.toISOString().slice(0,10); }
+
+async function load() {
+  const date = getToday();
+  let data;
+  try {
+    const r = await fetch(`data/sectors-${date}.json`);
+    data = await r.json();
+  } catch(e) {
+    document.getElementById('updated').textContent = '暂无今日数据';
+    document.getElementById('dashboard').innerHTML = '<div class="no-surge">非交易时段或数据未生成</div>';
+    return;
+  }
+
+  document.getElementById('updated').textContent = `更新于 ${data.updated}`;
+
+  const sectors = Object.entries(data.sectors);
+  sectors.sort((a,b) => b[1].current - a[1].current);
+  const hs300 = sectors.find(([n]) => n === '沪深300')?.[1]?.current || 0;
+
+  // ═══ Surge cards ═══
+  const hot = sectors.filter(([,s]) => s.current > 2);
+  const cold = sectors.filter(([,s]) => s.current < -3);
+  let surgeHtml = '';
+  if (hot.length + cold.length > 0) {
+    surgeHtml = '<div class="surge-grid">';
+    for (const [name, s] of [...hot, ...cold]) {
+      const isUp = s.current > 0;
+      const cls = isUp ? 'up' : 'down';
+      const tag = isUp ? '🔥 资金流入' : '⚠️ 资金撤离';
+      const excess = (s.current - hs300).toFixed(1);
+      const sign = s.current > 0 ? '+' : '';
+      const history = s.history || [];
+      const vals = history.map(h => h.chg);
+      const range = vals.length > 1 ? (Math.max(...vals) - Math.min(...vals)).toFixed(1) : '—';
+      const detail = isUp
+        ? `超额<b>+${excess}%</b> · 振幅 ${range}% · 资金流入`
+        : `超额<b>${excess}%</b> · 振幅 ${range}% · 资金流出`;
+      surgeHtml += `<div class="surge-card ${cls}">
+        <div class="sc-header"><div class="sc-name">${name}</div><div class="sc-tag">${tag}</div></div>
+        <div class="sc-chg">${sign}${s.current.toFixed(2)}%</div>
+        <div class="sc-detail">${detail}</div>
+      </div>`;
+    }
+    surgeHtml += '</div>';
+  } else {
+    surgeHtml = '<div class="no-surge">📊 暂无显著异动（±3% 以内）</div>';
+  }
+
+  // ═══ Chart ═══
+  let maxLen = 0, fullTimes = [];
+  sectors.forEach(([,s]) => { if (s.history.length > maxLen) { maxLen = s.history.length; fullTimes = s.history.map(h => h.time); } });
+  const volatile = sectors.filter(([,s]) => Math.abs(s.current) > 1.5);
+  const displaySectors = volatile.length >= 4 ? volatile : sectors.filter((_,i) => i < 4 || i >= sectors.length-4);
+
+  const datasets = displaySectors.map(([name, s], i) => {
+    const histMap = {};
+    s.history.forEach(h => { histMap[h.time] = h.chg; });
+    return {
+      label: name, data: fullTimes.map(t => histMap[t] !== undefined ? histMap[t] : null),
+      borderColor: COLORS[i % COLORS.length], backgroundColor: 'transparent',
+      borderWidth: 1.5, pointRadius: 0, tension: 0.3, spanGaps: false,
+    };
+  });
+
+  const chartHtml = `<div class="chart-wrap">
+    <h3>📈 异动板块走势</h3>
+    <canvas id="trendChart" style="max-height:380px;"></canvas>
+  </div>`;
+
+  // ═══ Ranking (right panel on desktop) ═══
+  let rankHtml = '<div class="rank-panel"><h3>📋 全板块排名</h3><table class="rank-table">';
+  sectors.forEach(([name, s], i) => {
+    const cls = s.current > 0.5 ? 'up' : s.current < -0.5 ? 'down' : '';
+    const sign = s.current > 0 ? '+' : '';
+    rankHtml += `<tr class="${cls}"><td class="rt-rank">${i+1}</td><td class="rt-name">${name}</td><td class="rt-chg">${sign}${s.current.toFixed(1)}%</td></tr>`;
+  });
+  rankHtml += '</table></div>';
+
+  // ═══ Assemble ═══
+  document.getElementById('dashboard').innerHTML = `
+    <div class="dash-left">${surgeHtml}${fullTimes.length > 0 ? '<div style="height:20px;"></div>' + chartHtml : ''}</div>
+    <div class="dash-right">${rankHtml}</div>
+  `;
+
+  // Render chart
+  if (fullTimes.length > 0) {
+    new Chart(document.getElementById('trendChart'), {
+      type: 'line', data: { labels: fullTimes, datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { size: 10 }, boxWidth: 10, padding: 6 } } },
+        scales: {
+          x: { ticks: { color: '#555', font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+          y: { ticks: { color: '#555', font: { size: 10 }, callback: v => v+'%' }, grid: { color: '#1a1a1a' } }
+        }
+      }
+    });
+  }
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

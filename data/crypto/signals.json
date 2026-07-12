@@ -1,0 +1,127 @@
+{
+  "updated": "2026-07-12 17:16:48",
+  "strategy": "funding_extreme_long",
+  "description": "Funding rate below P5 percentile → LONG with 4h trend filter + simulated portfolio",
+  "signal_count": 5,
+  "signals": [
+    {
+      "symbol": "EVAA",
+      "funding_rate": -0.0055,
+      "p5_threshold": 0.005,
+      "entry_price": 1.4011,
+      "current_price": 1.4011,
+      "unrealized_pnl": 16.85,
+      "trend_up": true,
+      "direction": "LONG",
+      "confidence": "HIGH",
+      "stop_loss": 1.26099,
+      "take_profit": 1.54121,
+      "reason": "费率-0.005%<P5(0.005%) +4h涨势",
+      "time": "17:16:48"
+    },
+    {
+      "symbol": "MU",
+      "funding_rate": -0.0233,
+      "p5_threshold": -0.0032,
+      "entry_price": 978.64,
+      "current_price": 978.64,
+      "unrealized_pnl": -0.04,
+      "trend_up": false,
+      "direction": "LONG",
+      "confidence": "HIGH",
+      "stop_loss": 880.776,
+      "take_profit": 1076.504,
+      "reason": "费率-0.023%<P5(-0.003%) ",
+      "time": "17:16:48"
+    },
+    {
+      "symbol": "SKL",
+      "funding_rate": -0.0614,
+      "p5_threshold": -0.0047,
+      "entry_price": 0.004636,
+      "current_price": 0.004636,
+      "unrealized_pnl": -1.42,
+      "trend_up": true,
+      "direction": "LONG",
+      "confidence": "HIGH",
+      "stop_loss": 0.004172,
+      "take_profit": 0.0051,
+      "reason": "费率-0.061%<P5(-0.005%) +4h涨势",
+      "time": "17:16:48"
+    },
+    {
+      "symbol": "SXT",
+      "funding_rate": -0.6608,
+      "p5_threshold": -0.0115,
+      "entry_price": 0.009113,
+      "current_price": 0.009113,
+      "unrealized_pnl": 3.46,
+      "trend_up": true,
+      "direction": "LONG",
+      "confidence": "HIGH",
+      "stop_loss": 0.008202,
+      "take_profit": 0.010024,
+      "reason": "费率-0.661%<P5(-0.012%) +4h涨势",
+      "time": "17:16:48"
+    },
+    {
+      "symbol": "T",
+      "funding_rate": -0.705,
+      "p5_threshold": -0.0222,
+      "entry_price": 0.005144,
+      "current_price": 0.005144,
+      "unrealized_pnl": -1.08,
+      "trend_up": true,
+      "direction": "LONG",
+      "confidence": "HIGH",
+      "stop_loss": 0.00463,
+      "take_profit": 0.005658,
+      "reason": "费率-0.705%<P5(-0.022%) +4h涨势",
+      "time": "17:16:48"
+    }
+  ],
+  "portfolio": {
+    "open_count": 4,
+    "closed_total": 1,
+    "closed_recent": [
+      {
+        "symbol": "EVAA",
+        "entry_price": 1.1991,
+        "exit_price": 1.4011,
+        "exit_pnl": 16.85,
+        "exit_reason": "止盈 +10%",
+        "exit_time": "2026-07-12 17:16:48"
+      }
+    ],
+    "open_positions": [
+      {
+        "symbol": "MU",
+        "entry_price": 979.04,
+        "current_price": 978.64,
+        "unrealized_pnl": -0.04,
+        "entry_time": "2026-07-12 17:03:10"
+      },
+      {
+        "symbol": "SKL",
+        "entry_price": 0.004703,
+        "current_price": 0.004636,
+        "unrealized_pnl": -1.42,
+        "entry_time": "2026-07-12 17:03:10"
+      },
+      {
+        "symbol": "SXT",
+        "entry_price": 0.008808,
+        "current_price": 0.009113,
+        "unrealized_pnl": 3.46,
+        "entry_time": "2026-07-12 17:03:10"
+      },
+      {
+        "symbol": "T",
+        "entry_price": 0.0052,
+        "current_price": 0.005144,
+        "unrealized_pnl": -1.08,
+        "entry_time": "2026-07-12 17:03:10"
+      }
+    ]
+  }
+}

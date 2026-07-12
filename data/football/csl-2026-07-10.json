@@ -1,0 +1,106 @@
+{
+  "date": "2026-07-10",
+  "round": "中超第18轮",
+  "updated": "7/11 12:00",
+  "status": "finished",
+  "matches": [
+    {
+      "home": "山东泰山",
+      "home_cn": "山东泰山",
+      "home_emoji": "https://pic.cfl-china.cn/cfluat/club/csl/e7b81a4cfcb74fe2bc09059781ca20a0.png",
+      "away": "云南玉昆",
+      "away_cn": "云南玉昆",
+      "away_emoji": "https://pic.cfl-china.cn/cfluat/club/csl/b4e17a88f747464497640bb89ecc624e.png",
+      "time": "19:35",
+      "date": "2026-07-10",
+      "venue": "济南奥体中心",
+      "attendance": 23719,
+      "route_home": "排名#7 · 21分",
+      "route_away": "排名#4 · 24分",
+      "status": "finished",
+      "live_status": "FT",
+      "live_clock": "90'+8'",
+      "live_score": "4-3",
+      "goals": [
+        {"time": "10'", "player": "Maiwulang Mijiti", "team": "山东泰山", "score": "1-0"},
+        {"time": "16'", "player": "Zeca", "team": "山东泰山", "score": "2-0"},
+        {"time": "26'", "player": "Zeca", "team": "山东泰山", "score": "3-0"},
+        {"time": "42'", "player": "Alexandru Ionita", "team": "云南玉昆", "score": "3-1"},
+        {"time": "54'", "player": "Chen Pu", "team": "山东泰山", "score": "4-1", "note": "凌空抽射"},
+        {"time": "76'", "player": "Cleber", "team": "云南玉昆", "score": "4-2", "note": "点球"},
+        {"time": "90'+1'", "player": "Cleber", "team": "云南玉昆", "score": "4-3", "note": "凌空抽射"}
+      ],
+      "cards": [
+        {"time": "30'", "player": "Chen Pu", "team": "山东泰山", "type": "yellow"}
+      ],
+      "stats": {
+        "possession": "41.8-58.2",
+        "shots": "13-28",
+        "shots_on_target": "8-7",
+        "corners": "2-14",
+        "fouls": "11-7"
+      },
+      "odds_h2h": {
+        "home": 1.8,
+        "draw": 4.0,
+        "away": 3.5
+      },
+      "odds_spread": {
+        "line": "-0.75",
+        "price": 1.9
+      },
+      "odds_totals": {
+        "line": 3.5,
+        "over": 1.868,
+        "under": 1.879
+      },
+      "home_rank": 7,
+      "away_rank": 4,
+      "home_pts": "21",
+      "away_pts": "24",
+      "upset_risk": "mid",
+      "upset_signals": 1,
+      "home_win_prob": 50.9,
+      "pred_h2h": "—",
+      "pred_spread": "—",
+      "pred_totals": "—",
+      "pred_scores": [],
+      "tier": "C",
+      "reason": "胜率51%均衡，方向不明，不推荐",
+      "factors": [
+        {
+          "icon": "🏟️",
+          "label": "山东泰山主场",
+          "severity": "positive"
+        },
+        {
+          "icon": "📊",
+          "label": "排名#7 vs #4 实力接近",
+          "severity": "medium"
+        }
+      ],
+      "review": {
+        "verdicts": [
+          {"pick": "Tier C - 不推荐", "odds": null, "hit": "half", "note": "未做投注推荐，但山东泰山4-3取胜，过程跌宕起伏"}
+        ],
+        "summary": "⚽进球大战！山东泰山4-3云南玉昆 · 泰山26分钟3-0领先(麦吾郎10'+泽卡16'26') · 玉昆顽强追至3-1(42')→4-2(76'点球)→4-3(90'+1') · 云南控球58.2%射门28-13碾压但效率不足 · 7球盛宴 · 预测Tier C正确(方向不明)"
+      }
+    }
+  ],
+  "top_picks": [],
+  "parlays": [],
+  "timeline": [
+    {
+      "time": "7/11 12:00",
+      "event": "FT复盘 | 山东泰山 4-3 云南玉昆",
+      "detail": "进球大战7球！山东泰山26分钟3-0领先(麦吾郎10'+泽卡16'26') · 云南玉昆顽强追至4-3(克莱伯76'点球+90'+1'凌空) · 云南控球58.2%射门28-13碾压 · 23,719人观战 · 预测Tier C(方向不明)正确",
+      "type": "review"
+    },
+    {
+      "time": "14:00",
+      "event": "赛前预测",
+      "detail": "山东泰山 vs 云南玉昆 — 隐含胜率58.9%，赔率从1.60走弱",
+      "type": "system"
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "date": "2026-07-04",
+  "round": "1/16决赛",
+  "updated": "7/4 14:00",
+  "upset_framework": "v2 — 8-signal scan",
+  "timeline": [
+    {
+      "time": "7/3 22:00",
+      "event": "赛前预测发布",
+      "detail": "三场比赛H2H+亚盘+大小球分析完成。阿根廷-2、哥伦比亚独赢、埃及不败。",
+      "type": "system"
+    },
+    {
+      "time": "7/4 02:00",
+      "event": "澳大利亚 vs 埃及 开赛",
+      "detail": "埃及不败预测。最终1-1平局，点球埃及4-2胜出。Egypt不败✅收米。",
+      "type": "final"
+    },
+    {
+      "time": "7/4 06:00",
+      "event": "阿根廷 vs 佛得角 开赛",
+      "detail": "赛前阿根廷@1.14 88%概率碾压。冷门信号4/8触发未充分预警。结果1-1，阿根廷加时3-2险胜。",
+      "type": "final"
+    },
+    {
+      "time": "7/4 09:30",
+      "event": "哥伦比亚 vs 加纳 开赛",
+      "detail": "哥伦比亚1-0小胜。独赢@1.45收米。",
+      "type": "final"
+    }
+  ],
+  "matches": [
+    {
+      "home": "Australia",
+      "away": "Egypt",
+      "home_cn": "澳大利亚",
+      "away_cn": "埃及",
+      "home_emoji": "🇦🇺",
+      "away_emoji": "🇪🇬",
+      "time": "02:00",
+      "pred_h2h": "Egypt不败",
+      "pred_totals": "小 2.25",
+      "pred_spread": "Egypt +0.25",
+      "pred_scores": [
+        "1-1",
+        "0-1"
+      ],
+      "tier": "B",
+      "odds_h2h": {
+        "home": 3.75,
+        "draw": 2.93,
+        "away": 2.41
+      },
+      "odds_spread": {
+        "line": "+0.25",
+        "price": 1.95
+      },
+      "odds_totals": {
+        "line": "2.25",
+        "over": 2.05,
+        "under": 1.83
+      },
+      "upset_signals": 1,
+      "upset_risk": "low",
+      "reason": "最接近的一场，淘汰赛平局概率高(33%)。Egypt有Salah这个爆点。",
+      "route_home": "小组赛2-0土耳其 → 1/16决赛对埃及",
+      "route_away": "小组赛1-1比利时 → 1/16决赛对澳大利亚",
+      "status": "finished",
+      "live_score": "1-1",
+      "final_score": "1-1 (点球2-4)",
+      "review": {
+        "verdicts": [
+          {
+            "pick": "Egypt不败",
+            "odds": 1.68,
+            "hit": true,
+            "note": "1-1平局，Egypt不败收米"
+          },
+          {
+            "pick": "小 2.25",
+            "odds": 1.83,
+            "hit": true,
+            "note": "总进球2"
+          },
+          {
+            "pick": "比分 1-1 / 0-1",
+            "odds": null,
+            "hit": true,
+            "note": "1-1命中"
+          }
+        ],
+        "summary": "全中 ✅ | 淘汰赛平局高发判断准确，Egypt不败+小2.25双收",
+        "score": "hit"
+      }
+    },
+    {
+      "home": "Argentina",
+      "away": "Cape Verde",
+      "home_cn": "阿根廷",
+      "away_cn": "佛得角",
+      "home_emoji": "🇦🇷",
+      "away_emoji": "🇨🇻",
+      "time": "06:00",
+      "pred_h2h": "Argentina胜",
+      "pred_totals": "大 2.5",
+      "pred_spread": "Argentina -2",
+      "pred_scores": [
+        "3-0",
+        "4-0"
+      ],
+      "tier": "A",
+      "odds_h2h": {
+        "home": 1.15,
+        "draw": 9.0,
+        "away": 21.0
+      },
+      "odds_spread": {
+        "line": "-2.0",
+        "price": 1.9
+      },
+      "odds_totals": {
+        "line": "2.5",
+        "over": 1.85,
+        "under": 2.05
+      },
+      "upset_signals": 4,
+      "upset_risk": "high",
+      "upset_details": [
+        "让球过深: Argentina -2.0",
+        "弱队爆冷履历: 佛得角0-0零封西班牙",
+        "弱队防守: 零封西班牙90分钟",
+        "淘汰赛心理: 卫冕冠军压力"
+      ],
+      "reason": "卫冕冠军打世界杯新军，实力鸿沟但-2过深。佛得角防守硬。冷门信号4/8触发但赛前未充分重视——教训！",
+      "route_home": "小组赛3-0阿尔及利 → 1/16决赛对佛得角",
+      "route_away": "小组赛0-0西班牙 → 1/16决赛对阿根廷",
+      "status": "finished",
+      "live_score": "1-1",
+      "final_score": "1-1 (加时3-2)",
+      "review": {
+        "verdicts": [
+          {
+            "pick": "Argentina -2",
+            "odds": 1.9,
+            "hit": false,
+            "note": "1-1，远未穿盘。让2球过深"
+          },
+          {
+            "pick": "Argentina独赢",
+            "odds": 1.15,
+            "hit": false,
+            "note": "90分钟1-1平局"
+          },
+          {
+            "pick": "大 2.5",
+            "odds": 1.85,
+            "hit": false,
+            "note": "总进球2"
+          },
+          {
+            "pick": "比分 3-0 / 4-0",
+            "odds": null,
+            "hit": false,
+            "note": "实际1-1，严重低估佛得角"
+          }
+        ],
+        "summary": "❌ 大冷门 · 4/8冷门信号触发但赛前未预警 → 佛得角0-0西班牙后逼平阿根廷 | 核心教训：让球过深+弱队防守=冷门配方",
+        "score": "miss"
+      }
+    },
+    {
+      "home": "Colombia",
+      "away": "Ghana",
+      "home_cn": "哥伦比亚",
+      "away_cn": "加纳",
+      "home_emoji": "🇨🇴",
+      "away_emoji": "🇬🇭",
+      "time": "09:30",
+      "pred_h2h": "Colombia胜",
+      "pred_totals": "小 2.5",
+      "pred_spread": "Colombia -0.75",
+      "pred_scores": [
+        "2-0",
+        "2-1"
+      ],
+      "tier": "A",
+      "odds_h2h": {
+        "home": 1.45,
+        "draw": 4.4,
+        "away": 9.25
+      },
+      "odds_spread": {
+        "line": "-0.75",
+        "price": 1.88
+      },
+      "odds_totals": {
+        "line": "2.5",
+        "over": 2.1,
+        "under": 1.78
+      },
+      "upset_signals": 0,
+      "upset_risk": "low",
+      "reason": "Diaz+James状态正佳，加纳防线有漏洞。三场中最佳投注价值。",
+      "route_home": "小组赛1-0刚果金 → 1/16决赛对加纳",
+      "route_away": "小组赛1-0巴拿马 → 1/16决赛对哥伦比亚",
+      "status": "finished",
+      "live_score": "1-0",
+      "final_score": "1-0",
+      "review": {
+        "verdicts": [
+          {
+            "pick": "Colombia 独赢",
+            "odds": 1.45,
+            "hit": true,
+            "note": "1-0小胜"
+          },
+          {
+            "pick": "Colombia -0.75",
+            "odds": 1.88,
+            "hit": true,
+            "note": "赢1球，赢半盘"
+          },
+          {
+            "pick": "小 2.5",
+            "odds": 1.78,
+            "hit": true,
+            "note": "总进球1"
+          },
+          {
+            "pick": "比分 2-0 / 2-1",
+            "odds": null,
+            "hit": false,
+            "note": "实际1-0"
+          }
+        ],
+        "summary": "方向全对 ✅ | 独赢+亚盘+小2.5三收 · 比分差一球",
+        "score": "hit"
+      }
+    }
+  ],
+  "top_picks": [
+    {
+      "rank": "🥇",
+      "pick": "Colombia 独赢",
+      "odds": 1.45,
+      "tier": "A",
+      "logic": "✅ 1-0收米 · 全场控制",
+      "hit": true
+    },
+    {
+      "rank": "🥈",
+      "pick": "Argentina -2",
+      "odds": 1.9,
+      "tier": "A",
+      "logic": "❌ 大冷门 · 1-1 · 佛得角零封西班牙后逼平阿根廷",
+      "hit": false
+    },
+    {
+      "rank": "🥉",
+      "pick": "Egypt不败",
+      "odds": 1.68,
+      "tier": "B",
+      "logic": "✅ 1-1平局 · 淘汰赛平局高发判断准确",
+      "hit": true
+    },
+    {
+      "rank": "🎲",
+      "pick": "Egypt 平局 (90分钟)",
+      "odds": 2.93,
+      "tier": "B",
+      "logic": "✅ 1-1命中 · 点球埃及胜出",
+      "hit": true
+    }
+  ]
+}

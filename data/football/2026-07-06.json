@@ -1,0 +1,478 @@
+{
+  "date": "2026-07-06",
+  "round": "1/8决赛",
+  "updated": "7/7 05:04",
+  "upset_framework": "v2 — 8-signal scan",
+  "timeline": [
+    {
+      "time": "7/7 05:04",
+      "event": "⚽ 进球! 西班牙 1-0 90+1' · 盘口全面逆转",
+      "type": "emergency",
+      "detail": "Mikel Merino 90+1' 破门！0-0僵局被打破，西班牙1-0领先。盘口全面逆转：Draw从之前1.369(73%概率)→现在+2200(4.3%)，平局场景彻底终结。Spread从早期-0.5→DK -1.5(降4级≥3→Emergency)。Totals从早期2.5→DK 1.5(-1.0球→Watch)。零售共识ESP~1.03(97%胜率)/Draw~13/POR~200+。Pinnacle未更新(仍显示pre-match: POR@7.19/Draw@1.67/ESP@3.25)。DK: POR+1.5@-20000, ESP-1.5@+1600, Totals 1.5(O@+1240/U@-3000)。90+8'补时阶段，西班牙即将晋级1/4决赛。此前4次Emergency均基于0-0闷战逻辑，本进球彻底改变比赛格局。"
+    },
+    {
+      "time": "7/7 04:50",
+      "event": "Emergency Draw -59.5%25 / Totals -2.0 / 90+' 0-0",
+      "type": "emergency",
+      "detail": "0-0 90+'. Draw 1.746-1.369(-21.6%25/8min) -59.5%25vs early 3.38. 35bk POR@8.705(+129%25) Draw@1.369(-59.5%25) ESP@4.502(+127%25). Pinnacle Draw@1.67(73%25prob). Spread POR+0.25@1.66. Totals Pinnacle 1.0-0.5(O@2.03/U@1.85) -2.0 vs early 2.5. Retail 14bk 0.5 O@2.829/U@1.423. Market fully prices 0-0 stalemate."
+    },
+    {
+      "time": "7/7 04:42",
+      "event": "🔴 Emergency持续 · Draw加速逼近60%线",
+      "type": "emergency",
+      "detail": "0-0 第78分钟。Draw继续加速下跌：75'时1.857→现在1.746(3分钟内再跌-6.0%)，累计vs初盘-48.3%(3.38→1.746)—距60%Emergency线仅11.7pp。35家均价 POR@6.025(+58.6%vs初盘3.80) / Draw@1.746(-48.3%) / ESP@2.980(+50.5%vs初盘1.98)。Pinnacle: POR@4.87/Draw@2.12/ESP@2.67。Spread POR+0.25@1.81/ESP-0.25@2.10(Pinnacle)。Totals Pinnacle 1.0(O@2.07/U@1.81)，零售13家0.5线(O@1.84/U@1.89)。西班牙78分钟仍0-0，Draw 57.3%概率→市场几乎定价平局。加上补时约剩14-15分钟，若无进球Draw必将突破60%。Totals已塌-1.5球(Pinnacle 1.0)至-2.0球(零售0.5)，全市场共识0-0。"
+    },
+    {
+      "time": "7/7 04:38",
+      "event": "🔴 Emergency持续 · Draw暴跌+Totals全塌",
+      "type": "emergency",
+      "detail": "0-0 第75分钟。Draw从04:22的2.31暴跌至1.857(13分钟内再跌-19.6%)，累计vs初盘-45.1%(3.38→1.857)—接近60%Emergency升级线。35家均价 POR@5.549(+46.0%vs初盘3.80) / Draw@1.857(-45.0%) / ESP@2.802(+41.5%vs初盘1.98)。Pinnacle: POR@4.87/Draw@2.12/ESP@2.67。Spread POR+0.25@1.81/ESP-0.25@2.10(Pinnacle)。Totals Pinnacle 1.0(O@2.07/U@1.81)全线收窄，零售13家进一步塌至0.5线(O@1.6746/U@2.0962)— 全市场共识0-0完场。西班牙75分钟仍未破门，淘汰赛闷战叙事完全兑现。Draw距60%Emergency线仅差14.9个百分点，75-90'若无进球→必冲60%。"
+    },
+    {
+      "time": "7/7 04:22",
+      "event": "🔴 Emergency · Spread降级10分钟+Draw破30%",
+      "type": "emergency",
+      "detail": "0-0 第62分钟。Spread -0.5→-0.25自04:11触发Watch以来已维持≥10分钟→自动升级🔴Emergency。Draw从初盘3.38跌至2.310(-31.7%)突破30%Watch警戒线(Pinnacle Draw@2.59,-23.4%仍低于30%)。36家共识: POR@4.486(+18.1%vs初盘3.80) / Draw@2.310(-31.7%) / ESP@2.411(+21.8%vs初盘1.98)。Pinnacle: POR@3.96/Draw@2.59/ESP@2.42。Spread: POR+0.25@1.89/ESP-0.25@2.01(Pinnacle)，零售2家-0.5@2.425/2家+0.25@1.890→Sharp与Retail分歧加剧。Totals: Pinnacle 1.5(O@1.94/U@1.94)全线收窄至均衡，零售13家1.5线Under@1.582(63%概率乌小)。西班牙62分钟仍未破门，淘汰赛闷战模式全面验证。每分每Pass→西班牙让球压力加速累积。"
+    },
+    {
+      "time": "7/7 04:11",
+      "event": "🟡 Watch · 让球降级",
+      "type": "odds_alert",
+      "detail": "0-0 第47分钟下半场开局。36家均价 POR@3.904(-9.2%vs上次)/Draw@2.634(-0.6%)/ESP@2.298(+2.1%)。 Pinnacle: POR@3.98/Draw@2.72/ESP@2.30。 ⚠️ 关键变化：Pinnacle Spread -0.5→-0.25(降1级)，POR+0.25@1.97/ESP-0.25@1.93。Matchbook/MyBookie仍锚定-0.5但Pinnacle作为sharp已转。-0.5→-0.25触发🟡Watch。 Totals: Pinnacle 1.75(O@2.03/U@1.85) vs early 2.25。零售共识1.5(12家,O@1.80/U@1.97)、另2家2.0(O@2.62/U@1.46)。Draw -22.1%vs初盘(3.38→2.634)仍低于30%Watch警戒线。 市场叙事: 西班牙56.4%控球8射3正仍0-0后，Pinnacle率先降让球→葡萄牙获re-rate。淘汰赛下半场模式，若10分钟内Draw跌破2.40或Spread进一步降至0→升级🔴。"
+    },
+    {
+      "time": "7/6 04:02",
+      "event": "🔴 Emergency · 大小球崩塌升级",
+      "detail": "半场0-0僵局持续。DK大小球2.5→1.5(-1.0球)自03:50首次触发Watch以来已维持至中场休息结束(≥10分钟)→自动升级🔴Emergency。即时盘(ESPN DK): POR@4.30(持平)/Draw@2.65(-3.6% vs 03:50, -21.6% vs 初盘3.38)/ESP@2.25(+4.7% vs 03:50)。Spread -0.5未变(POR+0.5@1.625/ESP-0.5@2.25), Totals 1.5(O@1.80/U@2.05)。Draw续降(2.75→2.65)接近30% Watch警戒线的下沿。西班牙8射3正仍0-0, 淘汰赛典型闷战模式。若下半场Draw跌破2.50或ESP胜赔突破2.50→二次Emergency触发。",
+      "type": "emergency"
+    },
+    {
+      "time": "7/6 03:50",
+      "event": "🟡 Watch · 半场大小球崩塌",
+      "detail": "半场 Portugal 0-0 Spain。DK大小球从2.5塌至1.5(-1.0球)触发Watch。Draw@2.75(-18.6% vs 初盘3.38)，平局预期升温。Spread -0.5未变(ESP -0.5@2.25/POR +0.5@1.625)。西班牙54.6%控球8射3正但破门乏力，葡萄牙5射2正。Sharpe/Retail分歧：Pinnacle仍锚定2.25但零售已全面转向1.5。若10分钟维持→升级🔴Emergency。",
+      "type": "odds_alert"
+    },
+    {
+      "time": "7/6 03:40",
+      "event": "Rolling Monitor 39min update: Monitor",
+      "detail": "0-0 at 39min. 36bk avg POR@3.932(+3.5% vs early 3.80), Draw@2.958(-12.5% vs 3.38), ESP@2.095(+5.8% vs 1.98). Pinnacle: ESP@2.03/Draw@3.27/POR@4.06. Spread -0.5 steady (POR+0.5@1.85/ESP-0.5@2.03). Pinnacle Totals 2.25(O@1.89/U@1.97) unchanged; retail 14 bk at 1.5, 12 at 2.5. Spain 56.4% possession, 3 SOG/7 shots still 0-0. Monitor: no new triggers, Draw drop -12.5% below Watch threshold (30%).",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 03:30",
+      "event": "📊 滚球监控 · 30'更新 🟢Monitor",
+      "detail": "0-0 第30分钟。36家均价 POR@3.881(+2.1%), Draw@3.110(-8.0%), ESP@2.026(+2.3%)。Pinnacle: ESP@2.03 / Draw@3.27 / POR@4.06。关键变化：Spread从19'的-0.2恢复至初盘-0.5(ESP -0.5@2.05/POR +0.5@1.83)，19'watch信号已解除。Totals Pinnacle 2.25(O@1.88/U@1.98), 共识维持2.5(O@2.27/U@1.60)。西班牙控球54%射正3次仍0-0，但盘口回稳→🟢 Monitor。",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 03:20",
+      "event": "📊 滚球监控 · 19'更新 🟡Watch",
+      "detail": "0-0 第19分钟。盘口开始松动：ESP H2H@2.019(+2.0%←初盘1.98)、Draw@3.237(-4.2%←3.38)、POR@3.758(-1.1%←3.80)。关键变化：Pinnacle Spread从-0.5降至-0.2(降1级)，ESP -0.2@1.82 / POR +0.2@2.07。西班牙0-0不开胡，让球压力浮现。Totals 2.5仍维持但Over@2.02(←1.82)走弱。西班牙控球60%但射正3次未得分。🟡 Watch — 若10分钟内Spread持续恶化或西班牙再不得分则升级🔴。",
+      "type": "odds_alert"
+    },
+    {
+      "time": "7/6 03:12",
+      "event": "📊 滚球监控 · 10'更新",
+      "detail": "0-0 第10分钟。46家均价 POR@3.71(-2.4%)/Draw@3.38(0%)/ESP@2.00(+1.0%)。Pinnacle: POR@4.08/Draw@3.57/ESP@2.01。Spread: ESP -0.5，POR +0.5@1.92(不变)。Totals: 2.5 O@1.83/U@1.96(几乎不变)。初盘以来无显著偏移，正常滚球波动。Pinnacle H2H仍在线→API未转入in-play模式。🟢 Monitor。",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 03:05",
+      "event": "📊 滚球监控 · 西班牙vs葡萄牙 开场",
+      "detail": "ESP 50.5%胜率(47家均价ESP@1.98/Draw@3.38/POR@3.8)。Pinnacle: ESP@2.01/Draw@3.57/POR@4.08。Spread: ESP -0.5(9家)。Pinnacle Spread: ESP -0.5@2.02/POR 0.5@1.92。Totals: 2.5(21/22家),Over@1.82/Under@1.96。Pinnacle Totals: 2.5 O@1.78/U@2.16。比赛刚开始1分钟，首次滚球基线。🟢 Monitor。",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 14:00",
+      "event": "赛后复盘完成",
+      "detail": "今日战绩: 0/5全黑。巴西1-2挪威(大冷门)、墨西哥2-3英格兰。H2H全错、Spread全错、大小球仅巴西大收。冷门框架评巴西低风险→需重校准。",
+      "type": "review"
+    },
+    {
+      "time": "7/6 13:50",
+      "event": "赛后复盘",
+      "detail": "England不败✅ Mexico+0.25❌ 小2.25❌。5球轰炸,方向对但盘口输了。",
+      "type": "review"
+    },
+    {
+      "time": "7/6 11:00",
+      "event": "墨西哥 2-3 英格兰 · 终场",
+      "detail": "英格兰3-2险胜！Bellingham36+38双响,墨西哥追2球未果。1/4决赛vs挪威！",
+      "type": "goal"
+    },
+    {
+      "time": "7/6 10:41",
+      "event": "📊 滚球监控 · 77min更新",
+      "detail": "MEX 2-3 ENG. 36bk avg England@1.74(-27.8% vs early), Draw@2.85(-10.1%), Mexico@6.95(+122%). Pinnacle: England@1.73/Draw@2.98/Mexico@7.26. Spread flipped: Mexico -0.25@1.78 (was +0.25 pre). Totals 6.0(O@2.20/U@1.70). Spread reversal driven by 10-man ENG but 3-2 cushion holding. 🟢 Monitor, no triggers.",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 10:35",
+      "event": "rg Monitor 68min update",
+      "detail": "MEX 1-3 ENG. Kane 60'PK! ENG recovered from red-card low 2.111 to 1.725(-18.3% vs last), Pinnacle ENG@1.66. Draw@2.837(-10.5% vs early), MEX@6.70. Spread: ENG +0.25(2H)@1.95. Totals: 4.25(O@1.80/U@2.08). 10-man ENG but 3-1 cushion solid. 🟢 Monitor.",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 10:02",
+      "event": "📊 滚球监控 · 半场",
+      "detail": "半场墨西哥1-2英格兰。盘口稳定：England @1.558(36家,64.2%) Draw @3.397 Mexico @7.497。Pinnacle恢复更新(H2H England@1.66/Draw@3.40/Mexico@6.49)。Totals 4.5线(12家,O@2.334/U@1.557)，Pinnacle 4.25(O@1.80/U@2.08)。Spread: England -0.5(Matchbook@1.60)至-0.75(Bovada@1.77)。England自42'进球后持续小幅走强(-6.1%←上次更新)。🟢 Monitor，正常波动。",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 09:53",
+      "event": "⚡ 进球! 墨西哥1-2扳回一球",
+      "detail": "Julián Quiñones 42'凌空抽射破门！墨西哥1-2落后。英格兰胜率从90.6%跌至60.1%(England @1.10→1.66)，平局从8.27恢复至3.23。盘口大逆转：零售32家England均价@1.664，Draw@3.231。Pinnacle仍显示赛前盘口(英格兰2.90/平3.35/墨西哥2.45)，Totals 1.5线—明显延迟未更新。Totals 4.5(Over@2.16/Under@1.66)——比赛总共已3球。半场45+5，中场休息将至。",
+      "type": "goal"
+    },
+    {
+      "time": "7/6 09:42",
+      "event": "⚡⚡ 进球! 英格兰2-0领先",
+      "detail": "Jude Bellingham 36'头球+38'进球，3分钟双响！墨西哥0-2落后。盘口剧变：零售庄家全线英格兰@1.10(90.6%胜率)、Draw@8.27(+161%←初盘3.17)、Totals 3.5(+1.25球)。赛前平局/小2.25/Mexico+0.25预测全部失效。Pinnacle疑似未更新(仍显示1.5总球线)。",
+      "type": "goal"
+    },
+    {
+      "time": "7/6 09:32",
+      "event": "🔴 滚球紧急 · 持续崩塌升级",
+      "detail": "大小球从赛前2.5跌至1.5已持续20分钟(09:10首发→当前)，满足🟡Watch→🔴Emergency升级条件。平赔续降至2.45(Pinnacle,-22.7%←初盘3.17)。英格兰胜赔升至2.90(被Fade)，墨西哥赔率稳定。0-0僵局，淘汰赛闷战模式。",
+      "type": "emergency"
+    },
+    {
+      "time": "7/6 09:22",
+      "event": "📊 滚球监控 · 20分更新",
+      "detail": "0-0僵持。平赔续降至2.68(-15.6%←初盘)，大小球维持1.5低线(12家)。英格兰胜赔升至2.65，市场信心减弱。Pinnacle唯一开1.75总球线。",
+      "type": "odds_alert"
+    },
+    {
+      "time": "7/5 12:00",
+      "event": "初盘发布",
+      "detail": "The Odds API扫描完成。巴西-0.75@2.02，英格兰-0.25@2.09，两场盘口均衡。墨英战平局@3.27高度拥挤。",
+      "type": "system"
+    },
+    {
+      "time": "7/6 06:11",
+      "event": "⚡ 巴西 1-2 挪威 · 终场",
+      "detail": "挪威爆冷！巴西90+11分钟未能扳平。本届世界杯连续第二个冷门（1/16阿根廷1-1佛得角）。",
+      "type": "goal"
+    },
+    {
+      "time": "7/6 13:20",
+      "event": "赛后复盘",
+      "detail": "巴西1-2挪威：H2H预测❌(Brazil胜@1.79)、Spread❌(Brazil-0.75@2.02)。冷门扫描仅1信号评为低风险，结果爆冷→冷门框架需要重新校准。",
+      "type": "review"
+    },
+    {
+      "time": "7/6 09:10",
+      "event": "📊 滚球监控 · 大小球崩塌",
+      "detail": "大小球线从赛前2.25塌至1.5(-0.75球)，12家bookmaker已调至1.5线。平手盘(0.0)取代+0.25。5分钟0-0，英格兰Declan Rice第1分钟吃黄牌。",
+      "type": "odds_alert"
+    },
+    {
+      "time": "7/6 10:21",
+      "event": "🔴 红牌盘口剧变",
+      "detail": "Quansah 54分直红！英格兰10v11。盘口逆转：England @2.111(+35.5%)，Mexico @4.619(-38.4%)，Draw @2.757(-18.9%)。Spread England -0.5→+0.25(2H)。墨西哥主场+人数优势，还剩32分+补时。🟡 Watch。",
+      "type": "emergency"
+    },
+    {
+      "time": "7/6 10:52",
+      "event": "📊 滚球监控 · 87'更新",
+      "detail": "MEX 2-3 ENG. 36bk avg England@1.446(-28.2% vs early), Draw@3.261(-6.0%), Mexico@14.4(+132%). Pinnacle: England@1.73/Draw@2.98/Mexico@7.26. Spread: Mexico -0.25@1.78. Totals 6.0(O@2.20/U@1.70). Pinnacle unchanged from 77' — match winding down. 🟢 Monitor.",
+      "type": "monitor"
+    },
+    {
+      "time": "7/6 11:05",
+      "event": "Monitor 90+8 stoppage",
+      "detail": "MEX 2-3 ENG 90+8. Pinnacle Spread: Mexico -0.25@2.10/England +0.25@1.81. Totals 5.5(O@2.17/U@1.72). DK ML: ENG-550/MEX+7500. Spread from early +0.25 flipped to -0.25 (0.5 step) - normal settlement move. 5 goals scored, match nearly over. Monitor.",
+      "type": "monitor"
+    }
+  ],
+  "matches": [
+    {
+      "home": "Portugal",
+      "away": "Spain",
+      "home_cn": "葡萄牙",
+      "away_cn": "西班牙",
+      "home_emoji": "🇵🇹",
+      "away_emoji": "🇪🇸",
+      "time": "03:00",
+      "venue": "AT&T Stadium (Arlington, TX)",
+      "status": "live",
+      "live_score": "0-1 (90'+8')",
+      "odds_h2h": {
+        "home": 7.19,
+        "draw": 1.67,
+        "away": 3.25,
+        "source": "Pinnacle (stale pre-match); Retail consensus ESP ~1.03/Draw ~13/POR ~200+"
+      },
+      "odds_h2h_pinnacle": {
+        "Portugal": 7.19,
+        "Spain": 3.25,
+        "Draw": 1.67,
+        "note": "Pinnacle H2H appears stale; retail books show ESP near-certain"
+      },
+      "odds_h2h_early": {
+        "home": 3.8,
+        "draw": 3.38,
+        "away": 1.98
+      },
+      "odds_spread": {
+        "line": "-1.5",
+        "home_point": 1.5,
+        "home_price": 1.005,
+        "away_point": -1.5,
+        "away_price": 17.0,
+        "source": "DraftKings (live)",
+        "note": "Pinnacle stale at -0.25; DK live shows -1.5 post-goal"
+      },
+      "odds_spread_pinnacle": {
+        "home_point": 0.25,
+        "home_price": 1.66,
+        "away_point": -0.25,
+        "away_price": 2.34,
+        "note": "Pinnacle appears stale (pre-match); not reflecting goal"
+      },
+      "odds_spread_early": {
+        "line": "-0.5",
+        "price": 1.92
+      },
+      "odds_totals": {
+        "line": "1.5",
+        "over": 13.4,
+        "under": 1.033,
+        "source": "DraftKings (live)"
+      },
+      "odds_totals_pinnacle": {
+        "line": "0.5",
+        "over": 2.03,
+        "under": 1.85,
+        "note": "Pinnacle stale (pre-match)"
+      },
+      "odds_totals_consensus": {
+        "line": "1.5 (DK live) / 0.5 (Pinnacle stale)",
+        "over": 13.4,
+        "under": 1.033,
+        "note": "Post-goal settlement: u2.5 now near-certain with only 1 goal at 90+8'"
+      },
+      "odds_movement": "⚽ 90+1' Mikel Merino GOAL! 0-0→0-1. Draw 1.369(-59.5%vs3.38)→+2200(4.3%prob): draw scenario dead. Spread -0.25→-1.5(DK): 4-level shift. Totals 0.5→1.5(DK): +1.0 post-goal. Pinnacle frozen at pre-match levels. Match in 90+8' stoppage, Spain 89.6% win probability (retail consensus ESP~1.03).",
+      "tier": "emergency",
+      "pred_h2h": "Spain",
+      "pred_spread": "Spain -0.5",
+      "pred_totals": "大 2.5",
+      "pred_scores": [
+        "1-0",
+        "2-0"
+      ],
+      "reason": "西班牙1-0绝杀！90+1' Merino破门打破0-0僵局。此前滚球监控连续4次Emergency预警Draw崩盘(1.369,-59.5%)和Totals塌至0.5线，市场完全定价0-0平局。但西班牙在补时阶段抓住机会，射门15次(6射正)vs葡萄牙9次(2射正)，xG优势终于兑现。预测西班牙胜✅ / Spread -0.5✅(净胜1球覆盖)。大2.5❌(全场仅1球)。",
+      "route_home": "小组赛WDWDW → 1/16决赛待查",
+      "route_away": "小组赛WWWDW → 1/16决赛待查"
+    },
+    {
+      "home": "Brazil",
+      "away": "Norway",
+      "home_cn": "巴西",
+      "away_cn": "挪威",
+      "home_emoji": "🇧🇷",
+      "away_emoji": "🇳🇴",
+      "time": "04:00",
+      "venue": "纽约/新泽西体育场",
+      "pred_h2h": "Brazil胜",
+      "pred_totals": "大 2.5",
+      "pred_spread": "Brazil -0.75",
+      "pred_scores": [
+        "2-0",
+        "2-1"
+      ],
+      "tier": "B",
+      "odds_h2h": {
+        "home": 1.79,
+        "draw": 3.71,
+        "away": 4.55
+      },
+      "odds_h2h_early": {
+        "home": 1.79,
+        "draw": 3.71,
+        "away": 4.55
+      },
+      "odds_spread": {
+        "line": "-0.75",
+        "price": 2.02
+      },
+      "odds_spread_early": {
+        "line": "-0.75",
+        "price": 2.02
+      },
+      "odds_totals": {
+        "line": "2.75",
+        "over": 1.92,
+        "under": 1.97
+      },
+      "odds_totals_consensus": {
+        "line": "2.5",
+        "over": 1.7,
+        "under": 2.14
+      },
+      "odds_movement": "N/A（已完赛）",
+      "upset_signals": 1,
+      "upset_risk": "low",
+      "upset_details": [
+        "强队状态: 巴西1/16决赛2-1日本险胜，未展现碾压级优势"
+      ],
+      "reason": "巴西实力占优但让球不深。-0.75穿盘需净胜2球，挪威1-4法国暴露防守短板但2-1科特迪瓦展现韧性。大2.5盘共识强（Over@1.70=58.8%）。",
+      "route_home": "小组赛3-0 → 1/16决赛2-1日本",
+      "route_away": "小组赛1-4法国 → 1/16决赛2-1科特迪瓦",
+      "status": "finished",
+      "live_score": "1-2",
+      "review": {
+        "verdicts": [
+          {
+            "pick": "Brazil 胜",
+            "odds": 1.79,
+            "hit": false,
+            "note": "巴西1-2输球，爆冷"
+          },
+          {
+            "pick": "Brazil -0.75",
+            "odds": 2.02,
+            "hit": false,
+            "note": "直接输球，-0.75全输"
+          },
+          {
+            "pick": "大 2.5",
+            "odds": 1.7,
+            "hit": true,
+            "note": "总进球3，大2.5 ✅"
+          },
+          {
+            "pick": "大 2.75",
+            "odds": 1.92,
+            "hit": true,
+            "note": "总进球3，大2.75 ✅"
+          }
+        ],
+        "summary": "方向全错 ❌ | 巴西被挪威2-1淘汰，冷门框架仅评1信号/低风险→需要校准。大小球双收（大2.5+大2.75）勉强挽回。"
+      }
+    },
+    {
+      "home": "Mexico",
+      "away": "England",
+      "home_cn": "墨西哥",
+      "away_cn": "英格兰",
+      "home_emoji": "🇲🇽",
+      "away_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "time": "08:00",
+      "venue": "墨西哥城体育场",
+      "pred_h2h": "平局/England不败",
+      "pred_totals": "小 2.25",
+      "pred_spread": "Mexico +0.25",
+      "pred_scores": [
+        "0-0",
+        "1-1"
+      ],
+      "tier": "B",
+      "odds_h2h": {
+        "home": 76.0,
+        "draw": 4.9,
+        "away": 1.182
+      },
+      "odds_h2h_early": {
+        "home": 3.13,
+        "draw": 3.17,
+        "away": 2.41
+      },
+      "odds_spread": {
+        "line": "-0.25",
+        "price": 2.1
+      },
+      "odds_spread_early": {
+        "line": "+0.25",
+        "price": 1.83
+      },
+      "odds_totals": {
+        "line": "5.5",
+        "over": 2.17,
+        "under": 1.72
+      },
+      "odds_totals_consensus": {
+        "line": "2.5",
+        "over": 2.38,
+        "under": 1.57
+      },
+      "odds_movement": "90+8 | Spread flip: +0.25→-0.25(0.5) | Totals: 2.5→5.5(+3.0) | H2H: MEX +245→+7500, ENG +125→-550",
+      "upset_signals": 2,
+      "upset_risk": "low",
+      "upset_details": [
+        "强队防守: 英格兰场均失1.5球（2球克罗地亚+1球刚果金），后防不稳",
+        "淘汰赛心理: 墨西哥主场作战无包袱，英格兰争冠压力"
+      ],
+      "reason": "三线极度均衡——Eng@2.41/Mex@3.13/Draw@3.17，是本届最接近五五开的比赛。小2.5共识极强（Under@1.57=63.7%），必闷战。Mexico+0.25是价值盘。",
+      "route_home": "小组赛2-1韩国 → 1/16决赛2-0厄瓜多尔",
+      "route_away": "小组赛4-2克罗地亚 → 1/16决赛2-1刚果金",
+      "status": "finished",
+      "live_score": "2-3",
+      "review": {
+        "verdicts": [
+          {
+            "pick": "Mexico +0.25",
+            "odds": 1.83,
+            "hit": false,
+            "note": "墨西哥2-3惜败,+0.25不够"
+          },
+          {
+            "pick": "小 2.25",
+            "odds": 1.8,
+            "hit": false,
+            "note": "总进球5,小2.25全输"
+          },
+          {
+            "pick": "平局/England不败",
+            "odds": 2.41,
+            "hit": true,
+            "note": "英格兰3-2险胜"
+          }
+        ],
+        "summary": "方向对了一半 | 英格兰3-2, Bellingham双响后墨西哥追2球, 5球打穿大小球。"
+      }
+    }
+  ],
+  "top_picks": [
+    {
+      "rank": "🥇",
+      "pick": "Mexico +0.25",
+      "odds": 1.83,
+      "tier": "B",
+      "logic": "❌ 墨西哥2-3惜败",
+      "hit": false
+    },
+    {
+      "rank": "🥈",
+      "pick": "小 2.25 (墨西哥 vs 英格兰)",
+      "odds": 1.8,
+      "tier": "B",
+      "logic": "❌ 总进球5球",
+      "hit": false
+    },
+    {
+      "rank": "🥉",
+      "pick": "Brazil -0.5",
+      "odds": 1.77,
+      "tier": "B",
+      "hit": false,
+      "logic": "❌ 巴西1-2输球 · 全损"
+    },
+    {
+      "rank": "🔥",
+      "pick": "二串一: Mexico+0.25 + 巴西胜",
+      "odds": 3.24,
+      "tier": "B",
+      "hit": false,
+      "logic": "❌ 巴西输球断串"
+    },
+    {
+      "rank": "🎲",
+      "pick": "墨西哥 vs 英格兰 平局",
+      "odds": 3.27,
+      "tier": "娱乐",
+      "logic": "❌ 不是平局",
+      "hit": false
+    }
+  ]
+}

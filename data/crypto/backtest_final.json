@@ -1,0 +1,12 @@
+{
+  "sharpe": "0.10923177123353264",
+  "strategy": "bb_squeeze",
+  "interval": "4h",
+  "sl": "-0.1",
+  "tp": "0.1",
+  "hold_h": 24,
+  "trades": 5583,
+  "win_rate": "0.06734730431667563",
+  "avg_pnl": "0.0034390112842557765",
+  "condition": "-- \u5e03\u6797\u5e26\u6324\u538b: \u4ef7\u683c\u5728EMA21\u9644\u8fd1\u7a84\u5e45 + \u91cf\u7f29 + \u7136\u540e\u653e\u91cf\u7a81\u7834\n        ABS(s.close - s.ema21)/s.ema21 < 0.02 AND s.close > s.ema21\n        AND s.volume < s.avg_vol * 0.7"
+}

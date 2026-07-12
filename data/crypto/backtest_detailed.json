@@ -1,0 +1,516 @@
+[
+  {
+    "symbol": "VANRY",
+    "trades": 32,
+    "win_rate": 56.0,
+    "avg_pnl": 1.02,
+    "max_dd": 12.4,
+    "sharpe": 1.4,
+    "equity": 107690.0,
+    "date_range": "07/01~07/12",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-04 16:30:00",
+        "exit_time": "2026-07-04 17:00:00",
+        "duration": "0h",
+        "entry": 0.004791,
+        "exit": 0.004371,
+        "pnl": -8.77
+      },
+      {
+        "entry_time": "2026-07-04 17:15:00",
+        "exit_time": "2026-07-04 17:45:00",
+        "duration": "0h",
+        "entry": 0.004148,
+        "exit": 0.004686,
+        "pnl": 12.97
+      },
+      {
+        "entry_time": "2026-07-04 18:00:00",
+        "exit_time": "2026-07-04 18:15:00",
+        "duration": "0h",
+        "entry": 0.004508,
+        "exit": 0.005166,
+        "pnl": 14.6
+      },
+      {
+        "entry_time": "2026-07-04 18:30:00",
+        "exit_time": "2026-07-04 21:00:00",
+        "duration": "2h",
+        "entry": 0.005065,
+        "exit": 0.004657,
+        "pnl": -8.06
+      },
+      {
+        "entry_time": "2026-07-04 21:15:00",
+        "exit_time": "2026-07-05 02:15:00",
+        "duration": "5h",
+        "entry": 0.004631,
+        "exit": 0.004202,
+        "pnl": -9.26
+      },
+      {
+        "entry_time": "2026-07-05 02:30:00",
+        "exit_time": "2026-07-05 03:15:00",
+        "duration": "0h",
+        "entry": 0.004303,
+        "exit": 0.004617,
+        "pnl": 7.3
+      },
+      {
+        "entry_time": "2026-07-05 03:30:00",
+        "exit_time": "2026-07-05 09:45:00",
+        "duration": "6h",
+        "entry": 0.005034,
+        "exit": 0.004467,
+        "pnl": -11.26
+      },
+      {
+        "entry_time": "2026-07-05 10:00:00",
+        "exit_time": "2026-07-05 12:45:00",
+        "duration": "2h",
+        "entry": 0.004564,
+        "exit": 0.005966,
+        "pnl": 30.72
+      },
+      {
+        "entry_time": "2026-07-05 13:00:00",
+        "exit_time": "2026-07-05 14:45:00",
+        "duration": "1h",
+        "entry": 0.005906,
+        "exit": 0.005362,
+        "pnl": -9.21
+      },
+      {
+        "entry_time": "2026-07-05 15:00:00",
+        "exit_time": "2026-07-06 01:30:00",
+        "duration": "10h",
+        "entry": 0.005311,
+        "exit": 0.005362,
+        "pnl": 0.96
+      },
+      {
+        "entry_time": "2026-07-06 01:45:00",
+        "exit_time": "2026-07-06 05:30:00",
+        "duration": "3h",
+        "entry": 0.005709,
+        "exit": 0.004962,
+        "pnl": -13.08
+      },
+      {
+        "entry_time": "2026-07-06 05:45:00",
+        "exit_time": "2026-07-06 08:15:00",
+        "duration": "2h",
+        "entry": 0.005062,
+        "exit": 0.005726,
+        "pnl": 13.12
+      },
+      {
+        "entry_time": "2026-07-06 08:30:00",
+        "exit_time": "2026-07-06 09:45:00",
+        "duration": "1h",
+        "entry": 0.005721,
+        "exit": 0.006583,
+        "pnl": 15.07
+      },
+      {
+        "entry_time": "2026-07-06 10:00:00",
+        "exit_time": "2026-07-06 13:15:00",
+        "duration": "3h",
+        "entry": 0.006625,
+        "exit": 0.007828,
+        "pnl": 18.16
+      },
+      {
+        "entry_time": "2026-07-06 13:30:00",
+        "exit_time": "2026-07-06 14:15:00",
+        "duration": "0h",
+        "entry": 0.008818,
+        "exit": 0.009526,
+        "pnl": 8.03
+      },
+      {
+        "entry_time": "2026-07-06 14:30:00",
+        "exit_time": "2026-07-06 15:15:00",
+        "duration": "0h",
+        "entry": 0.009353,
+        "exit": 0.00828,
+        "pnl": -11.47
+      },
+      {
+        "entry_time": "2026-07-06 15:30:00",
+        "exit_time": "2026-07-06 19:15:00",
+        "duration": "3h",
+        "entry": 0.008064,
+        "exit": 0.007487,
+        "pnl": -7.16
+      },
+      {
+        "entry_time": "2026-07-06 19:30:00",
+        "exit_time": "2026-07-07 01:30:00",
+        "duration": "6h",
+        "entry": 0.007612,
+        "exit": 0.007997,
+        "pnl": 5.06
+      },
+      {
+        "entry_time": "2026-07-07 01:45:00",
+        "exit_time": "2026-07-07 04:00:00",
+        "duration": "2h",
+        "entry": 0.007751,
+        "exit": 0.008054,
+        "pnl": 3.91
+      },
+      {
+        "entry_time": "2026-07-07 04:15:00",
+        "exit_time": "2026-07-07 04:45:00",
+        "duration": "0h",
+        "entry": 0.007595,
+        "exit": 0.006734,
+        "pnl": -11.34
+      },
+      {
+        "entry_time": "2026-07-07 05:00:00",
+        "exit_time": "2026-07-07 08:00:00",
+        "duration": "3h",
+        "entry": 0.007018,
+        "exit": 0.007606,
+        "pnl": 8.38
+      },
+      {
+        "entry_time": "2026-07-07 08:15:00",
+        "exit_time": "2026-07-07 16:00:00",
+        "duration": "7h",
+        "entry": 0.007753,
+        "exit": 0.006927,
+        "pnl": -10.65
+      },
+      {
+        "entry_time": "2026-07-07 16:15:00",
+        "exit_time": "2026-07-08 07:00:00",
+        "duration": "14h",
+        "entry": 0.006725,
+        "exit": 0.00737,
+        "pnl": 9.59
+      },
+      {
+        "entry_time": "2026-07-08 07:15:00",
+        "exit_time": "2026-07-08 10:15:00",
+        "duration": "3h",
+        "entry": 0.007259,
+        "exit": 0.006674,
+        "pnl": -8.06
+      },
+      {
+        "entry_time": "2026-07-08 10:30:00",
+        "exit_time": "2026-07-08 16:15:00",
+        "duration": "5h",
+        "entry": 0.006552,
+        "exit": 0.007114,
+        "pnl": 8.58
+      },
+      {
+        "entry_time": "2026-07-09 04:30:00",
+        "exit_time": "2026-07-09 08:00:00",
+        "duration": "3h",
+        "entry": 0.007231,
+        "exit": 0.007554,
+        "pnl": 4.47
+      },
+      {
+        "entry_time": "2026-07-09 08:15:00",
+        "exit_time": "2026-07-09 15:30:00",
+        "duration": "7h",
+        "entry": 0.007592,
+        "exit": 0.007701,
+        "pnl": 1.44
+      },
+      {
+        "entry_time": "2026-07-09 15:45:00",
+        "exit_time": "2026-07-09 21:00:00",
+        "duration": "5h",
+        "entry": 0.007518,
+        "exit": 0.0068,
+        "pnl": -9.55
+      },
+      {
+        "entry_time": "2026-07-09 21:15:00",
+        "exit_time": "2026-07-10 18:45:00",
+        "duration": "21h",
+        "entry": 0.007018,
+        "exit": 0.006331,
+        "pnl": -9.79
+      },
+      {
+        "entry_time": "2026-07-10 19:00:00",
+        "exit_time": "2026-07-11 03:15:00",
+        "duration": "8h",
+        "entry": 0.00632,
+        "exit": 0.005692,
+        "pnl": -9.94
+      },
+      {
+        "entry_time": "2026-07-11 03:30:00",
+        "exit_time": "2026-07-11 12:45:00",
+        "duration": "9h",
+        "entry": 0.005681,
+        "exit": 0.005705,
+        "pnl": 0.42
+      },
+      {
+        "entry_time": "2026-07-11 13:00:00",
+        "exit_time": "2026-07-12 05:15:00",
+        "duration": "16h",
+        "entry": 0.00579,
+        "exit": 0.006219,
+        "pnl": 7.41
+      }
+    ],
+    "avg_pnl_pct": 1.02,
+    "max_drawdown_pct": 12.4,
+    "final_equity": 107690.0,
+    "total_return": 7.7,
+    "strategy": "funding_extreme"
+  },
+  {
+    "symbol": "T",
+    "trades": 4,
+    "win_rate": 100.0,
+    "avg_pnl": 7.65,
+    "max_dd": 2.8,
+    "sharpe": 2.43,
+    "equity": 109250.0,
+    "date_range": "07/01~07/12",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-11 12:30:00",
+        "exit_time": "2026-07-11 12:45:00",
+        "duration": "0h",
+        "entry": 0.003929,
+        "exit": 0.004397,
+        "pnl": 11.91
+      },
+      {
+        "entry_time": "2026-07-11 13:00:00",
+        "exit_time": "2026-07-11 17:00:00",
+        "duration": "4h",
+        "entry": 0.004301,
+        "exit": 0.004488,
+        "pnl": 4.35
+      },
+      {
+        "entry_time": "2026-07-11 17:15:00",
+        "exit_time": "2026-07-11 23:15:00",
+        "duration": "6h",
+        "entry": 0.004579,
+        "exit": 0.004811,
+        "pnl": 5.07
+      },
+      {
+        "entry_time": "2026-07-11 23:30:00",
+        "exit_time": "2026-07-12 04:45:00",
+        "duration": "5h",
+        "entry": 0.004695,
+        "exit": 0.005131,
+        "pnl": 9.29
+      }
+    ],
+    "avg_pnl_pct": 7.65,
+    "max_drawdown_pct": 2.8,
+    "final_equity": 109250.0,
+    "total_return": 9.3,
+    "strategy": "funding_extreme"
+  },
+  {
+    "symbol": "SOXL",
+    "trades": 17,
+    "win_rate": 100.0,
+    "avg_pnl": 5.0,
+    "max_dd": 0,
+    "sharpe": 99.99,
+    "equity": 100,
+    "total_return": 85.0,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 5.0,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "VIRTUAL",
+    "trades": 8,
+    "win_rate": 100.0,
+    "avg_pnl": 5.0,
+    "max_dd": 0,
+    "sharpe": 99.99,
+    "equity": 100,
+    "total_return": 40.0,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 5.0,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "SNDK",
+    "trades": 26,
+    "win_rate": 100.0,
+    "avg_pnl": 1.63,
+    "max_dd": 0,
+    "sharpe": 79.57,
+    "equity": 100,
+    "total_return": 42.379999999999995,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 1.63,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "SPCX",
+    "trades": 15,
+    "win_rate": 100.0,
+    "avg_pnl": 1.2,
+    "max_dd": 0,
+    "sharpe": 24.84,
+    "equity": 100,
+    "total_return": 18.0,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 1.2,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "EVAA",
+    "trades": 27,
+    "win_rate": 96.3,
+    "avg_pnl": 4.77,
+    "max_dd": 0,
+    "sharpe": 20.73,
+    "equity": 100,
+    "total_return": 128.79,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 4.77,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "T",
+    "trades": 68,
+    "win_rate": 91.2,
+    "avg_pnl": 3.76,
+    "max_dd": 0,
+    "sharpe": 13.63,
+    "equity": 100,
+    "total_return": 255.68,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 3.76,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "LIT",
+    "trades": 117,
+    "win_rate": 93.2,
+    "avg_pnl": 3.97,
+    "max_dd": 0,
+    "sharpe": 11.36,
+    "equity": 100,
+    "total_return": 464.49,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 3.97,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "HMSTR",
+    "trades": 87,
+    "win_rate": 82.8,
+    "avg_pnl": 2.41,
+    "max_dd": 0,
+    "sharpe": 3.97,
+    "equity": 100,
+    "total_return": 209.67000000000002,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 2.41,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "ARX",
+    "trades": 6,
+    "win_rate": 83.3,
+    "avg_pnl": 3.88,
+    "max_dd": 0,
+    "sharpe": 3.8,
+    "equity": 100,
+    "total_return": 23.28,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 3.88,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "ENA",
+    "trades": 29,
+    "win_rate": 58.6,
+    "avg_pnl": 1.71,
+    "max_dd": 0,
+    "sharpe": 3.0,
+    "equity": 100,
+    "total_return": 49.589999999999996,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 1.71,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "SXT",
+    "trades": 61,
+    "win_rate": 70.5,
+    "avg_pnl": 1.26,
+    "max_dd": 0,
+    "sharpe": 1.73,
+    "equity": 100,
+    "total_return": 76.86,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 1.26,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  },
+  {
+    "symbol": "HBAR",
+    "trades": 34,
+    "win_rate": 35.3,
+    "avg_pnl": 0.69,
+    "max_dd": 0,
+    "sharpe": 1.37,
+    "equity": 100,
+    "total_return": 23.459999999999997,
+    "date_range": "07/01~07/12",
+    "strategy": "multifactor",
+    "avg_pnl_pct": 0.69,
+    "max_drawdown_pct": 0,
+    "final_equity": 100,
+    "trades_detail": []
+  }
+]

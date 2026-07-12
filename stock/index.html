@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas AI · A股</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  /* ── Dashboard Grid ── */
+  .dash { display: grid; gap: 16px; }
+  @media (min-width: 900px) { .dash { grid-template-columns: 1fr 1fr; } }
+
+  .card {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 12px; padding: 16px;
+  }
+  .card h3 {
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+  }
+  .card-full { grid-column: 1 / -1; }
+
+  /* ── Market Index Card ── */
+  .idx-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .idx-name { font-size: 13px; color: var(--body); min-width: 50px; }
+  .idx-val { font-family: 'JetBrains Mono',monospace; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .idx-chg { font-family: 'JetBrains Mono',monospace; font-size: 13px; margin-left: 4px; }
+  .idx-chg.up { color: var(--accent-emerald); }
+  .idx-chg.down { color: var(--accent-rose); }
+  .idx-bar { flex: 1; height: 4px; border-radius: 2px; background: var(--hairline); overflow: hidden; }
+  .idx-bar-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+
+  /* ── Position Card ── */
+  .pos-row {
+    display: flex; align-items: center; gap: 8px; padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .pos-row:last-child { border-bottom: none; }
+  .pos-name { font-size: 13px; color: var(--body); font-weight: 500; width: 56px; }
+  .pos-price { font-family: 'JetBrains Mono',monospace; font-size: 13px; color: var(--ink); }
+  .pos-pnl { font-family: 'JetBrains Mono',monospace; font-size: 12px; margin-left: auto; }
+  .pos-pnl.up { color: var(--accent-emerald); }
+  .pos-pnl.down { color: var(--accent-rose); }
+  .pos-badge {
+    font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .pos-badge.buy { background: rgba(34,197,94,0.12); color: var(--accent-emerald); }
+  .pos-badge.hold { background: rgba(255,255,255,0.05); color: var(--muted); }
+  .pos-badge.warn { background: rgba(239,68,68,0.1); color: var(--accent-rose); }
+  .pos-badge.caution { background: rgba(245,158,11,0.1); color: var(--warning); }
+
+  /* ── Surge Card ── */
+  .surge-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .surge-item:last-child { border-bottom: none; }
+  .surge-name { font-size: 13px; color: var(--body); font-weight: 500; width: 56px; }
+  .surge-chg { font-family: 'JetBrains Mono',monospace; font-size: 14px; font-weight: 600; }
+  .surge-chg.up { color: var(--accent-emerald); }
+  .surge-chg.down { color: var(--accent-rose); }
+  .surge-tag {
+    font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 3px;
+    margin-left: auto;
+  }
+  .surge-tag.in { background: rgba(34,197,94,0.1); color: var(--accent-emerald); }
+  .surge-tag.out { background: rgba(239,68,68,0.1); color: var(--accent-rose); }
+
+  /* ── Chart ── */
+  .chart-wrap { padding: 8px 0 0 0; }
+
+  /* ── Alerts ── */
+  .alert-line {
+    font-size: 11px; padding: 4px 0; color: var(--muted);
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+  }
+  .alert-line .al-time { font-family: 'JetBrains Mono',monospace; font-size: 10px; color: var(--muted-soft); margin-right: 6px; }
+
+  .no-data { color: var(--muted-soft); font-size: 12px; text-align: center; padding: 16px 0; }
+  .updated { font-size: 11px; color: var(--muted-soft); margin-bottom: 16px; }
+
+  /* ── Analysis Card ── */
+  .analysis-card { border-color: rgba(250,255,105,0.15); background: linear-gradient(135deg, rgba(250,255,105,0.04) 0%, rgba(250,255,105,0.01) 100%); }
+  .analysis-card h3 { font-size: 13px; }
+  .ana-body { font-size: 13px; color: var(--body); line-height: 1.7; }
+  .ana-body p { margin-bottom: 6px; }
+  .ana-body b { color: var(--ink); }
+  .ana-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .ana-tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 6px;
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    color: var(--body);
+  }
+  .ana-tag:has(+ .ana-tag) { margin-right: 0; }
+  .ana-risk { font-size: 12px; color: var(--warning); padding: 6px 10px; background: rgba(245,158,11,0.06); border-radius: 6px; margin-top: 8px; }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .card { padding: 14px; border-radius: 10px; }
+    .card h3 { font-size: 12px; margin-bottom: 10px; }
+  }
+  @media (max-width: 480px) {
+    .card { padding: 12px; }
+    .surge-item { padding: 10px 0; }
+    .surge-name { font-size: 12px; }
+    .surge-chg { font-size: 13px; }
+    .updated { margin-bottom: 12px; }
+  }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+
+<div class="main">
+  <div class="updated" id="updated">加载中...</div>
+  <div id="content"></div>
+</div>
+
+<footer class="footer">Atlas<span style="color:var(--muted-soft);font-weight:400;"> AI · A股</span></footer>
+
+<script>
+const COLORS = ['#faff69','#22c55e','#3b82f6','#f59e0b','#ef4444','#8b5cf6',
+  '#06b6d4','#ec4899','#84cc16','#f97316','#6366f1','#14b8a6',
+  '#eab308','#a855f7','#22d3ee','#fb7185','#a3e635','#c084fc',
+  '#2dd4bf','#f87171','#818cf8','#4ade80','#e879f9','#38bdf8'];
+
+// ── Portfolio (manual cost basis) ──
+// (moved to dedicated portfolio page)
+
+async function fetchSina(codes) {
+  const r = await fetch(`https://hq.sinajs.cn/list=${codes}`, {headers:{Referer:'https://finance.sina.com.cn/'}});
+  const text = await r.text();
+  // Need to handle GBK encoding — use a workaround
+  return text;
+}
+
+async function fetchSinaJSON(codes) {
+  // Use our own JSON data file as proxy for sector data
+  // For index prices, we'll use the sector data if available
+  return null;
+}
+
+function getToday() { const d = new Date(); return d.toISOString().slice(0,10); }
+
+async function load() {
+  const date = getToday();
+
+  // ── 1. Fetch data ──
+  let sectorData = null;
+  let pfData = null;
+  try {
+    let sr = await fetch(`data/sectors-${date}.json`);
+    if (!sr.ok) {
+      const yd = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+      sr = await fetch(`data/sectors-${yd}.json`);
+    }
+    if (sr.ok) sectorData = await sr.json();
+  } catch(e) {}
+
+  try {
+    const pr = await fetch('../data/stock/portfolio.json');
+    if (pr.ok) pfData = await pr.json();
+  } catch(e) {}
+
+  if (!sectorData) {
+    document.getElementById('updated').textContent = '数据加载中 — 非交易时段';
+    document.getElementById('content').innerHTML = '<div class="no-data">📊 非交易时段，暂无实时数据。<br><span style="font-size:11px;color:var(--muted-soft);">交易时段（9:30-11:30 / 13:00-15:00）自动更新</span></div>';
+    return;
+  }
+
+  const now = sectorData?.updated || '—';
+  document.getElementById('updated').textContent = `更新于 ${now}`;
+  const sectors = Object.entries(sectorData.sectors);
+  sectors.sort((a,b) => b[1].current - a[1].current);
+
+  // ═══════════════════════════════════════
+  // BUILD DASHBOARD
+  // ═══════════════════════════════════════
+
+  // ── Market Breadth (from sector data) ──
+  const upCount = sectors.filter(([,s]) => s.current > 0).length;
+  const downCount = sectors.filter(([,s]) => s.current < 0).length;
+  const totalCount = sectors.length;
+  const breadth = upCount / totalCount * 100;
+  let breadthHtml = '<div class="card"><h3>📈 市场情绪</h3>';
+  breadthHtml += `<div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${breadth>50?'var(--accent-emerald)':'var(--accent-rose)'};margin-bottom:4px;">${upCount}/${totalCount}</div>`;
+  breadthHtml += `<div style="font-size:12px;color:var(--muted);">板块上涨数 · ${breadth>60?'🟢 偏多':breadth>40?'⚪ 中性':'🔴 偏空'}</div>`;
+  breadthHtml += `<div style="margin-top:8px;font-size:11px;color:var(--muted-soft);">最强: ${sectors[0][0]} +${sectors[0][1].current.toFixed(1)}% · 最弱: ${sectors[sectors.length-1][0]} ${sectors[sectors.length-1][1].current.toFixed(1)}%</div>`;
+  breadthHtml += '</div>';
+
+  // ── Surge Card ──
+  let surgeHtml = '<div class="card"><h3>⚡ 异动板块</h3>';
+  if (sectorData) {
+    const hot = sectors.filter(([,s]) => s.current > 2);
+    const cold = sectors.filter(([,s]) => s.current < -3);
+    const allSurge = [...hot, ...cold];
+    if (allSurge.length > 0) {
+      for (const [name, s] of allSurge.slice(0, 6)) {
+        const cls = s.current > 0 ? 'up' : 'down';
+        const tagCls = s.current > 0 ? 'in' : 'out';
+        const sign = s.current > 0 ? '+' : '';
+        surgeHtml += `<div class="surge-item">
+          <span class="surge-name">${name}</span>
+          <span class="surge-chg ${cls}">${sign}${s.current.toFixed(2)}%</span>
+          <span class="surge-tag ${tagCls}">${s.current > 0 ? '流入' : '流出'}</span>
+        </div>`;
+      }
+    } else {
+      surgeHtml += '<div class="no-data">暂无显著异动（±3% 以内）</div>';
+    }
+  } else {
+    surgeHtml += '<div class="no-data">数据加载中</div>';
+  }
+  surgeHtml += '</div>';
+
+  // ── Chart Card ──
+  let chartHtml = '';
+  if (sectorData) {
+    let maxLen = 0, times = [];
+    sectors.forEach(([,s]) => { if (s.history.length > maxLen) { maxLen = s.history.length; times = s.history.map(h => h.time); } });
+
+    const volatile = sectors.filter(([,s]) => Math.abs(s.current) > 1.5);
+    const display = volatile.length >= 4 ? volatile : sectors.filter((_,i) => i < 4 || i >= sectors.length-4);
+
+    const datasets = display.map(([name, s], i) => {
+      const map = {};
+      s.history.forEach(h => { map[h.time] = h.chg; });
+      return { label: name, data: times.map(t => map[t] ?? null),
+        borderColor: COLORS[i % COLORS.length], backgroundColor: 'transparent',
+        borderWidth: 1.5, pointRadius: 0, tension: 0.3, spanGaps: false };
+    });
+
+    chartHtml = `<div class="card card-full"><h3>📈 板块走势</h3><div class="chart-wrap"><canvas id="trendChart" style="max-height:380px;"></canvas></div></div>`;
+
+    // Render after HTML insertion
+    setTimeout(() => {
+      if (times.length > 0) {
+        new Chart(document.getElementById('trendChart'), {
+          type: 'line', data: { labels: times, datasets },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode:'index', intersect:false },
+            plugins: { legend: { position:'bottom', labels:{color:'#888',font:{size:10},boxWidth:10,padding:6} } },
+            scales: {
+              x: { ticks:{color:'#555',font:{size:10}}, grid:{color:'#1a1a1a'} },
+              y: { ticks:{color:'#555',font:{size:10},callback:v=>v+'%'}, grid:{color:'#1a1a1a'} }
+            }
+          }
+        });
+      }
+    }, 50);
+  }
+
+  // ═══ Assemble ═══
+
+  // ── Market Analysis Card ──
+  let analysisHtml = '';
+  if (pfData?.analysis) {
+    const a = pfData.analysis;
+    analysisHtml = `<div class="card card-full analysis-card">
+      <h3>🧠 市场研判 <span style="font-weight:400;color:var(--muted);">${a.verdict}</span></h3>
+      <div class="ana-body">
+        <p>${a.market}</p>
+        ${a.risk ? `<p class="ana-risk">⚠️ ${a.risk}</p>` : ''}
+      </div>
+    </div>`;
+  }
+
+  // ═══ Assemble ═══
+  let alertHtml = '';
+  if (sectorData?.alerts?.length > 0) {
+    const recent = sectorData.alerts.slice(-20).reverse();
+    const ups = recent.filter(a => ['🔥','⚡','🚀'].some(e => a.msg.startsWith(e)));
+    const downs = recent.filter(a => ['⚠️','🔻'].some(e => a.msg.startsWith(e)));
+    alertHtml = '<div class="card card-full"><h3>🔔 异动记录</h3>';
+    if (ups.length > 0) {
+      alertHtml += '<div style="font-size:11px;font-weight:600;color:var(--accent-emerald);margin-bottom:4px;">🟢 领涨</div>';
+      for (const a of ups.slice(0, 4)) {
+        alertHtml += `<div class="alert-line"><span class="al-time">${a.time}</span>${a.msg}</div>`;
+      }
+    }
+    if (downs.length > 0) {
+      alertHtml += '<div style="font-size:11px;font-weight:600;color:var(--accent-rose);margin:8px 0 4px;">🔴 领跌</div>';
+      for (const a of downs.slice(0, 4)) {
+        alertHtml += `<div class="alert-line"><span class="al-time">${a.time}</span>${a.msg}</div>`;
+      }
+    }
+    alertHtml += '</div>';
+  }
+
+  document.getElementById('content').innerHTML = `
+    <div class="dash">
+      ${analysisHtml}
+      ${breadthHtml}
+      ${surgeHtml}
+      ${chartHtml}
+      ${alertHtml}
+      <div class="card card-full" id="timelineCard"></div>
+      <div class="card card-full" id="signalCard"></div>
+    </div>`;
+
+  // ── Timeline card ──
+  setTimeout(async () => {
+    const tc = document.getElementById('timelineCard');
+    try {
+      const tr = await fetch('../data/stock/market_timeline.json');
+      const td = await tr.json();
+      const events = td.events || [];
+      if (events.length > 0) {
+        let th = '<h3>📋 今日行情时间线</h3><div style="font-size:12px;color:var(--muted-soft);max-height:300px;overflow-y:auto;">';
+        for (const e of events.slice(-10).reverse()) {
+          th += `<div style="margin-bottom:6px;padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:6px;">
+            <span style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--muted);">${e.time.slice(-5)}</span>
+            <span style="color:var(--accent-emerald);">🟢 ${(e.top||[]).join(' ')}</span>
+            <span style="color:var(--accent-rose);margin-left:6px;">🔴 ${(e.bottom||[]).join(' ')}</span>
+          </div>`;
+        }
+        th += '</div>';
+        tc.innerHTML = th;
+      }
+    } catch(e) { tc.innerHTML = ''; }
+  }, 200);
+
+  // ── Signal card (from scanner.json) ──
+  setTimeout(async () => {
+    const sc = document.getElementById('signalCard');
+    try {
+      const sr = await fetch('../data/stock/scanner.json');
+      const sd = await sr.json();
+      const picks = sd.results || [];
+      if (picks.length > 0) {
+        let sh = `<h3>🔍 选股信号 <a href="scanner.html" style="font-size:10px;color:var(--primary);text-decoration:none;margin-left:6px;">查看全部 →</a></h3>`;
+        for (const r of picks.slice(0, 3)) {
+          const rec = r.recommend === 'buy' ? '🟢' : r.recommend === 'watch' ? '🟡' : '⚪';
+          sh += `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <span style="font-weight:600;color:var(--ink);">${r.cname}</span>
+            <span style="font-size:10px;color:var(--muted-soft);">${r.pattern}</span>
+            <span style="font-size:10px;color:var(--muted-soft);background:var(--hairline);padding:1px 5px;border-radius:3px;">${r.sector}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--primary);margin-left:auto;">${r.price.toFixed(2)}</span>
+            <span>${rec}</span>
+          </div>`;
+        }
+        sc.innerHTML = sh;
+      }
+    } catch(e) { sc.innerHTML = ''; }
+  }, 100);
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

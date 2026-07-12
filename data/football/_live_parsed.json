@@ -1,0 +1,282 @@
+[
+  {
+    "home_team": "USA",
+    "away_team": "Belgium",
+    "commence_time": "2026-07-07T00:00:00Z",
+    "h2h": {
+      "Belgium": 1.452,
+      "USA": 7.978,
+      "Draw": 3.901
+    },
+    "totals_consensus": {
+      "line": 4.5,
+      "over_avg": 1.925,
+      "under_avg": 1.841,
+      "bookmakers": 26
+    },
+    "pinnacle": {
+      "h2h": [
+        {
+          "name": "Belgium",
+          "price": 1.46
+        },
+        {
+          "name": "USA",
+          "price": 8.04
+        },
+        {
+          "name": "Draw",
+          "price": 4.19
+        }
+      ],
+      "spreads": [
+        {
+          "name": "Belgium",
+          "price": 1.98,
+          "point": -0.0
+        },
+        {
+          "name": "USA",
+          "price": 1.93,
+          "point": 0.0
+        }
+      ],
+      "totals": [
+        {
+          "name": "Over",
+          "price": 2.02,
+          "point": 4.75
+        },
+        {
+          "name": "Under",
+          "price": 1.86,
+          "point": 4.75
+        }
+      ]
+    }
+  },
+  {
+    "home_team": "Argentina",
+    "away_team": "Egypt",
+    "commence_time": "2026-07-07T16:00:00Z",
+    "h2h": {
+      "Argentina": 1.357,
+      "Egypt": 9.828,
+      "Draw": 4.779
+    },
+    "totals_consensus": {
+      "line": 2.5,
+      "over_avg": 2.003,
+      "under_avg": 1.81,
+      "bookmakers": 42
+    },
+    "pinnacle": {
+      "h2h": [
+        {
+          "name": "Argentina",
+          "price": 1.37
+        },
+        {
+          "name": "Egypt",
+          "price": 9.7
+        },
+        {
+          "name": "Draw",
+          "price": 4.85
+        }
+      ],
+      "spreads": [
+        {
+          "name": "Argentina",
+          "price": 1.9,
+          "point": -1.25
+        },
+        {
+          "name": "Egypt",
+          "price": 2.0,
+          "point": 1.25
+        }
+      ],
+      "totals": [
+        {
+          "name": "Over",
+          "price": 2.07,
+          "point": 2.5
+        },
+        {
+          "name": "Under",
+          "price": 1.83,
+          "point": 2.5
+        }
+      ]
+    }
+  },
+  {
+    "home_team": "Switzerland",
+    "away_team": "Colombia",
+    "commence_time": "2026-07-07T20:00:00Z",
+    "h2h": {
+      "Colombia": 2.263,
+      "Switzerland": 3.544,
+      "Draw": 3.078
+    },
+    "totals_consensus": {
+      "line": 2.5,
+      "over_avg": 2.344,
+      "under_avg": 1.586,
+      "bookmakers": 32
+    },
+    "pinnacle": {
+      "h2h": [
+        {
+          "name": "Colombia",
+          "price": 2.27
+        },
+        {
+          "name": "Switzerland",
+          "price": 3.68
+        },
+        {
+          "name": "Draw",
+          "price": 3.12
+        }
+      ],
+      "spreads": [
+        {
+          "name": "Colombia",
+          "price": 1.93,
+          "point": -0.25
+        },
+        {
+          "name": "Switzerland",
+          "price": 1.98,
+          "point": 0.25
+        }
+      ],
+      "totals": [
+        {
+          "name": "Over",
+          "price": 2.12,
+          "point": 2.25
+        },
+        {
+          "name": "Under",
+          "price": 1.79,
+          "point": 2.25
+        }
+      ]
+    }
+  },
+  {
+    "home_team": "France",
+    "away_team": "Morocco",
+    "commence_time": "2026-07-09T20:00:00Z",
+    "h2h": {
+      "France": 1.583,
+      "Morocco": 6.246,
+      "Draw": 3.884
+    },
+    "totals_consensus": {
+      "line": 2.5,
+      "over_avg": 1.976,
+      "under_avg": 1.822,
+      "bookmakers": 42
+    },
+    "pinnacle": {
+      "h2h": [
+        {
+          "name": "France",
+          "price": 1.6
+        },
+        {
+          "name": "Morocco",
+          "price": 6.54
+        },
+        {
+          "name": "Draw",
+          "price": 3.88
+        }
+      ],
+      "spreads": [
+        {
+          "name": "France",
+          "price": 2.06,
+          "point": -1.0
+        },
+        {
+          "name": "Morocco",
+          "price": 1.85,
+          "point": 1.0
+        }
+      ],
+      "totals": [
+        {
+          "name": "Over",
+          "price": 2.04,
+          "point": 2.5
+        },
+        {
+          "name": "Under",
+          "price": 1.85,
+          "point": 2.5
+        }
+      ]
+    }
+  },
+  {
+    "home_team": "Norway",
+    "away_team": "England",
+    "commence_time": "2026-07-11T21:00:00Z",
+    "h2h": {
+      "England": 1.9,
+      "Norway": 4.02,
+      "Draw": 3.648
+    },
+    "totals_consensus": {
+      "line": 2.5,
+      "over_avg": 1.764,
+      "under_avg": 2.046,
+      "bookmakers": 38
+    },
+    "pinnacle": {
+      "h2h": [
+        {
+          "name": "England",
+          "price": 1.88
+        },
+        {
+          "name": "Norway",
+          "price": 4.26
+        },
+        {
+          "name": "Draw",
+          "price": 3.7
+        }
+      ],
+      "spreads": [
+        {
+          "name": "England",
+          "price": 1.89,
+          "point": -0.5
+        },
+        {
+          "name": "Norway",
+          "price": 2.01,
+          "point": 0.5
+        }
+      ],
+      "totals": [
+        {
+          "name": "Over",
+          "price": 2.01,
+          "point": 2.75
+        },
+        {
+          "name": "Under",
+          "price": 1.88,
+          "point": 2.75
+        }
+      ]
+    }
+  }
+]

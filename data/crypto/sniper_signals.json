@@ -1,0 +1,23 @@
+{
+  "signals": [],
+  "last_updated": "2026-07-12T10:13:49.173560",
+  "btc_filtered": false,
+  "btc_1h_chg": 0.48,
+  "strategy": "volume_climax_reversal",
+  "strategy_params": {
+    "vol_gt": "20x",
+    "near_bottom": "<5%",
+    "hammer": "green or wick>30%",
+    "funding": ">0.0%",
+    "btc_1h": ">-3%",
+    "tp": "+10%",
+    "sl": "-7%",
+    "hold_max": "8h"
+  },
+  "stats": {
+    "scanned": 131,
+    "new": 0,
+    "active": 0,
+    "total": 0
+  }
+}
