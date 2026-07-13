@@ -17,8 +17,8 @@
       "symbol": "SXTUSDT",
       "symbol_short": "SXT",
       "entry_price": 0.0079,
-      "current_price": 0.0077,
-      "unrealized_pnl": -2.53,
+      "current_price": 0.00774,
+      "unrealized_pnl": -2.03,
       "entry_time": "2026-07-13 18:30:02",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.6608,
@@ -30,12 +30,25 @@
       "symbol": "TUSDT",
       "symbol_short": "T",
       "entry_price": 0.00494,
-      "current_price": 0.00473,
-      "unrealized_pnl": -4.25,
+      "current_price": 0.00476,
+      "unrealized_pnl": -3.64,
       "entry_time": "2026-07-13 18:50:03",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.705,
       "p5_at_entry": -0.0222,
+      "score_at_entry": 0.2,
+      "trend_up": true
+    },
+    {
+      "symbol": "SKLUSDT",
+      "symbol_short": "SKL",
+      "entry_price": 0.00421,
+      "current_price": 0.00421,
+      "unrealized_pnl": 0,
+      "entry_time": "2026-07-14 06:00:14",
+      "strategy": "V11_multifactor",
+      "funding_at_entry": -0.0614,
+      "p5_at_entry": -0.0046,
       "score_at_entry": 0.2,
       "trend_up": true
     }
@@ -142,11 +155,11 @@
       "exit_time": "2026-07-14 02:00:05"
     }
   ],
-  "updated": "2026-07-14 02:00:05",
+  "updated": "2026-07-14 06:00:14",
   "stats": {
     "total_trades": 6,
     "win_rate": 33.3,
     "total_pnl": -8.19,
-    "open_positions": 3
+    "open_positions": 4
   }
 }
