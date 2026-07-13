@@ -84,7 +84,7 @@ function renderTable(jobs) {
 async function load() {
   let data;
   try {
-    const r = await fetch('../data/stock/cron_status.json');
+    const r = await fetch('data/stock/cron_status.json');
     if (!r.ok) throw new Error('no data');
     data = await r.json();
   } catch(e) {
