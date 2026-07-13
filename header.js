@@ -32,9 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (inStock) {
     items = [
-      { id:'dashboard', href:base+'stock/',             icon:svg.dashboard, label:'仪表盘', active:isActive('/stock/') && !isActive('/stock/sectors.html') && !isActive('/stock/scanner.html') && !isActive('/stock/portfolio.html') && !inCron },
+      { id:'dashboard', href:base+'stock/',             icon:svg.dashboard, label:'仪表盘', active:isActive('/stock/') && !isActive('/stock/sectors.html') && !isActive('/stock/portfolio.html') && !inCron },
       { id:'sectors',   href:base+'stock/sectors.html',  icon:svg.sectors,   label:'板块',   active:isActive('/stock/sectors.html') },
-      { id:'scanner',   href:base+'stock/scanner.html',  icon:svg.search,    label:'选股',   active:isActive('/stock/scanner.html') },
       { id:'portfolio', href:base+'stock/portfolio.html',icon:svg.briefcase, label:'持仓',   active:isActive('/stock/portfolio.html') },
     ];
   } else if (inFootball) {
