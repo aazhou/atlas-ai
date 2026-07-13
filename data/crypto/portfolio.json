@@ -1,19 +1,6 @@
 {
   "positions": [
     {
-      "symbol": "SKLUSDT",
-      "symbol_short": "SKL",
-      "entry_price": 0.004703,
-      "current_price": 0.00435,
-      "unrealized_pnl": -7.51,
-      "entry_time": "2026-07-12 17:03:10",
-      "strategy": "V11_multifactor",
-      "funding_at_entry": -0.0614,
-      "p5_at_entry": -0.0047,
-      "trend_up": true,
-      "score_at_entry": 0.2
-    },
-    {
       "symbol": "EVAAUSDT",
       "symbol_short": "EVAA",
       "entry_price": 1.1987,
@@ -30,8 +17,8 @@
       "symbol": "SXTUSDT",
       "symbol_short": "SXT",
       "entry_price": 0.0079,
-      "current_price": 0.00781,
-      "unrealized_pnl": -1.14,
+      "current_price": 0.0077,
+      "unrealized_pnl": -2.53,
       "entry_time": "2026-07-13 18:30:02",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.6608,
@@ -43,8 +30,8 @@
       "symbol": "TUSDT",
       "symbol_short": "T",
       "entry_price": 0.00494,
-      "current_price": 0.00494,
-      "unrealized_pnl": 0,
+      "current_price": 0.00473,
+      "unrealized_pnl": -4.25,
       "entry_time": "2026-07-13 18:50:03",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.705,
@@ -136,13 +123,30 @@
       "exit_pnl": -10.0,
       "exit_reason": "止损 -10.6%",
       "exit_time": "2026-07-13 14:40:40"
+    },
+    {
+      "symbol": "SKLUSDT",
+      "symbol_short": "SKL",
+      "entry_price": 0.004703,
+      "current_price": 0.00422,
+      "unrealized_pnl": -10.27,
+      "entry_time": "2026-07-12 17:03:10",
+      "strategy": "V11_multifactor",
+      "funding_at_entry": -0.0614,
+      "p5_at_entry": -0.0047,
+      "trend_up": true,
+      "score_at_entry": 0.2,
+      "exit_price": 0.0042327,
+      "exit_pnl": -10.0,
+      "exit_reason": "止损 -10.3%",
+      "exit_time": "2026-07-14 02:00:05"
     }
   ],
-  "updated": "2026-07-13 18:50:03",
+  "updated": "2026-07-14 02:00:05",
   "stats": {
-    "total_trades": 5,
-    "win_rate": 40.0,
-    "total_pnl": 1.81,
-    "open_positions": 4
+    "total_trades": 6,
+    "win_rate": 33.3,
+    "total_pnl": -8.19,
+    "open_positions": 3
   }
 }

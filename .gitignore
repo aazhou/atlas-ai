@@ -33,3 +33,5 @@ Thumbs.db
 NUL
 data/atlas.duckdb
 data/crypto/market.duckdb
+
+.vercel

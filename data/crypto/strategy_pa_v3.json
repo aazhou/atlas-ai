@@ -1,0 +1,177 @@
+{
+  "name": "PA-V3 日内趋势跟踪",
+  "principles": [
+    "价格行为为主: 只在大周期S/R位等待15m反转K线入场",
+    "均线为辅: 4h EMA20/50定方向, 15m EMA13做移动止盈",
+    "每币种独立参数: 基于ATR动态设定止损止盈",
+    "加密特性: 避开低流动性时段, BTC急跌暂停做多"
+  ],
+  "timeframes": {
+    "trend": "4h EMA20 vs EMA50 判定趋势方向",
+    "structure": "1h 识别关键支撑阻力位(前高/前低/EMA)",
+    "entry": "15m 等待PA反转信号(pinbar/吞没/孕线突破) + 放量>1.5x"
+  },
+  "entry_conditions": [
+    "1. 4h EMA20 > EMA50(做多) 或 EMA20 < EMA50(做空)",
+    "2. 价格在1h关键位+-1%范围内",
+    "3. 15m出现反转PA形态",
+    "4. 15m成交量 > 前10根均值1.5倍"
+  ],
+  "stop_loss": "入场K线反侧极点 + 1 ATR(动态, 非固定%)",
+  "take_profit": [
+    "TP1: 1:1.5 RR 平50%",
+    "TP2: 移动止盈用15m EMA13跟踪"
+  ],
+  "position_sizing": {
+    "per_trade_risk": "账户2%",
+    "max_concurrent": 3,
+    "high_vol_coins": "仓位减半"
+  },
+  "crypto_specific": [
+    "BTC 15分钟内急跌>2% -> 暂停所有做多",
+    "资金费率极端(<-0.1%或>0.1%) -> 顺费率方向",
+    "亚洲早盘(9-11点)流动性好, 欧美重叠(20-23点)波动大, 凌晨(2-6点)不交易"
+  ],
+  "coin_params": {
+    "BTCUSDT": {
+      "atr": 147.64285714,
+      "vol_ratio": 0.23,
+      "avg_spread": 0.16,
+      "liquidity": 96273749.0,
+      "risk_tier": "LOW"
+    },
+    "ETHUSDT": {
+      "atr": 4.68357143,
+      "vol_ratio": 0.26,
+      "avg_spread": 0.29,
+      "liquidity": 70584645.0,
+      "risk_tier": "LOW"
+    },
+    "SOLUSDT": {
+      "atr": 0.19928571,
+      "vol_ratio": 0.26,
+      "avg_spread": 0.31,
+      "liquidity": 16024035.0,
+      "risk_tier": "LOW"
+    },
+    "SNDKUSDT": {
+      "atr": 15.21571429,
+      "vol_ratio": 0.78,
+      "avg_spread": 0.28,
+      "liquidity": 13878039.0,
+      "risk_tier": "LOW"
+    },
+    "SKHYNIXUSDT": {
+      "atr": 14.91071429,
+      "vol_ratio": 1.01,
+      "avg_spread": 0.21,
+      "liquidity": 12275546.0,
+      "risk_tier": "MED"
+    },
+    "SOXLUSDT": {
+      "atr": 1.875,
+      "vol_ratio": 0.96,
+      "avg_spread": 0.33,
+      "liquidity": 9874876.0,
+      "risk_tier": "LOW"
+    },
+    "LABUSDT": {
+      "atr": 0.04776429,
+      "vol_ratio": 8.91,
+      "avg_spread": 3.95,
+      "liquidity": 9331730.0,
+      "risk_tier": "HIGH"
+    },
+    "XAUUSDT": {
+      "atr": 4.87785714,
+      "vol_ratio": 0.12,
+      "avg_spread": 0.03,
+      "liquidity": 9041095.0,
+      "risk_tier": "LOW"
+    },
+    "MUUSDT": {
+      "atr": 6.29857143,
+      "vol_ratio": 0.64,
+      "avg_spread": 0.18,
+      "liquidity": 8744550.0,
+      "risk_tier": "LOW"
+    },
+    "KORUUSDT": {
+      "atr": 8.85428571,
+      "vol_ratio": 1.61,
+      "avg_spread": 0.29,
+      "liquidity": 6630966.0,
+      "risk_tier": "MED"
+    },
+    "SPCXUSDT": {
+      "atr": 0.35428571,
+      "vol_ratio": 0.24,
+      "avg_spread": 0.08,
+      "liquidity": 6138063.0,
+      "risk_tier": "LOW"
+    },
+    "ZECUSDT": {
+      "atr": 4.21714286,
+      "vol_ratio": 0.82,
+      "avg_spread": 0.8,
+      "liquidity": 5749264.0,
+      "risk_tier": "LOW"
+    },
+    "HYPEUSDT": {
+      "atr": 0.23035714,
+      "vol_ratio": 0.34,
+      "avg_spread": 0.37,
+      "liquidity": 5683765.0,
+      "risk_tier": "LOW"
+    },
+    "XRPUSDT": {
+      "atr": 0.00236429,
+      "vol_ratio": 0.22,
+      "avg_spread": 0.24,
+      "liquidity": 4873314.0,
+      "risk_tier": "LOW"
+    },
+    "CLUSDT": {
+      "atr": 0.22642857,
+      "vol_ratio": 0.31,
+      "avg_spread": 0.44,
+      "liquidity": 4079003.0,
+      "risk_tier": "LOW"
+    },
+    "EVAAUSDT": {
+      "atr": 0.11476429,
+      "vol_ratio": 9.57,
+      "avg_spread": 12.22,
+      "liquidity": 3072326.0,
+      "risk_tier": "HIGH"
+    },
+    "DOGEUSDT": {
+      "atr": 0.00020214,
+      "vol_ratio": 0.28,
+      "avg_spread": 0.33,
+      "liquidity": 2744722.0,
+      "risk_tier": "LOW"
+    },
+    "BNBUSDT": {
+      "atr": 1.13,
+      "vol_ratio": 0.2,
+      "avg_spread": 0.18,
+      "liquidity": 2552480.0,
+      "risk_tier": "LOW"
+    },
+    "VANRYUSDT": {
+      "atr": 0.00015329,
+      "vol_ratio": 2.37,
+      "avg_spread": 2.03,
+      "liquidity": 2171341.0,
+      "risk_tier": "HIGH"
+    },
+    "ADAUSDT": {
+      "atr": 0.00089286,
+      "vol_ratio": 0.55,
+      "avg_spread": 0.53,
+      "liquidity": 2027024.0,
+      "risk_tier": "LOW"
+    }
+  }
+}
