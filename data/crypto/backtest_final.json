@@ -1,12 +1,728 @@
-{
-  "sharpe": "0.10923177123353264",
-  "strategy": "bb_squeeze",
-  "interval": "4h",
-  "sl": "-0.1",
-  "tp": "0.1",
-  "hold_h": 24,
-  "trades": 5583,
-  "win_rate": "0.06734730431667563",
-  "avg_pnl": "0.0034390112842557765",
-  "condition": "-- \u5e03\u6797\u5e26\u6324\u538b: \u4ef7\u683c\u5728EMA21\u9644\u8fd1\u7a84\u5e45 + \u91cf\u7f29 + \u7136\u540e\u653e\u91cf\u7a81\u7834\n        ABS(s.close - s.ema21)/s.ema21 < 0.02 AND s.close > s.ema21\n        AND s.volume < s.avg_vol * 0.7"
-}
+[
+  {
+    "symbol": "LAB",
+    "strategy": "funding_extreme",
+    "direction": "SHORT",
+    "tp_pct": 3,
+    "sl_pct": 10,
+    "hold_h": 12,
+    "trades": 14,
+    "win_rate": 92.9,
+    "avg_pnl": 4.56,
+    "total_return": 63.83,
+    "max_dd": 4.1,
+    "sharpe": 5.2,
+    "profit_factor": 16.72,
+    "trades_per_month": 28.0,
+    "date_range": "07/10~07/12",
+    "score": 93.8,
+    "trade_quality": "A",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-10 20:05:00",
+        "exit_time": "2026-07-10 20:10:00",
+        "entry_price": 1.1941,
+        "exit_price": 1.1532,
+        "pnl_pct": 3.43,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0537
+      },
+      {
+        "entry_time": "2026-07-10 20:15:00",
+        "exit_time": "2026-07-11 00:15:00",
+        "entry_price": 1.1756,
+        "exit_price": 1.1199,
+        "pnl_pct": 4.74,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0537
+      },
+      {
+        "entry_time": "2026-07-11 04:00:00",
+        "exit_time": "2026-07-11 06:25:00",
+        "entry_price": 0.92,
+        "exit_price": 0.8468,
+        "pnl_pct": 7.96,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0558
+      },
+      {
+        "entry_time": "2026-07-11 06:30:00",
+        "exit_time": "2026-07-11 12:25:00",
+        "entry_price": 0.8598,
+        "exit_price": 0.7607,
+        "pnl_pct": 11.53,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0558
+      },
+      {
+        "entry_time": "2026-07-12 00:00:00",
+        "exit_time": "2026-07-12 00:15:00",
+        "entry_price": 0.7611,
+        "exit_price": 0.7048,
+        "pnl_pct": 7.4,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 00:20:00",
+        "exit_time": "2026-07-12 00:35:00",
+        "entry_price": 0.7239,
+        "exit_price": 0.6947,
+        "pnl_pct": 4.03,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 00:40:00",
+        "exit_time": "2026-07-12 02:40:00",
+        "entry_price": 0.7,
+        "exit_price": 0.6764,
+        "pnl_pct": 3.37,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 02:45:00",
+        "exit_time": "2026-07-12 05:15:00",
+        "entry_price": 0.672,
+        "exit_price": 0.6403,
+        "pnl_pct": 4.72,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 05:20:00",
+        "exit_time": "2026-07-12 06:40:00",
+        "entry_price": 0.6403,
+        "exit_price": 0.617,
+        "pnl_pct": 3.64,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 06:45:00",
+        "exit_time": "2026-07-12 07:20:00",
+        "entry_price": 0.6186,
+        "exit_price": 0.5971,
+        "pnl_pct": 3.48,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 07:25:00",
+        "exit_time": "2026-07-12 07:50:00",
+        "entry_price": 0.597,
+        "exit_price": 0.5655,
+        "pnl_pct": 5.28,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 07:55:00",
+        "exit_time": "2026-07-12 08:45:00",
+        "entry_price": 0.5691,
+        "exit_price": 0.5396,
+        "pnl_pct": 5.18,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 08:50:00",
+        "exit_time": "2026-07-12 09:00:00",
+        "entry_price": 0.5364,
+        "exit_price": 0.5196,
+        "pnl_pct": 3.13,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0553
+      },
+      {
+        "entry_time": "2026-07-12 09:05:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.5147,
+        "exit_price": 0.5356,
+        "pnl_pct": -4.06,
+        "direction": "SHORT",
+        "exit_reason": "收盘",
+        "entry_rate": 0.0553
+      }
+    ]
+  },
+  {
+    "symbol": "T",
+    "strategy": "funding_extreme",
+    "direction": "LONG",
+    "tp_pct": 3,
+    "sl_pct": 8,
+    "hold_h": 12,
+    "trades": 6,
+    "win_rate": 83.3,
+    "avg_pnl": 2.71,
+    "total_return": 16.26,
+    "max_dd": 4.9,
+    "sharpe": 1.81,
+    "profit_factor": 4.28,
+    "trades_per_month": 12.0,
+    "date_range": "07/12~07/12",
+    "score": 75.7,
+    "trade_quality": "A",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-12 04:00:00",
+        "exit_time": "2026-07-12 05:45:00",
+        "entry_price": 0.004404,
+        "exit_price": 0.004557,
+        "pnl_pct": 3.47,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.42
+      },
+      {
+        "entry_time": "2026-07-12 05:50:00",
+        "exit_time": "2026-07-12 07:00:00",
+        "entry_price": 0.004499,
+        "exit_price": 0.004815,
+        "pnl_pct": 7.02,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.4051
+      },
+      {
+        "entry_time": "2026-07-12 07:05:00",
+        "exit_time": "2026-07-12 09:45:00",
+        "entry_price": 0.004767,
+        "exit_price": 0.004916,
+        "pnl_pct": 3.13,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.3426
+      },
+      {
+        "entry_time": "2026-07-12 09:50:00",
+        "exit_time": "2026-07-12 10:15:00",
+        "entry_price": 0.00499,
+        "exit_price": 0.005185,
+        "pnl_pct": 3.91,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.4544
+      },
+      {
+        "entry_time": "2026-07-12 10:20:00",
+        "exit_time": "2026-07-12 11:15:00",
+        "entry_price": 0.005187,
+        "exit_price": 0.005378,
+        "pnl_pct": 3.68,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.5228
+      },
+      {
+        "entry_time": "2026-07-12 11:20:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.005474,
+        "exit_price": 0.005203,
+        "pnl_pct": -4.95,
+        "direction": "LONG",
+        "exit_reason": "收盘",
+        "entry_rate": -0.6227
+      }
+    ]
+  },
+  {
+    "symbol": "T",
+    "strategy": "multifactor",
+    "direction": "LONG",
+    "tp_pct": 3,
+    "sl_pct": 8,
+    "hold_h": 48,
+    "trades": 7,
+    "win_rate": 85.7,
+    "avg_pnl": 2.19,
+    "total_return": 15.33,
+    "max_dd": 4.9,
+    "sharpe": 1.86,
+    "profit_factor": 4.1,
+    "trades_per_month": 14.0,
+    "date_range": "07/09~07/12",
+    "score": 75.6,
+    "trade_quality": "A",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-09 02:15:00",
+        "exit_time": "2026-07-11 02:15:00",
+        "entry_price": 0.003382,
+        "exit_price": 0.003422,
+        "pnl_pct": 1.18,
+        "direction": "LONG",
+        "exit_reason": "超时",
+        "entry_rate": -0.0275
+      },
+      {
+        "entry_time": "2026-07-12 04:10:00",
+        "exit_time": "2026-07-12 06:00:00",
+        "entry_price": 0.004436,
+        "exit_price": 0.004577,
+        "pnl_pct": 3.18,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.42
+      },
+      {
+        "entry_time": "2026-07-12 06:05:00",
+        "exit_time": "2026-07-12 07:00:00",
+        "entry_price": 0.004577,
+        "exit_price": 0.004815,
+        "pnl_pct": 5.2,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.2995
+      },
+      {
+        "entry_time": "2026-07-12 07:05:00",
+        "exit_time": "2026-07-12 09:45:00",
+        "entry_price": 0.004767,
+        "exit_price": 0.004916,
+        "pnl_pct": 3.13,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.3426
+      },
+      {
+        "entry_time": "2026-07-12 09:50:00",
+        "exit_time": "2026-07-12 10:15:00",
+        "entry_price": 0.00499,
+        "exit_price": 0.005185,
+        "pnl_pct": 3.91,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.4544
+      },
+      {
+        "entry_time": "2026-07-12 10:20:00",
+        "exit_time": "2026-07-12 11:15:00",
+        "entry_price": 0.005187,
+        "exit_price": 0.005378,
+        "pnl_pct": 3.68,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.5228
+      },
+      {
+        "entry_time": "2026-07-12 11:20:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.005474,
+        "exit_price": 0.005203,
+        "pnl_pct": -4.95,
+        "direction": "LONG",
+        "exit_reason": "收盘",
+        "entry_rate": -0.6227
+      }
+    ]
+  },
+  {
+    "symbol": "LAB",
+    "strategy": "multifactor",
+    "direction": "SHORT",
+    "tp_pct": 5,
+    "sl_pct": 10,
+    "hold_h": 12,
+    "trades": 17,
+    "win_rate": 76.5,
+    "avg_pnl": 2.98,
+    "total_return": 50.72,
+    "max_dd": 17.6,
+    "sharpe": 1.67,
+    "profit_factor": 2.33,
+    "trades_per_month": 34.0,
+    "date_range": "07/10~07/12",
+    "score": 72.3,
+    "trade_quality": "B",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-10 04:05:00",
+        "exit_time": "2026-07-10 05:55:00",
+        "entry_price": 1.0211,
+        "exit_price": 1.1259,
+        "pnl_pct": -10.26,
+        "direction": "SHORT",
+        "exit_reason": "止损",
+        "entry_rate": 0.0328
+      },
+      {
+        "entry_time": "2026-07-10 06:00:00",
+        "exit_time": "2026-07-10 06:40:00",
+        "entry_price": 1.18,
+        "exit_price": 1.1133,
+        "pnl_pct": 5.65,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0328
+      },
+      {
+        "entry_time": "2026-07-10 06:45:00",
+        "exit_time": "2026-07-10 08:50:00",
+        "entry_price": 1.1315,
+        "exit_price": 1.279,
+        "pnl_pct": -13.04,
+        "direction": "SHORT",
+        "exit_reason": "止损",
+        "entry_rate": 0.0328
+      },
+      {
+        "entry_time": "2026-07-10 08:55:00",
+        "exit_time": "2026-07-10 09:55:00",
+        "entry_price": 1.25,
+        "exit_price": 1.1575,
+        "pnl_pct": 7.4,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0466
+      },
+      {
+        "entry_time": "2026-07-10 10:00:00",
+        "exit_time": "2026-07-10 13:20:00",
+        "entry_price": 1.1426,
+        "exit_price": 1.0541,
+        "pnl_pct": 7.75,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0466
+      },
+      {
+        "entry_time": "2026-07-10 20:05:00",
+        "exit_time": "2026-07-11 00:15:00",
+        "entry_price": 1.1941,
+        "exit_price": 1.1199,
+        "pnl_pct": 6.21,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0537
+      },
+      {
+        "entry_time": "2026-07-11 04:00:00",
+        "exit_time": "2026-07-11 06:25:00",
+        "entry_price": 0.92,
+        "exit_price": 0.8468,
+        "pnl_pct": 7.96,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0558
+      },
+      {
+        "entry_time": "2026-07-11 06:30:00",
+        "exit_time": "2026-07-11 12:25:00",
+        "entry_price": 0.8598,
+        "exit_price": 0.7607,
+        "pnl_pct": 11.53,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0558
+      },
+      {
+        "entry_time": "2026-07-11 12:30:00",
+        "exit_time": "2026-07-11 18:45:00",
+        "entry_price": 0.7578,
+        "exit_price": 0.8476,
+        "pnl_pct": -11.85,
+        "direction": "SHORT",
+        "exit_reason": "止损",
+        "entry_rate": 0.0447
+      },
+      {
+        "entry_time": "2026-07-12 00:00:00",
+        "exit_time": "2026-07-12 00:15:00",
+        "entry_price": 0.7611,
+        "exit_price": 0.7048,
+        "pnl_pct": 7.4,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 00:20:00",
+        "exit_time": "2026-07-12 02:40:00",
+        "entry_price": 0.7239,
+        "exit_price": 0.6764,
+        "pnl_pct": 6.56,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 02:45:00",
+        "exit_time": "2026-07-12 05:40:00",
+        "entry_price": 0.672,
+        "exit_price": 0.6371,
+        "pnl_pct": 5.19,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 05:45:00",
+        "exit_time": "2026-07-12 07:20:00",
+        "entry_price": 0.6373,
+        "exit_price": 0.5971,
+        "pnl_pct": 6.31,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 07:30:00",
+        "exit_time": "2026-07-12 07:50:00",
+        "entry_price": 0.604,
+        "exit_price": 0.5655,
+        "pnl_pct": 6.37,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 07:55:00",
+        "exit_time": "2026-07-12 08:45:00",
+        "entry_price": 0.5691,
+        "exit_price": 0.5396,
+        "pnl_pct": 5.18,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 08:50:00",
+        "exit_time": "2026-07-12 09:10:00",
+        "entry_price": 0.5364,
+        "exit_price": 0.507,
+        "pnl_pct": 5.48,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "entry_rate": 0.0553
+      },
+      {
+        "entry_time": "2026-07-12 09:15:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.5194,
+        "exit_price": 0.5356,
+        "pnl_pct": -3.12,
+        "direction": "SHORT",
+        "exit_reason": "收盘",
+        "entry_rate": 0.0553
+      }
+    ]
+  },
+  {
+    "symbol": "EVAA",
+    "strategy": "multifactor",
+    "direction": "LONG",
+    "tp_pct": 3,
+    "sl_pct": 5,
+    "hold_h": 12,
+    "trades": 6,
+    "win_rate": 66.7,
+    "avg_pnl": 2.45,
+    "total_return": 14.69,
+    "max_dd": 5.6,
+    "sharpe": 1.24,
+    "profit_factor": 2.9,
+    "trades_per_month": 12.0,
+    "date_range": "07/12~07/12",
+    "score": 67.8,
+    "trade_quality": "B",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-12 12:00:00",
+        "exit_time": "2026-07-12 12:05:00",
+        "entry_price": 0.9548,
+        "exit_price": 0.9855,
+        "pnl_pct": 3.22,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0055
+      },
+      {
+        "entry_time": "2026-07-12 12:10:00",
+        "exit_time": "2026-07-12 12:25:00",
+        "entry_price": 1.1123,
+        "exit_price": 1.0502,
+        "pnl_pct": -5.58,
+        "direction": "LONG",
+        "exit_reason": "止损",
+        "entry_rate": -0.0055
+      },
+      {
+        "entry_time": "2026-07-12 12:30:00",
+        "exit_time": "2026-07-12 12:35:00",
+        "entry_price": 0.9718,
+        "exit_price": 1.0467,
+        "pnl_pct": 7.71,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0055
+      },
+      {
+        "entry_time": "2026-07-12 12:40:00",
+        "exit_time": "2026-07-12 13:00:00",
+        "entry_price": 1.0684,
+        "exit_price": 1.1468,
+        "pnl_pct": 7.34,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0055
+      },
+      {
+        "entry_time": "2026-07-12 13:05:00",
+        "exit_time": "2026-07-12 13:10:00",
+        "entry_price": 1.1668,
+        "exit_price": 1.2152,
+        "pnl_pct": 4.15,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0055
+      },
+      {
+        "entry_time": "2026-07-12 13:15:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 1.225,
+        "exit_price": 1.1987,
+        "pnl_pct": -2.15,
+        "direction": "LONG",
+        "exit_reason": "收盘",
+        "entry_rate": -0.0055
+      }
+    ]
+  },
+  {
+    "symbol": "VANRY",
+    "strategy": "funding_extreme",
+    "direction": "LONG",
+    "tp_pct": 3,
+    "sl_pct": 10,
+    "hold_h": 24,
+    "trades": 10,
+    "win_rate": 80.0,
+    "avg_pnl": 1.16,
+    "total_return": 11.57,
+    "max_dd": 20.2,
+    "sharpe": 0.64,
+    "profit_factor": 1.57,
+    "trades_per_month": 20.0,
+    "date_range": "07/09~07/12",
+    "score": 50.5,
+    "trade_quality": "C",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-09 12:05:00",
+        "exit_time": "2026-07-09 13:30:00",
+        "entry_price": 0.007473,
+        "exit_price": 0.007759,
+        "pnl_pct": 3.83,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0546
+      },
+      {
+        "entry_time": "2026-07-09 13:35:00",
+        "exit_time": "2026-07-09 14:15:00",
+        "entry_price": 0.007788,
+        "exit_price": 0.008111,
+        "pnl_pct": 4.15,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0546
+      },
+      {
+        "entry_time": "2026-07-09 14:20:00",
+        "exit_time": "2026-07-09 20:30:00",
+        "entry_price": 0.008021,
+        "exit_price": 0.008362,
+        "pnl_pct": 4.25,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0546
+      },
+      {
+        "entry_time": "2026-07-10 04:00:00",
+        "exit_time": "2026-07-10 05:50:00",
+        "entry_price": 0.006863,
+        "exit_price": 0.007095,
+        "pnl_pct": 3.38,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0984
+      },
+      {
+        "entry_time": "2026-07-10 05:55:00",
+        "exit_time": "2026-07-10 09:50:00",
+        "entry_price": 0.007151,
+        "exit_price": 0.007423,
+        "pnl_pct": 3.8,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0984
+      },
+      {
+        "entry_time": "2026-07-10 09:55:00",
+        "exit_time": "2026-07-10 23:00:00",
+        "entry_price": 0.007345,
+        "exit_price": 0.006598,
+        "pnl_pct": -10.17,
+        "direction": "LONG",
+        "exit_reason": "止损",
+        "entry_rate": -0.2285
+      },
+      {
+        "entry_time": "2026-07-10 23:05:00",
+        "exit_time": "2026-07-11 09:30:00",
+        "entry_price": 0.006636,
+        "exit_price": 0.005967,
+        "pnl_pct": -10.08,
+        "direction": "LONG",
+        "exit_reason": "止损",
+        "entry_rate": -0.17
+      },
+      {
+        "entry_time": "2026-07-11 09:35:00",
+        "exit_time": "2026-07-11 13:55:00",
+        "entry_price": 0.005997,
+        "exit_price": 0.006188,
+        "pnl_pct": 3.18,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.1069
+      },
+      {
+        "entry_time": "2026-07-11 14:00:00",
+        "exit_time": "2026-07-12 13:15:00",
+        "entry_price": 0.006066,
+        "exit_price": 0.006475,
+        "pnl_pct": 6.74,
+        "direction": "LONG",
+        "exit_reason": "止盈",
+        "entry_rate": -0.0587
+      },
+      {
+        "entry_time": "2026-07-12 13:20:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.006315,
+        "exit_price": 0.006472,
+        "pnl_pct": 2.49,
+        "direction": "LONG",
+        "exit_reason": "收盘",
+        "entry_rate": -0.074
+      }
+    ]
+  }
+]

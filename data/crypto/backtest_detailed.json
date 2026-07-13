@@ -268,8 +268,8 @@
     ],
     "avg_pnl_pct": 1.02,
     "max_drawdown_pct": 12.4,
-    "final_equity": 107690.0,
-    "total_return": 7.7,
+    "final_equity": 107690,
+    "total_return": 32.6,
     "strategy": "funding_extreme"
   },
   {
@@ -317,200 +317,2288 @@
     ],
     "avg_pnl_pct": 7.65,
     "max_drawdown_pct": 2.8,
-    "final_equity": 109250.0,
-    "total_return": 9.3,
+    "final_equity": 109250,
+    "total_return": 30.6,
     "strategy": "funding_extreme"
   },
   {
-    "symbol": "SOXL",
-    "trades": 17,
-    "win_rate": 100.0,
-    "avg_pnl": 5.0,
-    "max_dd": 0,
-    "sharpe": 99.99,
-    "equity": 100,
-    "total_return": 85.0,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 5.0,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "VIRTUAL",
-    "trades": 8,
-    "win_rate": 100.0,
-    "avg_pnl": 5.0,
-    "max_dd": 0,
-    "sharpe": 99.99,
-    "equity": 100,
-    "total_return": 40.0,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 5.0,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "SNDK",
-    "trades": 26,
-    "win_rate": 100.0,
-    "avg_pnl": 1.63,
-    "max_dd": 0,
-    "sharpe": 79.57,
-    "equity": 100,
-    "total_return": 42.379999999999995,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 1.63,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "SPCX",
-    "trades": 15,
-    "win_rate": 100.0,
-    "avg_pnl": 1.2,
-    "max_dd": 0,
-    "sharpe": 24.84,
-    "equity": 100,
-    "total_return": 18.0,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 1.2,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "EVAA",
-    "trades": 27,
-    "win_rate": 96.3,
-    "avg_pnl": 4.77,
-    "max_dd": 0,
-    "sharpe": 20.73,
-    "equity": 100,
-    "total_return": 128.79,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 4.77,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
     "symbol": "T",
-    "trades": 68,
-    "win_rate": 91.2,
-    "avg_pnl": 3.76,
-    "max_dd": 0,
-    "sharpe": 13.63,
-    "equity": 100,
-    "total_return": 255.68,
-    "date_range": "07/01~07/12",
     "strategy": "multifactor",
-    "avg_pnl_pct": 3.76,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "LIT",
-    "trades": 117,
-    "win_rate": 93.2,
-    "avg_pnl": 3.97,
-    "max_dd": 0,
-    "sharpe": 11.36,
-    "equity": 100,
-    "total_return": 464.49,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 3.97,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
+    "trades": 137,
+    "win_rate": 89.1,
+    "avg_pnl": 3.78,
+    "max_dd": 15.8,
+    "sharpe": 8.06,
+    "total_return": 517.9,
+    "date_range": "07/09~07/12",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-11 20:05",
+        "exit_time": "2026-07-11 20:35",
+        "duration": "30m",
+        "entry": 0.003854,
+        "exit": 0.004047,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 20:10",
+        "exit_time": "2026-07-11 20:35",
+        "duration": "25m",
+        "entry": 0.003852,
+        "exit": 0.004045,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 20:15",
+        "exit_time": "2026-07-11 20:35",
+        "duration": "20m",
+        "entry": 0.003881,
+        "exit": 0.004075,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 20:20",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "4h25m",
+        "entry": 0.003936,
+        "exit": 0.00433,
+        "pnl": 10.0
+      },
+      {
+        "entry_time": "2026-07-11 20:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "17h0m",
+        "entry": 0.003927,
+        "exit": 0.005219,
+        "pnl": 32.9
+      },
+      {
+        "entry_time": "2026-07-11 20:30",
+        "exit_time": "2026-07-11 20:35",
+        "duration": "5m",
+        "entry": 0.004014,
+        "exit": 0.004054,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 20:35",
+        "exit_time": "2026-07-12 00:00",
+        "duration": "3h25m",
+        "entry": 0.004285,
+        "exit": 0.004499,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 20:40",
+        "exit_time": "2026-07-11 23:05",
+        "duration": "2h25m",
+        "entry": 0.004396,
+        "exit": 0.00444,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 20:45",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "4h0m",
+        "entry": 0.004314,
+        "exit": 0.004357,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 20:50",
+        "exit_time": "2026-07-12 00:00",
+        "duration": "3h10m",
+        "entry": 0.004275,
+        "exit": 0.004489,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 20:55",
+        "exit_time": "2026-07-12 00:00",
+        "duration": "3h5m",
+        "entry": 0.004301,
+        "exit": 0.004516,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-11 21:00",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h45m",
+        "entry": 0.004357,
+        "exit": 0.004401,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:05",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h40m",
+        "entry": 0.004401,
+        "exit": 0.004445,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:10",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h35m",
+        "entry": 0.004419,
+        "exit": 0.004463,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:15",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h30m",
+        "entry": 0.004321,
+        "exit": 0.004364,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:20",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h25m",
+        "entry": 0.004317,
+        "exit": 0.00436,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:25",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h20m",
+        "entry": 0.004422,
+        "exit": 0.004466,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:30",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h15m",
+        "entry": 0.004348,
+        "exit": 0.004391,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:35",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h10m",
+        "entry": 0.004361,
+        "exit": 0.004405,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:40",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h5m",
+        "entry": 0.004318,
+        "exit": 0.004361,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:45",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "3h0m",
+        "entry": 0.004428,
+        "exit": 0.004472,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:50",
+        "exit_time": "2026-07-12 00:45",
+        "duration": "2h55m",
+        "entry": 0.004364,
+        "exit": 0.004408,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 21:55",
+        "exit_time": "2026-07-12 00:00",
+        "duration": "2h5m",
+        "entry": 0.004473,
+        "exit": 0.004518,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 22:00",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "9h0m",
+        "entry": 0.004555,
+        "exit": 0.004601,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 22:05",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "8h55m",
+        "entry": 0.004585,
+        "exit": 0.004631,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 22:10",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "15h15m",
+        "entry": 0.004616,
+        "exit": 0.005219,
+        "pnl": 13.06
+      },
+      {
+        "entry_time": "2026-07-11 22:30",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "14h55m",
+        "entry": 0.004588,
+        "exit": 0.005219,
+        "pnl": 13.75
+      },
+      {
+        "entry_time": "2026-07-11 22:55",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "8h5m",
+        "entry": 0.004533,
+        "exit": 0.004578,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 23:05",
+        "exit_time": "2026-07-12 00:00",
+        "duration": "55m",
+        "entry": 0.004511,
+        "exit": 0.004556,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 23:10",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "7h50m",
+        "entry": 0.004552,
+        "exit": 0.004598,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 23:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "14h0m",
+        "entry": 0.00459,
+        "exit": 0.005219,
+        "pnl": 13.7
+      },
+      {
+        "entry_time": "2026-07-11 23:30",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h55m",
+        "entry": 0.004742,
+        "exit": 0.005219,
+        "pnl": 10.06
+      },
+      {
+        "entry_time": "2026-07-11 23:40",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h45m",
+        "entry": 0.004693,
+        "exit": 0.005219,
+        "pnl": 11.21
+      },
+      {
+        "entry_time": "2026-07-11 23:45",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h40m",
+        "entry": 0.004657,
+        "exit": 0.005219,
+        "pnl": 12.07
+      },
+      {
+        "entry_time": "2026-07-11 23:50",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h35m",
+        "entry": 0.0047,
+        "exit": 0.005219,
+        "pnl": 11.04
+      },
+      {
+        "entry_time": "2026-07-11 23:55",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h30m",
+        "entry": 0.004726,
+        "exit": 0.005219,
+        "pnl": 10.43
+      },
+      {
+        "entry_time": "2026-07-12 00:00",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h25m",
+        "entry": 0.004604,
+        "exit": 0.005219,
+        "pnl": 13.36
+      },
+      {
+        "entry_time": "2026-07-12 00:15",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h10m",
+        "entry": 0.004592,
+        "exit": 0.005219,
+        "pnl": 13.65
+      },
+      {
+        "entry_time": "2026-07-12 00:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h5m",
+        "entry": 0.00466,
+        "exit": 0.005219,
+        "pnl": 12.0
+      },
+      {
+        "entry_time": "2026-07-12 00:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "13h0m",
+        "entry": 0.004657,
+        "exit": 0.005219,
+        "pnl": 12.07
+      },
+      {
+        "entry_time": "2026-07-12 00:45",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "8h0m",
+        "entry": 0.00445,
+        "exit": 0.004495,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 00:50",
+        "exit_time": "2026-07-12 08:00",
+        "duration": "7h10m",
+        "entry": 0.004517,
+        "exit": 0.004562,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:05",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "7h0m",
+        "entry": 0.004496,
+        "exit": 0.004541,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:15",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "8h25m",
+        "entry": 0.004633,
+        "exit": 0.004679,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "12h5m",
+        "entry": 0.004614,
+        "exit": 0.005219,
+        "pnl": 13.11
+      },
+      {
+        "entry_time": "2026-07-12 01:25",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "5h35m",
+        "entry": 0.004566,
+        "exit": 0.004612,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:35",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "5h25m",
+        "entry": 0.004579,
+        "exit": 0.004625,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:40",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "5h20m",
+        "entry": 0.004578,
+        "exit": 0.004624,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 01:55",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "5h5m",
+        "entry": 0.004544,
+        "exit": 0.004589,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:10",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "6h35m",
+        "entry": 0.004435,
+        "exit": 0.004479,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:15",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "6h30m",
+        "entry": 0.004453,
+        "exit": 0.004498,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:20",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "5h45m",
+        "entry": 0.004479,
+        "exit": 0.004524,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:30",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "6h15m",
+        "entry": 0.004462,
+        "exit": 0.004507,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:35",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "6h10m",
+        "entry": 0.00444,
+        "exit": 0.004484,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:40",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "5h25m",
+        "entry": 0.004483,
+        "exit": 0.004528,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 02:50",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "5h15m",
+        "entry": 0.004501,
+        "exit": 0.004546,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:00",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "5h5m",
+        "entry": 0.004505,
+        "exit": 0.00455,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:10",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "4h55m",
+        "entry": 0.004482,
+        "exit": 0.004527,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:20",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "5h25m",
+        "entry": 0.004458,
+        "exit": 0.004503,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:30",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "3h30m",
+        "entry": 0.004359,
+        "exit": 0.004577,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 03:35",
+        "exit_time": "2026-07-12 08:00",
+        "duration": "4h25m",
+        "entry": 0.004345,
+        "exit": 0.004562,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 03:40",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "5h5m",
+        "entry": 0.004396,
+        "exit": 0.00444,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:45",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "5h0m",
+        "entry": 0.004391,
+        "exit": 0.004435,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 03:55",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "4h50m",
+        "entry": 0.004425,
+        "exit": 0.004469,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 04:10",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "4h35m",
+        "entry": 0.004436,
+        "exit": 0.00448,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 04:35",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "3h30m",
+        "entry": 0.00449,
+        "exit": 0.004535,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 04:55",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "3h50m",
+        "entry": 0.004449,
+        "exit": 0.004493,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:05",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "3h40m",
+        "entry": 0.004435,
+        "exit": 0.004479,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:15",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "3h30m",
+        "entry": 0.004439,
+        "exit": 0.004483,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:20",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "3h25m",
+        "entry": 0.004453,
+        "exit": 0.004498,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:30",
+        "exit_time": "2026-07-12 08:45",
+        "duration": "3h15m",
+        "entry": 0.004431,
+        "exit": 0.004475,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:40",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "2h25m",
+        "entry": 0.004496,
+        "exit": 0.004541,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:45",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "1h15m",
+        "entry": 0.004557,
+        "exit": 0.004603,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:50",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "2h15m",
+        "entry": 0.004499,
+        "exit": 0.004544,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 05:55",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "2h10m",
+        "entry": 0.004504,
+        "exit": 0.004549,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:00",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "1h0m",
+        "entry": 0.004577,
+        "exit": 0.004623,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:10",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "50m",
+        "entry": 0.004548,
+        "exit": 0.004593,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:15",
+        "exit_time": "2026-07-12 08:00",
+        "duration": "1h45m",
+        "entry": 0.004518,
+        "exit": 0.004563,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:20",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "1h45m",
+        "entry": 0.004513,
+        "exit": 0.004558,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:30",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "1h35m",
+        "entry": 0.004491,
+        "exit": 0.004536,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:35",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "1h30m",
+        "entry": 0.004509,
+        "exit": 0.004554,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:40",
+        "exit_time": "2026-07-12 08:05",
+        "duration": "1h25m",
+        "entry": 0.004511,
+        "exit": 0.004556,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:45",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "15m",
+        "entry": 0.004527,
+        "exit": 0.004572,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:50",
+        "exit_time": "2026-07-12 07:00",
+        "duration": "10m",
+        "entry": 0.004552,
+        "exit": 0.004598,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 06:55",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "6h30m",
+        "entry": 0.004604,
+        "exit": 0.005219,
+        "pnl": 13.36
+      },
+      {
+        "entry_time": "2026-07-12 07:00",
+        "exit_time": "2026-07-12 11:00",
+        "duration": "4h0m",
+        "entry": 0.004815,
+        "exit": 0.005056,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 07:10",
+        "exit_time": "2026-07-12 11:00",
+        "duration": "3h50m",
+        "entry": 0.004811,
+        "exit": 0.005052,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 07:15",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "6h10m",
+        "entry": 0.004707,
+        "exit": 0.005219,
+        "pnl": 10.88
+      },
+      {
+        "entry_time": "2026-07-12 07:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "6h5m",
+        "entry": 0.004703,
+        "exit": 0.005219,
+        "pnl": 10.97
+      },
+      {
+        "entry_time": "2026-07-12 07:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "6h0m",
+        "entry": 0.004696,
+        "exit": 0.005219,
+        "pnl": 11.14
+      },
+      {
+        "entry_time": "2026-07-12 07:30",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h55m",
+        "entry": 0.004707,
+        "exit": 0.005219,
+        "pnl": 10.88
+      },
+      {
+        "entry_time": "2026-07-12 07:35",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h50m",
+        "entry": 0.004673,
+        "exit": 0.005219,
+        "pnl": 11.68
+      },
+      {
+        "entry_time": "2026-07-12 07:40",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h45m",
+        "entry": 0.004668,
+        "exit": 0.005219,
+        "pnl": 11.8
+      },
+      {
+        "entry_time": "2026-07-12 07:45",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h40m",
+        "entry": 0.004666,
+        "exit": 0.005219,
+        "pnl": 11.85
+      },
+      {
+        "entry_time": "2026-07-12 07:50",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "1h50m",
+        "entry": 0.004652,
+        "exit": 0.004699,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 07:55",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "1h45m",
+        "entry": 0.00464,
+        "exit": 0.004686,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 08:00",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h25m",
+        "entry": 0.004616,
+        "exit": 0.005219,
+        "pnl": 13.06
+      },
+      {
+        "entry_time": "2026-07-12 08:05",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5h20m",
+        "entry": 0.004658,
+        "exit": 0.005219,
+        "pnl": 12.04
+      },
+      {
+        "entry_time": "2026-07-12 08:15",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "1h25m",
+        "entry": 0.004635,
+        "exit": 0.004681,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 08:20",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "1h20m",
+        "entry": 0.004645,
+        "exit": 0.004691,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 08:45",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "4h40m",
+        "entry": 0.004461,
+        "exit": 0.005219,
+        "pnl": 16.99
+      },
+      {
+        "entry_time": "2026-07-12 08:50",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "4h35m",
+        "entry": 0.004554,
+        "exit": 0.005219,
+        "pnl": 14.6
+      },
+      {
+        "entry_time": "2026-07-12 09:00",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "4h25m",
+        "entry": 0.004603,
+        "exit": 0.005219,
+        "pnl": 13.38
+      },
+      {
+        "entry_time": "2026-07-12 09:05",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "35m",
+        "entry": 0.004623,
+        "exit": 0.004669,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 09:10",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "4h15m",
+        "entry": 0.004677,
+        "exit": 0.005219,
+        "pnl": 11.59
+      },
+      {
+        "entry_time": "2026-07-12 09:15",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "4h10m",
+        "entry": 0.004663,
+        "exit": 0.005219,
+        "pnl": 11.92
+      },
+      {
+        "entry_time": "2026-07-12 09:25",
+        "exit_time": "2026-07-12 09:40",
+        "duration": "15m",
+        "entry": 0.004648,
+        "exit": 0.004694,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 09:35",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "3h50m",
+        "entry": 0.004669,
+        "exit": 0.005219,
+        "pnl": 11.78
+      },
+      {
+        "entry_time": "2026-07-12 09:40",
+        "exit_time": "2026-07-12 12:00",
+        "duration": "2h20m",
+        "entry": 0.004887,
+        "exit": 0.005131,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 09:45",
+        "exit_time": "2026-07-12 11:50",
+        "duration": "2h5m",
+        "entry": 0.004916,
+        "exit": 0.005162,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 09:50",
+        "exit_time": "2026-07-12 11:00",
+        "duration": "1h10m",
+        "entry": 0.00499,
+        "exit": 0.00504,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 10:05",
+        "exit_time": "2026-07-12 12:00",
+        "duration": "1h55m",
+        "entry": 0.005096,
+        "exit": 0.005147,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 10:10",
+        "exit_time": "2026-07-12 11:50",
+        "duration": "1h40m",
+        "entry": 0.005102,
+        "exit": 0.005153,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 10:15",
+        "exit_time": "2026-07-12 11:40",
+        "duration": "1h25m",
+        "entry": 0.005185,
+        "exit": 0.005237,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 10:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "3h0m",
+        "entry": 0.00529,
+        "exit": 0.005219,
+        "pnl": -1.34
+      },
+      {
+        "entry_time": "2026-07-12 10:35",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "2h50m",
+        "entry": 0.005332,
+        "exit": 0.005219,
+        "pnl": -2.12
+      },
+      {
+        "entry_time": "2026-07-12 10:45",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "2h40m",
+        "entry": 0.005341,
+        "exit": 0.005219,
+        "pnl": -2.28
+      },
+      {
+        "entry_time": "2026-07-12 10:55",
+        "exit_time": "2026-07-12 11:40",
+        "duration": "45m",
+        "entry": 0.005208,
+        "exit": 0.00526,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 11:00",
+        "exit_time": "2026-07-12 12:00",
+        "duration": "1h0m",
+        "entry": 0.0051,
+        "exit": 0.005151,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 11:05",
+        "exit_time": "2026-07-12 11:40",
+        "duration": "35m",
+        "entry": 0.0052,
+        "exit": 0.005252,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 11:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "2h5m",
+        "entry": 0.005474,
+        "exit": 0.005219,
+        "pnl": -4.66
+      },
+      {
+        "entry_time": "2026-07-12 11:30",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h55m",
+        "entry": 0.005374,
+        "exit": 0.005219,
+        "pnl": -2.88
+      },
+      {
+        "entry_time": "2026-07-12 11:35",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h50m",
+        "entry": 0.005337,
+        "exit": 0.005219,
+        "pnl": -2.21
+      },
+      {
+        "entry_time": "2026-07-12 11:40",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h45m",
+        "entry": 0.005271,
+        "exit": 0.005219,
+        "pnl": -0.99
+      },
+      {
+        "entry_time": "2026-07-12 11:50",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h35m",
+        "entry": 0.005259,
+        "exit": 0.005219,
+        "pnl": -0.76
+      },
+      {
+        "entry_time": "2026-07-12 12:00",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h25m",
+        "entry": 0.00523,
+        "exit": 0.005219,
+        "pnl": -0.21
+      },
+      {
+        "entry_time": "2026-07-12 12:05",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h20m",
+        "entry": 0.005234,
+        "exit": 0.005219,
+        "pnl": -0.29
+      },
+      {
+        "entry_time": "2026-07-12 12:10",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h15m",
+        "entry": 0.005234,
+        "exit": 0.005219,
+        "pnl": -0.29
+      },
+      {
+        "entry_time": "2026-07-12 12:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h5m",
+        "entry": 0.005235,
+        "exit": 0.005219,
+        "pnl": -0.31
+      },
+      {
+        "entry_time": "2026-07-12 12:25",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "1h0m",
+        "entry": 0.005302,
+        "exit": 0.005219,
+        "pnl": -1.57
+      },
+      {
+        "entry_time": "2026-07-12 12:35",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "50m",
+        "entry": 0.005137,
+        "exit": 0.005219,
+        "pnl": 1.6
+      },
+      {
+        "entry_time": "2026-07-12 12:40",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "45m",
+        "entry": 0.005129,
+        "exit": 0.005219,
+        "pnl": 1.75
+      },
+      {
+        "entry_time": "2026-07-12 12:45",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "40m",
+        "entry": 0.005211,
+        "exit": 0.005219,
+        "pnl": 0.15
+      },
+      {
+        "entry_time": "2026-07-12 13:00",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "25m",
+        "entry": 0.005264,
+        "exit": 0.005219,
+        "pnl": -0.85
+      },
+      {
+        "entry_time": "2026-07-12 13:10",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "15m",
+        "entry": 0.005192,
+        "exit": 0.005219,
+        "pnl": 0.52
+      },
+      {
+        "entry_time": "2026-07-12 13:15",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "10m",
+        "entry": 0.005209,
+        "exit": 0.005219,
+        "pnl": 0.19
+      },
+      {
+        "entry_time": "2026-07-12 13:20",
+        "exit_time": "2026-07-12 13:25",
+        "duration": "5m",
+        "entry": 0.005229,
+        "exit": 0.005219,
+        "pnl": -0.19
+      }
+    ],
+    "avg_pnl_pct": 3.78,
+    "max_drawdown_pct": 15.8,
+    "final_equity": 13426.7
   },
   {
     "symbol": "HMSTR",
-    "trades": 87,
-    "win_rate": 82.8,
-    "avg_pnl": 2.41,
-    "max_dd": 0,
-    "sharpe": 3.97,
-    "equity": 100,
-    "total_return": 209.67000000000002,
-    "date_range": "07/01~07/12",
     "strategy": "multifactor",
-    "avg_pnl_pct": 2.41,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
+    "trades": 127,
+    "win_rate": 82.7,
+    "avg_pnl": 12.76,
+    "max_dd": 42.4,
+    "sharpe": 13.97,
+    "total_return": 1620.5,
+    "date_range": "07/09~07/12",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-10 08:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "35h40m",
+        "entry": 0.000193,
+        "exit": 0.000229,
+        "pnl": 18.41
+      },
+      {
+        "entry_time": "2026-07-10 08:30",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "35h30m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 18.1
+      },
+      {
+        "entry_time": "2026-07-10 08:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "35h20m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.86
+      },
+      {
+        "entry_time": "2026-07-10 09:10",
+        "exit_time": "2026-07-10 23:25",
+        "duration": "14h15m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 09:40",
+        "exit_time": "2026-07-10 23:25",
+        "duration": "13h45m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 09:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "34h15m",
+        "entry": 0.000193,
+        "exit": 0.000229,
+        "pnl": 18.53
+      },
+      {
+        "entry_time": "2026-07-10 09:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "34h10m",
+        "entry": 0.000193,
+        "exit": 0.000229,
+        "pnl": 18.65
+      },
+      {
+        "entry_time": "2026-07-10 09:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "34h5m",
+        "entry": 0.000193,
+        "exit": 0.000229,
+        "pnl": 18.35
+      },
+      {
+        "entry_time": "2026-07-10 10:05",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "13h35m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 10:10",
+        "exit_time": "2026-07-10 23:25",
+        "duration": "13h15m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 10:25",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "13h15m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 10:35",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "13h5m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 10:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "33h5m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.91
+      },
+      {
+        "entry_time": "2026-07-10 11:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "32h55m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.59
+      },
+      {
+        "entry_time": "2026-07-10 11:20",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "12h20m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 11:40",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "12h0m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 11:55",
+        "exit_time": "2026-07-10 23:45",
+        "duration": "11h50m",
+        "entry": 0.00019,
+        "exit": 0.000192,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 12:00",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "11h40m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 12:10",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "11h30m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 12:25",
+        "exit_time": "2026-07-10 23:20",
+        "duration": "10h55m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 12:35",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "11h5m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 13:00",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "10h40m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 13:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h40m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.84
+      },
+      {
+        "entry_time": "2026-07-10 13:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h35m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.78
+      },
+      {
+        "entry_time": "2026-07-10 13:30",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h30m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.78
+      },
+      {
+        "entry_time": "2026-07-10 13:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h20m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.04
+      },
+      {
+        "entry_time": "2026-07-10 13:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h15m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.16
+      },
+      {
+        "entry_time": "2026-07-10 13:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h5m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.42
+      },
+      {
+        "entry_time": "2026-07-10 14:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "30h0m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.53
+      },
+      {
+        "entry_time": "2026-07-10 14:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h55m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.33
+      },
+      {
+        "entry_time": "2026-07-10 14:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h50m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.79
+      },
+      {
+        "entry_time": "2026-07-10 14:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h45m",
+        "entry": 0.000185,
+        "exit": 0.000229,
+        "pnl": 23.52
+      },
+      {
+        "entry_time": "2026-07-10 14:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h40m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.25
+      },
+      {
+        "entry_time": "2026-07-10 14:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h35m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.19
+      },
+      {
+        "entry_time": "2026-07-10 14:30",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h30m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.25
+      },
+      {
+        "entry_time": "2026-07-10 14:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h20m",
+        "entry": 0.000185,
+        "exit": 0.000229,
+        "pnl": 23.78
+      },
+      {
+        "entry_time": "2026-07-10 14:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h15m",
+        "entry": 0.000185,
+        "exit": 0.000229,
+        "pnl": 23.85
+      },
+      {
+        "entry_time": "2026-07-10 14:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h10m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.32
+      },
+      {
+        "entry_time": "2026-07-10 14:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h5m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.39
+      },
+      {
+        "entry_time": "2026-07-10 15:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "29h0m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.32
+      },
+      {
+        "entry_time": "2026-07-10 15:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "28h55m",
+        "entry": 0.000184,
+        "exit": 0.000229,
+        "pnl": 24.52
+      },
+      {
+        "entry_time": "2026-07-10 15:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "28h50m",
+        "entry": 0.000186,
+        "exit": 0.000229,
+        "pnl": 22.92
+      },
+      {
+        "entry_time": "2026-07-10 15:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "28h45m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.2
+      },
+      {
+        "entry_time": "2026-07-10 15:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "28h40m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.2
+      },
+      {
+        "entry_time": "2026-07-10 15:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "28h20m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.79
+      },
+      {
+        "entry_time": "2026-07-10 16:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "27h55m",
+        "entry": 0.000186,
+        "exit": 0.000229,
+        "pnl": 23.25
+      },
+      {
+        "entry_time": "2026-07-10 16:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "27h35m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.39
+      },
+      {
+        "entry_time": "2026-07-10 16:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "27h25m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 22.13
+      },
+      {
+        "entry_time": "2026-07-10 16:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "27h5m",
+        "entry": 0.000186,
+        "exit": 0.000229,
+        "pnl": 22.99
+      },
+      {
+        "entry_time": "2026-07-10 17:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h55m",
+        "entry": 0.000186,
+        "exit": 0.000229,
+        "pnl": 22.92
+      },
+      {
+        "entry_time": "2026-07-10 17:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h45m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.72
+      },
+      {
+        "entry_time": "2026-07-10 17:30",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h30m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 21.68
+      },
+      {
+        "entry_time": "2026-07-10 17:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h20m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 22.0
+      },
+      {
+        "entry_time": "2026-07-10 17:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h10m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.46
+      },
+      {
+        "entry_time": "2026-07-10 17:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "26h5m",
+        "entry": 0.000187,
+        "exit": 0.000229,
+        "pnl": 22.33
+      },
+      {
+        "entry_time": "2026-07-10 18:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "25h55m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 21.74
+      },
+      {
+        "entry_time": "2026-07-10 18:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "25h50m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.97
+      },
+      {
+        "entry_time": "2026-07-10 18:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "25h40m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.16
+      },
+      {
+        "entry_time": "2026-07-10 18:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "25h35m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.59
+      },
+      {
+        "entry_time": "2026-07-10 18:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "25h25m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.72
+      },
+      {
+        "entry_time": "2026-07-10 18:55",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "4h45m",
+        "entry": 0.000192,
+        "exit": 0.000194,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 19:10",
+        "exit_time": "2026-07-10 23:45",
+        "duration": "4h35m",
+        "entry": 0.00019,
+        "exit": 0.000192,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 19:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "24h40m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.84
+      },
+      {
+        "entry_time": "2026-07-10 19:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "24h25m",
+        "entry": 0.00019,
+        "exit": 0.000229,
+        "pnl": 20.4
+      },
+      {
+        "entry_time": "2026-07-10 19:40",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "4h0m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 19:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "24h10m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.91
+      },
+      {
+        "entry_time": "2026-07-10 19:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "24h5m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.36
+      },
+      {
+        "entry_time": "2026-07-10 20:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "24h0m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 22.0
+      },
+      {
+        "entry_time": "2026-07-10 20:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h55m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 21.87
+      },
+      {
+        "entry_time": "2026-07-10 20:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h50m",
+        "entry": 0.000188,
+        "exit": 0.000229,
+        "pnl": 21.87
+      },
+      {
+        "entry_time": "2026-07-10 20:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h45m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.42
+      },
+      {
+        "entry_time": "2026-07-10 20:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h40m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 21.29
+      },
+      {
+        "entry_time": "2026-07-10 20:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h35m",
+        "entry": 0.000189,
+        "exit": 0.000229,
+        "pnl": 20.97
+      },
+      {
+        "entry_time": "2026-07-10 20:30",
+        "exit_time": "2026-07-10 23:40",
+        "duration": "3h10m",
+        "entry": 0.000191,
+        "exit": 0.000193,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-10 20:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h20m",
+        "entry": 0.000195,
+        "exit": 0.000229,
+        "pnl": 17.5
+      },
+      {
+        "entry_time": "2026-07-10 20:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h10m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.98
+      },
+      {
+        "entry_time": "2026-07-10 20:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h5m",
+        "entry": 0.000195,
+        "exit": 0.000229,
+        "pnl": 17.74
+      },
+      {
+        "entry_time": "2026-07-10 21:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "23h0m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.86
+      },
+      {
+        "entry_time": "2026-07-10 21:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h55m",
+        "entry": 0.000198,
+        "exit": 0.000229,
+        "pnl": 15.83
+      },
+      {
+        "entry_time": "2026-07-10 21:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h45m",
+        "entry": 0.000197,
+        "exit": 0.000229,
+        "pnl": 16.07
+      },
+      {
+        "entry_time": "2026-07-10 21:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h35m",
+        "entry": 0.000196,
+        "exit": 0.000229,
+        "pnl": 16.78
+      },
+      {
+        "entry_time": "2026-07-10 21:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h15m",
+        "entry": 0.000198,
+        "exit": 0.000229,
+        "pnl": 15.66
+      },
+      {
+        "entry_time": "2026-07-10 21:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h5m",
+        "entry": 0.000197,
+        "exit": 0.000229,
+        "pnl": 16.01
+      },
+      {
+        "entry_time": "2026-07-10 22:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "22h0m",
+        "entry": 0.0002,
+        "exit": 0.000229,
+        "pnl": 14.27
+      },
+      {
+        "entry_time": "2026-07-10 22:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h55m",
+        "entry": 0.000202,
+        "exit": 0.000229,
+        "pnl": 13.37
+      },
+      {
+        "entry_time": "2026-07-10 22:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h50m",
+        "entry": 0.000201,
+        "exit": 0.000229,
+        "pnl": 13.7
+      },
+      {
+        "entry_time": "2026-07-10 22:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h40m",
+        "entry": 0.000199,
+        "exit": 0.000229,
+        "pnl": 14.79
+      },
+      {
+        "entry_time": "2026-07-10 22:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h25m",
+        "entry": 0.000197,
+        "exit": 0.000229,
+        "pnl": 16.24
+      },
+      {
+        "entry_time": "2026-07-10 22:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h10m",
+        "entry": 0.000196,
+        "exit": 0.000229,
+        "pnl": 16.6
+      },
+      {
+        "entry_time": "2026-07-10 22:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "21h5m",
+        "entry": 0.000196,
+        "exit": 0.000229,
+        "pnl": 16.84
+      },
+      {
+        "entry_time": "2026-07-10 23:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h50m",
+        "entry": 0.000196,
+        "exit": 0.000229,
+        "pnl": 17.14
+      },
+      {
+        "entry_time": "2026-07-10 23:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h45m",
+        "entry": 0.000195,
+        "exit": 0.000229,
+        "pnl": 17.2
+      },
+      {
+        "entry_time": "2026-07-10 23:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h40m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.86
+      },
+      {
+        "entry_time": "2026-07-10 23:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h35m",
+        "entry": 0.000195,
+        "exit": 0.000229,
+        "pnl": 17.5
+      },
+      {
+        "entry_time": "2026-07-10 23:30",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h30m",
+        "entry": 0.000195,
+        "exit": 0.000229,
+        "pnl": 17.38
+      },
+      {
+        "entry_time": "2026-07-10 23:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h25m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.8
+      },
+      {
+        "entry_time": "2026-07-10 23:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h20m",
+        "entry": 0.000193,
+        "exit": 0.000229,
+        "pnl": 18.41
+      },
+      {
+        "entry_time": "2026-07-10 23:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h15m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 18.04
+      },
+      {
+        "entry_time": "2026-07-10 23:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h5m",
+        "entry": 0.000194,
+        "exit": 0.000229,
+        "pnl": 17.86
+      },
+      {
+        "entry_time": "2026-07-11 00:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20h0m",
+        "entry": 0.000198,
+        "exit": 0.000229,
+        "pnl": 15.54
+      },
+      {
+        "entry_time": "2026-07-11 16:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h55m",
+        "entry": 0.000233,
+        "exit": 0.000229,
+        "pnl": -1.55
+      },
+      {
+        "entry_time": "2026-07-11 16:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h50m",
+        "entry": 0.000233,
+        "exit": 0.000229,
+        "pnl": -1.55
+      },
+      {
+        "entry_time": "2026-07-11 16:15",
+        "exit_time": "2026-07-11 19:40",
+        "duration": "3h25m",
+        "entry": 0.000228,
+        "exit": 0.00023,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 16:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h40m",
+        "entry": 0.000232,
+        "exit": 0.000229,
+        "pnl": -1.12
+      },
+      {
+        "entry_time": "2026-07-11 16:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h35m",
+        "entry": 0.00023,
+        "exit": 0.000229,
+        "pnl": -0.65
+      },
+      {
+        "entry_time": "2026-07-11 16:35",
+        "exit_time": "2026-07-11 19:40",
+        "duration": "3h5m",
+        "entry": 0.000229,
+        "exit": 0.000231,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-11 16:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h10m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -2.3
+      },
+      {
+        "entry_time": "2026-07-11 17:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "3h0m",
+        "entry": 0.000239,
+        "exit": 0.000229,
+        "pnl": -4.1
+      },
+      {
+        "entry_time": "2026-07-11 17:10",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "2h50m",
+        "entry": 0.000238,
+        "exit": 0.000229,
+        "pnl": -3.82
+      },
+      {
+        "entry_time": "2026-07-11 17:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "2h35m",
+        "entry": 0.000238,
+        "exit": 0.000229,
+        "pnl": -3.7
+      },
+      {
+        "entry_time": "2026-07-11 17:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "2h25m",
+        "entry": 0.000237,
+        "exit": 0.000229,
+        "pnl": -3.5
+      },
+      {
+        "entry_time": "2026-07-11 17:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "2h20m",
+        "entry": 0.000238,
+        "exit": 0.000229,
+        "pnl": -3.98
+      },
+      {
+        "entry_time": "2026-07-11 17:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "2h10m",
+        "entry": 0.00024,
+        "exit": 0.000229,
+        "pnl": -4.78
+      },
+      {
+        "entry_time": "2026-07-11 18:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h55m",
+        "entry": 0.000235,
+        "exit": 0.000229,
+        "pnl": -2.55
+      },
+      {
+        "entry_time": "2026-07-11 18:15",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h45m",
+        "entry": 0.000235,
+        "exit": 0.000229,
+        "pnl": -2.39
+      },
+      {
+        "entry_time": "2026-07-11 18:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h40m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -2.26
+      },
+      {
+        "entry_time": "2026-07-11 18:25",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h35m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -2.09
+      },
+      {
+        "entry_time": "2026-07-11 18:35",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h25m",
+        "entry": 0.000233,
+        "exit": 0.000229,
+        "pnl": -1.84
+      },
+      {
+        "entry_time": "2026-07-11 18:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h20m",
+        "entry": 0.000235,
+        "exit": 0.000229,
+        "pnl": -2.43
+      },
+      {
+        "entry_time": "2026-07-11 18:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h10m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -2.22
+      },
+      {
+        "entry_time": "2026-07-11 18:55",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h5m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -1.93
+      },
+      {
+        "entry_time": "2026-07-11 19:00",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "1h0m",
+        "entry": 0.000233,
+        "exit": 0.000229,
+        "pnl": -1.55
+      },
+      {
+        "entry_time": "2026-07-11 19:05",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "55m",
+        "entry": 0.000234,
+        "exit": 0.000229,
+        "pnl": -2.26
+      },
+      {
+        "entry_time": "2026-07-11 19:20",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "40m",
+        "entry": 0.000238,
+        "exit": 0.000229,
+        "pnl": -3.7
+      },
+      {
+        "entry_time": "2026-07-11 19:40",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "20m",
+        "entry": 0.000224,
+        "exit": 0.000229,
+        "pnl": 2.23
+      },
+      {
+        "entry_time": "2026-07-11 19:45",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "15m",
+        "entry": 0.000223,
+        "exit": 0.000229,
+        "pnl": 2.64
+      },
+      {
+        "entry_time": "2026-07-11 19:50",
+        "exit_time": "2026-07-11 20:00",
+        "duration": "10m",
+        "entry": 0.000228,
+        "exit": 0.000229,
+        "pnl": 0.62
+      }
+    ],
+    "avg_pnl_pct": 12.76,
+    "max_drawdown_pct": 42.4,
+    "final_equity": 243239031
   },
   {
-    "symbol": "ARX",
-    "trades": 6,
-    "win_rate": 83.3,
-    "avg_pnl": 3.88,
-    "max_dd": 0,
-    "sharpe": 3.8,
-    "equity": 100,
-    "total_return": 23.28,
-    "date_range": "07/01~07/12",
+    "symbol": "EVAA",
     "strategy": "multifactor",
-    "avg_pnl_pct": 3.88,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "ENA",
-    "trades": 29,
-    "win_rate": 58.6,
-    "avg_pnl": 1.71,
-    "max_dd": 0,
-    "sharpe": 3.0,
-    "equity": 100,
-    "total_return": 49.589999999999996,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 1.71,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "SXT",
-    "trades": 61,
-    "win_rate": 70.5,
-    "avg_pnl": 1.26,
-    "max_dd": 0,
-    "sharpe": 1.73,
-    "equity": 100,
-    "total_return": 76.86,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 1.26,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
-  },
-  {
-    "symbol": "HBAR",
-    "trades": 34,
-    "win_rate": 35.3,
-    "avg_pnl": 0.69,
-    "max_dd": 0,
-    "sharpe": 1.37,
-    "equity": 100,
-    "total_return": 23.459999999999997,
-    "date_range": "07/01~07/12",
-    "strategy": "multifactor",
-    "avg_pnl_pct": 0.69,
-    "max_drawdown_pct": 0,
-    "final_equity": 100,
-    "trades_detail": []
+    "trades": 15,
+    "win_rate": 80.0,
+    "avg_pnl": 1.06,
+    "max_dd": 10.0,
+    "sharpe": 1.11,
+    "total_return": 15.9,
+    "date_range": "07/09~07/12",
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-12 12:00",
+        "exit_time": "2026-07-12 12:30",
+        "duration": "30m",
+        "entry": 0.9548,
+        "exit": 1.00254,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 12:05",
+        "exit_time": "2026-07-12 12:30",
+        "duration": "25m",
+        "entry": 0.9855,
+        "exit": 0.995355,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:15",
+        "exit_time": "2026-07-12 12:30",
+        "duration": "15m",
+        "entry": 1.0715,
+        "exit": 0.96435,
+        "pnl": -10.0
+      },
+      {
+        "entry_time": "2026-07-12 12:20",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "40m",
+        "entry": 1.0583,
+        "exit": 1.068883,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:25",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "35m",
+        "entry": 1.0502,
+        "exit": 1.060702,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:30",
+        "exit_time": "2026-07-12 12:35",
+        "duration": "5m",
+        "entry": 0.9718,
+        "exit": 0.981518,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:35",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "25m",
+        "entry": 1.0467,
+        "exit": 1.057167,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:40",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "20m",
+        "entry": 1.0684,
+        "exit": 1.079084,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:45",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "15m",
+        "entry": 1.0874,
+        "exit": 1.098274,
+        "pnl": 1.0
+      },
+      {
+        "entry_time": "2026-07-12 12:50",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "10m",
+        "entry": 1.0353,
+        "exit": 1.087065,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 12:55",
+        "exit_time": "2026-07-12 13:00",
+        "duration": "5m",
+        "entry": 1.0372,
+        "exit": 1.08906,
+        "pnl": 5.0
+      },
+      {
+        "entry_time": "2026-07-12 13:00",
+        "exit_time": "2026-07-12 13:30",
+        "duration": "30m",
+        "entry": 1.1468,
+        "exit": 1.1987,
+        "pnl": 4.53
+      },
+      {
+        "entry_time": "2026-07-12 13:05",
+        "exit_time": "2026-07-12 13:30",
+        "duration": "25m",
+        "entry": 1.1668,
+        "exit": 1.1987,
+        "pnl": 2.73
+      },
+      {
+        "entry_time": "2026-07-12 13:20",
+        "exit_time": "2026-07-12 13:30",
+        "duration": "10m",
+        "entry": 1.238,
+        "exit": 1.1987,
+        "pnl": -3.17
+      },
+      {
+        "entry_time": "2026-07-12 13:25",
+        "exit_time": "2026-07-12 13:30",
+        "duration": "5m",
+        "entry": 1.2016,
+        "exit": 1.1987,
+        "pnl": -0.24
+      }
+    ],
+    "avg_pnl_pct": 1.06,
+    "max_drawdown_pct": 10.0,
+    "final_equity": 115.9
   }
 ]

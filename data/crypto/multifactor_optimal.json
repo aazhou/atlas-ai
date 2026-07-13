@@ -1,0 +1,36 @@
+[
+  {
+    "sharpe": 9.47,
+    "trades": 206,
+    "wr": 86.9,
+    "avg": 3.56,
+    "weights": {
+      "candle": 0.6,
+      "vol": 0.0,
+      "pa": 0.4,
+      "rsi": 0.0,
+      "trend": 0.0
+    },
+    "thr": 0.1,
+    "sl": -12,
+    "tp": 20,
+    "sym": "TUSDT"
+  },
+  {
+    "sharpe": 22.57,
+    "trades": 23,
+    "wr": 100.0,
+    "avg": 21.47,
+    "weights": {
+      "candle": 0.0,
+      "vol": 0.0,
+      "pa": 0.0,
+      "rsi": 0.9,
+      "trend": 0.1
+    },
+    "thr": 0.2,
+    "sl": -8,
+    "tp": 5,
+    "sym": "HMSTRUSDT"
+  }
+]

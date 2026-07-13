@@ -1,0 +1,41 @@
+{
+  "time": "2026-07-13T15:30:40.231693",
+  "signals": [
+    {
+      "symbol": "TUSDT",
+      "funding_rate": -0.705,
+      "p5": -0.0222,
+      "price_5m_close": 0.005203,
+      "score": 0.2,
+      "trend": "UP",
+      "time": "15:30:40"
+    },
+    {
+      "symbol": "SXTUSDT",
+      "funding_rate": -0.6608,
+      "p5": -0.0115,
+      "price_5m_close": 0.00881,
+      "score": 0.2,
+      "trend": "UP",
+      "time": "15:30:40"
+    },
+    {
+      "symbol": "SKLUSDT",
+      "funding_rate": -0.0614,
+      "p5": -0.0046,
+      "price_5m_close": 0.004704,
+      "score": 0.2,
+      "trend": "UP",
+      "time": "15:30:40"
+    },
+    {
+      "symbol": "EVAAUSDT",
+      "funding_rate": -0.0055,
+      "p5": 0.005,
+      "price_5m_close": 1.1987,
+      "score": 0.3,
+      "trend": "UP",
+      "time": "15:30:40"
+    }
+  ]
+}

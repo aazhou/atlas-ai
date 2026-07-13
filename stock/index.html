@@ -154,10 +154,10 @@ async function load() {
   let sectorData = null;
   let pfData = null;
   try {
-    let sr = await fetch(`data/sectors-${date}.json`);
+    let sr = await fetch(`../data/stock/sectors-${date}.json`);
     if (!sr.ok) {
       const yd = new Date(Date.now() - 86400000).toISOString().slice(0,10);
-      sr = await fetch(`data/sectors-${yd}.json`);
+      sr = await fetch(`../data/stock/sectors-${yd}.json`);
     }
     if (sr.ok) sectorData = await sr.json();
   } catch(e) {}

@@ -1,0 +1,91 @@
+[
+  {
+    "symbol": "LAB",
+    "strategy": "funding_extreme",
+    "direction": "SHORT",
+    "date_range": "07-10~07-12",
+    "trades": 6,
+    "win_rate": 83.3,
+    "avg_pnl": 10.76,
+    "total_return": 64.55,
+    "max_dd": 0.6,
+    "sharpe": 4.65,
+    "profit_factor": 116.27,
+    "avg_win": 13.02,
+    "avg_loss": -0.56,
+    "trades_detail": [
+      {
+        "entry_time": "2026-07-10 20:05:00",
+        "exit_time": "2026-07-11 00:20:00",
+        "entry_price": 1.1941,
+        "exit_price": 1.0107,
+        "pnl_pct": 15.36,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "max_profit": 15.36,
+        "max_loss": -3.56,
+        "entry_rate": 0.0537
+      },
+      {
+        "entry_time": "2026-07-11 04:00:00",
+        "exit_time": "2026-07-11 12:25:00",
+        "entry_price": 0.92,
+        "exit_price": 0.7607,
+        "pnl_pct": 17.32,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "max_profit": 17.32,
+        "max_loss": -1.87,
+        "entry_rate": 0.0558
+      },
+      {
+        "entry_time": "2026-07-12 00:00:00",
+        "exit_time": "2026-07-12 02:40:00",
+        "entry_price": 0.7611,
+        "exit_price": 0.6764,
+        "pnl_pct": 11.13,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "max_profit": 11.13,
+        "max_loss": 0,
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 02:45:00",
+        "exit_time": "2026-07-12 07:20:00",
+        "entry_price": 0.672,
+        "exit_price": 0.5971,
+        "pnl_pct": 11.15,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "max_profit": 11.15,
+        "max_loss": -2.54,
+        "entry_rate": 0.0665
+      },
+      {
+        "entry_time": "2026-07-12 07:25:00",
+        "exit_time": "2026-07-12 08:50:00",
+        "entry_price": 0.597,
+        "exit_price": 0.5364,
+        "pnl_pct": 10.15,
+        "direction": "SHORT",
+        "exit_reason": "止盈",
+        "max_profit": 10.15,
+        "max_loss": -1.17,
+        "entry_rate": 0.0751
+      },
+      {
+        "entry_time": "2026-07-12 08:55:00",
+        "exit_time": "2026-07-12 13:30:00",
+        "entry_price": 0.5326,
+        "exit_price": 0.5356,
+        "pnl_pct": -0.56,
+        "direction": "SHORT",
+        "exit_reason": "收盘",
+        "max_profit": 4.81,
+        "max_loss": -4.83,
+        "entry_rate": 0.0553
+      }
+    ]
+  }
+]

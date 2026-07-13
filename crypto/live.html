@@ -23,6 +23,15 @@
   .refresh-row { display: flex; gap: 12px; align-items: center; margin-bottom: 4px; }
   .refresh-btn { padding: 6px 16px; border: 1px solid var(--primary); border-radius: 6px; background: rgba(250,255,105,0.06); color: var(--primary); cursor: pointer; font-size: 13px; font-weight: 600; }
   .refresh-btn:hover { background: rgba(250,255,105,0.12); }
+  .bg-win { background: rgba(16,185,129,0.06); }
+  .bg-loss { background: rgba(244,63,94,0.06); }
+  @media (max-width: 640px) {
+    .picks-table { display: block !important; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .picks-table th, .picks-table td { padding: 8px 10px; font-size: 11px; white-space: nowrap; }
+    .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .stat-card { padding: 12px; }
+    .stat-card .value { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
@@ -40,8 +49,8 @@
   <div class="strategy-selector">
     <label>策略</label>
     <select id="strategySelect" onchange="renderAll()">
-      <option value="funding_extreme_long">费率极值反转 (LONG)</option>
-      <option value="ema_crossover">EMA金叉死叉</option>
+      <option value="V11_multifactor">V11 多因子评分 (LONG)</option>
+      <option value="funding_extreme">费率极值反转 (LONG)</option>
     </select>
   </div>
 
@@ -68,19 +77,18 @@
 <script>
 var DATA = {};
 var STRATEGIES = {
-  funding_extreme_long: { name: '费率极值反转', desc: '资金费率低于P5分位时反向做多，4h趋势过滤。入场即设SL(-10%)/TP(+10%)' },
+  V11_multifactor: { name: "V11 多因子评分", desc: "费率<P5 + 4h趋势↑ + K线/量/PA/趋势四因子评分>0.18 → LONG。止损-10% | 移动止盈+5% | 最大48h。" },
+  funding_extreme: { name: '费率极值反转', desc: '资金费率低于P5分位时反向做多，4h趋势过滤。入场即设SL(-10%)/TP(+10%)，持仓最长48h。' },
 };
 
 function loadAll(){
   var ts = Date.now();
   Promise.all([
     fetch('/data/crypto/portfolio.json?'+ts).then(function(r){ return r.json(); }),
-    fetch('/data/crypto/signals.json?'+ts).then(function(r){ return r.json(); }),
-    fetch('/data/crypto/strategies.json?'+ts).then(function(r){ return r.json(); }).catch(function(){ return null; })
+    fetch('/data/crypto/signals.json?'+ts).then(function(r){ return r.json(); }).catch(function(){ return null; })
   ]).then(function(results){
     DATA.portfolio = results[0];
     DATA.signals = results[1];
-    DATA.strategies = results[2];
     document.getElementById('updateTime').textContent = new Date().toLocaleString('zh-CN');
     renderAll();
   }).catch(function(e){
@@ -90,7 +98,7 @@ function loadAll(){
 
 function renderAll(){
   var strat = document.getElementById('strategySelect').value;
-  var info = STRATEGIES[strat] || STRATEGIES['funding_extreme_long'];
+  var info = STRATEGIES[strat] || STRATEGIES['funding_extreme'];
   document.getElementById('strategyDesc').textContent = info.desc;
 
   renderStats(strat);
@@ -106,17 +114,28 @@ function calcStats(pf, strat){
   var totalTrades = filteredClosed.length;
   var wins = filteredClosed.filter(function(c){ return (c.exit_pnl||0) > 0; });
   var winRate = totalTrades > 0 ? (wins.length / totalTrades * 100) : 0;
-  var totalPnL = 0, maxDD = 0, sumRet = 0, sumRetSq = 0;
+  var totalPnL = 0;
   var returns = [];
-  filteredClosed.forEach(function(c){ var p = c.exit_pnl||0; totalPnL += p; returns.push(p); sumRet += p; sumRetSq += p*p; });
+  filteredClosed.forEach(function(c){ var p = c.exit_pnl||0; totalPnL += p; returns.push(p); });
+
+  // Include unrealized PnL from open positions for total return display
+  var unrealized = 0;
+  var filteredOpen = positions;
+  if (strat) filteredOpen = positions.filter(function(p){ return (p.strategy||'') === strat || !p.strategy || p.strategy === ''; });
+  filteredOpen.forEach(function(p){ unrealized += (p.unrealized_pnl||0); });
+
+  // Stats from closed trades only
+  var sumRet = 0, sumRetSq = 0;
+  returns.forEach(function(p){ sumRet += p; sumRetSq += p*p; });
   var avgRet = totalTrades > 0 ? sumRet / totalTrades : 0;
   var stdRet = totalTrades > 1 ? Math.sqrt((sumRetSq - sumRet*sumRet/totalTrades) / (totalTrades-1)) : 0;
   var sharpe = stdRet > 0 ? (avgRet / stdRet * Math.sqrt(252)) : 0;
 
-  // Max drawdown approximation
+  // Max drawdown from closed
   var peak = 0, drawdown = 0;
-  returns.forEach(function(r){ peak = Math.max(peak, peak+r); drawdown = Math.max(drawdown, peak - (peak+r)); });
-  maxDD = peak > 0 ? (drawdown / peak * 100) : 0;
+  var eq = 0;
+  returns.forEach(function(r){ eq += r; peak = Math.max(peak, eq); drawdown = Math.max(drawdown, peak - eq); });
+  var maxDD = peak > 0 ? (drawdown / peak * 100) : 0;
 
   return {
     total_return: totalPnL.toFixed(2),
@@ -131,15 +150,15 @@ function calcStats(pf, strat){
 function renderStats(strat){
   var pf = DATA.portfolio || {};
   var stats = calcStats(pf, strat);
-  var signTot = stats.open_positions > 0 ? Number(stats.total_return) : Number(stats.total_return) || 0;
+  var signTot = Number(stats.total_return) || 0;
   document.getElementById('statCards').innerHTML = [
-    {l:'总收益率', v:stats.total_return+'%', cls:signTot>=0?'up':'down'},
+    {l:'累计盈亏', v:stats.total_return+'%', cls:signTot>=0?'up':'down'},
     {l:'胜率', v:stats.win_rate+'%', cls:Number(stats.win_rate)>=50?'up':'down'},
     {l:'夏普比率', v:stats.sharpe, cls:''},
     {l:'最大回撤', v:stats.max_dd+'%', cls:Number(stats.max_dd)>20?'down':''},
     {l:'交易笔数', v:stats.trades, cls:''},
     {l:'当前持仓', v:stats.open_positions, cls:''}
-  ].map(function(s){ return '<div class="stat-card"><div class="label">'+s.l+'</div><div class="value '+s.cls+'">'+s.v+'</div></div>'; }).join('');
+  ].map(function(s){ return '<div class="stat-card"><div class="label">'+s.l+'</div><div class="value '+s.cls+'\">'+s.v+'</div></div>'; }).join('');
 }
 
 function renderPositions(strat){
@@ -154,6 +173,7 @@ function renderPositions(strat){
   function pp(v){ return Math.abs(v) < 1 ? v.toFixed(6) : v.toFixed(4); }
   function duration(entryTime){
     var now = new Date(), then = new Date(entryTime.replace(' ','T'));
+    if (isNaN(then.getTime())) return '—';
     var diff = now - then;
     var h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000);
     if (h >= 24) return Math.floor(h/24)+'d '+(h%24)+'h';
@@ -191,6 +211,18 @@ function renderClosed(strat){
   if (!filtered.length) { el.innerHTML = '<div class="loading">暂无已平仓记录</div>'; return; }
 
   function pp(v){ return Math.abs(v) < 1 ? v.toFixed(6) : v.toFixed(4); }
+  function tradeDuration(entryTime, exitTime){
+    if (!entryTime || !exitTime) return '—';
+    var t1 = new Date(entryTime.replace(' ','T'));
+    var t2 = new Date(exitTime.replace(' ','T'));
+    if (isNaN(t1.getTime()) || isNaN(t2.getTime())) return '—';
+    var diff = t2 - t1;
+    var h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000);
+    if (h >= 24) return Math.floor(h/24)+'d '+(h%24)+'h';
+    if (h > 0) return h+'h '+m+'m';
+    return m+'m';
+  }
+
   var h = '<table class="picks-table"><thead><tr>';
   h += '<th>币种</th><th>方向</th><th>入场价</th><th>出场价</th><th>盈亏</th><th>平仓原因</th><th>持仓</th><th>策略</th>';
   h += '</tr></thead><tbody>';
@@ -205,7 +237,7 @@ function renderClosed(strat){
     h += '<td class="mono">$'+pp(c.exit_price)+'</td>';
     h += '<td class="mono '+pnlClass+'">'+(pnl>=0?'+':'')+pnl.toFixed(2)+'%</td>';
     h += '<td>'+c.exit_reason+'</td>';
-    h += '<td>'+c.duration+'</td>';
+    h += '<td>'+tradeDuration(c.entry_time, c.exit_time)+'</td>';
     h += '<td>'+(c.strategy||'—')+'</td>';
     h += '</tr>';
   });
