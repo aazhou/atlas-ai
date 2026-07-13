@@ -1,10 +1,14 @@
-// Atlas AI — 单栏统一导航 v2
+// Atlas AI — 单栏统一导航 v3 (相对路径)
 document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname;
   const inStock = path.includes('/stock/');
   const inFootball = path.includes('/football/');
   const inCrypto = path.includes('/crypto/');
-  const inCron = path === '/system.html';
+  const inCron = path === '/system.html' || path.endsWith('/system.html');
+
+  // Detect depth: pages in subdirectories need ../ prefix
+  const depth = (path.match(/\//g) || []).length - 1; // minus trailing slash
+  const base = depth > 0 ? '../' : '';
 
   const svg = {
     trending: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
@@ -28,21 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (inStock) {
     items = [
-      { id:'dashboard', href:'/stock/',             icon:svg.dashboard, label:'仪表盘', active:isActive('/stock/') && !isActive('/stock/sectors.html') && !isActive('/stock/scanner.html') && !isActive('/stock/portfolio.html') && !inCron },
-      { id:'sectors',   href:'/stock/sectors.html',  icon:svg.sectors,   label:'板块',   active:isActive('/stock/sectors.html') },
-      { id:'scanner',   href:'/stock/scanner.html',  icon:svg.search,    label:'选股',   active:isActive('/stock/scanner.html') },
-      { id:'portfolio', href:'/stock/portfolio.html',icon:svg.briefcase, label:'持仓',   active:isActive('/stock/portfolio.html') },
+      { id:'dashboard', href:base+'stock/',             icon:svg.dashboard, label:'仪表盘', active:isActive('/stock/') && !isActive('/stock/sectors.html') && !isActive('/stock/scanner.html') && !isActive('/stock/portfolio.html') && !inCron },
+      { id:'sectors',   href:base+'stock/sectors.html',  icon:svg.sectors,   label:'板块',   active:isActive('/stock/sectors.html') },
+      { id:'scanner',   href:base+'stock/scanner.html',  icon:svg.search,    label:'选股',   active:isActive('/stock/scanner.html') },
+      { id:'portfolio', href:base+'stock/portfolio.html',icon:svg.briefcase, label:'持仓',   active:isActive('/stock/portfolio.html') },
     ];
   } else if (inFootball) {
     items = [
-      { id:'predict',   href:'/football/predict.html',     icon:svg.clock,     label:'预测',   active:path === '/football/predict.html' },
-      { id:'results',   href:'/football/results.html',icon:svg.clipboard, label:'成绩单', active:isActive('/football/results.html') },
-      { id:'bracket',   href:'/football/bracket.html',icon:svg.bracket,   label:'晋级图', active:isActive('/football/bracket.html') },
+      { id:'predict',   href:base+'football/predict.html',     icon:svg.clock,     label:'预测',   active:path === '/football/predict.html' },
+      { id:'results',   href:base+'football/results.html',icon:svg.clipboard, label:'成绩单', active:isActive('/football/results.html') },
+      { id:'bracket',   href:base+'football/bracket.html',icon:svg.bracket,   label:'晋级图', active:isActive('/football/bracket.html') },
     ];
   } else if (inCrypto) {
     items = [
-      { id:'backtest',  href:'/crypto/',           icon:svg.flask,     label:'回测',   active:path === '/crypto/' || path === '/crypto/index.html' },
-      { id:'live',      href:'/crypto/live.html',  icon:svg.briefcase, label:'实盘',   active:isActive('/crypto/live.html') },
+      { id:'backtest',  href:base+'crypto/',           icon:svg.flask,     label:'回测',   active:path === '/crypto/' || path === '/crypto/index.html' },
+      { id:'live',      href:base+'crypto/live.html',  icon:svg.briefcase, label:'实盘',   active:isActive('/crypto/live.html') },
     ];
   }
 
@@ -56,13 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Build header
   var header = '<header class="an-bar">';
   header += '<div class="an-bar-inner">';
-  header += '<a href="/" class="an-brand">Atlas AI</a>';
+  header += '<a href="'+base+'" class="an-brand">Atlas AI</a>';
   header += '<nav class="an-nav">' + subNavHtml + '</nav>';
   header += '<div class="an-switch">';
-  header += '<a href="/stock/" class="an-sw-item'+(inStock?' active':'')+'">'+svg.trending+'<span>A股</span></a>';
-  header += '<a href="/football/predict.html" class="an-sw-item'+(inFootball?' active':'')+'">'+svg.football+'<span>足球</span></a>';
-  header += '<a href="/crypto/" class="an-sw-item'+(inCrypto?' active':'')+'">'+svg.crypto+'<span>加密</span></a>';
-  header += '<a href="/system.html" class="an-sw-item'+(inCron?' active':'')+'">'+svg.settings+'<span>看板</span></a>';
+  header += '<a href="'+base+'stock/" class="an-sw-item'+(inStock?' active':'')+'">'+svg.trending+'<span>A股</span></a>';
+  header += '<a href="'+base+'football/predict.html" class="an-sw-item'+(inFootball?' active':'')+'">'+svg.football+'<span>足球</span></a>';
+  header += '<a href="'+base+'crypto/" class="an-sw-item'+(inCrypto?' active':'')+'">'+svg.crypto+'<span>加密</span></a>';
+  header += '<a href="'+base+'system.html" class="an-sw-item'+(inCron?' active':'')+'">'+svg.settings+'<span>看板</span></a>';
   header += '</div>';
   header += '</div></header>';
 

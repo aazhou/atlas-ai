@@ -4,8 +4,8 @@
       "symbol": "SKLUSDT",
       "symbol_short": "SKL",
       "entry_price": 0.004703,
-      "current_price": 0.00442,
-      "unrealized_pnl": -6.02,
+      "current_price": 0.00447,
+      "unrealized_pnl": -4.95,
       "entry_time": "2026-07-12 17:03:10",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.0614,
@@ -112,7 +112,7 @@
       "exit_time": "2026-07-13 14:40:40"
     }
   ],
-  "updated": "2026-07-13 16:00:45",
+  "updated": "2026-07-13 16:20:49",
   "stats": {
     "total_trades": 5,
     "win_rate": 40.0,
