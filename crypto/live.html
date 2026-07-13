@@ -84,8 +84,8 @@ var STRATEGIES = {
 function loadAll(){
   var ts = Date.now();
   Promise.all([
-    fetch('/data/crypto/portfolio.json?'+ts).then(function(r){ return r.json(); }),
-    fetch('/data/crypto/signals.json?'+ts).then(function(r){ return r.json(); }).catch(function(){ return null; })
+    fetch('../data/crypto/portfolio.json?'+ts).then(function(r){ return r.json(); }),
+    fetch('../data/crypto/signals.json?'+ts).then(function(r){ return r.json(); }).catch(function(){ return null; })
   ]).then(function(results){
     DATA.portfolio = results[0];
     DATA.signals = results[1];

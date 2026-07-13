@@ -156,7 +156,7 @@ async function load() {
   const date = getToday();
   let data;
   try {
-    let r = await fetch(`data/portfolio.json`);
+    let r = await fetch(`../data/stock/portfolio.json`);
     if (!r.ok) {
       const yd = new Date(Date.now() - 86400000).toISOString().slice(0,10);
       r = await fetch(`data/portfolio-${yd}.json`);
