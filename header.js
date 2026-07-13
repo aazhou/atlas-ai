@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const inCron = path === '/system.html' || path.endsWith('/system.html');
 
   // Detect depth: pages in subdirectories need ../ prefix
-  const depth = (path.match(/\//g) || []).length - 1; // minus trailing slash
-  const base = depth > 0 ? '../' : '';
+  const inSubDir = inStock || inFootball || inCrypto;
+  const base = inSubDir ? '../' : './';
 
   const svg = {
     trending: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
