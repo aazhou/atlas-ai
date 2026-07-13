@@ -2,10 +2,73 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Atlas AI</title>
-<meta http-equiv="refresh" content="0;url=/stock/">
-<script>location.replace('/stock/');</script>
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero { text-align: center; padding: 60px 20px 40px; }
+  .hero h1 { font-size: 32px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+  .hero p { font-size: 14px; color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+  
+  .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 700px; margin: 0 auto; }
+  .nav-card { display: block; background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 10px; padding: 24px; text-decoration: none; transition: border-color 0.2s, transform 0.1s; }
+  .nav-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .nav-card .icon { font-size: 28px; margin-bottom: 10px; }
+  .nav-card .title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .nav-card .desc { font-size: 12px; color: var(--muted-soft); line-height: 1.5; }
+
+  .status-bar { display: flex; gap: 20px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+  .status-item { font-size: 12px; color: var(--muted); }
+  .status-item .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; }
+  .status-item .dot.on { background: #22c55e; }
+  .status-item .dot.off { background: #555; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 40px 16px 24px; }
+    .hero h1 { font-size: 24px; }
+    .nav-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .nav-card { padding: 16px; }
+    .nav-card .title { font-size: 14px; }
+  }
+</style>
 </head>
-<body></body>
+<body>
+<script src="header.js"></script>
+<div class="main">
+  <div class="hero">
+    <h1>Atlas AI</h1>
+    <p>龙哥的智能投资助手 — 覆盖A股、港股、美股、加密、足球，AI驱动实时盯盘与量化策略</p>
+  </div>
+
+  <div class="nav-grid">
+    <a href="stock/" class="nav-card">
+      <div class="icon">📈</div>
+      <div class="title">A股</div>
+      <div class="desc">仪表盘 · 板块资金流 · 选股 · 持仓分析</div>
+    </a>
+    <a href="crypto/" class="nav-card">
+      <div class="icon">₿</div>
+      <div class="title">加密</div>
+      <div class="desc">策略回测 · 模拟交易 · V11多因子</div>
+    </a>
+    <a href="football/predict.html" class="nav-card">
+      <div class="icon">⚽</div>
+      <div class="title">足球</div>
+      <div class="desc">世界杯预测 · 中超 · 盘口分析</div>
+    </a>
+    <a href="system.html" class="nav-card">
+      <div class="icon">⚙️</div>
+      <div class="title">系统</div>
+      <div class="desc">Cron看板 · 运行状态</div>
+    </a>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-item"><span class="dot on"></span>A股盯盘</div>
+    <div class="status-item"><span class="dot on"></span>港股盯盘</div>
+    <div class="status-item"><span class="dot on"></span>加密V11</div>
+    <div class="status-item"><span class="dot on"></span>GitHub Pages</div>
+  </div>
+</div>
+</body>
 </html>
