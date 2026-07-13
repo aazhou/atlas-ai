@@ -1,226 +1,85 @@
 {
-  "updated": "2026-07-13 16:30",
-  "total": 13,
-  "active": 13,
-  "ok": 11,
-  "error": 2,
-  "paused": 0,
+  "updated": "2026-07-13 15:30",
   "categories": {
-    "🇨🇳 A股": {
-      "jobs": [
-        {
-          "id": "41bd8a86f598",
-          "state": "active",
-          "enabled": true,
-          "name": "A股盘中预判",
-          "schedule": "0 10,11,13,14 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T10:00:00+08:00",
-          "deliver": "origin",
-          "skills": "investment-framework",
-          "last": "2026-07-13T14:07:24.679598+08:00  ok",
-          "status": "ok",
-          "type": "AI",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "1725ae88acca",
-          "state": "active",
-          "enabled": true,
-          "name": "A股盘前预判",
-          "schedule": "45 8 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T08:45:00+08:00",
-          "deliver": "origin",
-          "skills": "investment-framework",
-          "last": "2026-07-13T08:47:12.009910+08:00  ok",
-          "status": "ok",
-          "type": "AI",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "b3a139f63e8f",
-          "state": "active",
-          "enabled": true,
-          "name": "持仓分析-收盘更新",
-          "schedule": "35 15 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T15:35:00+08:00",
-          "deliver": "origin",
-          "skills": "investment-framework",
-          "last": "2026-07-13T15:43:47.986949+08:00  ok",
-          "status": "ok",
-          "type": "AI",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "9c3bfdcb032f",
-          "state": "active",
-          "enabled": true,
-          "name": "港股AI盯盘",
-          "schedule": "30 10,14 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T10:30:00+08:00",
-          "deliver": "origin",
-          "skills": "investment-framework",
-          "last": "2026-07-13T14:32:45.331715+08:00  ok",
-          "status": "ok",
-          "type": "AI",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "0f2a619f5c48",
-          "state": "active",
-          "enabled": true,
-          "name": "美股异动+建仓监控",
-          "schedule": "0 22,23,0,1,2,3 * * *",
-          "repeat": "∞",
-          "next": "2026-07-13T22:00:00+08:00",
-          "deliver": "origin",
-          "script": "us_stock_monitor.py",
-          "last": "2026-07-13T03:00:57.311004+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "587997324fef",
-          "state": "active",
-          "enabled": true,
-          "name": "港股紧急盯盘",
-          "schedule": "0 10,11,14,15 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T10:00:00+08:00",
-          "deliver": "origin",
-          "script": "hk_stock_monitor.py",
-          "last": "2026-07-13T15:00:38.525424+08:00  error: Script exited with code 1",
-          "status": "error",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "b0983c4f7a09",
-          "state": "active",
-          "enabled": true,
-          "name": "A股持仓哨兵",
-          "schedule": "*/10 9-11,13-14 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
-          "deliver": "origin",
-          "script": "position_sentinel.py",
-          "last": "2026-07-13T14:50:27.278879+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "cb429489440f",
-          "state": "active",
-          "enabled": true,
-          "name": "板块动量分析",
-          "schedule": "*/10 9-14 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
-          "deliver": "origin",
-          "script": "sector_momentum.py",
-          "last": "2026-07-13T14:50:25.963685+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "90185c795e9c",
-          "state": "active",
-          "enabled": true,
-          "name": "形态选股-盘前",
-          "schedule": "0 9 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
-          "deliver": "origin",
-          "script": "multi_scanner.py",
-          "last": "2026-07-13T09:00:29.106793+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "3ffe822d5b99",
-          "state": "active",
-          "enabled": true,
-          "name": "板块数据采集",
-          "schedule": "*/5 9-14 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
-          "deliver": "origin",
-          "script": "sector_logger.py",
-          "last": "2026-07-13T14:55:26.493326+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        },
-        {
-          "id": "d454f888c87d",
-          "state": "active",
-          "enabled": true,
-          "name": "量能极值反转狙击v3",
-          "schedule": "*/15 * * * *",
-          "repeat": "∞",
-          "next": "2026-07-13T16:45:00+08:00",
-          "deliver": "local",
-          "script": "funding_scanner.py",
-          "last": "2026-07-13T16:30:29.401212+08:00  error: Script not found: C:\\Users\\admin\\AppData\\Local\\hermes\\profiles\\market\\scripts\\funding_scanner.py",
-          "status": "error",
-          "type": "script",
-          "category": "🇨🇳 A股"
-        }
-      ],
-      "ok": 9,
-      "error": 2,
-      "paused": 0
-    },
-    "🇺🇸 美股": {
-      "jobs": [
-        {
-          "id": "0a8805c2853e",
-          "state": "active",
-          "enabled": true,
-          "name": "每日美股早间简报",
-          "schedule": "0 8 * * 1-5",
-          "repeat": "∞",
-          "next": "2026-07-14T08:00:00+08:00",
-          "deliver": "origin",
-          "skills": "investment-framework",
-          "last": "2026-07-13T08:18:28.456575+08:00  ok",
-          "status": "ok",
-          "type": "AI",
-          "category": "🇺🇸 美股"
-        }
-      ],
-      "ok": 1,
-      "error": 0,
-      "paused": 0
-    },
-    "🔧 系统": {
-      "jobs": [
-        {
-          "id": "1cc3b48d1aa6",
-          "state": "active",
-          "enabled": true,
-          "name": "Cron看板采集",
-          "schedule": "30 * * * *",
-          "repeat": "∞",
-          "next": "2026-07-13T17:30:00+08:00",
-          "deliver": "local",
-          "script": "cron_collector.py",
-          "last": "2026-07-13T15:30:28.181900+08:00  ok",
-          "status": "ok",
-          "type": "script",
-          "category": "🔧 系统"
-        }
-      ],
-      "ok": 1,
-      "error": 0,
-      "paused": 0
-    }
+    "A股": [
+      {
+        "name": "板块采集",
+        "schedule": "*/5 9-14",
+        "type": "脚本",
+        "last": "15:00",
+        "status": "ok"
+      },
+      {
+        "name": "持仓哨兵",
+        "schedule": "*/10 9-14",
+        "type": "脚本",
+        "last": "14:50",
+        "status": "ok"
+      },
+      {
+        "name": "盘中预判",
+        "schedule": "10,11,13,14",
+        "type": "AI",
+        "last": "14:00",
+        "status": "ok"
+      },
+      {
+        "name": "收盘更新",
+        "schedule": "15:35",
+        "type": "AI",
+        "last": "—",
+        "status": "pending"
+      }
+    ],
+    "港股": [
+      {
+        "name": "紧急盯盘",
+        "schedule": "10,11,14,15",
+        "type": "脚本",
+        "last": "14:00",
+        "status": "ok"
+      },
+      {
+        "name": "AI盯盘",
+        "schedule": "10:30,14:30",
+        "type": "AI",
+        "last": "14:30",
+        "status": "ok"
+      }
+    ],
+    "美股": [
+      {
+        "name": "异动监控",
+        "schedule": "22-3",
+        "type": "脚本",
+        "last": "—",
+        "status": "pending"
+      },
+      {
+        "name": "早间简报",
+        "schedule": "8:00",
+        "type": "AI",
+        "last": "—",
+        "status": "pending"
+      }
+    ],
+    "加密": [
+      {
+        "name": "V11模拟交易",
+        "schedule": "*/10",
+        "type": "脚本",
+        "last": "15:20",
+        "status": "ok"
+      }
+    ],
+    "系统": [
+      {
+        "name": "网站部署",
+        "schedule": "push触发",
+        "type": "Git",
+        "last": "now",
+        "status": "ok"
+      }
+    ]
   }
 }
