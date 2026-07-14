@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-14",
+  "match": "France vs Spain",
+  "kickoff": "2026-07-15 03:00 Beijing",
+  "stage": "Semifinal",
+  "odds": {
+    "pinnacle": {
+      "France": 2.44,
+      "Draw": 3.17,
+      "Spain": 3.26
+    },
+    "williamhill": {
+      "France": 2.38,
+      "Draw": 3.3,
+      "Spain": 2.9
+    },
+    "implied": {
+      "France": "41.0%",
+      "Draw": "31.5%",
+      "Spain": "30.7%"
+    },
+    "vig": "3.2%"
+  },
+  "analysis": {
+    "fundamentals": "法国卫冕冠军班底，姆巴佩+格列兹曼；西班牙传控青年军佩德里+亚马尔。法国大赛经验碾压。",
+    "tactical": "法国防反克制西班牙传控高位防线。本届西班牙被反击进球占失球60%。",
+    "odds_trend": "法国初盘2.55→2.44持续走低，资金流入。西班牙3.0→3.26走高。",
+    "verdict": "法国-0 或 法国胜。战术克制+盘口一致。"
+  },
+  "picks": [
+    {
+      "tier": "A",
+      "bet": "France win",
+      "odds": 2.44,
+      "reason": "战术克制+盘口支持+经验优势"
+    },
+    {
+      "tier": "B",
+      "bet": "France -0",
+      "odds": 1.72,
+      "reason": "平局退款，稳健选项"
+    }
+  ],
+  "prediction": "France 2-1 Spain (90 min)",
+  "updated": "2026-07-14 13:20"
+}
