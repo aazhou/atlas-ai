@@ -57,28 +57,28 @@
   .topbar-sub .topbar-link.active { color: var(--primary); border-color: var(--primary); }
 
   /* ── Date nav ── */
-  .topbar-dates {
-    display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
-    -webkit-overflow-scrolling: touch; padding-bottom: 8px;
-  }
-  .topbar-dates::-webkit-scrollbar { display: none; }
-  .nav-date {
-    padding: 4px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
-    font-size: 11px; font-weight: 500; cursor: pointer;
-    color: var(--muted); background: transparent;
-    border: 1px solid transparent;
-    font-family: 'JetBrains Mono', monospace;
-    transition: all 0.15s ease;
-  }
-  .nav-date:hover { color: var(--ink); background: var(--surface-card); border-color: var(--hairline); }
-  .nav-date.active { color: var(--on-primary); background: var(--primary); border-color: var(--primary); font-weight: 600; }
-
-  /* ── Mobile nav ── */
+  /* ── Topbar (3 rows: brand+league tabs, sub nav, date nav) ── */
   @media (max-width: 480px) {
     .topbar-tab { font-size: 11px; padding: 5px 10px; }
     .topbar-sub .topbar-link { font-size: 11px; padding: 5px 10px; }
     .topbar-sub .topbar-link svg { margin-right: 0; width: 15px; height: 15px; }
     .topbar-brand { font-size: 12px; }
+  }
+
+  /* ── Date select in header ── */
+  .date-select {
+    appearance: none; -webkit-appearance: none;
+    padding: 6px 28px 6px 12px;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    color: var(--ink); background: var(--surface-card);
+    border: 1px solid var(--hairline); border-radius: 8px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 8px center;
+  }
+  .date-select:focus { outline: none; border-color: var(--primary); }
+  @media (max-width: 480px) {
+    .date-select { font-size: 12px; padding: 5px 24px 5px 10px; }
   }
 
   /* ── Main ── */
@@ -301,8 +301,6 @@
 </head>
 <body>
 
-<div class="an-dates" id="dateNav"></div>
-
 <div class="main" id="content"><div class="loading">加载中...</div></div>
 
 <footer class="footer">Atlas <span style="color:var(--muted-soft);font-weight:400;">｜</span> 体育预测</footer>
@@ -319,14 +317,14 @@ const bj = new Date(now.getTime() + (8*60 + now.getTimezoneOffset()) * 60000);
 const today = bj.toISOString().slice(0,10);
 let currentDate = DATES.includes(today) ? today : DATES.find(d => d > today) || DATES[DATES.length-1];
 let currentLeague = 'wc'; // 'wc'=世界杯, 'csl'=中超
-function buildDateNav() {
-  const nav = document.getElementById('dateNav');
-  if (!nav) return;
-  nav.innerHTML = DATES.map(d => {
-    const parts = d.split('-');
-    const label = `${parseInt(parts[1])}/${parseInt(parts[2])}`;
-    return `<span class="nav-date${d === currentDate ? ' active' : ''}" onclick="switchDate('${d}')">${label}</span>`;
-  }).join('');
+function buildDateSelect() {
+  return `<select class="date-select" onchange="switchDate(this.value)">
+    ${DATES.map(d => {
+      const parts = d.split('-');
+      const label = `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+      return `<option value="${d}"${d === currentDate ? ' selected' : ''}>${label}</option>`;
+    }).join('')}
+  </select>`;
 }
 
 function buildLeagueToggle() {
@@ -367,7 +365,6 @@ async function switchLeague(league) {
 
 async function switchDate(date) {
   currentDate = date;
-  buildDateNav();
   await render(date);
   window.scrollTo(0, 0);
 }
@@ -540,8 +537,11 @@ async function render(date) {
     const title = `${parseInt(parts[1])}月${parseInt(parts[2])}日`;
     container.innerHTML = `
       <div class="page-header">
-        <h1>${title}</h1>
-        <span class="round">${currentLeague === 'csl' ? '中超' : '世界杯'}</span>
+        <div>
+          <h1>${title}</h1>
+          <span class="round">${currentLeague === 'csl' ? '中超' : '世界杯'}</span>
+        </div>
+        ${buildDateSelect()}
       </div>
       <div id="leagueToggle" style="display:flex;gap:6px;margin-bottom:20px;"></div>
       <div class="loading" style="padding:40px 0">今天暂无比赛</div>`;
@@ -555,8 +555,11 @@ async function render(date) {
 
   let html = `
     <div class="page-header">
-      <h1>${data.date.split('-').slice(1).map((v,i) => i===0 ? v.replace(/^0/,'')+'月' : v.replace(/^0/,'')+'日').join('')} · ${data.round}</h1>
-      <span class="round">${data.matches.length}场${hasPrediction ? ' · ' + data.top_picks.filter(p=>p.tier==='A').length + '个A级推荐' : ' · 赛前'} · ${data.updated || ''}</span>
+      <div>
+        <h1>${data.date.split('-').slice(1).map((v,i) => i===0 ? v.replace(/^0/,'')+'月' : v.replace(/^0/,'')+'日').join('')} · ${data.round}</h1>
+        <span class="round">${data.matches.length}场${hasPrediction ? ' · ' + data.top_picks.filter(p=>p.tier==='A').length + '个A级推荐' : ' · 赛前'} · ${data.updated || ''}</span>
+      </div>
+      ${buildDateSelect()}
     </div>
     <div id="leagueToggle" style="display:flex;gap:6px;margin-bottom:20px;"></div>`;
 
@@ -660,7 +663,6 @@ async function render(date) {
   if (lt) lt.innerHTML = buildLeagueToggle();
 }
 
-buildDateNav();
 render(currentDate);
 </script>
 
