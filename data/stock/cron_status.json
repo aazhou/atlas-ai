@@ -1,9 +1,9 @@
 {
-  "updated": "2026-07-14 08:30",
+  "updated": "2026-07-14 12:34",
   "total": 13,
   "active": 13,
-  "ok": 11,
-  "error": 2,
+  "ok": 12,
+  "error": 1,
   "paused": 0,
   "categories": {
     "🇨🇳 A股": {
@@ -90,11 +90,11 @@
           "name": "港股紧急盯盘",
           "schedule": "0 10,11,14,15 * * 1-5",
           "repeat": "∞",
-          "next": "2026-07-14T10:00:00+08:00",
+          "next": "None",
           "deliver": "origin",
           "script": "hk_stock_monitor.py",
-          "last": "2026-07-13T15:00:38.525424+08:00  error: Script exited with code 1",
-          "status": "error",
+          "last": "2026-07-14T12:34:03.525097+08:00  ok",
+          "status": "ok",
           "type": "script",
           "category": "🇨🇳 A股"
         },
@@ -105,10 +105,10 @@
           "name": "A股持仓哨兵",
           "schedule": "*/10 9-11,13-14 * * 1-5",
           "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
+          "next": "None",
           "deliver": "origin",
           "script": "position_sentinel.py",
-          "last": "2026-07-13T14:50:27.278879+08:00  ok",
+          "last": "2026-07-14T12:34:03.507446+08:00  ok",
           "status": "ok",
           "type": "script",
           "category": "🇨🇳 A股"
@@ -120,10 +120,10 @@
           "name": "板块动量分析",
           "schedule": "*/10 9-14 * * 1-5",
           "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
+          "next": "None",
           "deliver": "origin",
           "script": "sector_momentum.py",
-          "last": "2026-07-13T14:50:25.963685+08:00  ok",
+          "last": "2026-07-14T12:34:03.368876+08:00  ok",
           "status": "ok",
           "type": "script",
           "category": "🇨🇳 A股"
@@ -150,10 +150,10 @@
           "name": "板块数据采集",
           "schedule": "*/5 9-14 * * 1-5",
           "repeat": "∞",
-          "next": "2026-07-14T09:00:00+08:00",
+          "next": "None",
           "deliver": "origin",
           "script": "sector_logger.py",
-          "last": "2026-07-13T14:55:26.493326+08:00  ok",
+          "last": "2026-07-14T12:34:03.550225+08:00  ok",
           "status": "ok",
           "type": "script",
           "category": "🇨🇳 A股"
@@ -165,17 +165,17 @@
           "name": "量能极值反转狙击v3",
           "schedule": "*/15 * * * *",
           "repeat": "∞",
-          "next": "2026-07-14T08:45:00+08:00",
+          "next": "None",
           "deliver": "local",
           "script": "funding_scanner.py",
-          "last": "2026-07-14T08:30:05.834229+08:00  error: Script not found: C:\\Users\\admin\\AppData\\Local\\hermes\\profiles\\market\\scripts\\funding_scanner.py",
+          "last": "2026-07-14T12:34:03.155225+08:00  error: Script not found: C:\\Users\\admin\\AppData\\Local\\hermes\\profiles\\market\\scripts\\funding_scanner.py",
           "status": "error",
           "type": "script",
           "category": "🇨🇳 A股"
         }
       ],
-      "ok": 9,
-      "error": 2,
+      "ok": 10,
+      "error": 1,
       "paused": 0
     },
     "🇺🇸 美股": {
@@ -212,7 +212,7 @@
           "next": "2026-07-14T09:30:00+08:00",
           "deliver": "local",
           "script": "cron_collector.py",
-          "last": "2026-07-14T07:30:04.684714+08:00  ok",
+          "last": "2026-07-14T08:30:07.007764+08:00  ok",
           "status": "ok",
           "type": "script",
           "category": "🔧 系统"
