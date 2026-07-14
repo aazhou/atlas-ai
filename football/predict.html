@@ -362,22 +362,6 @@ async function loadData(date) {
 
 async function switchLeague(league) {
   currentLeague = league;
-  // Check if current date has data for this league; if not, fall back
-  const data = await loadData(currentDate);
-  if (!data) {
-    // Find latest date with data for this league
-    const resp = await fetch('../data/football/schedule.json');
-    if (resp.ok) {
-      const schedule = await resp.json();
-      const leagueDates = schedule.schedule
-        .filter(d => (league === 'csl') === (d.league === 'csl'))
-        .map(d => d.date)
-        .sort();
-      if (leagueDates.length) {
-        currentDate = leagueDates[leagueDates.length-1];
-      }
-    }
-  }
   switchDate(currentDate);
 }
 
