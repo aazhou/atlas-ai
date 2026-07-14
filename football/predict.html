@@ -344,7 +344,13 @@ async function loadData(date) {
     const resp = await fetch('../data/football/schedule.json');
     if (!resp.ok) return null;
     const schedule = await resp.json();
-    const day = schedule.schedule.find(d => d.date === date);
+// 2. schedule.json fallback — filter by league
+    const day = schedule.schedule.find(d => {
+      if (d.date !== date) return false;
+      const wantCSL = currentLeague === 'csl';
+      const isCSL = d.league === 'csl';
+      return wantCSL === isCSL;  // WC dates have no league field → isCSL=false
+    });
     if (!day) return null;
     return {
       date: day.date, round: day.round, updated: null,
@@ -354,8 +360,24 @@ async function loadData(date) {
   } catch(e) { return null; }
 }
 
-function switchLeague(league) {
+async function switchLeague(league) {
   currentLeague = league;
+  // Check if current date has data for this league; if not, fall back
+  const data = await loadData(currentDate);
+  if (!data) {
+    // Find latest date with data for this league
+    const resp = await fetch('../data/football/schedule.json');
+    if (resp.ok) {
+      const schedule = await resp.json();
+      const leagueDates = schedule.schedule
+        .filter(d => (league === 'csl') === (d.league === 'csl'))
+        .map(d => d.date)
+        .sort();
+      if (leagueDates.length) {
+        currentDate = leagueDates[leagueDates.length-1];
+      }
+    }
+  }
   switchDate(currentDate);
 }
 
