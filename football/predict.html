@@ -535,7 +535,17 @@ async function render(date) {
   const isUpcoming = !hasPrediction;
 
   if (!data) {
-    container.innerHTML = '<div class="loading">暂无比赛数据</div>';
+    // 保留页面框架（标题+切换按钮），只在卡片区域显示空状态
+    const parts = date.split('-');
+    const title = `${parseInt(parts[1])}月${parseInt(parts[2])}日`;
+    container.innerHTML = `
+      <div class="page-header">
+        <h1>${title}</h1>
+        <span class="round">${currentLeague === 'csl' ? '中超' : '世界杯'}</span>
+      </div>
+      <div id="leagueToggle" style="display:flex;gap:6px;margin-bottom:20px;"></div>
+      <div class="loading" style="padding:40px 0">今天暂无比赛</div>`;
+    document.getElementById('leagueToggle').innerHTML = buildLeagueToggle();
     return;
   }
 
