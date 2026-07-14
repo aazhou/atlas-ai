@@ -175,7 +175,7 @@ function renderDaily() {
   // Stats
   let h = '<div class="stat-row">';
   h += '<div class="stat-card"><div class="v" style="color:#22c55e">+' + totalIn.toFixed(0) + '亿</div><div class="l">主力净流入</div></div>';
-  h += '<div class="stat-card"><div class="v" style="color:#ef4444">' + totalOut.toFixed(0) + '亿</div><div class="l">主力净流出</div></div>';
+  h += '<div class="stat-card"><div class="v" style="color:#ef4444">' + Math.abs(totalOut).toFixed(0) + '亿</div><div class="l">主力净流出</div></div>';
   h += '<div class="stat-card"><div class="v" style="color:var(--ink)">' + (totalIn + totalOut).toFixed(0) + '亿</div><div class="l">净流向</div></div>';
   h += '</div>';
   
