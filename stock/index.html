@@ -84,9 +84,8 @@ async function load() {
   }
   h += '</div></div>'; // end col 3 + dash
 
-  // Full-width chart
-  const volatile = sectors.filter(([,s]) => Math.abs(s.current) > 1);
-  const chartSectors = volatile.length >= 4 ? volatile.slice(0,4).concat(volatile.slice(-4)) : sectors.slice(0,3).concat(sectors.slice(-3));
+  // Full-width chart — top 4 + bottom 4 by real-time change
+  const chartSectors = sectors.slice(0, 4).concat(sectors.slice(-4));
   let maxTimes = [];
   chartSectors.forEach(([,s]) => { if (s.history.length > maxTimes.length) maxTimes = s.history.map(h => h.time); });
   if (maxTimes.length > 1) {
