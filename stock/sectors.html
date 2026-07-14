@@ -105,9 +105,8 @@ function renderIntra() {
   const top3 = sectors.slice(0, 3);
   const bot3 = sectors.slice(-3);
   
-  // Pick top 6 volatile sectors for chart
-  const volatile = sectors.filter(([,s]) => Math.abs(s.current) > 1);
-  const chartSectors = volatile.length >= 6 ? volatile.slice(0, 3).concat(volatile.slice(-3)) : sectors.slice(0, 3).concat(sectors.slice(-3));
+  // Pick top 3 + bottom 3 by real-time change (领涨+领跌)
+  const chartSectors = sectors.slice(0, 3).concat(sectors.slice(-3));
   
   // Shared time axis
   let maxTimes = [];
@@ -122,7 +121,7 @@ function renderIntra() {
   
   // Multi-line chart of volatile sectors
   if (maxTimes.length > 1) {
-    h += '<div class="chart-box"><h3>📈 日内涨跌走势（波动最大板块）</h3><canvas id="intraChart"></canvas></div>';
+    h += '<div class="chart-box"><h3>📈 日内涨跌走势（领涨 vs 领跌）</h3><canvas id="intraChart"></canvas></div>';
   }
   
   // All sectors table
