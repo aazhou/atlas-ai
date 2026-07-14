@@ -1,0 +1,46 @@
+{
+  "results": [
+    {
+      "coin": "ZECUSDT",
+      "params": {
+        "threshold": 0.22,
+        "sl_pct": -0.12,
+        "tp_pct": 0.05,
+        "max_hold_hours": 48
+      },
+      "total_trades": 14,
+      "win_trades": 10,
+      "win_rate": 0.7142857142857143,
+      "avg_return": 0.5433186428571428,
+      "total_return": 7.701674113653272,
+      "max_drawdown": 0.22496700480191886,
+      "sharpe_ratio": 1.0044443610121667,
+      "sortino_ratio": 49.028124932337725,
+      "calmar_ratio": 34.234683083568264,
+      "profit_factor": 32.45167172498201,
+      "avg_hold_hours": 954.5119047619047,
+      "score": 143.4
+    },
+    {
+      "coin": "BTCUSDT",
+      "params": {
+        "threshold": 0.18,
+        "sl_pct": -0.08,
+        "tp_pct": 0.03,
+        "max_hold_hours": 12
+      },
+      "total_trades": 39,
+      "win_trades": 21,
+      "win_rate": 0.5384615384615384,
+      "avg_return": 0.001623153846153846,
+      "total_return": 0.060078328350881005,
+      "max_drawdown": 0.12158905956596704,
+      "sharpe_ratio": 0.6319021377801178,
+      "sortino_ratio": 0.9259972631491333,
+      "calmar_ratio": 0.49410965563300585,
+      "profit_factor": 1.3229959129942293,
+      "avg_hold_hours": 11.801282051282051,
+      "score": 40.6
+    }
+  ]
+}

@@ -1,0 +1,480 @@
+{
+  "run_at": "2026-07-14T08:46:10.388889",
+  "total_combinations": 7,
+  "a_grade": 2,
+  "b_grade": 3,
+  "c_grade": 2,
+  "results": [
+    {
+      "strategy": "multifactor",
+      "symbol": "UNIUSDT",
+      "total_trades": 4,
+      "win_rate": 0.75,
+      "avg_return": 0.029,
+      "total_return": 0.1184,
+      "max_drawdown": 0.0205,
+      "sharpe_ratio": 1.37,
+      "sortino_ratio": 5.67,
+      "calmar_ratio": 5.78,
+      "profit_factor": 6.67,
+      "avg_hold_hours": 19.7,
+      "score": 84.7,
+      "grade": "A",
+      "trades_count": 4,
+      "trades": [
+        {
+          "entry_time": 1783549500000,
+          "exit_time": 1783598700000,
+          "entry_price": 3.2586285,
+          "exit_price": 3.308345,
+          "pnl_pct": 0.014457,
+          "max_favorable": 0.0532,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.314
+        },
+        {
+          "entry_time": 1783599300000,
+          "exit_time": 1783693500000,
+          "entry_price": 3.3086534999999997,
+          "exit_price": 3.5752115,
+          "pnl_pct": 0.079764,
+          "max_favorable": 0.1153,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.231
+        },
+        {
+          "entry_time": 1783693800000,
+          "exit_time": 1783812000000,
+          "entry_price": 3.5517749999999997,
+          "exit_price": 3.7051465,
+          "pnl_pct": 0.042382,
+          "max_favorable": 0.0772,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.198
+        },
+        {
+          "entry_time": 1783812300000,
+          "exit_time": 1783834200000,
+          "entry_price": 3.699849,
+          "exit_price": 3.627,
+          "pnl_pct": -0.02049,
+          "max_favorable": -0.0005,
+          "max_adverse": -0.0205,
+          "exit_reason": "EOD",
+          "score": 0.198
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.0144568787758408,
+        1.0953739066999442,
+        1.1417976587127985
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "AAVEUSDT",
+      "total_trades": 3,
+      "win_rate": 0.667,
+      "avg_return": 0.0339,
+      "total_return": 0.1036,
+      "max_drawdown": 0.0066,
+      "sharpe_ratio": 1.47,
+      "sortino_ratio": 15.5,
+      "calmar_ratio": 15.78,
+      "profit_factor": 16.5,
+      "avg_hold_hours": 25.7,
+      "score": 82.3,
+      "grade": "A",
+      "trades_count": 3,
+      "trades": [
+        {
+          "entry_time": 1783549500000,
+          "exit_time": 1783689300000,
+          "entry_price": 88.554255,
+          "exit_price": 95.122415,
+          "pnl_pct": 0.073371,
+          "max_favorable": 0.1086,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.215
+        },
+        {
+          "entry_time": 1783689600000,
+          "exit_time": 1783812300000,
+          "entry_price": 95.417685,
+          "exit_price": 98.83056,
+          "pnl_pct": 0.034968,
+          "max_favorable": 0.07,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.323
+        },
+        {
+          "entry_time": 1783818900000,
+          "exit_time": 1783834200000,
+          "entry_price": 98.74934999999999,
+          "exit_price": 98.18,
+          "pnl_pct": -0.006566,
+          "max_favorable": 0.0047,
+          "max_adverse": -0.0066,
+          "exit_reason": "EOD",
+          "score": 0.362
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.0733710265644492,
+        1.1109043861244245
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "WLDUSDT",
+      "total_trades": 3,
+      "win_rate": 0.667,
+      "avg_return": 0.0126,
+      "total_return": 0.037,
+      "max_drawdown": 0.0159,
+      "sharpe_ratio": 0.61,
+      "sortino_ratio": 2.37,
+      "calmar_ratio": 2.32,
+      "profit_factor": 3.37,
+      "avg_hold_hours": 25.9,
+      "score": 69.8,
+      "grade": "B",
+      "trades_count": 3,
+      "trades": [
+        {
+          "entry_time": 1783549500000,
+          "exit_time": 1783722300000,
+          "entry_price": 0.38869424999999996,
+          "exit_price": 0.38280850000000005,
+          "pnl_pct": -0.015942,
+          "max_favorable": 0.0175,
+          "max_adverse": -0.0159,
+          "exit_reason": "TIMEOUT",
+          "score": 0.199
+        },
+        {
+          "entry_time": 1783722600000,
+          "exit_time": 1783808100000,
+          "entry_price": 0.3827913,
+          "exit_price": 0.40339820000000004,
+          "pnl_pct": 0.053033,
+          "max_favorable": 0.087,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.248
+        },
+        {
+          "entry_time": 1783812900000,
+          "exit_time": 1783834200000,
+          "entry_price": 0.3973986,
+          "exit_price": 0.398,
+          "pnl_pct": 0.000713,
+          "max_favorable": 0.0118,
+          "max_adverse": 0,
+          "exit_reason": "EOD",
+          "score": 0.231
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        0.9840576355322984,
+        1.0362454107727135
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "BTCUSDT",
+      "total_trades": 4,
+      "win_rate": 0.75,
+      "avg_return": 0.0081,
+      "total_return": 0.0305,
+      "max_drawdown": 0.0483,
+      "sharpe_ratio": 0.42,
+      "sortino_ratio": 0.67,
+      "calmar_ratio": 0.63,
+      "profit_factor": 1.67,
+      "avg_hold_hours": 40.5,
+      "score": 66.4,
+      "grade": "B",
+      "trades_count": 4,
+      "trades": [
+        {
+          "entry_time": 1735704900000,
+          "exit_time": 1735877700000,
+          "entry_price": 93752.58286499999,
+          "exit_price": 96951.49000500001,
+          "pnl_pct": 0.033321,
+          "max_favorable": 0.0435,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.231
+        },
+        {
+          "entry_time": 1735878300000,
+          "exit_time": 1736051100000,
+          "entry_price": 96968.72012999999,
+          "exit_price": 98437.91642000001,
+          "pnl_pct": 0.014351,
+          "max_favorable": 0.0204,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.231
+        },
+        {
+          "entry_time": 1736051400000,
+          "exit_time": 1736224200000,
+          "entry_price": 98480.965875,
+          "exit_price": 101818.34536,
+          "pnl_pct": 0.033089,
+          "max_favorable": 0.0403,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.298
+        },
+        {
+          "entry_time": 1736224500000,
+          "exit_time": 1736289300000,
+          "entry_price": 101974.531785,
+          "exit_price": 97128.85,
+          "pnl_pct": -0.048319,
+          "max_favorable": 0.0004,
+          "max_adverse": -0.0483,
+          "exit_reason": "EOD",
+          "score": 0.248
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.0333207361146126,
+        1.048150169343596,
+        1.08283196362915
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "SOLUSDT",
+      "total_trades": 4,
+      "win_rate": 0.5,
+      "avg_return": 0.0171,
+      "total_return": 0.0632,
+      "max_drawdown": 0.0726,
+      "sharpe_ratio": 0.51,
+      "sortino_ratio": 1.09,
+      "calmar_ratio": 0.87,
+      "profit_factor": 1.93,
+      "avg_hold_hours": 40.5,
+      "score": 63.1,
+      "grade": "B",
+      "trades_count": 4,
+      "trades": [
+        {
+          "entry_time": 1735704600000,
+          "exit_time": 1735877400000,
+          "entry_price": 190.20505500000002,
+          "exit_price": 207.59615,
+          "pnl_pct": 0.090633,
+          "max_favorable": 0.1,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.231
+        },
+        {
+          "entry_time": 1735877700000,
+          "exit_time": 1736050500000,
+          "entry_price": 207.56373,
+          "exit_price": 218.33078,
+          "pnl_pct": 0.051073,
+          "max_favorable": 0.0589,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.298
+        },
+        {
+          "entry_time": 1736050800000,
+          "exit_time": 1736223600000,
+          "entry_price": 218.859375,
+          "exit_price": 216.481705,
+          "pnl_pct": -0.011664,
+          "max_favorable": 0.0178,
+          "max_adverse": -0.0117,
+          "exit_reason": "TIMEOUT",
+          "score": 0.298
+        },
+        {
+          "entry_time": 1736224800000,
+          "exit_time": 1736289300000,
+          "entry_price": 216.71830500000002,
+          "exit_price": 203.54,
+          "pnl_pct": -0.061608,
+          "max_favorable": 0.0,
+          "max_adverse": -0.0616,
+          "exit_reason": "EOD",
+          "score": 0.231
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.090633400652785,
+        1.1463358280813964,
+        1.132965062572021
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "ETHUSDT",
+      "total_trades": 4,
+      "win_rate": 0.75,
+      "avg_return": -0.1084,
+      "total_return": -0.4657,
+      "max_drawdown": 0.4992,
+      "sharpe_ratio": -0.83,
+      "sortino_ratio": -0.87,
+      "calmar_ratio": -0.93,
+      "profit_factor": 0.13,
+      "avg_hold_hours": 3342.0,
+      "score": 24.3,
+      "grade": "C",
+      "trades_count": 4,
+      "trades": [
+        {
+          "entry_time": 1735704900000,
+          "exit_time": 1735877700000,
+          "entry_price": 3350.744535,
+          "exit_price": 3463.777245,
+          "pnl_pct": 0.032934,
+          "max_favorable": 0.0432,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.231
+        },
+        {
+          "entry_time": 1735878300000,
+          "exit_time": 1783534500000,
+          "entry_price": 3463.5208949999997,
+          "exit_price": 1737.2809250000003,
+          "pnl_pct": -0.499206,
+          "max_favorable": 0.0462,
+          "max_adverse": -0.4992,
+          "exit_reason": "TIMEOUT",
+          "score": 0.195
+        },
+        {
+          "entry_time": 1783535100000,
+          "exit_time": 1783707900000,
+          "entry_price": 1737.0681,
+          "exit_price": 1788.56527,
+          "pnl_pct": 0.028846,
+          "max_favorable": 0.0395,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.565
+        },
+        {
+          "entry_time": 1783711800000,
+          "exit_time": 1783834200000,
+          "entry_price": 1792.5158099999999,
+          "exit_price": 1800.85,
+          "pnl_pct": 0.003849,
+          "max_favorable": 0.0196,
+          "max_adverse": 0,
+          "exit_reason": "EOD",
+          "score": 0.633
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.0329336101929956,
+        0.5172868426035686,
+        0.5322085134891545
+      ]
+    },
+    {
+      "strategy": "multifactor",
+      "symbol": "XRPUSDT",
+      "total_trades": 5,
+      "win_rate": 0.6,
+      "avg_return": -0.088,
+      "total_return": -0.4926,
+      "max_drawdown": 0.5398,
+      "sharpe_ratio": -0.77,
+      "sortino_ratio": -0.81,
+      "calmar_ratio": -0.91,
+      "profit_factor": 0.2,
+      "avg_hold_hours": 2673.6,
+      "score": 24.0,
+      "grade": "C",
+      "trades_count": 5,
+      "trades": [
+        {
+          "entry_time": 1735704600000,
+          "exit_time": 1735751700000,
+          "entry_price": 2.1052521,
+          "exit_price": 2.2124932,
+          "pnl_pct": 0.05014,
+          "max_favorable": 0.0847,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.298
+        },
+        {
+          "entry_time": 1735753500000,
+          "exit_time": 1735797900000,
+          "entry_price": 2.2533261,
+          "exit_price": 2.3657165499999997,
+          "pnl_pct": 0.049078,
+          "max_favorable": 0.0845,
+          "max_adverse": 0,
+          "exit_reason": "TRAILING",
+          "score": 0.265
+        },
+        {
+          "entry_time": 1735798800000,
+          "exit_time": 1783534500000,
+          "entry_price": 2.36268075,
+          "exit_price": 1.0892551000000001,
+          "pnl_pct": -0.539775,
+          "max_favorable": 0.0205,
+          "max_adverse": -0.5398,
+          "exit_reason": "TIMEOUT",
+          "score": 0.396
+        },
+        {
+          "entry_time": 1783536300000,
+          "exit_time": 1783709100000,
+          "entry_price": 1.0877435999999998,
+          "exit_price": 1.09695125,
+          "pnl_pct": 0.007665,
+          "max_favorable": 0.0273,
+          "max_adverse": 0,
+          "exit_reason": "TIMEOUT",
+          "score": 0.366
+        },
+        {
+          "entry_time": 1783710000000,
+          "exit_time": 1783834200000,
+          "entry_price": 1.1001497999999998,
+          "exit_price": 1.0934,
+          "pnl_pct": -0.006935,
+          "max_favorable": 0.0167,
+          "max_adverse": -0.0069,
+          "exit_reason": "EOD",
+          "score": 0.44
+        }
+      ],
+      "equity_curve": [
+        1.0,
+        1.0501397900612472,
+        1.10167810830547,
+        0.5070199040233151,
+        0.5109061651741426
+      ]
+    }
+  ]
+}
