@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14 09:30",
+  "updated": "2026-07-14 09:40",
   "holdings": [
     {
       "name": "上海新阳",
@@ -7,9 +7,9 @@
       "sector": "—",
       "position": "持有",
       "cost": 121.9,
-      "price": 114.0,
-      "chg": 0.6,
-      "pnl": -6.5,
+      "price": 112.72,
+      "chg": -0.6,
+      "pnl": -7.5,
       "status": "hold",
       "action": "持有观察",
       "alert": ""
@@ -20,9 +20,9 @@
       "sector": "—",
       "position": "持有",
       "cost": 99.4,
-      "price": 99.8,
-      "chg": 1.8,
-      "pnl": 0.4,
+      "price": 95.27,
+      "chg": -2.9,
+      "pnl": -4.2,
       "status": "hold",
       "action": "持有观察",
       "alert": ""
@@ -33,11 +33,11 @@
       "sector": "—",
       "position": "持有",
       "cost": 63.1,
-      "price": 58.44,
-      "chg": -0.9,
-      "pnl": -7.4,
-      "status": "hold",
-      "action": "持有观察",
+      "price": 57.67,
+      "chg": -2.2,
+      "pnl": -8.6,
+      "status": "warn",
+      "action": "🟡 连跌走弱，关注60支撑",
       "alert": ""
     },
     {
@@ -46,24 +46,34 @@
       "sector": "—",
       "position": "持有",
       "cost": 30.3,
-      "price": 28.95,
-      "chg": -0.7,
-      "pnl": -4.5,
+      "price": 29.69,
+      "chg": 1.8,
+      "pnl": -2.0,
       "status": "hold",
       "action": "持有观察",
       "alert": ""
     }
   ],
   "market": {
-    "direction": "震荡",
-    "top_sectors": [],
-    "worst_sectors": []
+    "direction": "偏空",
+    "top_sectors": [
+      "煤炭 +1.9%",
+      "电力 +0.3%",
+      "医药 +0.3%"
+    ],
+    "worst_sectors": [
+      "游戏 -1.2%",
+      "传媒 -1.4%",
+      "军工 -2.9%"
+    ]
   },
   "analysis": {
-    "verdict": "⚪ 震荡",
-    "market": "板块0涨0跌。",
-    "portfolio": "上海新阳 -6.5%；晶晨 +0.4%；立讯 -7.4%；华东医药 -4.5%",
-    "actions": [],
+    "verdict": "🔴 偏空",
+    "market": "板块3涨3跌。最强: 煤炭 +1.9%,电力 +0.3%,医药 +0.3%。最弱: 游戏 -1.2%,传媒 -1.4%,军工 -2.9%",
+    "portfolio": "上海新阳 -7.5%；晶晨 -4.2%；立讯 -8.6%；华东医药 -2.0%",
+    "actions": [
+      "立讯: 🟡 连跌走弱，关注60支撑"
+    ],
     "risk": "无紧急风险"
   }
 }
