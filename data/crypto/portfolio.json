@@ -17,8 +17,8 @@
       "symbol": "SXTUSDT",
       "symbol_short": "SXT",
       "entry_price": 0.0079,
-      "current_price": 0.00801,
-      "unrealized_pnl": 1.39,
+      "current_price": 0.00805,
+      "unrealized_pnl": 1.9,
       "entry_time": "2026-07-13 18:30:02",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.6608,
@@ -30,8 +30,8 @@
       "symbol": "SKLUSDT",
       "symbol_short": "SKL",
       "entry_price": 0.00421,
-      "current_price": 0.00415,
-      "unrealized_pnl": -1.43,
+      "current_price": 0.00414,
+      "unrealized_pnl": -1.66,
       "entry_time": "2026-07-14 06:00:14",
       "strategy": "V11_multifactor",
       "funding_at_entry": -0.0614,
@@ -159,7 +159,7 @@
       "exit_time": "2026-07-14 08:20:19"
     }
   ],
-  "updated": "2026-07-14 12:30:56",
+  "updated": "2026-07-14 12:50:47",
   "stats": {
     "total_trades": 7,
     "win_rate": 42.9,
