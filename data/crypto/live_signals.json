@@ -1,5 +1,5 @@
 {
-  "time": "2026-07-14T14:10:47.936472",
+  "time": "2026-07-14T14:40:49.174277",
   "signals": [
     {
       "symbol": "SXTUSDT",
@@ -8,7 +8,7 @@
       "price_5m_close": 0.00881,
       "score": 0.2,
       "trend": "UP",
-      "time": "14:10:47"
+      "time": "14:40:49"
     },
     {
       "symbol": "SKLUSDT",
@@ -17,7 +17,7 @@
       "price_5m_close": 0.004704,
       "score": 0.2,
       "trend": "UP",
-      "time": "14:10:47"
+      "time": "14:40:48"
     },
     {
       "symbol": "EVAAUSDT",
@@ -26,7 +26,7 @@
       "price_5m_close": 1.1987,
       "score": 0.3,
       "trend": "UP",
-      "time": "14:10:47"
+      "time": "14:40:48"
     }
   ]
 }
