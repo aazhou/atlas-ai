@@ -1,7 +1,7 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/16 04:20",
+  "updated": "7/16 04:45",
   "status": "live",
   "matches": [
     {
@@ -17,20 +17,20 @@
       "route_home": "1/16 2-1刚果金 → 1/8 3-2墨西哥 → 1/4 2-1挪威(加时)",
       "route_away": "1/16 3-2佛得角(加时) → 1/8 3-2埃及 → 1/4 3-1瑞士(加时)",
       "odds_h2h": {
-        "home": 1.41,
-        "draw": 3.5,
-        "away": 15.0
+        "home": 8.5,
+        "draw": 1.25,
+        "away": 6.0
       },
       "odds_spread": {
         "line": "-0.5",
         "price": 1.42
       },
       "odds_totals": {
-        "line": "1.5",
-        "over": 1.8,
-        "under": 2.06,
-        "lean": "under",
-        "note": "80' 1-0 · 大小球线1.5 · 再进球可能性低"
+        "line": 1.5,
+        "over": 1.86,
+        "under": 2.02,
+        "lean": "over",
+        "note": "89' 1-1 · 大小球线1.5 · 补时+可能加时"
       },
       "upset_signals": 3,
       "upset_risk": "mid",
@@ -78,14 +78,14 @@
       ],
       "status": "live",
       "live_status": "STATUS_SECOND_HALF",
-      "live_clock": "80'",
-      "live_score": "1-0",
-      "odds_movement": "7/15 21:00复核: 51b E2.70(-0.01)/D2.88(-0.01)/A3.00(-0.02) · 9h变动<0.03 · 无Spain式骤降信号(对比法西战西班牙-0.15) · 盘口彻底进入稳态 · Under 2.5@1.57微增 · Over@2.35维持悲观 · 维持Tier A小2.5 · 无新方向信号",
+      "live_clock": "89'",
+      "live_score": "1-1",
+      "odds_movement": "85' Enzo Fernández扳平1-1 · 平局崩溃3.50→1.20(-66%) · 大2.5已收@2.35 · 接近FT · 可能加时",
       "vig": 5.1,
       "home_win_prob": 35.2,
       "home_rank": 4,
       "away_rank": 1,
-      "updated": "7/16 04:20",
+      "updated": "7/16 04:45",
       "top_picks": [
         {
           "rank": "🥇",
@@ -121,6 +121,12 @@
     }
   ],
   "timeline": [
+    {
+      "time": "7/16 04:45",
+      "event": "⚽ 进球 | 阿根廷 1-1 (85')",
+      "detail": "Enzo Fernández 破门扳平！89' 1-1 · 平局赔率崩溃 3.50→1.20(-66%) · 零售盘口Draw@1.20市场定价加时 · 大2.5已收 · 英格兰55'Gordon进球后领先后被追平",
+      "type": "goal"
+    },
     {
       "time": "7/16 04:00",
       "event": "⚽ 进球 | 英格兰 1-0 (55')",
