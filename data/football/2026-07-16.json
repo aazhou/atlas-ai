@@ -1,8 +1,8 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/16 04:45",
-  "status": "live",
+  "updated": "7/16 05:15",
+  "status": "finished",
   "matches": [
     {
       "home": "England",
@@ -13,7 +13,7 @@
       "away_emoji": "🇦🇷",
       "time": "03:00",
       "venue": "亚特兰大体育场(Mercedes-Benz Stadium)",
-      "attendance": null,
+      "attendance": 68239,
       "route_home": "1/16 2-1刚果金 → 1/8 3-2墨西哥 → 1/4 2-1挪威(加时)",
       "route_away": "1/16 3-2佛得角(加时) → 1/8 3-2埃及 → 1/4 3-1瑞士(加时)",
       "odds_h2h": {
@@ -30,7 +30,7 @@
         "over": 1.86,
         "under": 2.02,
         "lean": "over",
-        "note": "89' 1-1 · 大小球线1.5 · 补时+可能加时"
+        "note": "FT 1-2 · 大2.5已收 · 3球"
       },
       "upset_signals": 3,
       "upset_risk": "mid",
@@ -76,16 +76,16 @@
           "severity": "medium"
         }
       ],
-      "status": "live",
-      "live_status": "STATUS_SECOND_HALF",
-      "live_clock": "89'",
-      "live_score": "1-1",
-      "odds_movement": "85' Enzo Fernández扳平1-1 · 平局崩溃3.50→1.20(-66%) · 大2.5已收@2.35 · 接近FT · 可能加时",
+      "status": "finished",
+      "live_status": "FT",
+      "live_clock": "FT",
+      "live_score": "1-2",
+      "odds_movement": "90'+2' Lautaro Martínez绝杀1-2！阿根廷逆转晋级决赛 · 85' Enzo Fernández扳平后补时头球绝杀 · 大2.5已收@2.35 · FT 英格兰1-2阿根廷",
       "vig": 5.1,
       "home_win_prob": 35.2,
       "home_rank": 4,
       "away_rank": 1,
-      "updated": "7/16 04:45",
+      "updated": "7/16 05:15",
       "top_picks": [
         {
           "rank": "🥇",
@@ -121,6 +121,12 @@
     }
   ],
   "timeline": [
+    {
+      "time": "7/16 05:12",
+      "event": "🏁 全场 | 英格兰 1-2 阿根廷",
+      "detail": "FT · 阿根廷逆转晋级决赛！55' Gordon破门→85' Enzo Fernández扳平→90'+2' Lautaro Martínez头球绝杀 · 大2.5✅收@2.35 · 平局❌ · 阿根廷连续逆转 · 卫冕冠军再进决赛",
+      "type": "system"
+    },
     {
       "time": "7/16 04:45",
       "event": "⚽ 进球 | 阿根廷 1-1 (85')",
