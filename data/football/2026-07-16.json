@@ -12,7 +12,8 @@
       "away_cn": "阿根廷",
       "away_emoji": "🇦🇷",
       "time": "03:00",
-      "venue": "亚特兰大体育场",
+      "venue": "亚特兰大体育场(Mercedes-Benz Stadium)",
+      "attendance": 68239,
       "route_home": "小组赛4-2克罗地亚 → 1/16决赛2-1刚果金 → 1/8决赛3-2墨西哥 → 1/4决赛2-1挪威(加时)",
       "route_away": "小组赛3-0阿尔及利亚 → 1/16决赛3-2佛得角(加时) → 1/8决赛3-2埃及 → 1/4决赛3-1瑞士(加时)",
       "odds_h2h": {
@@ -91,7 +92,21 @@
       "live_score": "1-2",
       "live_status": "FT",
       "live_clock": "FT",
-      "odds_movement": "初盘=即时(21:00首拉) · 无前期基线对比 · 后续复核将追踪变化"
+      "odds_movement": "初盘=即时(21:00首拉) · 无前期基线对比 · 后续复核将追踪变化",
+      "cards": [
+        {"time": "37'", "player": "Elliot Anderson", "team": "England", "type": "YC"},
+        {"time": "42'", "player": "Lisandro Martínez", "team": "Argentina", "type": "YC"},
+        {"time": "51'", "player": "Cristian Romero", "team": "Argentina", "type": "YC"},
+        {"time": "90'+4'", "player": "Rodrigo De Paul", "team": "Argentina", "type": "YC"}
+      ],
+      "stats": {
+        "possession": "35.7% / 64.3%",
+        "shots": "5 / 15",
+        "shots_on_target": "2 / 5",
+        "corners": "2 / 6",
+        "fouls": "11 / 15",
+        "attendance": 68239
+      }
     }
   ],
   "top_picks": [
@@ -107,33 +122,29 @@
   "timeline": [
     {
       "time": "7/16 05:12",
-      "event": "🏁 比赛结束",
-      "detail": "英格兰1-2阿根廷 · 阿根廷逆转晋级决赛 · 55' Gordon → 85' Enzo → 90+2' Lautaro",
-      "type": "system"
+      "event": "🏁 FT复盘 | 🏴󠁧󠁢󠁥󠁮󠁧󠁿英格兰 1-2 🇦🇷阿根廷 · 阿根廷逆转晋级决赛！",
+      "detail": "Gordon 55'首开纪录 → Enzo Fernández 85'扳平 → Lautaro Martínez 90+2'头球绝杀！阿根廷64.3%控球碾压(15射5正)，英格兰仅35.7%控球(5射2正)。黄牌: Anderson 37'(ENG) + L.Martínez 42'/Romero 51'/De Paul 90+4'(ARG)。68,239人观战。小2.5❌@1.585(3球打穿)。🇦🇷卫冕冠军晋级决赛vs🇪🇸西班牙(7/20 03:00) · 法国vs英格兰季军赛(7/19 05:00)",
+      "type": "review"
     },
     {
       "time": "7/16 05:02",
-      "event": "⚽ 绝杀",
-      "detail": "阿根廷2-1英格兰 · Lautaro Martínez 90+2'头球破门 · 阿根廷逆转！",
-      "type": "goal"
+      "event": "⚽ GOAL | Lautaro Martínez 90+2'头球绝杀 · 英格兰1-2阿根廷",
+      "detail": "阿根廷右路传中 · Lautaro头槌破门 · 90+2'逆转绝杀！阿根廷2-1领先 · 距决赛仅剩补时"
     },
     {
       "time": "7/16 04:35",
-      "event": "⚽ 进球",
-      "detail": "阿根廷1-1英格兰 · Enzo Fernández 85'扳平比分",
-      "type": "goal"
+      "event": "⚽ GOAL | Enzo Fernández 85' · 英格兰1-1阿根廷",
+      "detail": "阿根廷终于破门！Enzo Fernández 85'抽射扳平比分 · 阿根廷全场15射5正终于兑现"
     },
     {
       "time": "7/16 03:55",
-      "event": "⚽ 进球",
-      "detail": "英格兰1-0阿根廷 · Anthony Gordon 55'凌空抽射 · 半决赛首球",
-      "type": "goal"
+      "event": "⚽ GOAL | Anthony Gordon 55'凌空抽射 · 英格兰1-0阿根廷",
+      "detail": "半决赛首球！Gordon禁区外凌空抽射破门 · 英格兰控球仅35%但率先进球"
     },
     {
       "time": "7/15 21:00",
       "event": "赛前预测发布(21:00补发)",
-      "detail": "半决赛英格兰vs阿根廷 · 12:00 cron未触发 · 21:00复核时补发 · 0.0平手盘 · 仅推荐小2.5@1.585(Tier A) · 五五开无H2H方向",
-      "type": "system"
+      "detail": "半决赛英格兰vs阿根廷 · 12:00 cron未触发 · 21:00复核时补发 · 0.0平手盘 · 仅推荐小2.5@1.585(Tier A) · 五五开无H2H方向"
     }
   ],
   "review": {
@@ -142,8 +153,9 @@
         "pick": "小 2.5",
         "odds": 1.585,
         "hit": false,
-        "note": "总进球3球 · 85'恩佐扳平+90+2'劳塔罗绝杀打穿小球"
+        "note": "总进球3球(55' Gordon → 85' Enzo → 90+2' Lautaro头球绝杀) · 阿根廷85分钟后连进2球打穿小球 · 英格兰35.7%控球被动挨打"
       }
-    ]
+    ],
+    "summary": "1黑 · 小2.5❌@1.585(-1.0u) · 净-1.0u · 市场极度看小(63.1%隐含)但阿根廷64.3%控球+15射碾压 · 劳塔罗90+2'头球绝杀 · 68,239人观战 · 阿根廷逆转晋级决赛"
   }
 }
