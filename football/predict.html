@@ -316,15 +316,41 @@ const now = new Date();
 const bj = new Date(now.getTime() + (8*60 + now.getTimezoneOffset()) * 60000);
 const today = bj.toISOString().slice(0,10);
 let currentDate = DATES.includes(today) ? today : DATES.find(d => d > today) || DATES[DATES.length-1];
-let currentLeague = 'wc'; // 'wc'=世界杯, 'csl'=中超
+let currentLeague = 'wc';
+
+// 智能初始日期：如果当天比赛已结束+已复盘，自动跳到下一比赛日
+(async function initDate() {
+  if (DATES.includes(today)) {
+    try {
+      const resp = await fetch(`../data/football/${today}.json`);
+      if (resp.ok) {
+        const d = await resp.json();
+        const allDone = d.matches.length > 0 && d.matches.every(m => m.status === 'finished' && m.review);
+        if (allDone) {
+          const next = DATES.find(d => d > today);
+          if (next) currentDate = next;
+        }
+      }
+    } catch(e) {}
+  }
+  render(currentDate);
+})();
 function buildDateSelect() {
-  return `<select class="date-select" onchange="switchDate(this.value)">
-    ${DATES.map(d => {
-      const parts = d.split('-');
-      const label = `${parseInt(parts[1])}/${parseInt(parts[2])}`;
-      return `<option value="${d}"${d === currentDate ? ' selected' : ''}>${label}</option>`;
-    }).join('')}
-  </select>`;
+  const idx = DATES.indexOf(currentDate);
+  const prevDate = idx > 0 ? DATES[idx - 1] : null;
+  const nextDate = idx < DATES.length - 1 ? DATES[idx + 1] : null;
+  const parts = currentDate.split('-');
+  const label = `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+  return `<div style="display:flex;align-items:center;gap:4px;">
+    <button onclick="switchDate('${prevDate}')" ${prevDate ? '' : 'disabled'} style="background:none;border:1px solid var(--hairline);color:${prevDate ? 'var(--ink)' : 'var(--hairline)'};border-radius:6px;padding:4px 6px;cursor:${prevDate ? 'pointer' : 'default'};font-size:12px;">◀</button>
+    <select class="date-select" onchange="switchDate(this.value)">
+      ${DATES.map(d => {
+        const p = d.split('-');
+        return `<option value="${d}"${d === currentDate ? ' selected' : ''}>${parseInt(p[1])}/${parseInt(p[2])}</option>`;
+      }).join('')}
+    </select>
+    <button onclick="switchDate('${nextDate}')" ${nextDate ? '' : 'disabled'} style="background:none;border:1px solid var(--hairline);color:${nextDate ? 'var(--ink)' : 'var(--hairline)'};border-radius:6px;padding:4px 6px;cursor:${nextDate ? 'pointer' : 'default'};font-size:12px;">▶</button>
+  </div>`;
 }
 
 function buildLeagueToggle() {
@@ -663,7 +689,7 @@ async function render(date) {
   if (lt) lt.innerHTML = buildLeagueToggle();
 }
 
-render(currentDate);
+// 初始渲染由 initDate() 负责
 </script>
 
 </body>
