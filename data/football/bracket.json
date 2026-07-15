@@ -46,20 +46,20 @@
     {
       "name": "半决赛",
       "matches": [
-        {"home": "法国","home_emoji": "🇫🇷","away": "西班牙","away_emoji": "🇪🇸","score": null,"winner": null,"status": "upcoming","date": "7/15 03:00","home_cn": "法国","away_cn": "西班牙"},
+        {"home": "法国","home_emoji": "🇫🇷","away": "西班牙","away_emoji": "🇪🇸","score": "0-2","winner": "away","status": "done","date": "7/15 03:00","home_cn": "法国","away_cn": "西班牙"},
         {"home": "英格兰","home_emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿","away": "阿根廷","away_emoji": "🇦🇷","score": null,"winner": null,"status": "upcoming","date": "7/16 03:00","home_cn": "英格兰","away_cn": "阿根廷"}
       ]
     },
     {
       "name": "季军赛",
       "matches": [
-        {"home": "半决赛1败者","home_emoji": "🥉","away": "半决赛2败者","away_emoji": "🥉","score": null,"winner": null,"status": "upcoming","date": "7/19 05:00"}
+        {"home": "法国","home_emoji": "🇫🇷","away": "半决赛2败者","away_emoji": "🥉","score": null,"winner": null,"status": "upcoming","date": "7/19 05:00","home_cn": "法国"}
       ]
     },
     {
       "name": "决赛",
       "matches": [
-        {"home": "半决赛1胜者","home_emoji": "🏆","away": "半决赛2胜者","away_emoji": "🏆","score": null,"winner": null,"status": "upcoming","date": "7/20 03:00"}
+        {"home": "西班牙","home_emoji": "🇪🇸","away": "半决赛2胜者","away_emoji": "🏆","score": null,"winner": null,"status": "upcoming","date": "7/20 03:00","home_cn": "西班牙"}
       ]
     }
   ]

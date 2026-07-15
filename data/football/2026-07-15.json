@@ -1,8 +1,8 @@
 {
   "date": "2026-07-15",
   "round": "半决赛",
-  "updated": "07/15 04:35",
-  "status": "live",
+  "updated": "07/15 05:15",
+  "status": "finished",
   "matches": [
     {
       "home": "France",
@@ -13,7 +13,7 @@
       "away_emoji": "🇪🇸",
       "time": "03:00",
       "venue": "达拉斯体育场(AT&T Stadium)",
-      "attendance": null,
+      "attendance": 70176,
       "route_home": "1/16 3-0瑞典 → 1/8 1-0巴拉圭 → 1/4 2-0摩洛哥",
       "route_away": "1/16 3-0奥地利 → 1/8 1-0葡萄牙 → 1/4 2-1比利时",
       "odds_h2h": {
@@ -79,9 +79,9 @@
           "severity": "medium"
         }
       ],
-      "status": "live",
-      "live_status": "LIVE",
-      "live_clock": "88'",
+      "status": "finished",
+      "live_status": "FT",
+      "live_clock": "FT",
       "live_score": "0-2",
       "odds_movement": "滚球59': F6.78/D3.51/A1.64 · Porro58'扩大比分至0-2 · 西班牙距决赛仅31分钟",
       "vig": 5.1,
@@ -95,29 +95,50 @@
       },
       "live_stats": {
         "possession": {
-          "home": 49.4,
-          "away": 50.6
+          "home": 49.1,
+          "away": 50.9
         },
         "shots": {
-          "home": 6,
-          "away": 9
+          "home": 10,
+          "away": 10
         },
         "shots_on_target": {
-          "home": 1,
+          "home": 3,
           "away": 2
         },
         "fouls": {
-          "home": 10,
+          "home": 11,
           "away": 12
         },
         "corners": {
-          "home": 6,
+          "home": 7,
           "away": 1
         },
         "yellow_cards": {
           "home": 2,
           "away": 1
         }
+      },
+      "cards": [
+        {"time": "9'", "player": "Adrien Rabiot", "team": "France", "type": "YC"},
+        {"time": "31'", "player": "Marc Cucurella", "team": "Spain", "type": "YC"},
+        {"time": "86'", "player": "Kylian Mbappé", "team": "France", "type": "YC"}
+      ],
+      "stats": {
+        "possession": "49.1% / 50.9%",
+        "shots": "10 / 10",
+        "shots_on_target": "3 / 2",
+        "corners": "7 / 1",
+        "fouls": "11 / 12",
+        "attendance": 70176
+      },
+      "review": {
+        "verdicts": [
+          {"pick": "法国 vs 西班牙 · 小 2.5", "odds": 1.92, "hit": true, "note": "常规时间2球(Oyarzabal 22'点球+Porro 58') · 小2.5全收@1.92"},
+          {"pick": "法国 DNB(Draw No Bet)", "odds": 1.60, "hit": false, "note": "法国0-2完败 · DNB全损 · 西班牙赔率骤降0.15信号最终验证"},
+          {"pick": "平局", "odds": 3.25, "hit": false, "note": "西班牙22'点球打破僵局 · Porro 58'扩大比分 · 平局未兑现"}
+        ],
+        "summary": "1红2黑 · 小2.5✅@1.92(+0.92u) vs DNB❌@1.60(-1.0u)+平局❌@3.25(-1.0u) · 净-1.08u · 西班牙赔率赛前12h骤降0.15(3.25→3.10)信号精准 · 法国零失球金身被破 · 70,176人观战"
       }
     }
   ],
@@ -127,6 +148,7 @@
       "pick": "法国 vs 西班牙 · 小 2.5",
       "odds": 1.92,
       "tier": "B",
+      "hit": true,
       "logic": "5家共识Under@1.92(曾1.86 → 市场趋均衡) · 法国淘汰赛0失球 · 西班牙淘汰赛前2场均1-0 · 半决赛防守型 · 但市场已从Under偏向转向50/50 · 降低仓位"
     },
     {
@@ -134,6 +156,7 @@
       "pick": "法国 DNB(Draw No Bet)",
       "odds": 1.6,
       "tier": "B",
+      "hit": false,
       "logic": "法国零失球防线+排名优势 · 平局退款降低风险 · 但西班牙赔率骤降0.15⚠️ · 市场向西班牙倾斜 · DNB比独赢更安全但风险上升"
     },
     {
@@ -141,10 +164,17 @@
       "pick": "平局",
       "odds": 3.25,
       "tier": "C",
+      "hit": false,
       "logic": "29.3%隐含概率 · 三态均衡 · 两队实力极度接近 · 半决赛加时风险高(35-45%) · 西班牙赔率骤降增加变数 · 小注搏冷"
     }
   ],
   "timeline": [
+    {
+      "time": "07/15 05:00",
+      "event": "FT | 🇪🇸西班牙 2-0 🇫🇷法国 · 西班牙晋级决赛！",
+      "detail": "Oyarzabal 22'点球+Porro 58'锁定胜局 · 法国零失球金身被破 · 控球49.1%/50.9% 射门10/10 · 黄牌: Rabiot 9'+Mbappé 86'(FRA) Cucurella 31'(ESP) · 70,176人观战 · 小2.5✅@1.92 · DNB❌@1.60 · 平局❌@3.25 · 🇪🇸晋级决赛vs英格兰/阿根廷胜者 | 赛前12h西班牙赔率骤降0.15预警精准",
+      "type": "review"
+    },
     {
       "time": "07/15 04:21",
       "event": "⚽ GOAL | Pedro Porro 58' · 法国0-2西班牙",

@@ -95,9 +95,9 @@
           "venue": "达拉斯体育场(AT&T Stadium)",
           "route_home": "1/4决赛 2-0 摩洛哥",
           "route_away": "1/4决赛 2-1 比利时",
-          "score": null,
-          "winner": null,
-          "status": "upcoming"
+          "score": "0-2",
+          "winner": "away",
+          "status": "done"
         }
       ]
     },
@@ -127,10 +127,10 @@
       "round": "季军赛",
       "matches": [
         {
-          "home": "半决赛败者",
-          "home_cn": "半决赛1败者",
-          "home_emoji": "🥉",
-          "away": "半决赛败者",
+          "home": "France",
+          "home_cn": "法国",
+          "home_emoji": "🇫🇷",
+          "away": "半决赛2败者",
           "away_cn": "半决赛2败者",
           "away_emoji": "🥉",
           "time": "05:00",
@@ -146,10 +146,10 @@
       "round": "决赛",
       "matches": [
         {
-          "home": "半决赛胜者",
-          "home_cn": "半决赛1胜者",
-          "home_emoji": "🏆",
-          "away": "半决赛胜者",
+          "home": "Spain",
+          "home_cn": "西班牙",
+          "home_emoji": "🇪🇸",
+          "away": "半决赛2胜者",
           "away_cn": "半决赛2胜者",
           "away_emoji": "🏆",
           "time": "03:00",
