@@ -1,7 +1,7 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/16 04:10",
+  "updated": "7/16 04:20",
   "status": "live",
   "matches": [
     {
@@ -17,20 +17,20 @@
       "route_home": "1/16 2-1刚果金 → 1/8 3-2墨西哥 → 1/4 2-1挪威(加时)",
       "route_away": "1/16 3-2佛得角(加时) → 1/8 3-2埃及 → 1/4 3-1瑞士(加时)",
       "odds_h2h": {
-        "home": 1.5,
-        "draw": 3.35,
-        "away": 10.5
+        "home": 1.41,
+        "draw": 3.5,
+        "away": 15.0
       },
       "odds_spread": {
         "line": "-0.5",
-        "price": 1.49
+        "price": 1.42
       },
       "odds_totals": {
         "line": "1.5",
-        "over": 1.49,
-        "under": 2.69,
+        "over": 1.8,
+        "under": 2.06,
         "lean": "under",
-        "note": "70' 1-0 · 大小球线从2.5暴跌至1.5"
+        "note": "80' 1-0 · 大小球线1.5 · 再进球可能性低"
       },
       "upset_signals": 3,
       "upset_risk": "mid",
@@ -77,15 +77,15 @@
         }
       ],
       "status": "live",
-      "live_status": "STATUS_IN_PROGRESS",
-      "live_clock": "70'",
+      "live_status": "STATUS_SECOND_HALF",
+      "live_clock": "80'",
       "live_score": "1-0",
       "odds_movement": "7/15 21:00复核: 51b E2.70(-0.01)/D2.88(-0.01)/A3.00(-0.02) · 9h变动<0.03 · 无Spain式骤降信号(对比法西战西班牙-0.15) · 盘口彻底进入稳态 · Under 2.5@1.57微增 · Over@2.35维持悲观 · 维持Tier A小2.5 · 无新方向信号",
       "vig": 5.1,
       "home_win_prob": 35.2,
       "home_rank": 4,
       "away_rank": 1,
-      "updated": "7/16 00:30 (信心修正: 半决赛因素纳入)",
+      "updated": "7/16 04:20",
       "top_picks": [
         {
           "rank": "🥇",
