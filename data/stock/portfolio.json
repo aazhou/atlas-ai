@@ -1,43 +1,17 @@
 {
-  "updated": "2026-07-14 16:36",
+  "updated": "2026-07-15 09:30",
   "holdings": [
-    {
-      "name": "立讯精密",
-      "code": "002475",
-      "sector": "消费电子",
-      "position": "持有",
-      "cost": 74.5,
-      "price": 60.36,
-      "chg": 2.34,
-      "pnl": -19.0,
-      "status": "warn",
-      "action": "深套-19.0%，等反弹至63以上减仓1/3",
-      "alert": "成本74.5，现价60.36"
-    },
     {
       "name": "上海新阳",
       "code": "300236",
       "sector": "半导体材料",
       "position": "持有",
       "cost": 121.9,
-      "price": 114.42,
-      "chg": 0.94,
-      "pnl": -6.1,
-      "status": "warn",
-      "action": "持有观望，止损109.7",
-      "alert": ""
-    },
-    {
-      "name": "双环传动",
-      "code": "002472",
-      "sector": "汽车零部件",
-      "position": "持有",
-      "cost": 43.44,
-      "price": 42.23,
-      "chg": 0.21,
-      "pnl": -2.8,
+      "price": 117.18,
+      "chg": 1.2,
+      "pnl": -3.9,
       "status": "watch",
-      "action": "MACD金叉偏多，持有等回本",
+      "action": "持有观察",
       "alert": ""
     },
     {
@@ -46,11 +20,24 @@
       "sector": "SoC芯片",
       "position": "持有",
       "cost": 99.4,
-      "price": 97.23,
-      "chg": -0.86,
-      "pnl": -2.2,
+      "price": 98.14,
+      "chg": -0.1,
+      "pnl": -1.3,
       "status": "hold",
-      "action": "MACD即将金叉，持有观察",
+      "action": "⚪ 接近回本（距成本1.3%）",
+      "alert": ""
+    },
+    {
+      "name": "立讯精密",
+      "code": "002475",
+      "sector": "消费电子",
+      "position": "持有",
+      "cost": 74.5,
+      "price": 61.87,
+      "chg": 0.3,
+      "pnl": -17.0,
+      "status": "warn",
+      "action": "🔴 深套-17.0%，等反弹减仓",
       "alert": ""
     },
     {
@@ -59,26 +46,31 @@
       "sector": "医药",
       "position": "持有",
       "cost": 30.3,
-      "price": 29.71,
-      "chg": 1.89,
-      "pnl": -1.9,
+      "price": 29.81,
+      "chg": -0.4,
+      "pnl": -1.6,
       "status": "hold",
-      "action": "距回本0.6元，持有",
+      "action": "⚪ 接近回本（距成本1.6%）",
+      "alert": ""
+    },
+    {
+      "name": "双环传动",
+      "code": "002472",
+      "sector": "汽车零部件",
+      "position": "持有",
+      "cost": 43.44,
+      "price": 43.21,
+      "chg": 1.9,
+      "pnl": -0.5,
+      "status": "hold",
+      "action": "⚪ 接近回本（距成本0.5%）",
       "alert": ""
     }
   ],
   "market": {
-    "direction": "偏多",
-    "top_sectors": [
-      "5G/AI +5.3%",
-      "通信 +4.7%",
-      "消费电子 +3.7%"
-    ],
-    "worst_sectors": [
-      "军工 -3.4%",
-      "传媒 -2.8%",
-      "计算机 -2.3%"
-    ]
+    "direction": "震荡",
+    "top_sectors": [],
+    "worst_sectors": []
   },
   "analysis": {
     "verdict": "持仓分化 — 4只可控，立讯深套需关注",

@@ -1,8 +1,8 @@
 {
   "date": "2026-07-15",
   "round": "半决赛",
-  "updated": "7/14 13:35",
-  "status": "upcoming",
+  "updated": "07/15 04:35",
+  "status": "live",
   "matches": [
     {
       "home": "France",
@@ -17,36 +17,36 @@
       "route_home": "1/16 3-0瑞典 → 1/8 1-0巴拉圭 → 1/4 2-0摩洛哥",
       "route_away": "1/16 3-0奥地利 → 1/8 1-0葡萄牙 → 1/4 2-1比利时",
       "odds_h2h": {
-        "home": 2.38,
-        "draw": 3.25,
-        "away": 3.10
+        "home": 6.78,
+        "draw": 3.51,
+        "away": 1.64
       },
       "odds_spread": {
-        "line": "-0.25",
-        "price": 2.04
+        "line": "0.0",
+        "price": 1.98
       },
       "odds_totals": {
         "line": "2.5",
-        "over": 1.90,
-        "under": 1.92
+        "over": 1.93,
+        "under": 1.88
       },
       "upset_signals": 3,
       "upset_risk": "medium",
       "upset_details": [
-        "⚡ 西班牙赔率7/14骤降0.15(3.25→3.10) · 达重大漂移阈值 · 市场资金流向西班牙",
-        "法国淘汰赛零失球(6-0) · 防守铁壁",
-        "西班牙88分钟绝杀比利时 · 进攻端创造力强但不稳定"
+        "Spain odds volatile(3.25->3.10->3.22) · money flow unstable",
+        "France KO stage 0 goals conceded(6-0) · defensive fortress",
+        "Draw price continues falling to 3.15 · spread consensus flat -> confirmed 50/50"
       ],
-      "pred_h2h": "⚠️ 法国平手盘(修正) · 法国40.0% vs 西班牙30.7% vs 平29.3% · 21家共识 · 西班牙赔率赛前12h骤降0.15→3.10 · 市场向西班牙倾斜 · 半决赛加时风险35-45% · 强烈建议走法国DNB@1.60或关注平局@3.25 · 独赢风险已升级",
+      "pred_h2h": "France 39.7% vs Spain 29.5% vs Draw 30.1% · 51家共识 · Spain部分回弹(3.10->3.22) · Draw续降至3.15 · 让球共识转平手 · 半决赛加时风险35-45% · 建议法国DNB@1.60或平局@3.15",
       "pred_spread": "法国 -0.25 @2.04 — 浅盘 · 法国淘汰赛零失球 · 西班牙进攻可能受阻",
-      "pred_totals": "⚠️ 小2.5倾向减弱 · Under@1.92(曾1.86) · 5家共识近乎50/50 · 半决赛防守型但市场趋于均衡 · 小注小2.5或观望",
+      "pred_totals": "小2.5倾向恢复 · Under@1.88(12:00曾1.92) · 23家共识22家用2.5线 · 半决赛防守型 · 小注小2.5",
       "pred_scores": [
         "1-0",
         "0-0",
         "1-1"
       ],
       "tier": "C",
-      "reason": "半决赛🔥 FIFA#2法国 vs FIFA#3西班牙，排名仅差1位。法国淘汰赛3场零失球（3-0瑞典/1-0巴拉圭/2-0摩洛哥），防线坚不可摧。西班牙淘汰赛前2场也是1-0（vs葡萄牙/奥地利），仅对比利时失1球但88分钟绝杀。两队2024欧洲杯半决赛法国2-1西班牙。⚠️ 赛前12h西班牙赔率骤降0.15(3.25→3.10)，达重大漂移阈值，市场资金向西班牙倾斜。21家共识法国2.38/平3.25/西班牙3.10，vig 5.1%。半决赛加时风险35-45%（本杯赛1/4决赛4/8场进入加时）。三态过于接近（40.0%/30.7%/29.3%），任何结果都不算冷门。Tier C — 不推荐单边投注，关注法国DNB+小2.5观望。",
+      "reason": "SF: FIFA#2 France vs FIFA#3 Spain. 21:00 review: 51b consensus F2.39/D3.15/A3.22, vig 4.6%. Spain 12:00 crash(-0.15) partially reversed to 3.22, Draw continues to fall to 3.15. Spread consensus shifted -0.25->0.0(flat), confirming market views as true 50/50. Under 2.5 restrengthened @1.88(was 1.86->1.92->1.88). SF extra time risk 35-45%. Tier C - 3-way balanced, no single-side rec. France DNB@1.60 + Under 2.5@1.88 worth watching.",
       "factors": [
         {
           "icon": "⚡",
@@ -79,15 +79,46 @@
           "severity": "medium"
         }
       ],
-      "status": "upcoming",
-      "live_status": null,
-      "live_clock": null,
-      "live_score": null,
-      "odds_movement": "初盘(7/12 04:00 UTC): 法国2.30/平3.20/西班牙3.20 → 7/13 21:00: 法国2.30/平3.25/西班牙3.25 → 7/14 12:00复核: 法国2.38(+0.08)/平3.25(不变)/西班牙3.10(-0.15⚠️) · 21家共识 · 西班牙赔率骤降0.15达重大漂移阈值 · 市场赛前12h向西班牙倾斜 · 关注临场阵容",
+      "status": "live",
+      "live_status": "LIVE",
+      "live_clock": "88'",
+      "live_score": "0-2",
+      "odds_movement": "滚球59': F6.78/D3.51/A1.64 · Porro58'扩大比分至0-2 · 西班牙距决赛仅31分钟",
       "vig": 5.1,
       "home_win_prob": 40.0,
       "home_rank": 2,
-      "away_rank": 3
+      "away_rank": 3,
+      "odds_h2h_live": {
+        "home": 6.78,
+        "draw": 3.51,
+        "away": 1.64
+      },
+      "live_stats": {
+        "possession": {
+          "home": 49.4,
+          "away": 50.6
+        },
+        "shots": {
+          "home": 6,
+          "away": 9
+        },
+        "shots_on_target": {
+          "home": 1,
+          "away": 2
+        },
+        "fouls": {
+          "home": 10,
+          "away": 12
+        },
+        "corners": {
+          "home": 6,
+          "away": 1
+        },
+        "yellow_cards": {
+          "home": 2,
+          "away": 1
+        }
+      }
     }
   ],
   "top_picks": [
@@ -101,7 +132,7 @@
     {
       "rank": "🥈",
       "pick": "法国 DNB(Draw No Bet)",
-      "odds": 1.60,
+      "odds": 1.6,
       "tier": "B",
       "logic": "法国零失球防线+排名优势 · 平局退款降低风险 · 但西班牙赔率骤降0.15⚠️ · 市场向西班牙倾斜 · DNB比独赢更安全但风险上升"
     },
@@ -114,6 +145,24 @@
     }
   ],
   "timeline": [
+    {
+      "time": "07/15 04:21",
+      "event": "⚽ GOAL | Pedro Porro 58' · 法国0-2西班牙",
+      "detail": "西班牙Pedro Porro 58'破门 · 比分扩大到0-2 · 统计数据: France 46.4%控球 · 2射0正 · 6犯规3角球 | Spain 53.6%控球 · 6射1正 · 6犯规1角球 · 盘口: France 6.78(+27.9%) / Draw 3.51 / Spain 1.64",
+      "type": "goal"
+    },
+    {
+      "time": "7/15 03:40",
+      "event": "⚽ GOAL | 奥亚萨瓦尔(Oyarzabal)22'点球 · 法国0-1西班牙",
+      "detail": "西班牙获点球 · Oyarzabal主罚命中 · 盘口剧震: France 2.39→5.30(+122%) / Spain 3.22→1.73(-46%) / Draw 3.15→3.63 · 黄牌: Rabiot(FRA)9' Cucurella(ESP)31'",
+      "type": "goal"
+    },
+    {
+      "time": "7/14 21:00",
+      "event": "盘口复核 | Spain回弹+Draw续降+Spread转平手",
+      "detail": "51b: F2.39(+0.01)/D3.15(-0.10)/A3.22(+0.12) · Spain crash partially reversed · Spread -0.25->0.0 flat confirmed · Under 2.5@1.88 restrengthened · Tier C maintained",
+      "type": "review"
+    },
     {
       "time": "7/14 12:00",
       "event": "⚠️ 赛前12h盘口复核 | 西班牙赔率骤降0.15",
@@ -142,7 +191,10 @@
   "parlays": [
     {
       "type": "二串一",
-      "picks": ["法国vs西班牙 小 2.5", "英格兰vs阿根廷 小 2.5"],
+      "picks": [
+        "法国vs西班牙 小 2.5",
+        "英格兰vs阿根廷 小 2.5"
+      ],
       "odds": 2.58,
       "tier": "B",
       "logic": "双小2.5串关 @2.58 · 两场均为防守型淘汰赛 · 法国零失球+英阿体能透支"

@@ -1,7 +1,7 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/12 14:00",
+  "updated": "7/14 21:00",
   "status": "upcoming",
   "matches": [
     {
@@ -17,37 +17,38 @@
       "route_home": "1/16 2-1刚果金 → 1/8 3-2墨西哥 → 1/4 2-1挪威(加时)",
       "route_away": "1/16 3-2佛得角(加时) → 1/8 3-2埃及 → 1/4 3-1瑞士(加时)",
       "odds_h2h": {
-        "home": 2.60,
-        "draw": 3.10,
-        "away": 2.80
+        "home": 2.65,
+        "draw": 2.92,
+        "away": 3.04
       },
       "odds_spread": {
         "line": "0",
-        "price": 1.92
+        "price": 1.94
       },
       "odds_totals": {
         "line": "2.5",
-        "over": 2.15,
-        "under": 1.62
+        "over": 2.31,
+        "under": 1.6
       },
       "upset_signals": 4,
       "upset_risk": "high",
       "upset_details": [
-        "两队均连续3场淘汰赛有失球 · 防守非铁壁",
-        "英格兰+阿根廷各经历加时才晋级4强 · 体能隐患严重",
-        "大小球极度偏Under@1.62 · 博彩公司强烈预期低进球",
-        "阿根廷连续4场淘汰赛失球 · 场均失1.75球但未被淘汰"
+        "Argentina +8.6% massive drift(2.80->3.04) · Market abandoning defending champ",
+        "Draw -5.8% collapse(3.10->2.92) · Market expects extra time",
+        "Both teams conceded in all 3 KO games · leaky defense",
+        "Both teams went 120min in QF · extreme fatigue",
+        "Under 2.5@1.60 extreme tilt · bookmakers screaming low scoring"
       ],
-      "pred_h2h": "英格兰微弱优势 36.1% · 14家共识Eng 2.60 · 但阿根廷卫冕冠军底蕴不可忽视 — 建议走平局@3.10或英格兰DNB",
+      "pred_h2h": "England edge widening · Eng 35.7% vs Arg 31.3% vs Draw 32.5% · 51b consensus · Argentina +8.6% massive drift! · Draw -5.8% collapsing · Market fading defending champ · Rec: England DNB@1.72 or Draw@2.92",
       "pred_spread": "平手盘 · 双方无让球 · 市场认为完全对等 · 英格兰2.60 vs 阿根廷2.80差距极小",
-      "pred_totals": "小 2.5 @1.62 ⭐强烈信号 · 4家共识Under@1.62(61.7%隐含) · 博彩公司定价最自信的方向 · 两队120分钟消耗+连续失球但淘汰赛节奏慢",
+      "pred_totals": "Under 2.5 @1.60 EXTREME SIGNAL · 15b consensus Under@1.60(62.5% implied) · Over surging to 2.31(+7.4%) · Bookmakers extremely confident · MUST BET",
       "pred_scores": [
         "1-0",
         "0-0",
         "1-1"
       ],
-      "tier": "B",
-      "reason": "英格兰FIFA#5 vs 阿根廷FIFA#1，卫冕冠军对阵三狮军团。英格兰淘汰赛：2-1刚果金→3-2墨西哥→2-1挪威(加时)，场均2.3球但场均失1.3球，贝林厄姆双响淘汰挪威。阿根廷淘汰赛：3-2佛得角(加时)→3-2埃及→3-1瑞士(加时)，场均3.0球但场均失1.7球，全部加时晋级！两队均连续3场淘汰赛失球，防守都不稳固。但关键信号：大小球共识Under@1.62极度倾斜，4家bookmaker一致压低小2.5赔率，隐含61.7%概率。博彩公司在强烈暗示低进球比赛——两队120分钟体能消耗后节奏必然放缓。英格兰FIFA#5 vs 阿根廷FIFA#1，英格兰有微弱盘口优势(2.60 vs 2.80)，14家共识。平赔3.10在三态中排第三，说明市场并不认为平局是最可能结果。Tier B — 主推小2.5@1.62(强信号)，英格兰DNB@1.72作为安全选项。冷门风险高(4/8信号)：两队防守均有漏洞，体能是关键变量。",
+      "tier": "A",
+      "reason": "England FIFA#5 vs Argentina FIFA#1. 21:00 review: 51b consensus E2.65/D2.92/A3.04, vig 4.9%. Argentina +8.6% MASSIVE drift (2.80->3.04) exceeds 5% threshold - market abandoning defending champion. Draw -5.8% collapse (3.10->2.92) - market expecting extra time. Under 2.5 signal intensifying: Under@1.60(was 1.62), Over surging to 2.31(+7.4%), 62.5% implied. Both teams exhausted from 120-min QF wins + defensive SF profile. UPGRADE Tier B->A — Under 2.5@1.60 is the strongest signal tonight. England DNB@1.72 as safety.",
       "factors": [
         {
           "icon": "🔋",
@@ -79,8 +80,8 @@
       "live_status": null,
       "live_clock": null,
       "live_score": null,
-      "odds_movement": "初盘(7/12 04:00 UTC): 英格兰2.60/平3.10/阿根廷2.80 — 英格兰微弱优势 · 14家共识 · 无历史漂移 · 21:00复核待更新",
-      "vig": 6.4,
+      "odds_movement": "7/14 21:00复核: 51家共识 E2.65(+0.05)/D2.92(-0.18!)/A3.04(+0.24!!) · Argentina飙升8.6%达重大漂移阈值 · Draw急降5.8% · 市场放弃FIFA#1卫冕冠军 · Under 2.5@1.60进一步加强(曾1.62) · Over飙至2.31(+7.4%) · 冷门风险极高",
+      "vig": 5.0,
       "home_win_prob": 36.1,
       "home_rank": 5,
       "away_rank": 1
@@ -90,26 +91,32 @@
     {
       "rank": "🥇",
       "pick": "英格兰 vs 阿根廷 · 小 2.5",
-      "odds": 1.62,
+      "odds": 1.6,
       "tier": "A",
-      "logic": "4家共识Under@1.62(61.7%隐含) · 博彩公司最强方向信号 · 两队120分钟体能消耗 · 淘汰赛半决赛节奏慢"
+      "logic": "15b consensus Under@1.60(62.5% implied) · Strongest bookmaker signal · Argentina +8.6% + Draw -5.8% confirming low-scoring · Over@2.31 extremely pessimistic on goals"
     },
     {
       "rank": "🥈",
       "pick": "英格兰 DNB(Draw No Bet)",
       "odds": 1.72,
       "tier": "B",
-      "logic": "36.1%隐含概率+主场优势(FIFA#5) · 平局退款安全边际 · 贝林厄姆状态爆棚"
+      "logic": "35.7% implied + Argentina abandoned by market(+8.6%) · Draw refund safety · Defending champ faded"
     },
     {
       "rank": "🥉",
       "pick": "平局",
-      "odds": 3.10,
+      "odds": 2.92,
       "tier": "B",
-      "logic": "30.3%隐含概率 · 两队均需加时才能赢球 · 淘汰赛平局后加时的规律 · 体能透支增加平局概率"
+      "logic": "32.5% implied(rising) · Draw -5.8% at threshold · Both teams needed ET to win · Fatigue boosts draw"
     }
   ],
   "timeline": [
+    {
+      "time": "7/14 21:00",
+      "event": "盘口复核 | Argentina飙升8.6%+Draw急降5.8%",
+      "detail": "51b: E2.65(+0.05)/D2.92(-0.18!)/A3.04(+0.24!!) · Argentina massive drift exceeding 5% threshold · Draw collapsing · Market fading defending champ · Under 2.5@1.60 intensifying · Over@2.31(+7.4%) · UPGRADE Tier B->A",
+      "type": "odds_alert"
+    },
     {
       "time": "7/12 14:00",
       "event": "半决赛赛前预测发布",
@@ -120,14 +127,20 @@
   "parlays": [
     {
       "type": "二串一",
-      "picks": ["法国vs西班牙 小 2.5", "英格兰vs阿根廷 小 2.5"],
+      "picks": [
+        "法国vs西班牙 小 2.5",
+        "英格兰vs阿根廷 小 2.5"
+      ],
       "odds": 2.58,
       "tier": "B",
       "logic": "双小2.5串关 @2.58 · 两场半决赛均防守型预期 · 法国零失球+英阿体能透支"
     },
     {
       "type": "二串一(保守)",
-      "picks": ["法国 DNB", "英格兰 vs 阿根廷 小 2.5"],
+      "picks": [
+        "法国 DNB",
+        "英格兰 vs 阿根廷 小 2.5"
+      ],
       "odds": 2.59,
       "tier": "B",
       "logic": "法国不败+英阿小2.5 @2.59 · 平局保护+低进球双保险"
