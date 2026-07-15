@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15 09:30",
+  "updated": "2026-07-15 09:35",
   "holdings": [
     {
       "name": "上海新阳",
@@ -7,11 +7,11 @@
       "sector": "半导体材料",
       "position": "持有",
       "cost": 121.9,
-      "price": 117.18,
-      "chg": 1.2,
-      "pnl": -3.9,
-      "status": "watch",
-      "action": "持有观察",
+      "price": 111.46,
+      "chg": -3.7,
+      "pnl": -8.6,
+      "status": "warn",
+      "action": "🔶 距止损109.7仅1.6%，准备操作",
       "alert": ""
     },
     {
@@ -20,11 +20,11 @@
       "sector": "SoC芯片",
       "position": "持有",
       "cost": 99.4,
-      "price": 98.14,
-      "chg": -0.1,
-      "pnl": -1.3,
+      "price": 97.0,
+      "chg": -1.3,
+      "pnl": -2.4,
       "status": "hold",
-      "action": "⚪ 接近回本（距成本1.3%）",
+      "action": "持有观察",
       "alert": ""
     },
     {
@@ -33,11 +33,11 @@
       "sector": "消费电子",
       "position": "持有",
       "cost": 74.5,
-      "price": 61.87,
-      "chg": 0.3,
-      "pnl": -17.0,
+      "price": 61.18,
+      "chg": -0.8,
+      "pnl": -17.9,
       "status": "warn",
-      "action": "🔴 深套-17.0%，等反弹减仓",
+      "action": "🔴 深套-17.9%，等反弹减仓",
       "alert": ""
     },
     {
@@ -46,11 +46,11 @@
       "sector": "医药",
       "position": "持有",
       "cost": 30.3,
-      "price": 29.81,
-      "chg": -0.4,
-      "pnl": -1.6,
+      "price": 30.39,
+      "chg": 1.5,
+      "pnl": 0.3,
       "status": "hold",
-      "action": "⚪ 接近回本（距成本1.6%）",
+      "action": "⚪ 接近回本（距成本0.3%）",
       "alert": ""
     },
     {
@@ -59,18 +59,26 @@
       "sector": "汽车零部件",
       "position": "持有",
       "cost": 43.44,
-      "price": 43.21,
-      "chg": 1.9,
-      "pnl": -0.5,
-      "status": "hold",
-      "action": "⚪ 接近回本（距成本0.5%）",
+      "price": 41.51,
+      "chg": -2.1,
+      "pnl": -4.4,
+      "status": "watch",
+      "action": "持有观察",
       "alert": ""
     }
   ],
   "market": {
     "direction": "震荡",
-    "top_sectors": [],
-    "worst_sectors": []
+    "top_sectors": [
+      "半导体 +1.2%",
+      "消费电子 +1.1%",
+      "芯片 +1.0%"
+    ],
+    "worst_sectors": [
+      "中药 -1.2%",
+      "煤炭 -1.3%",
+      "基建 -100.0%"
+    ]
   },
   "analysis": {
     "verdict": "持仓分化 — 4只可控，立讯深套需关注",
