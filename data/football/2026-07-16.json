@@ -1,7 +1,7 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/16 04:00",
+  "updated": "7/16 04:10",
   "status": "live",
   "matches": [
     {
@@ -30,7 +30,7 @@
         "over": 1.49,
         "under": 2.69,
         "lean": "under",
-        "note": "59' 1-0 · 大小球线从2.5暴跌至1.5"
+        "note": "70' 1-0 · 大小球线从2.5暴跌至1.5"
       },
       "upset_signals": 3,
       "upset_risk": "mid",
@@ -77,8 +77,8 @@
         }
       ],
       "status": "live",
-      "live_status": "STATUS_SECOND_HALF",
-      "live_clock": "59'",
+      "live_status": "STATUS_IN_PROGRESS",
+      "live_clock": "70'",
       "live_score": "1-0",
       "odds_movement": "7/15 21:00复核: 51b E2.70(-0.01)/D2.88(-0.01)/A3.00(-0.02) · 9h变动<0.03 · 无Spain式骤降信号(对比法西战西班牙-0.15) · 盘口彻底进入稳态 · Under 2.5@1.57微增 · Over@2.35维持悲观 · 维持Tier A小2.5 · 无新方向信号",
       "vig": 5.1,
