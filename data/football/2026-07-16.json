@@ -1,8 +1,8 @@
 {
   "date": "2026-07-16",
   "round": "半决赛",
-  "updated": "7/15 22:35 (逻辑修正: 比分与大球方向一致)",
-  "status": "upcoming",
+  "updated": "7/16 04:00",
+  "status": "live",
   "matches": [
     {
       "home": "England",
@@ -17,20 +17,20 @@
       "route_home": "1/16 2-1刚果金 → 1/8 3-2墨西哥 → 1/4 2-1挪威(加时)",
       "route_away": "1/16 3-2佛得角(加时) → 1/8 3-2埃及 → 1/4 3-1瑞士(加时)",
       "odds_h2h": {
-        "home": 2.7,
-        "draw": 2.88,
-        "away": 3.0
+        "home": 1.5,
+        "draw": 3.35,
+        "away": 10.5
       },
       "odds_spread": {
-        "line": "0",
-        "price": 1.83
+        "line": "-0.5",
+        "price": 1.49
       },
       "odds_totals": {
-        "line": "2.5",
-        "over": 2.35,
-        "under": 1.57,
-        "lean": "over",
-        "note": "反市场推荐大2.5 · 两队淘汰赛100%大球"
+        "line": "1.5",
+        "over": 1.49,
+        "under": 2.69,
+        "lean": "under",
+        "note": "59' 1-0 · 大小球线从2.5暴跌至1.5"
       },
       "upset_signals": 3,
       "upset_risk": "mid",
@@ -76,10 +76,10 @@
           "severity": "medium"
         }
       ],
-      "status": "upcoming",
-      "live_status": null,
-      "live_clock": null,
-      "live_score": null,
+      "status": "live",
+      "live_status": "STATUS_SECOND_HALF",
+      "live_clock": "59'",
+      "live_score": "1-0",
       "odds_movement": "7/15 21:00复核: 51b E2.70(-0.01)/D2.88(-0.01)/A3.00(-0.02) · 9h变动<0.03 · 无Spain式骤降信号(对比法西战西班牙-0.15) · 盘口彻底进入稳态 · Under 2.5@1.57微增 · Over@2.35维持悲观 · 维持Tier A小2.5 · 无新方向信号",
       "vig": 5.1,
       "home_win_prob": 35.2,
@@ -121,6 +121,18 @@
     }
   ],
   "timeline": [
+    {
+      "time": "7/16 04:00",
+      "event": "⚽ 进球 | 英格兰 1-0 (55')",
+      "detail": "Anthony Gordon 凌空抽射破门 · 赔率巨震: 英格兰+180→-200 · 阿根廷+175→+950 · 大小球线2.5→1.5",
+      "type": "goal"
+    },
+    {
+      "time": "7/16 03:10",
+      "event": "滚球监控 | 上半场 0-0(10')",
+      "detail": "英格兰vs阿根廷 · 阿根廷控球54.5% · 双方暂无射正",
+      "type": "live"
+    },
     {
       "time": "7/15 21:00",
       "event": "盘口复核 | 9h稳定 · 无Spain式骤降信号 · 盘口彻底稳态",
