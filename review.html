@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas AI · 每日复盘 · 7/16</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07070a; --card: #0d0d12; --card2: #111118;
+  --border: #1e1e2a; --text: #e4e4ec; --text2: #8b8b9e;
+  --accent: #faff69; --green: #10b981; --red: #ef4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter','Noto Sans SC',sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 720px; margin:0 auto; padding: 32px 20px 60px; }
+
+/* Brand */
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.brand-logo {
+  width: 36px; height: 36px;
+  background: var(--accent); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 14px; color: #000;
+}
+.brand-name { font-weight: 800; font-size: 18px; }
+.brand-sub { font-size: 12px; color: var(--text2); }
+
+/* Hero */
+.hero { margin: 24px 0 28px; }
+.hero-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #faff69 0%, #f59e0b 100%);
+  color: #000; font-weight: 700; font-size: 12px;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 12px;
+}
+.hero h1 { font-size: 26px; font-weight: 900; }
+.hero .date { color: var(--text2); font-size: 14px; margin-top: 4px; }
+
+/* Index Cards */
+.index-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  margin-bottom: 28px;
+}
+.index-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 16px; text-align: center;
+}
+.index-card .idx-name { font-size: 13px; color: var(--text2); }
+.index-card .idx-price { font-size: 24px; font-weight: 900; margin: 4px 0; }
+.index-card .idx-chg { font-size: 15px; font-weight: 700; }
+.idx-up { color: var(--green); }
+.idx-down { color: var(--red); }
+
+/* Section */
+.section { margin-bottom: 28px; }
+.section-title {
+  font-size: 17px; font-weight: 800; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-size: 11px; color: var(--text2); text-align: left;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.data-table td {
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px; font-weight: 500;
+}
+.data-table .num { font-weight: 700; text-align: right; }
+
+/* Prediction */
+.prediction-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; margin-bottom: 12px;
+}
+.prediction-card h3 { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+.prediction-card p { font-size: 14px; color: var(--text2); }
+
+/* Insight */
+.insight {
+  background: var(--card2); border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 12px 0;
+}
+.insight p { font-size: 14px; }
+
+/* Footer */
+.footer {
+  text-align: center; padding: 24px 0 0;
+  color: var(--text2); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: 32px;
+}
+.footer .brand-sm { font-weight: 700; color: var(--accent); }
+
+@media (max-width:480px) {
+  .container { padding: 20px 14px 40px; }
+  .index-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .index-card { padding: 14px 10px; }
+  .index-card .idx-price { font-size: 20px; }
+  .hero h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Brand -->
+<div class="brand">
+  <div class="brand-logo">AI</div>
+  <div>
+    <div class="brand-name">Atlas AI</div>
+    <div class="brand-sub">数据驱动的投资决策引擎</div>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">📊 每日复盘</div>
+  <h1>创业板重挫 -2.95%<br>科技内部大轮动</h1>
+  <div class="date">2026年7月16日 · 周三 · 收盘复盘</div>
+</div>
+
+<!-- 大盘概览 -->
+<div class="section">
+  <div class="section-title">📈 大盘概览</div>
+  <div class="index-grid">
+    <div class="index-card">
+      <div class="idx-name">上证指数</div>
+      <div class="idx-price">3882</div>
+      <div class="idx-chg idx-down">-1.85%</div>
+    </div>
+    <div class="index-card">
+      <div class="idx-name">深证成指</div>
+      <div class="idx-price">14489</div>
+      <div class="idx-chg idx-down">-1.97%</div>
+    </div>
+    <div class="index-card">
+      <div class="idx-name">创业板指</div>
+      <div class="idx-price">3692</div>
+      <div class="idx-chg idx-down">-2.95%</div>
+    </div>
+  </div>
+  <div class="insight">
+    <p><strong>定性：不是系统性恐慌。</strong> 主力资金净流入+270亿，中小盘抗跌。砸盘集中在指数权重股和半导体方向，计算机、IT服务逆势大涨。科技内部从硬件（芯片）切换到软件（AI）。</p>
+  </div>
+</div>
+
+<!-- 板块复盘 -->
+<div class="section">
+  <div class="section-title">🔥 板块复盘</div>
+
+  <h4 style="font-size:13px;color:var(--text2);margin-bottom:8px;">领涨 TOP5（按主力资金流入）</h4>
+  <table class="data-table">
+    <tr><th>板块</th><th class="num">主力流入</th><th class="num">涨幅</th></tr>
+    <tr><td>💻 计算机</td><td class="num" style="color:var(--green)">+20.6亿</td><td class="num" style="color:var(--green)">+1.48%</td></tr>
+    <tr><td>🖥️ IT服务</td><td class="num" style="color:var(--green)">+14.4亿</td><td class="num" style="color:var(--green)">+2.70%</td></tr>
+    <tr><td>📟 印制电路板</td><td class="num" style="color:var(--green)">+9.5亿</td><td class="num" style="color:var(--green)">+0.86%</td></tr>
+    <tr><td>📺 传媒</td><td class="num" style="color:var(--green)">+8.1亿</td><td class="num" style="color:var(--green)">+1.47%</td></tr>
+    <tr><td>🚗 汽车零部件</td><td class="num" style="color:var(--green)">+2.3亿</td><td class="num" style="color:var(--green)">+0.51%</td></tr>
+  </table>
+
+  <h4 style="font-size:13px;color:var(--text2);margin:16px 0 8px;">重灾区</h4>
+  <table class="data-table">
+    <tr><th>板块</th><th class="num">表现</th><th class="num">原因</th></tr>
+    <tr><td>💾 半导体/芯片</td><td class="num" style="color:var(--red)">-5.6%</td><td>三连跌，资金大规模撤出涌入计算机</td></tr>
+    <tr><td>🏦 银行/保险</td><td class="num" style="color:var(--red)">微跌</td><td>指数权重股被砸，拖累上证</td></tr>
+  </table>
+</div>
+
+<!-- 资金轮动 -->
+<div class="section">
+  <div class="section-title">🔄 资金轮动逻辑</div>
+  <div class="prediction-card">
+    <p>💰 主力净流入 <strong style="color:var(--green)">+270亿</strong>，但三大指数全跌。说明：</p>
+    <p style="margin-top:8px;">
+      1. 资金不是离场，是<strong>调仓换方向</strong><br>
+      2. 从硬件（半导体）→ 软件（计算机/AI/IT服务）<br>
+      3. 中小盘逆势走强，权重股被砸——典型的<strong>指数假跌</strong><br>
+      4. 汽车零部件连续三天抗跌+资金持续流入——可能成为下阶段主线
+    </p>
+  </div>
+</div>
+
+<!-- 明日预判 -->
+<div class="section">
+  <div class="section-title">🔮 明日预判</div>
+
+  <div class="prediction-card">
+    <h3>📈 大盘方向</h3>
+    <p>创业板-3%后超跌反弹概率 >60%。连续两天杀跌，明天大概率技术性反弹。高度看量——缩量反弹=弱反弹，放量反弹=真反弹。</p>
+  </div>
+
+  <div class="prediction-card">
+    <h3>🎯 板块方向</h3>
+    <p>
+      • 半导体：三连跌→明天超跌反弹概率最大，但只是反弹不是反转<br>
+      • 计算机/IT：今天逆势涨→明天可能冲高回落，不要追<br>
+      • 消费电子：今天抗跌→明天可能继续走强<br>
+      • 汽车零部件：连续三天抗跌+资金持续流入→关注是否能成为主线
+    </p>
+  </div>
+
+  <div class="insight">
+    <p><strong>核心观察：</strong> 明天开盘如果半导体低开不破今天低点→可以博反弹。计算机高开→等回踩，别追。汽车零部件如果继续抗跌→考虑加仓。</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  由 <span class="brand-sm">Atlas AI</span> 数据引擎生成 · 仅供参考不构成投资建议<br>
+  数据来源: 新浪财经 / 东方财富 · 2026-07-16 15:00
+</div>
+
+</div>
+</body>
+</html>
