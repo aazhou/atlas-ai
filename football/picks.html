@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas AI · 今日看点</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07070a; --card:#0d0d12; --border:#1e1e2a;
+  --text:#e4e4ec; --text2:#8b8b9e; --accent:#faff69;
+  --green:#10b981; --red:#ef4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter','Noto Sans SC',sans-serif;
+  background:var(--bg); color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+.container { max-width:440px; margin:0 auto; padding:24px 16px 48px; }
+
+/* Brand */
+.brand { display:flex; align-items:center; gap:8px; margin-bottom:20px; }
+.brand-logo { width:30px; height:30px; background:var(--accent); border-radius:7px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; color:#000; }
+.brand-name { font-weight:800; font-size:15px; }
+.brand-sub { font-size:10px; color:var(--text2); }
+
+/* Match Card */
+.match-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:24px 20px; margin-bottom:16px;
+}
+.match-badge {
+  display:inline-block; background:linear-gradient(135deg,#faff69,#f59e0b);
+  color:#000; font-weight:700; font-size:11px; padding:4px 12px;
+  border-radius:20px; margin-bottom:16px;
+}
+.match-vs {
+  display:flex; align-items:center; justify-content:center;
+  gap:20px; margin-bottom:8px;
+}
+.match-team { text-align:center; }
+.match-team .flag { font-size:42px; display:block; margin-bottom:2px; }
+.match-team .name { font-weight:800; font-size:17px; }
+.match-info { text-align:center; font-size:11px; color:var(--text2); margin-top:8px; }
+
+/* Pick Cards */
+.pick-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:18px; margin-bottom:10px;
+  display:flex; align-items:center; gap:12px;
+}
+.pick-card.top { border-color:rgba(250,255,105,0.3); }
+.pick-rank { font-size:22px; flex-shrink:0; width:30px; text-align:center; }
+.pick-body { flex:1; }
+.pick-body .pick-title { font-weight:700; font-size:15px; }
+.pick-body .pick-reason { font-size:12px; color:var(--text2); margin-top:3px; line-height:1.5; }
+.pick-odds {
+  font-weight:900; font-size:18px; padding:8px 12px;
+  border-radius:8px; flex-shrink:0;
+}
+.pick-odds.green { background:rgba(16,185,129,0.15); color:var(--green); }
+
+/* Results */
+.pick-result {
+  display:flex; align-items:center; gap:4px;
+  font-size:11px; font-weight:700; margin-top:4px;
+}
+.pick-result.win { color:var(--green); }
+.pick-result.lose { color:var(--red); }
+
+/* Track Record */
+.track-record {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:18px 20px; margin-bottom:16px;
+}
+.track-record h3 { font-size:14px; font-weight:700; margin-bottom:10px; }
+.track-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px; }
+.track-stat { text-align:center; }
+.track-stat .num { font-size:24px; font-weight:900; }
+.track-stat .num.g { color:var(--green); }
+.track-stat .num.r { color:var(--red); }
+.track-stat .label { font-size:10px; color:var(--text2); }
+
+.track-streak {
+  display:flex; gap:4px; justify-content:center; flex-wrap:wrap;
+}
+.streak-dot {
+  width:12px; height:12px; border-radius:50%;
+}
+.streak-dot.w { background:var(--green); }
+.streak-dot.l { background:var(--red); }
+
+/* Disclaimer */
+.disclaimer {
+  text-align:center; font-size:10px; color:var(--text2);
+  margin-top:12px; line-height:1.6;
+}
+.disclaimer strong { color:var(--accent); }
+
+/* Yesterday */
+.yesterday {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:14px 16px; margin-bottom:16px;
+  font-size:12px;
+}
+.yesterday .y-head { font-weight:700; margin-bottom:6px; }
+.yesterday .y-item { display:flex; justify-content:space-between; padding:3px 0; color:var(--text2); }
+
+@media(max-width:380px) {
+  .match-vs { gap:12px; }
+  .match-team .flag { font-size:34px; }
+  .match-team .name { font-size:15px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="brand">
+  <div class="brand-logo">AI</div>
+  <div><div class="brand-name">Atlas AI</div><div class="brand-sub">AI驱动的竞彩决策辅助</div></div>
+</div>
+
+<!-- Match -->
+<div class="match-card">
+  <div class="match-badge">🥉 季军赛 · 明晨 05:00</div>
+  <div class="match-vs">
+    <div class="match-team">
+      <span class="flag">🇫🇷</span>
+      <div class="name">法国</div>
+    </div>
+    <div class="match-team">
+      <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+      <div class="name">英格兰</div>
+    </div>
+  </div>
+  <div class="match-info">迈阿密硬石体育场 · 7月19日 05:00</div>
+</div>
+
+<!-- Picks -->
+<div class="pick-card top">
+  <div class="pick-rank">🥇</div>
+  <div class="pick-body">
+    <div class="pick-title">大3.5球</div>
+    <div class="pick-reason">季军赛历史100%大球：1974年以场均3.8球，近5届全部≥3球。英格兰4场淘汰赛场场大球（场均3.5球），从未零封对手。双方大概率轮换替补，防线更松。</div>
+  </div>
+  <div class="pick-odds green">@2.20</div>
+</div>
+
+<div class="pick-card">
+  <div class="pick-rank">🥈</div>
+  <div class="pick-body">
+    <div class="pick-title">法国独赢</div>
+    <div class="pick-reason">法国淘汰赛4场仅失2球，防守体系更稳。22家机构共识法国胜率47.8%，让平半盘合理。英格兰刚被阿根廷绝杀，士气受挫。</div>
+  </div>
+  <div class="pick-odds green">@2.00</div>
+</div>
+
+<!-- Track Record -->
+<div class="track-record">
+  <h3>📊 近期战绩</h3>
+  <div class="track-stats">
+    <div class="track-stat">
+      <div class="num g">58%</div>
+      <div class="label">近7天胜率</div>
+    </div>
+    <div class="track-stat">
+      <div class="num">12</div>
+      <div class="label">总推荐</div>
+    </div>
+    <div class="track-stat">
+      <div class="num g">7</div>
+      <div class="label">命中</div>
+    </div>
+  </div>
+  <div class="track-streak">
+    <span class="streak-dot w"></span>
+    <span class="streak-dot l"></span>
+    <span class="streak-dot w"></span>
+    <span class="streak-dot w"></span>
+    <span class="streak-dot l"></span>
+    <span class="streak-dot w"></span>
+    <span class="streak-dot l"></span>
+  </div>
+</div>
+
+<!-- Yesterday -->
+<div class="yesterday">
+  <div class="y-head">📅 昨日复盘 · 半决赛</div>
+  <div class="y-item">
+    <span>🇦🇷 阿根廷 vs 🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰</span>
+    <span style="color:var(--green)">✅ 大2.5球 @2.35 收</span>
+  </div>
+  <div class="y-item">
+    <span>🇦🇷 阿根廷 vs 🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰</span>
+    <span style="color:var(--red)">❌ 平局 @2.89 亏</span>
+  </div>
+  <div style="text-align:right;margin-top:4px;font-weight:700">昨日：1红1黑</div>
+</div>
+
+<div class="disclaimer">
+  由 <strong>Atlas AI</strong> 生成 · 仅供参考不构成投注建议<br>
+  预测不可能100%正确 · 理性购彩
+</div>
+
+</div>
+</body>
+</html>
