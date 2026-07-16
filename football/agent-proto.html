@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas AI · 比赛智能体</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07070a; --card:#0d0d12; --card2:#111118;
+  --border:#1e1e2a; --text:#e4e4ec; --text2:#8b8b9e;
+  --accent:#faff69; --green:#10b981; --red:#ef4444;
+  --blue:#60a5fa; --amber:#f59e0b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter','Noto Sans SC',sans-serif;
+  background:#111; display:flex; justify-content:center;
+  align-items:flex-start; padding:20px;
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+}
+.phone {
+  width:375px; min-height:750px;
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:24px; overflow:hidden; position:relative;
+}
+
+/* ============ PAGE 1: HOME ============ */
+.home { display:flex; flex-direction:column; height:100%; }
+.home-header {
+  padding:20px 16px 12px; border-bottom:1px solid var(--border);
+  background:var(--card);
+}
+.home-header-top { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.home-logo { width:28px; height:28px; background:var(--accent); border-radius:7px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; color:#000; }
+.home-title { font-weight:800; font-size:16px; }
+.home-sub { font-size:10px; color:var(--text2); }
+
+.home-tabs { display:flex; gap:4px; }
+.home-tab { flex:1; text-align:center; padding:8px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; background:var(--card2); color:var(--text2); border:1px solid transparent; transition:all 0.2s; }
+.home-tab.active { background:rgba(250,255,105,0.08); border-color:var(--accent); color:var(--accent); }
+.home-tab .count { font-size:9px; color:var(--text2); font-weight:400; }
+
+.home-list { flex:1; overflow-y:auto; padding:12px; }
+.match-row {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:16px; margin-bottom:10px;
+  display:flex; align-items:center; gap:12px;
+  transition:border-color 0.2s;
+}
+.match-row.owned { border-color:rgba(250,255,105,0.25); }
+.match-row .mr-time { flex-shrink:0; text-align:center; min-width:48px; }
+.match-row .mr-date { font-size:9px; color:var(--text2); }
+.match-row .mr-clock { font-weight:700; font-size:13px; margin-top:2px; }
+.match-row .mr-vs { flex:1; }
+.match-row .mr-teams { font-weight:700; font-size:14px; }
+.match-row .mr-round { font-size:10px; color:var(--text2); margin-top:2px; }
+.match-row .mr-price {
+  flex-shrink:0; text-align:center;
+}
+.price-tag {
+  padding:8px 14px; border-radius:8px; font-weight:700;
+  font-size:12px; cursor:pointer; transition:all 0.15s;
+  border:none; font-family:inherit;
+}
+.price-tag.buy { background:var(--accent); color:#000; }
+.price-tag.owned { background:rgba(250,255,105,0.1); color:var(--accent); border:1px solid rgba(250,255,105,0.25); }
+.price-tag.free { background:var(--green); color:#000; }
+
+.home-empty { padding:40px 20px; text-align:center; color:var(--text2); font-size:12px; }
+
+/* ============ PAGE 2: COPILOT ============ */
+.copilot { display:none; flex-direction:column; height:100%; }
+.cp-header {
+  padding:14px 16px; background:var(--card);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+.cp-back {
+  width:28px; height:28px; border-radius:7px; cursor:pointer;
+  background:var(--card2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; flex-shrink:0;
+}
+.cp-match-info { flex:1; }
+.cp-match-teams { font-weight:700; font-size:14px; }
+.cp-match-status { font-size:10px; color:var(--green); display:flex; align-items:center; gap:4px; }
+.cp-match-status .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.cp-actions { display:flex; gap:6px; }
+.cp-action-btn {
+  width:28px; height:28px; border-radius:7px; cursor:pointer;
+  background:var(--card2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px;
+}
+
+/* Phase tabs */
+.cp-phases { display:flex; gap:0; padding:0 16px; background:var(--card); border-bottom:1px solid var(--border); }
+.cp-phase {
+  flex:1; text-align:center; padding:10px 0; font-size:11px;
+  font-weight:600; cursor:pointer; color:var(--text2);
+  border-bottom:2px solid transparent; transition:all 0.2s;
+}
+.cp-phase.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+/* Chat area */
+.cp-chat { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px; }
+
+.msg { max-width:90%; font-size:12px; line-height:1.7; animation:fadeIn 0.3s; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.msg.ai { align-self:flex-start; }
+.msg.user { align-self:flex-end; }
+.msg-bubble {
+  padding:12px 14px; border-radius:14px;
+  border-bottom-left-radius:4px;
+}
+.msg.ai .msg-bubble { background:var(--card); border:1px solid var(--border); }
+.msg.user .msg-bubble { background:rgba(250,255,105,0.08); border:1px solid rgba(250,255,105,0.15); }
+
+.msg-pick {
+  background:var(--card2); border:1px solid rgba(250,255,105,0.2);
+  border-radius:12px; padding:14px; margin-top:6px;
+}
+.msg-pick .mp-rank { font-size:14px; margin-bottom:2px; }
+.msg-pick .mp-pick { font-weight:700; font-size:14px; }
+.msg-pick .mp-odds { display:inline-block; background:rgba(16,185,129,0.12); color:var(--green); font-weight:700; padding:2px 8px; border-radius:4px; font-size:12px; margin-left:6px; }
+.msg-pick .mp-reason { font-size:10px; color:var(--text2); margin-top:4px; }
+
+.msg-options { display:flex; flex-direction:column; gap:6px; margin-top:6px; }
+.msg-option {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:10px; padding:10px 12px; font-size:11px;
+  cursor:pointer; transition:border-color 0.15s;
+  display:flex; align-items:center; gap:8px;
+}
+.msg-option:hover { border-color:var(--accent); }
+
+.msg-push {
+  background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.2);
+  border-radius:12px; padding:12px 14px; font-size:11px;
+  display:flex; gap:8px; align-items:flex-start;
+}
+.msg-push .push-icon { font-size:16px; flex-shrink:0; }
+
+.msg-timestamp { font-size:9px; color:var(--text2); margin-top:4px; text-align:right; }
+
+/* Chat input */
+.cp-input-bar {
+  padding:10px 14px; background:var(--card); border-top:1px solid var(--border);
+  display:flex; gap:8px; align-items:center;
+}
+.cp-input {
+  flex:1; background:var(--card2); border:1px solid var(--border);
+  border-radius:20px; padding:10px 14px; font-size:12px;
+  color:var(--text); font-family:inherit;
+}
+.cp-input::placeholder { color:var(--text2); }
+.cp-send {
+  width:36px; height:36px; border-radius:50%;
+  background:var(--accent); color:#000; font-weight:700;
+  border:none; cursor:pointer; font-size:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Modal */
+.modal-overlay {
+  display:none; position:absolute; inset:0;
+  background:rgba(0,0,0,0.7); z-index:20;
+  align-items:center; justify-content:center;
+}
+.modal-overlay.show { display:flex; }
+.modal {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:24px; width:300px; text-align:center;
+}
+.modal h4 { font-size:16px; margin-bottom:8px; }
+.modal p { font-size:11px; color:var(--text2); margin-bottom:6px; }
+.modal .price-big { font-size:32px; font-weight:900; margin:12px 0; }
+.modal .price-big span { font-size:14px; color:var(--text2); }
+.modal-btns { display:flex; gap:8px; margin-top:16px; }
+.modal-btn {
+  flex:1; padding:12px; border-radius:10px; font-weight:700;
+  font-size:13px; cursor:pointer; border:none; font-family:inherit;
+}
+.modal-btn.confirm { background:var(--accent); color:#000; }
+.modal-btn.cancel { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+
+/* Phase badging */
+.phase-pre .cp-phase:nth-child(1) { color:var(--accent); border-bottom-color:var(--accent); }
+.phase-live .cp-phase:nth-child(2) { color:var(--green); border-bottom-color:var(--green); }
+.phase-live .cp-match-status { color:var(--green); }
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+  
+  <!-- ============ HOME PAGE ============ -->
+  <div class="home" id="homePage">
+    <div class="home-header">
+      <div class="home-header-top">
+        <div class="home-logo">AI</div>
+        <div>
+          <div class="home-title">Atlas AI · 比赛智能体</div>
+          <div class="home-sub">AI全程陪伴 · 赛前分析 · 赛中推送 · 赛后复盘</div>
+        </div>
+      </div>
+      <div class="home-tabs">
+        <div class="home-tab active" onclick="filterTab('all',this)">全部<span class="count"> 5场</span></div>
+        <div class="home-tab" onclick="filterTab('owned',this)">已购<span class="count"> 1场</span></div>
+        <div class="home-tab" onclick="filterTab('available',this)">可订阅<span class="count"> 4场</span></div>
+      </div>
+    </div>
+
+    <div class="home-list" id="matchList">
+      <!-- 法国vs英格兰 - 已购 -->
+      <div class="match-row owned" data-status="owned" onclick="openCopilot()">
+        <div class="mr-time">
+          <div class="mr-date">7月19日</div>
+          <div class="mr-clock">05:00</div>
+        </div>
+        <div class="mr-vs">
+          <div class="mr-teams">🇫🇷 法国 vs 🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰</div>
+          <div class="mr-round">🥉 季军赛 · 迈阿密</div>
+        </div>
+        <div class="mr-price">
+          <div class="price-tag owned">已购 ✓</div>
+        </div>
+      </div>
+
+      <!-- 西班牙vs阿根廷 - 可订阅 -->
+      <div class="match-row" data-status="available">
+        <div class="mr-time">
+          <div class="mr-date">7月20日</div>
+          <div class="mr-clock">03:00</div>
+        </div>
+        <div class="mr-vs">
+          <div class="mr-teams">🇪🇸 西班牙 vs 🇦🇷 阿根廷</div>
+          <div class="mr-round">🏆 决赛 · 纽约MetLife</div>
+        </div>
+        <div class="mr-price">
+          <div class="price-tag buy" onclick="event.stopPropagation();openBuy('西班牙 vs 阿根廷','决赛','¥5.9')">¥5.9</div>
+        </div>
+      </div>
+
+      <!-- 中超 - 可订阅 -->
+      <div class="match-row" data-status="available">
+        <div class="mr-time">
+          <div class="mr-date">7月19日</div>
+          <div class="mr-clock">19:35</div>
+        </div>
+        <div class="mr-vs">
+          <div class="mr-teams">🔴 上海海港 vs 🔵 北京国安</div>
+          <div class="mr-round">⚽ 中超 · 第20轮</div>
+        </div>
+        <div class="mr-price">
+          <div class="price-tag buy" onclick="event.stopPropagation();openBuy('上海海港 vs 北京国安','中超','¥3.9')">¥3.9</div>
+        </div>
+      </div>
+
+      <div class="match-row" data-status="available">
+        <div class="mr-time">
+          <div class="mr-date">7月19日</div>
+          <div class="mr-clock">20:00</div>
+        </div>
+        <div class="mr-vs">
+          <div class="mr-teams">🟢 山东泰山 vs 🟠 武汉三镇</div>
+          <div class="mr-round">⚽ 中超 · 第20轮</div>
+        </div>
+        <div class="mr-price">
+          <div class="price-tag buy" onclick="event.stopPropagation();openBuy('山东泰山 vs 武汉三镇','中超','¥3.9')">¥3.9</div>
+        </div>
+      </div>
+
+      <!-- 免费 -->
+      <div class="match-row" data-status="free">
+        <div class="mr-time">
+          <div class="mr-date">7月17日</div>
+          <div class="mr-clock">03:00</div>
+        </div>
+        <div class="mr-vs">
+          <div class="mr-teams">🇧🇷 巴西 vs 🇩🇪 德国</div>
+          <div class="mr-round">🤝 友谊赛 · 免费体验</div>
+        </div>
+        <div class="mr-price">
+          <div class="price-tag free" onclick="event.stopPropagation();alert('免费场次，直接进入')">免费</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COPILOT PAGE ============ -->
+  <div class="copilot" id="copilotPage">
+    <div class="cp-header">
+      <div class="cp-back" onclick="goHome()">←</div>
+      <div class="cp-match-info">
+        <div class="cp-match-teams">🇫🇷 法国 vs 🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰</div>
+        <div class="cp-match-status" id="cpStatus">
+          <span class="live-dot" id="liveDot" style="display:none"></span>
+          <span id="cpStatusText">赛前 · 距开赛8小时</span>
+        </div>
+      </div>
+      <div class="cp-actions">
+        <div class="cp-action-btn" onclick="alert('分享本场比赛')">↗</div>
+      </div>
+    </div>
+
+    <div class="cp-phases" id="cpPhases">
+      <div class="cp-phase active" onclick="switchPhase('pre')">📋 赛前分析</div>
+      <div class="cp-phase" onclick="switchPhase('live')">🔴 赛中推送</div>
+      <div class="cp-phase" onclick="switchPhase('post')">📊 赛后复盘</div>
+    </div>
+
+    <div class="cp-chat" id="cpChat">
+      <!-- Pre-match messages -->
+      <div class="msg ai phase-pre">
+        <div class="msg-bubble">
+          你好！我是本场比赛的专属AI助手 🤖<br><br>
+          我已经梳理了法国vs英格兰的5个关键信息点，你想从哪个开始？
+          <div class="msg-options">
+            <div class="msg-option" onclick="showPick()">🥇 查看AI预测</div>
+            <div class="msg-option" onclick="showWater()">📈 水位走势分析</div>
+            <div class="msg-option" onclick="showInfoGap()">🔍 关键信息差</div>
+          </div>
+        </div>
+        <div class="msg-timestamp">7/16 05:30</div>
+      </div>
+
+      <div class="msg user phase-pre">
+        <div class="msg-bubble">法国让半球能买吗</div>
+      </div>
+      <div class="msg ai phase-pre">
+        <div class="msg-bubble">
+          法国只让平半(0.25)，不是半球。<br><br>
+          而且赔率高企@2.00——如果市场真看好法国，正常应开1.70-1.80。这说明机构对季军赛非常谨慎，双方都可能轮换。<br><br>
+          我的建议：法国方向价值一般，不如关注大球方向。
+        </div>
+        <div class="msg-timestamp">7/16 05:31</div>
+      </div>
+
+      <!-- Live push messages (hidden by default) -->
+      <div class="msg ai phase-live" style="display:none">
+        <div class="msg-push">
+          <div class="push-icon">🔴</div>
+          <div>
+            <strong>比赛开始</strong><br>
+            法国开球，首发阵容已出：姆巴佩、登贝莱首发。英格兰阵容有3处轮换。
+          </div>
+        </div>
+        <div class="msg-timestamp">05:00</div>
+      </div>
+      <div class="msg ai phase-live" style="display:none">
+        <div class="msg-push">
+          <div class="push-icon">⚽</div>
+          <div>
+            <strong>GOAL！法国 1-0</strong><br>
+            姆巴佩 23' 禁区外远射破门。法国控球62%，英格兰防线被撕开。<br>
+            <span style="color:var(--amber)">盘口异动：法国独赢赔率从2.00骤降至1.55</span>
+          </div>
+        </div>
+        <div class="msg-timestamp">05:23</div>
+      </div>
+      <div class="msg ai phase-live" style="display:none">
+        <div class="msg-push">
+          <div class="push-icon">⚽</div>
+          <div>
+            <strong>GOAL！英格兰扳平 1-1</strong><br>
+            贝林厄姆 41' 头球。大球方向正在兑现——上半场就2球了。
+          </div>
+        </div>
+        <div class="msg-timestamp">05:41</div>
+      </div>
+
+      <!-- Post-match messages (hidden by default) -->
+      <div class="msg ai phase-post" style="display:none">
+        <div class="msg-bubble">
+          <strong>📊 全场比赛结束</strong><br><br>
+          法国 3-1 英格兰<br><br>
+          进球：姆巴佩23'、贝林厄姆41'、登贝莱67'、格列兹曼84'<br>
+          全场射门：法国14(7正) / 英格兰9(3正)<br>
+          控球率：法国58% / 42%<br><br>
+          <strong>AI预测回顾：</strong><br>
+          ✅ 大3.5球 @2.20 → <span style="color:var(--green)">收！</span><br>
+          ✅ 法国独赢 @2.00 → <span style="color:var(--green)">收！</span><br><br>
+          本场2中2！
+        </div>
+        <div class="msg-timestamp">07:00</div>
+      </div>
+      <div class="msg ai phase-post" style="display:none">
+        <div class="msg-bubble">
+          <strong>🔍 本场复盘总结</strong><br><br>
+          1. 大球方向完全兑现——4球打穿3.5线<br>
+          2. 季军赛大球铁律继续（6届连大）<br>
+          3. 英格兰防守问题暴露——4场淘汰赛丢9球<br>
+          4. 法国前场效率回归——姆巴佩+登贝莱连线<br><br>
+          还有什么想复盘的吗？
+        </div>
+        <div class="msg-timestamp">07:02</div>
+      </div>
+
+      <!-- Pick card (shown dynamically) -->
+      <div class="msg ai" id="pickCard" style="display:none">
+        <div class="msg-bubble">
+          根据六维分析，本场推荐：
+          <div class="msg-pick">
+            <div class="mp-rank">🥇</div>
+            <div class="mp-pick">大3.5球 <span class="mp-odds">@2.20</span></div>
+            <div class="mp-reason">季军赛历史100%大球+英格兰4场全大球+双方轮换</div>
+          </div>
+          <div class="msg-pick">
+            <div class="mp-rank">🥈</div>
+            <div class="mp-pick">法国独赢 <span class="mp-odds">@2.00</span></div>
+            <div class="mp-reason">防守更稳，22家机构47.8%胜率共识</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cp-input-bar">
+      <input class="cp-input" placeholder="💬 问任何关于这场比赛的问题..." id="cpInput" onkeypress="if(event.key==='Enter')sendMsg()" />
+      <div class="cp-send" onclick="sendMsg()">↑</div>
+    </div>
+  </div>
+
+  <!-- Purchase Modal -->
+  <div class="modal-overlay" id="buyModal">
+    <div class="modal">
+      <h4>购买比赛智能体</h4>
+      <p id="buyModalMatch">西班牙 vs 阿根廷 · 决赛</p>
+      <div class="price-big"><span id="buyModalPrice">¥5.9</span></div>
+      <p style="font-size:10px;color:var(--text2)">赛前全盘分析 · 赛中实时推送 · 赛后自动复盘<br>一次购买，全程陪伴</p>
+      <div class="modal-btns">
+        <div class="modal-btn cancel" onclick="closeBuy()">取消</div>
+        <div class="modal-btn confirm" onclick="confirmBuy()">确认购买</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Page navigation
+function openCopilot() {
+  document.getElementById('homePage').style.display='none';
+  document.getElementById('copilotPage').style.display='flex';
+  resetPhase();
+}
+
+function goHome() {
+  document.getElementById('copilotPage').style.display='none';
+  document.getElementById('homePage').style.display='flex';
+}
+
+// Buy modal
+function openBuy(match, round, price) {
+  document.getElementById('buyModal').classList.add('show');
+  document.getElementById('buyModalMatch').textContent = match + ' · ' + round;
+  document.getElementById('buyModalPrice').textContent = price;
+}
+
+function closeBuy() {
+  document.getElementById('buyModal').classList.remove('show');
+}
+
+function confirmBuy() {
+  alert('购买成功！已解锁本场比赛智能体 🤖');
+  closeBuy();
+}
+
+function filterTab(type, el) {
+  document.querySelectorAll('.home-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.match-row').forEach(row => {
+    if (type === 'all') row.style.display = 'flex';
+    else if (type === 'owned') row.style.display = row.dataset.status === 'owned' ? 'flex' : 'none';
+    else row.style.display = row.dataset.status === 'available' || row.dataset.status === 'free' ? 'flex' : 'none';
+  });
+}
+
+// Phase switching
+function switchPhase(phase) {
+  document.querySelectorAll('.cp-phase').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cp-phase').forEach(p => {
+    if ((phase==='pre' && p.textContent.includes('赛前')) ||
+        (phase==='live' && p.textContent.includes('赛中')) ||
+        (phase==='post' && p.textContent.includes('赛后'))) {
+      p.classList.add('active');
+    }
+  });
+
+  // Show/hide messages
+  document.querySelectorAll('.phase-pre').forEach(m => m.style.display = phase==='pre'?'flex':'none');
+  document.querySelectorAll('.phase-live').forEach(m => m.style.display = phase==='live'?'flex':'none');
+  document.querySelectorAll('.phase-post').forEach(m => m.style.display = phase==='post'?'flex':'none');
+
+  // Update status
+  const dot = document.getElementById('liveDot');
+  const txt = document.getElementById('cpStatusText');
+  if (phase === 'pre') { dot.style.display='none'; txt.textContent='赛前 · 距开赛8小时'; }
+  else if (phase === 'live') { dot.style.display='inline-block'; txt.textContent='实时推送中 · 法国 1-1 英格兰'; }
+  else { dot.style.display='none'; txt.textContent='已结束 · 法国 3-1 英格兰'; }
+
+  // Scroll to bottom
+  document.getElementById('cpChat').scrollTop = document.getElementById('cpChat').scrollHeight;
+}
+
+function resetPhase() {
+  switchPhase('pre');
+  document.getElementById('pickCard').style.display = 'none';
+}
+
+function showPick() {
+  document.getElementById('pickCard').style.display = 'flex';
+  document.getElementById('pickCard').scrollIntoView({behavior:'smooth'});
+}
+
+function showWater() {
+  const el = document.createElement('div');
+  el.className = 'msg ai';
+  el.innerHTML = '<div class="msg-bubble"><strong>📈 大小球水位走势</strong><br><br>过去24小时，O3.5从@2.35→@2.20（压低6%），U3.5从@1.57→@1.66（拉升6%）。<br><br>市场在持续买入大球方向。2.5线已被击穿——WilliamHill退守O2.5仅余@1.50，意味着至少3球已成共识。<br><br>这不是预测，是资金用脚投票的结果。</div><div class="msg-timestamp">刚刚</div>';
+  document.getElementById('cpChat').appendChild(el);
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+function showInfoGap() {
+  const el = document.createElement('div');
+  el.className = 'msg ai';
+  el.innerHTML = '<div class="msg-bubble"><strong>🔍 你可能没注意到的</strong><br><br>📌 季军赛1974年以来场均3.8球，近5届全部≥3球——这是统计规律，不是预测。<br><br>📌 法国半决赛0-2之前连续3场零封，是西班牙太强还是防线裂了？这是本场最大未知数。<br><br>📌 法国让平半但赔率2.00偏高——若真看好应为1.70-1.80，机构对季军赛非常谨慎。</div><div class="msg-timestamp">刚刚</div>';
+  document.getElementById('cpChat').appendChild(el);
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+function sendMsg() {
+  const input = document.getElementById('cpInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // User msg
+  const uMsg = document.createElement('div');
+  uMsg.className = 'msg user';
+  uMsg.innerHTML = '<div class="msg-bubble">' + text + '</div>';
+  document.getElementById('cpChat').appendChild(uMsg);
+
+  input.value = '';
+
+  // AI reply
+  setTimeout(() => {
+    const aMsg = document.createElement('div');
+    aMsg.className = 'msg ai';
+    aMsg.innerHTML = '<div class="msg-bubble">好的，我来分析一下「' + text + '」...<br><br>根据当前数据和六维分析模型，我会在赛前持续跟踪最新变化。如果需要更详细的分析，可以随时追问。</div><div class="msg-timestamp">刚刚</div>';
+    document.getElementById('cpChat').appendChild(aMsg);
+    aMsg.scrollIntoView({behavior:'smooth'});
+  }, 800);
+}
+</script>
+
+</body>
+</html>
