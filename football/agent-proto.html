@@ -8,11 +8,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#07070a; --card:#0d0d12; --card2:#111118;
-  --border:#1e1e2a; --text:#e4e4ec; --text2:#8b8b9e;
+  --bg:#07070a; --card:#0d0d12; --card2:#16161e;
+  --border:#222233; --text:#f0f0f5; --text2:#a0a0b0;
   --accent:#faff69; --green:#10b981; --red:#ef4444;
   --blue:#60a5fa; --amber:#f59e0b;
 }
+/* 全局文字可见性 */
+body, input, textarea, button, select, .home-tab, .cp-phase, .price-tag, .modal-btn, .quick-chip { color:var(--text); }
+input::placeholder, textarea::placeholder { color:#6a6a7a; }
+.home-tab { color:var(--text2); }
+.home-tab.active { color:var(--accent); }
+.cp-phase { color:var(--text2); }
+.cp-phase.active { color:var(--accent); }
+.price-tag.buy { color:#000; }
+.price-tag.free { color:#000; }
+.price-tag.owned { color:var(--accent); }
+.modal-btn.confirm { color:#000; }
+.match-row .mr-teams { color:var(--text); }
+.msg-bubble { color:var(--text); }
+.msg-pick .mp-pick { color:var(--text); }
+.msg-push { color:var(--text); }
+.msg-option { color:var(--text); }
+.cp-match-teams { color:var(--text); }
+.home-title { color:var(--text); }
+.gap-item .gi-content { color:var(--text2); }
+.gap-item strong { color:var(--text); }
+.chart-insight { color:var(--text2); }
+.chart-insight strong { color:var(--text); }
+.modal h4 { color:var(--text); }
+.modal p { color:var(--text2); }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family:'Inter','Noto Sans SC',sans-serif;
