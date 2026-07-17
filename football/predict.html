@@ -497,8 +497,10 @@ function flagHtml(emoji) {
   return `<span class="flag">${emoji}</span>`;
 }
 
-function renderDimensions(reason, factors) {
+function renderDimensions(reason) {
   if (!reason) return '';
+  // HTML escape for data-sourced strings
+  const esc = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
   // Parse ①-⑥ markers from reason text
   const regex = /[①②③④⑤⑥]([^①②③④⑤⑥]+)/g;
   const dims = [];
@@ -511,29 +513,30 @@ function renderDimensions(reason, factors) {
   const verdict = verdictMatch ? verdictMatch[1].trim() : '';
 
   if (dims.length === 0) {
-    return `<div class="dimensions-section"><div class="dim-verdict">${reason}</div></div>`;
+    return `<div class="dimensions-section"><div class="dim-verdict">${esc(reason)}</div></div>`;
   }
 
-  // Icons mapping: try to match dimension label to icon
+  // Icons mapping: match ONLY on dimension label, not text body
   const iconMap = [
     { kw: ['防守', '失球', '零封', '不失'], icon: '🛡️' },
-    { kw: ['伤停', '缺阵', '伤病', '阵容'], icon: '🏥' },
+    { kw: ['伤停', '伤病', '阵容'], icon: '🏥' },
     { kw: ['天气', '温度', '气候', '°C'], icon: '🌤️' },
     { kw: ['盘口', '赔率', '让球', '水位'], icon: '📊' },
-    { kw: ['规律', '决赛', '往届', '届', '季军赛'], icon: '📈' },
+    { kw: ['规律', '决赛', '往届', '季军赛'], icon: '📈' },
     { kw: ['交锋', '交手', '对阵'], icon: '⚔️' },
     { kw: ['统计', '数据', '场均', '进球'], icon: '📐' },
   ];
 
-  // Sentiment: positive words = green, negative = red/amber
-  const posWords = ['利好', '优势', '最强', '零核心缺阵', '零缺阵', '全主力', '舒适', '统治', '稳定', '合理', '放松'];
-  const negWords = ['风险', '劣势', '缺阵', '不利', '炎热', '极浅', '无共识', '五五开', '不具参考'];
+  // Sentiment: sorted by length desc so '零核心缺阵' beats '缺阵'
+  const posWords = ['零核心缺阵', '零缺阵', '全主力', '利好', '优势', '最强', '舒适', '统治', '稳定', '合理', '放松'];
+  const negWords = ['不具参考', '无共识', '五五开', '极浅', '风险', '劣势', '炎热', '不利'];
   const warnWords = ['有限', '谨慎', '需关注', '变化'];
 
   function getMood(text) {
-    let s = 0;
-    posWords.forEach(w => { if (text.includes(w)) s++; });
-    negWords.forEach(w => { if (text.includes(w)) s--; });
+    let s = 0, remaining = text;
+    posWords.forEach(w => { if (remaining.includes(w)) { s++; remaining = remaining.replace(w, ''); } });
+    remaining = text;
+    negWords.forEach(w => { if (remaining.includes(w)) { s--; remaining = remaining.replace(w, ''); } });
     warnWords.forEach(w => { if (text.includes(w)) s -= 0.5; });
     if (s > 0) return 'positive';
     if (s < -0.5) return 'negative';
@@ -549,12 +552,12 @@ function renderDimensions(reason, factors) {
 
     let icon = '📌';
     for (const m of iconMap) {
-      if (m.kw.some(k => label.includes(k) || text.includes(k))) { icon = m.icon; break; }
+      if (m.kw.some(k => label.includes(k))) { icon = m.icon; break; }
     }
 
     return `<div class="dim-card ${mood}">
-      <div class="dim-top"><span class="dim-icon">${icon}</span><span class="dim-label">${label}</span></div>
-      <div class="dim-text">${text}</div>
+      <div class="dim-top"><span class="dim-icon">${icon}</span><span class="dim-label">${esc(label)}</span></div>
+      <div class="dim-text">${esc(text)}</div>
     </div>`;
   }).join('');
 
@@ -562,7 +565,7 @@ function renderDimensions(reason, factors) {
     <div class="dimensions-section">
       <div class="dimensions-header">🔬 六维深度分析<span class="dim-badge">${dims.length}维</span></div>
       <div class="dimensions-grid">${dimsHtml}</div>
-      ${verdict ? `<div class="dim-verdict">🎯 <strong>综合判断：</strong>${verdict}</div>` : ''}
+      ${verdict ? `<div class="dim-verdict">🎯 <strong>综合判断：</strong>${esc(verdict)}</div>` : ''}
     </div>`;
 }
 
@@ -635,7 +638,7 @@ function renderMatchCard(m, data) {
 
     ${renderRisk(m)}
 
-    ${renderDimensions(m.reason, m.factors)}
+    ${renderDimensions(m.reason)}
     ${m.status === 'finished' && m.review ? renderReview(m.review) : ''}
   </div>`;
 }
