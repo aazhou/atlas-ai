@@ -178,7 +178,62 @@
   .risk-detail { font-size: 11px; color: var(--muted-soft); margin-bottom: 10px; }
   .risk-detail .sig { color: var(--body); }
 
-  .prediction { font-size: 12px; color: var(--body); line-height: 1.5; }
+  /* Six-dimension analysis grid */
+  .dimensions-section {
+    background: linear-gradient(135deg, rgba(250,255,105,0.03) 0%, rgba(96,165,250,0.02) 100%);
+    border: 1px solid rgba(250,255,105,0.08);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+  }
+  .dimensions-header {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; color: var(--primary);
+    margin-bottom: 12px; letter-spacing: 0.3px;
+  }
+  .dimensions-header .dim-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 9999px;
+    background: rgba(250,255,105,0.12); color: var(--primary);
+  }
+  .dimensions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .dim-card {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; flex-direction: column; gap: 3px;
+    transition: border-color 0.2s;
+  }
+  .dim-card:hover { border-color: rgba(250,255,105,0.2); }
+  .dim-card .dim-top { display: flex; align-items: center; gap: 5px; }
+  .dim-card .dim-icon { font-size: 14px; line-height: 1; }
+  .dim-card .dim-label { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.2px; }
+  .dim-card .dim-text { font-size: 11px; color: var(--body); line-height: 1.4; }
+  .dim-card.positive { border-left: 2px solid var(--accent-emerald); }
+  .dim-card.negative { border-left: 2px solid var(--accent-rose); }
+  .dim-card.warning { border-left: 2px solid var(--warning); }
+  .dim-card.info { border-left: 2px solid #60a5fa; }
+
+  .dim-verdict {
+    background: rgba(250,255,105,0.06);
+    border: 1px solid rgba(250,255,105,0.12);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px; color: var(--body); line-height: 1.5;
+  }
+  .dim-verdict strong { color: var(--primary); font-weight: 700; }
+
+  @media (max-width: 640px) {
+    .dimensions-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .dimensions-grid { grid-template-columns: 1fr; }
+  }
 
   /* Key factors tags */
   .factors { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -442,6 +497,75 @@ function flagHtml(emoji) {
   return `<span class="flag">${emoji}</span>`;
 }
 
+function renderDimensions(reason, factors) {
+  if (!reason) return '';
+  // Parse ①-⑥ markers from reason text
+  const regex = /[①②③④⑤⑥]([^①②③④⑤⑥]+)/g;
+  const dims = [];
+  let match;
+  while ((match = regex.exec(reason)) !== null) {
+    dims.push(match[1].trim());
+  }
+  // Extract verdict
+  const verdictMatch = reason.match(/综合判断[：:](.+)/);
+  const verdict = verdictMatch ? verdictMatch[1].trim() : '';
+
+  if (dims.length === 0) {
+    return `<div class="dimensions-section"><div class="dim-verdict">${reason}</div></div>`;
+  }
+
+  // Icons mapping: try to match dimension label to icon
+  const iconMap = [
+    { kw: ['防守', '失球', '零封', '不失'], icon: '🛡️' },
+    { kw: ['伤停', '缺阵', '伤病', '阵容'], icon: '🏥' },
+    { kw: ['天气', '温度', '气候', '°C'], icon: '🌤️' },
+    { kw: ['交锋', '历史', '交手', '对阵', '参考'], icon: '⚔️' },
+    { kw: ['盘口', '赔率', '让球', '水位'], icon: '📊' },
+    { kw: ['规律', '决赛', '历史', '往届', '届'], icon: '📈' },
+    { kw: ['统计', '数据', '场均', '进球'], icon: '📐' },
+  ];
+
+  // Sentiment: positive words = green, negative = red/amber
+  const posWords = ['利好', '优势', '最强', '零核心缺阵', '零缺阵', '全主力', '舒适', '统治', '稳定', '合理', '放松'];
+  const negWords = ['风险', '劣势', '缺阵', '不利', '炎热', '极浅', '无共识', '五五开', '不具参考'];
+  const warnWords = ['有限', '谨慎', '需关注', '变化'];
+
+  function getMood(text) {
+    let s = 0;
+    posWords.forEach(w => { if (text.includes(w)) s++; });
+    negWords.forEach(w => { if (text.includes(w)) s--; });
+    warnWords.forEach(w => { if (text.includes(w)) s -= 0.5; });
+    if (s > 0) return 'positive';
+    if (s < -0.5) return 'negative';
+    if (s < 0) return 'warning';
+    return 'info';
+  }
+
+  const dimsHtml = dims.map((d, i) => {
+    const labelMatch = d.match(/^([^：:]+)[：:]/);
+    const label = labelMatch ? labelMatch[1] : `维度${i+1}`;
+    const text = labelMatch ? d.slice(labelMatch[0].length).trim() : d;
+    const mood = getMood(text);
+
+    let icon = '📌';
+    for (const m of iconMap) {
+      if (m.kw.some(k => label.includes(k) || text.includes(k))) { icon = m.icon; break; }
+    }
+
+    return `<div class="dim-card ${mood}">
+      <div class="dim-top"><span class="dim-icon">${icon}</span><span class="dim-label">${label}</span></div>
+      <div class="dim-text">${text}</div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="dimensions-section">
+      <div class="dimensions-header">🔬 六维深度分析<span class="dim-badge">${dims.length}维</span></div>
+      <div class="dimensions-grid">${dimsHtml}</div>
+      ${verdict ? `<div class="dim-verdict">🎯 <strong>综合判断：</strong>${verdict}</div>` : ''}
+    </div>`;
+}
+
 function renderMatchCard(m, data) {
   const totalProb = 1/m.odds_h2h.home + 1/m.odds_h2h.draw + 1/m.odds_h2h.away;
   const imp = {
@@ -511,9 +635,7 @@ function renderMatchCard(m, data) {
 
     ${renderRisk(m)}
 
-    <div class="prediction">
-      ${m.reason}
-    </div>
+    ${renderDimensions(m.reason, m.factors)}
     ${m.status === 'finished' && m.review ? renderReview(m.review) : ''}
   </div>`;
 }
