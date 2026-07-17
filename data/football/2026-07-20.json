@@ -1,5 +1,5 @@
 {
-  "updated": "7/17 22:00",
+  "updated": "7/17 22:30",
   "date": "2026-07-20",
   "matches": [
     {
@@ -36,12 +36,33 @@
         "1-1"
       ],
       "tier": "A",
-      "reason": "最强防守(失0.1/场)vs最强进攻(进2.7/场)。决赛历史偏向防守方。西班牙零封能力极强，阿根廷进攻虽猛但决赛节奏会慢。小2.25是更好的选择。",
+      "reason": "【六维新数据驱动】①防守数据：西班牙场均仅失0.1球，本届世界杯防守统治级 ②伤停：双方零核心缺阵，最强阵容出战 ③天气：纽约27°C舒适，利好传控打法 ④交锋参考有限（2018年6-1友谊赛不具参考性）⑤盘口：西班牙-0.25极浅让球，市场认为五五开 ⑥决赛规律：近5届世界杯决赛4次小2.5。综合判断：小球优先，西班牙方向次之。",
       "factors": [
-        "西班牙防守零封率",
-        "决赛小球传统",
-        "阿根廷进攻强但节奏压制",
-        "天气舒适利好控球"
+        {
+          "label": "西失0.1球/场统治级",
+          "severity": "high",
+          "icon": "🧤"
+        },
+        {
+          "label": "零伤停最强阵",
+          "severity": "positive",
+          "icon": "✅"
+        },
+        {
+          "label": "27°C利好控球",
+          "severity": "positive",
+          "icon": "🌤️"
+        },
+        {
+          "label": "决赛5届4次小球",
+          "severity": "high",
+          "icon": "📉"
+        },
+        {
+          "label": "浅让球市场无共识",
+          "severity": "medium",
+          "icon": "⚖️"
+        }
       ],
       "upset_risk": "mid",
       "upset_signals": 3,
@@ -96,10 +117,12 @@
         "under": 1.91
       },
       "stats": {
-        "home_goals": 1.9,
-        "away_goals": 2.7,
-        "home_conceded": 0.1,
-        "away_conceded": 1.0
+        "possession": "赛前数据",
+        "shots": "—",
+        "shots_on_target": "—",
+        "corners": "—",
+        "fouls": "—",
+        "attendance": "—"
       },
       "vig": 3.3,
       "pred_scores_str": "1-0 · 2-1 · 1-1",
@@ -139,5 +162,6 @@
       "detail": "全新六维分析(API-Football+TheOdds+天气+进阶统计)",
       "type": "system"
     }
-  ]
+  ],
+  "round": "决赛"
 }

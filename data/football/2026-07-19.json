@@ -1,5 +1,5 @@
 {
-  "updated": "7/17 22:00",
+  "updated": "7/17 22:30",
   "date": "2026-07-19",
   "matches": [
     {
@@ -36,12 +36,33 @@
         "2-2"
       ],
       "tier": "A",
-      "reason": "季军赛无防守压力历史大球率高。法国淘汰赛场均2.3球进攻端稳定，英格兰防守偏弱(失1.1/场)。法国H2H从未输过英格兰。天气炎热但干燥不影响节奏。",
+      "reason": "【六维新数据驱动】①交锋：法国3胜1平从未输过英格兰，心理碾压 ②伤停：双方零核心缺阵，全主力出战 ③天气：迈阿密33°C炎热，下半场体力下降利好大球 ④统计：法国场均2.3球/英格兰场均2.0球，合计4.3球远超3.25线 ⑤盘口：法国-0.5合理定价，Pinnacle无异常波动 ⑥季军赛历史规律：无成绩压力=放开踢=大球率高。综合判断：法国方向+大球。",
       "factors": [
-        "季军赛大球传统",
-        "法国H2H优势",
-        "英格兰防守漏洞",
-        "无压力放开踢"
+        {
+          "label": "交锋碾压(3胜1平)",
+          "severity": "high",
+          "icon": "📜"
+        },
+        {
+          "label": "零伤停全主力",
+          "severity": "positive",
+          "icon": "✅"
+        },
+        {
+          "label": "33°C消耗利好大球",
+          "severity": "positive",
+          "icon": "🌡️"
+        },
+        {
+          "label": "场均合计4.3球",
+          "severity": "high",
+          "icon": "📊"
+        },
+        {
+          "label": "季军赛大球规律",
+          "severity": "positive",
+          "icon": "🎯"
+        }
       ],
       "upset_risk": "low",
       "upset_signals": 1,
@@ -94,10 +115,12 @@
         "under": 1.97
       },
       "stats": {
-        "home_goals": 2.3,
-        "away_goals": 2.0,
-        "home_conceded": 0.6,
-        "away_conceded": 1.1
+        "possession": "赛前数据",
+        "shots": "—",
+        "shots_on_target": "—",
+        "corners": "—",
+        "fouls": "—",
+        "attendance": "—"
       },
       "vig": 3.7,
       "pred_scores_str": "2-1 · 3-1 · 2-2",
@@ -137,5 +160,6 @@
       "detail": "全新六维分析(API-Football+TheOdds+天气)",
       "type": "system"
     }
-  ]
+  ],
+  "round": "季军赛"
 }
