@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atlas AI · 每日复盘 · 7/16</title>
+<title>Atlas AI · 每日复盘 · 7/17</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -103,9 +103,15 @@ body {
 }
 .footer .brand-sm { font-weight: 700; color: var(--accent); }
 
+/* HK section */
+.hk-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  margin-bottom: 8px;
+}
+
 @media (max-width:480px) {
   .container { padding: 20px 14px 40px; }
-  .index-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .index-grid, .hk-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .index-card { padding: 14px 10px; }
   .index-card .idx-price { font-size: 20px; }
   .hero h1 { font-size: 22px; }
@@ -128,32 +134,57 @@ body {
 <!-- Hero -->
 <div class="hero">
   <div class="hero-badge">📊 每日复盘</div>
-  <h1>创业板重挫 -2.95%<br>科技内部大轮动</h1>
-  <div class="date">2026年7月16日 · 周三 · 收盘复盘</div>
+  <h1>V型反转 · 防御领涨<br>科技承压待周末消化</h1>
+  <div class="date">2026年7月17日 · 周五 · 收盘复盘</div>
 </div>
 
-<!-- 大盘概览 -->
+<!-- A股大盘概览 -->
 <div class="section">
-  <div class="section-title">📈 大盘概览</div>
+  <div class="section-title">📈 A股大盘</div>
   <div class="index-grid">
     <div class="index-card">
       <div class="idx-name">上证指数</div>
-      <div class="idx-price">3882</div>
-      <div class="idx-chg idx-down">-1.85%</div>
+      <div class="idx-price">3865</div>
+      <div class="idx-chg idx-down">-0.44%</div>
     </div>
     <div class="index-card">
       <div class="idx-name">深证成指</div>
-      <div class="idx-price">14489</div>
-      <div class="idx-chg idx-down">-1.97%</div>
+      <div class="idx-price">14348</div>
+      <div class="idx-chg idx-down">-0.97%</div>
     </div>
     <div class="index-card">
       <div class="idx-name">创业板指</div>
-      <div class="idx-price">3692</div>
-      <div class="idx-chg idx-down">-2.95%</div>
+      <div class="idx-price">3642</div>
+      <div class="idx-chg idx-down">-1.37%</div>
     </div>
   </div>
   <div class="insight">
-    <p><strong>定性：不是系统性恐慌。</strong> 主力资金净流入+270亿，中小盘抗跌。砸盘集中在指数权重股和半导体方向，计算机、IT服务逆势大涨。科技内部从硬件（芯片）切换到软件（AI）。</p>
+    <p><strong>定性：V型反转，韧性十足。</strong> 早盘受隔夜全球暴跌影响大幅低开（上证开3764，低开-3%），但全天震荡回升，三大指数均收在日内高位附近。上证从最低3745拉回3865，反弹120点。主力资金净流入+48亿，防御板块（电力+5.3亿/银行+4.9亿/公用事业+4.4亿）领涨，科技承压但未崩。这不是恐慌性出逃，是典型的低开洗盘+防御轮动。</p>
+  </div>
+</div>
+
+<!-- 港股大盘 -->
+<div class="section">
+  <div class="section-title">🇭🇰 港股</div>
+  <div class="hk-grid">
+    <div class="index-card">
+      <div class="idx-name">恒生指数</div>
+      <div class="idx-price">24562</div>
+      <div class="idx-chg idx-down">-1.78%</div>
+    </div>
+    <div class="index-card">
+      <div class="idx-name">国企指数</div>
+      <div class="idx-price">8137</div>
+      <div class="idx-chg idx-down">-2.18%</div>
+    </div>
+    <div class="index-card">
+      <div class="idx-name">恒生科技</div>
+      <div class="idx-price">4623</div>
+      <div class="idx-chg idx-down">-4.37%</div>
+    </div>
+  </div>
+  <div class="insight">
+    <p><strong>港股科技重挫。</strong> 恒生科技-4.37%领跌，远超A股创业板-1.37%。说明外资对科技股的抛售比内资更猛烈。恒指跌至24562，接近前低支撑区。如果周末无新利空，周一港股科技有超跌反弹需求。</p>
   </div>
 </div>
 
@@ -164,18 +195,19 @@ body {
   <h4 style="font-size:13px;color:var(--text2);margin-bottom:8px;">领涨 TOP5（按主力资金流入）</h4>
   <table class="data-table">
     <tr><th>板块</th><th class="num">主力流入</th><th class="num">涨幅</th></tr>
-    <tr><td>💻 计算机</td><td class="num" style="color:var(--green)">+20.6亿</td><td class="num" style="color:var(--green)">+1.48%</td></tr>
-    <tr><td>🖥️ IT服务</td><td class="num" style="color:var(--green)">+14.4亿</td><td class="num" style="color:var(--green)">+2.70%</td></tr>
-    <tr><td>📟 印制电路板</td><td class="num" style="color:var(--green)">+9.5亿</td><td class="num" style="color:var(--green)">+0.86%</td></tr>
-    <tr><td>📺 传媒</td><td class="num" style="color:var(--green)">+8.1亿</td><td class="num" style="color:var(--green)">+1.47%</td></tr>
-    <tr><td>🚗 汽车零部件</td><td class="num" style="color:var(--green)">+2.3亿</td><td class="num" style="color:var(--green)">+0.51%</td></tr>
+    <tr><td>⚡ 电力</td><td class="num" style="color:var(--green)">+5.31亿</td><td class="num" style="color:var(--green)">+0.89%</td></tr>
+    <tr><td>🔥 火力发电</td><td class="num" style="color:var(--green)">+5.01亿</td><td class="num" style="color:var(--green)">+2.05%</td></tr>
+    <tr><td>🏦 国有大型银行</td><td class="num" style="color:var(--green)">+4.89亿</td><td class="num" style="color:var(--green)">+3.07%</td></tr>
+    <tr><td>🏭 公用事业</td><td class="num" style="color:var(--green)">+4.44亿</td><td class="num" style="color:var(--green)">+0.67%</td></tr>
+    <tr><td>🛢️ 炼油化工</td><td class="num" style="color:var(--green)">+3.73亿</td><td class="num" style="color:var(--green)">+4.55%</td></tr>
   </table>
 
   <h4 style="font-size:13px;color:var(--text2);margin:16px 0 8px;">重灾区</h4>
   <table class="data-table">
     <tr><th>板块</th><th class="num">表现</th><th class="num">原因</th></tr>
-    <tr><td>💾 半导体/芯片</td><td class="num" style="color:var(--red)">-5.6%</td><td>三连跌，资金大规模撤出涌入计算机</td></tr>
-    <tr><td>🏦 银行/保险</td><td class="num" style="color:var(--red)">微跌</td><td>指数权重股被砸，拖累上证</td></tr>
+    <tr><td>💻 恒生科技</td><td class="num" style="color:var(--red)">-4.37%</td><td>外资抛售科技股，比A股猛烈得多</td></tr>
+    <tr><td>📊 创业板</td><td class="num" style="color:var(--red)">-1.37%</td><td>科技成长承压但尾盘回升，未破前低</td></tr>
+    <tr><td>🧵 锦纶/化纤</td><td class="num" style="color:var(--red)">-5.24%</td><td>小品种资金流出，非系统性</td></tr>
   </table>
 </div>
 
@@ -183,44 +215,44 @@ body {
 <div class="section">
   <div class="section-title">🔄 资金轮动逻辑</div>
   <div class="prediction-card">
-    <p>💰 主力净流入 <strong style="color:var(--green)">+270亿</strong>，但三大指数全跌。说明：</p>
+    <p>💰 主力净流入 <strong style="color:var(--green)">+48亿</strong>，三大指数全跌但资金净流入。说明：</p>
     <p style="margin-top:8px;">
-      1. 资金不是离场，是<strong>调仓换方向</strong><br>
-      2. 从硬件（半导体）→ 软件（计算机/AI/IT服务）<br>
-      3. 中小盘逆势走强，权重股被砸——典型的<strong>指数假跌</strong><br>
-      4. 汽车零部件连续三天抗跌+资金持续流入——可能成为下阶段主线
+      1. 资金不是离场，是<strong>调仓换防御</strong>——从科技切向电力/银行/公用事业<br>
+      2. 早盘低开-3%后V型拉回→<strong>抄底资金积极</strong>，市场承接力强<br>
+      3. 防御板块领涨+科技缩量下跌→典型的<strong>避险轮动</strong>，不是系统性崩盘<br>
+      4. 港股科技-4.37%远超A股→外资比内资更恐慌，内外资分歧加大
     </p>
   </div>
 </div>
 
 <!-- 明日预判 -->
 <div class="section">
-  <div class="section-title">🔮 明日预判</div>
+  <div class="section-title">🔮 下周一预判</div>
 
   <div class="prediction-card">
     <h3>📈 大盘方向</h3>
-    <p>创业板-3%后超跌反弹概率 >60%。连续两天杀跌，明天大概率技术性反弹。高度看量——缩量反弹=弱反弹，放量反弹=真反弹。</p>
+    <p>V型反转+周末消化利空→下周一反弹概率 >65%。今天低开-3%能拉回120点，说明市场承接力非常强。只要周末全球无重大新利空（关注美股周五夜盘），周一大概率延续反弹，上证目标3900-3920区间。关键观察：如果周一高开不破今日高点3869→谨防二次探底。</p>
   </div>
 
   <div class="prediction-card">
     <h3>🎯 板块方向</h3>
     <p>
-      • 半导体：三连跌→明天超跌反弹概率最大，但只是反弹不是反转<br>
-      • 计算机/IT：今天逆势涨→明天可能冲高回落，不要追<br>
-      • 消费电子：今天抗跌→明天可能继续走强<br>
-      • 汽车零部件：连续三天抗跌+资金持续流入→关注是否能成为主线
+      • <strong>防御（电力/银行/公用事业）</strong>：今天吸金最多，但连续上涨后周一可能冲高回落。不追。<br>
+      • <strong>科技/半导体</strong>：今日被错杀（港股-4%但A股仅-1.4%），周一超跌反弹概率最大。关注创业板能否站稳3650。<br>
+      • <strong>港股科技</strong>：-4.37%后技术性超卖，周一反弹弹性最大但风险也最大。<br>
+      • <strong>汽车零部件</strong>：+9.55%涨幅但资金流入仅0.23亿——涨的是小票，非板块性行情。
     </p>
   </div>
 
   <div class="insight">
-    <p><strong>核心观察：</strong> 明天开盘如果半导体低开不破今天低点→可以博反弹。计算机高开→等回踩，别追。汽车零部件如果继续抗跌→考虑加仓。</p>
+    <p><strong>核心策略：</strong> 周一如果高开→不追，等回踩确认。如果平开/小幅低开→关注科技方向超跌反弹机会。重点观察创业板能否在3650以上放量站稳，站稳=反弹延续，站不稳=还会二次探底。防御板块连续两日领涨后不宜追高。</p>
   </div>
 </div>
 
 <!-- Footer -->
 <div class="footer">
   由 <span class="brand-sm">Atlas AI</span> 数据引擎生成 · 仅供参考不构成投资建议<br>
-  数据来源: 新浪财经 / 东方财富 · 2026-07-16 15:00
+  数据来源: 新浪财经 / 东方财富 · 2026-07-17 15:00
 </div>
 
 </div>
