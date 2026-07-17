@@ -13,18 +13,6 @@
       "venue": "MetLife Stadium · 纽约",
       "round": "决赛",
       "status": "upcoming",
-      "home_rank": 3,
-      "away_rank": 1,
-      "home_form": "半决赛2-0法国",
-      "away_form": "半决赛2-1英格兰",
-      "home_goals_per_game": 1.9,
-      "home_conceded_per_game": 0.1,
-      "away_goals_per_game": 2.7,
-      "away_conceded_per_game": 1.0,
-      "weather": "21-29°C | 晴 | 风速25km/h | 舒适",
-      "referee": "待定",
-      "h2h": "西班牙6-1阿根廷(2018友谊赛)。2026 Finalissima数据缺失。决赛首次相遇。",
-      "injuries": "双方均无核心伤停",
       "odds_h2h": {
         "home": 2.31,
         "draw": 3.06,
@@ -80,11 +68,41 @@
         {
           "rank": "🥉",
           "pick": "1-0/2-1 比分",
-          "odds": null,
+          "odds": "—",
           "tier": "B",
           "logic": "西班牙小胜或平局，决赛不会大比分"
         }
-      ]
+      ],
+      "route_home": "小组赛3-0日本 → 1/8决赛2-0瑞士 → 1/4决赛2-1比利时 → 半决赛2-0法国",
+      "route_away": "小组赛3-0阿尔及利亚 → 1/8决赛3-2佛得角(加时) → 1/4决赛3-1瑞士(加时) → 半决赛2-1英格兰",
+      "odds_h2h_early": {
+        "home": 2.31,
+        "draw": 3.06,
+        "away": 3.66
+      },
+      "odds_spread_early": {
+        "line": -0.25,
+        "price": 1.95
+      },
+      "odds_totals_early": {
+        "line": 2.25,
+        "over": 1.98,
+        "under": 1.91
+      },
+      "odds_movement": "初盘=即时(7/17首拉) · 全新六维数据源 · 后续复核将追踪变化",
+      "odds_totals_pinnacle": {
+        "line": 2.25,
+        "over": 1.98,
+        "under": 1.91
+      },
+      "stats": {
+        "home_goals": 1.9,
+        "away_goals": 2.7,
+        "home_conceded": 0.1,
+        "away_conceded": 1.0
+      },
+      "vig": 3.3,
+      "pred_scores_str": "1-0 · 2-1 · 1-1"
     }
   ],
   "top_picks": [
@@ -105,7 +123,7 @@
     {
       "rank": "🥉",
       "pick": "1-0/2-1 比分",
-      "odds": null,
+      "odds": "—",
       "tier": "B",
       "logic": "西班牙小胜或平局，决赛不会大比分"
     }

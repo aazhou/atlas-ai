@@ -13,20 +13,6 @@
       "venue": "Hard Rock Stadium · 迈阿密",
       "round": "季军赛",
       "status": "upcoming",
-      "home_rank": 2,
-      "away_rank": 5,
-      "home_pts": null,
-      "away_pts": null,
-      "home_form": "半决赛0-2西班牙",
-      "away_form": "半决赛1-2阿根廷",
-      "home_goals_per_game": 2.3,
-      "home_conceded_per_game": 0.6,
-      "away_goals_per_game": 2.0,
-      "away_conceded_per_game": 1.1,
-      "weather": "25-34°C | 晴 | 风速25km/h | 炎热干燥",
-      "referee": "待定",
-      "h2h": "法国3胜1平不败。2022世界杯2-1，2012欧洲杯1-1，2017友谊赛3-2",
-      "injuries": "双方均无核心伤停",
       "odds_h2h": {
         "home": 1.9,
         "draw": 3.96,
@@ -80,11 +66,41 @@
         {
           "rank": "🥉",
           "pick": "2-1/3-1 比分",
-          "odds": null,
+          "odds": "—",
           "tier": "B",
           "logic": "法国攻击力强但英格兰也能进球，大比分方向"
         }
-      ]
+      ],
+      "route_home": "小组赛3-0阿尔及利亚 → 1/8决赛2-0摩洛哥 → 1/4决赛2-1挪威 → 半决赛0-2西班牙",
+      "route_away": "小组赛4-2克罗地亚 → 1/8决赛2-1刚果金 → 1/4决赛2-1挪威(加时) → 半决赛1-2阿根廷",
+      "odds_h2h_early": {
+        "home": 1.9,
+        "draw": 3.96,
+        "away": 3.88
+      },
+      "odds_spread_early": {
+        "line": -0.5,
+        "price": 1.92
+      },
+      "odds_totals_early": {
+        "line": 3.25,
+        "over": 1.91,
+        "under": 1.97
+      },
+      "odds_movement": "初盘=即时(7/17首拉) · 全新六维数据源 · 后续复核将追踪变化",
+      "odds_totals_pinnacle": {
+        "line": 3.25,
+        "over": 1.91,
+        "under": 1.97
+      },
+      "stats": {
+        "home_goals": 2.3,
+        "away_goals": 2.0,
+        "home_conceded": 0.6,
+        "away_conceded": 1.1
+      },
+      "vig": 3.7,
+      "pred_scores_str": "2-1 · 3-1 · 2-2"
     }
   ],
   "top_picks": [
@@ -105,7 +121,7 @@
     {
       "rank": "🥉",
       "pick": "2-1/3-1 比分",
-      "odds": null,
+      "odds": "—",
       "tier": "B",
       "logic": "法国攻击力强但英格兰也能进球，大比分方向"
     }
