@@ -100,7 +100,11 @@
         "away_conceded": 1.1
       },
       "vig": 3.7,
-      "pred_scores_str": "2-1 · 3-1 · 2-2"
+      "pred_scores_str": "2-1 · 3-1 · 2-2",
+      "home_rank": 2,
+      "away_rank": 5,
+      "home_pts": 0,
+      "away_pts": 0
     }
   ],
   "top_picks": [
