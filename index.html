@@ -6,83 +6,64 @@
 <title>Atlas Terminal</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0a0a0c; --bg-panel:#0f1014; --bg-card:#14161b; --bg-hover:#1a1c22;
-  --border:rgba(255,255,255,0.06); --border-active:rgba(255,255,255,0.10);
-  --text:#ddd; --text-dim:#999; --text-muted:#555;
-  --amber:#f0a030; --amber-dim:rgba(240,160,48,0.10);
-  --green:#00c853; --red:#f44336; --green-dim:rgba(0,200,83,0.08); --red-dim:rgba(244,67,54,0.08);
-  --font:'JetBrains Mono',monospace; --sans:'Inter',-apple-system,'PingFang SC',sans-serif; --nav-w:180px;
-}
+:root{--bg:#08090a;--panel:#0d0f11;--card:#131518;--border:rgba(255,255,255,0.05);--border-act:rgba(255,255,255,0.08);--text:#e4e6ea;--dim:#9095a0;--muted:#555a63;--amber:#f0a030;--amber-dim:rgba(240,160,48,0.08);--green:#00c853;--red:#f44336;--green-dim:rgba(0,200,83,0.06);--red-dim:rgba(244,67,54,0.06);--font:'JetBrains Mono',monospace;--sans:'Inter','PingFang SC',sans-serif;--nav-w:180px;--accent:#6366f1;--accent-dim:rgba(99,102,241,0.08)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:11px;line-height:1.5;-webkit-font-smoothing:antialiased}
+html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
 body{min-height:100dvh;display:flex}
-nav.sidebar{width:var(--nav-w);min-width:var(--nav-w);background:var(--bg-panel);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:12px 0;position:fixed;top:0;left:0;bottom:0;z-index:50}
-nav.sidebar .logo{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--amber);padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px;letter-spacing:-0.3px}
-nav.sidebar .logo span{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px}
-nav.sidebar a{display:flex;align-items:center;gap:8px;padding:8px 16px;color:var(--text-dim);text-decoration:none;font-size:11px;font-family:var(--sans);font-weight:500;border-left:2px solid transparent;transition:all 0.15s}
-nav.sidebar a:hover{color:var(--text);background:var(--bg-hover)}
-nav.sidebar a.active{color:var(--amber);border-left-color:var(--amber);background:var(--amber-dim)}
-nav.sidebar a .dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
-nav.sidebar a.active .dot{background:var(--amber)}
+nav.sidebar{width:var(--nav-w);min-width:var(--nav-w);background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:12px 0;position:fixed;top:0;left:0;bottom:0;z-index:50}
+nav.sidebar .logo{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--accent);padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px}
+nav.sidebar .logo span{color:var(--dim);font-weight:400;font-size:9px;margin-left:4px}
+nav.sidebar a{display:flex;align-items:center;gap:8px;padding:8px 16px;color:var(--dim);text-decoration:none;font-size:12px;font-family:var(--sans);font-weight:500;border-left:2px solid transparent;transition:all 0.15s}
+nav.sidebar a:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+nav.sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-dim)}
+nav.sidebar a .dot{width:5px;height:5px;border-radius:50%;background:var(--muted)}
+nav.sidebar a.active .dot{background:var(--accent)}
 nav.sidebar .spacer{flex:1}
-nav.sidebar .time{font-size:9px;color:var(--text-muted);padding:8px 16px;font-family:var(--font)}
-main{margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;min-height:100dvh;overflow-x:hidden}
-.ticker{background:var(--bg-panel);border-bottom:1px solid var(--border);padding:6px 12px;display:flex;gap:16px;overflow-x:auto;position:sticky;top:0;z-index:40;white-space:nowrap}
-.ticker::-webkit-scrollbar{display:none}
-.ticker .item{display:inline-flex;align-items:center;gap:6px;font-size:10px;flex-shrink:0}
-.ticker .item .flag{font-size:12px}
-.ticker .item .sym{color:var(--text-muted)}
-.ticker .item .val{color:var(--text);font-weight:500}
-.ticker .item .chg{font-weight:600}.ticker .item .chg.up{color:var(--green)}.ticker .item .chg.dn{color:var(--red)}
-.alert-banner{margin:0 16px;padding:8px 14px;border-radius:4px;font-size:11px;display:flex;align-items:center;gap:8px;cursor:pointer}
-.alert-banner.high{background:var(--red-dim);border:1px solid rgba(244,67,54,0.15);color:#f44336}
-.alert-banner.med{background:var(--amber-dim);border:1px solid rgba(240,160,48,0.15);color:#f0a030}
-.alert-banner .msg{flex:1}
-.content{padding:12px 16px 24px;flex:1}
-.dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:12px}
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:12px;transition:border-color 0.15s}
-.card:hover{border-color:var(--border-active)}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.card-header .label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
-.card-header .tag{font-size:9px;padding:1px 6px;border-radius:2px}
-.card-header .tag.live{background:var(--green-dim);color:var(--green)}
-.card-header .tag.closed{background:rgba(255,255,255,0.05);color:var(--text-muted)}
-.card .big{font-family:var(--font);font-size:20px;font-weight:600;line-height:1.1;margin-bottom:4px}
-.card .big.up{color:var(--green)}.card .big.dn{color:var(--red)}
-.card .sub{font-size:9px;color:var(--text-dim)}
-.chg-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px}
-.chg-badge.up{color:var(--green);background:var(--green-dim)}.chg-badge.dn{color:var(--red);background:var(--red-dim)}
-.sec-title{font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);font-weight:500}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.flow-item{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:10px;border-bottom:1px solid rgba(255,255,255,0.02)}
-.flow-item .sector{color:var(--text-dim)}.flow-item .flow{font-weight:500}
-.flow-item .flow.in{color:var(--green)}.flow-item .flow.out{color:var(--red)}
-.bar-row{display:flex;align-items:center;gap:8px;padding:2px 0;font-size:10px}
-.bar-row .sector-name{width:70px;flex-shrink:0;text-align:right;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-row .bar-wrap{flex:1;height:14px;background:var(--bg-hover);border-radius:2px;overflow:hidden}
-.bar-row .bar-fill{height:100%;border-radius:2px;transition:width 0.3s}
-.bar-row .bar-fill.green{background:var(--green-dim);border-right:2px solid var(--green)}
-.bar-row .bar-fill.red{background:var(--red-dim);border-right:2px solid var(--red)}
-.bar-row .bar-val{width:50px;flex-shrink:0;font-size:9px;text-align:right}
-.tbl{width:100%;border-collapse:collapse;font-size:10px}
-.tbl th{text-align:left;padding:4px 8px;color:var(--text-muted);font-weight:500;text-transform:uppercase;font-size:9px;letter-spacing:0.3px;border-bottom:1px solid var(--border)}
-.tbl td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.03)}
-.tbl tr:hover td{background:var(--bg-hover)}
-.tbl .up{color:var(--green)}.tbl .dn{color:var(--red)}.tbl .sym{font-family:var(--sans);font-weight:500;color:var(--text)}
-.insight{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:8px;font-size:11px;line-height:1.6;color:var(--text-dim)}
-.insight b{color:var(--amber)}.insight .up{color:var(--green)}.insight .dn{color:var(--red)}
-.opp-card{background:var(--bg-card);border-left:2px solid var(--amber);border-radius:0 4px 4px 0;padding:8px 12px;margin-bottom:6px;font-size:10px}
-.opp-card .opp-tag{font-size:8px;padding:1px 6px;border-radius:2px;background:var(--amber-dim);color:var(--amber);margin-right:6px}
-.opp-card .opp-action{color:var(--green);font-weight:500}
-.empty{padding:40px;text-align:center;color:var(--text-muted);font-size:12px}
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg-panel);border-top:1px solid var(--border);justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:50}
-.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--text-muted);text-decoration:none;font-size:9px;padding:4px 8px;border-radius:4px}
-.bottom-nav a.active{color:var(--amber)}.bottom-nav a .ico{font-size:16px}
+nav.sidebar .time{font-size:9px;color:var(--muted);padding:8px 16px;font-family:var(--font)}
+main{margin-left:var(--nav-w);flex:1;padding:0 20px 24px;max-width:900px;overflow-x:hidden}
+header.topbar{position:sticky;top:0;z-index:40;background:var(--bg);padding:14px 0 10px;border-bottom:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+header.topbar .page-title{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--text)}
+header.topbar .update-badge{font-size:10px;color:var(--muted);font-family:var(--font)}
+
+/* ── AI Analysis Block ── */
+.ai-block{margin-bottom:20px}
+.ai-block .market-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px;font-family:var(--sans);font-weight:600}
+.ai-block .market-label .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.ai-summary{font-size:16px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:12px;font-family:var(--sans)}
+.ai-detail{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:14px;font-family:var(--sans)}
+.ai-detail p{margin-bottom:6px}
+.ai-detail .up{color:var(--green);font-weight:500}.ai-detail .dn{color:var(--red);font-weight:500}
+
+/* ── Opportunity Cards ── */
+.opps{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-bottom:16px}
+.opp{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 14px;border-left:2px solid var(--accent)}
+.opp .opp-tag{font-size:9px;padding:1px 6px;border-radius:2px;background:var(--accent-dim);color:var(--accent);margin-right:6px;font-family:var(--sans);font-weight:500}
+.opp .opp-text{font-size:12px;color:var(--text);margin-top:4px;font-family:var(--sans)}
+
+/* ── Data Row (contextual) ── */
+.data-row{display:flex;gap:10px;overflow-x:auto;padding:8px 0;margin-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.data-row::-webkit-scrollbar{display:none}
+.data-chip{flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:6px 10px;font-size:10px;text-align:center;min-width:80px}
+.data-chip .chip-label{color:var(--muted);font-size:8px;text-transform:uppercase}
+.data-chip .chip-val{font-weight:600;margin-top:2px}
+.data-chip .chip-val.up{color:var(--green)}.data-chip .chip-val.dn{color:var(--red)}
+
+/* ── Bottom Nav ── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--border);justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:50}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--muted);text-decoration:none;font-size:9px;padding:4px 8px;border-radius:4px}
+.bottom-nav a.active{color:var(--accent)}.bottom-nav a .ico{font-size:16px}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:13px}
+.empty em{color:var(--dim)}
+
 @media(max-width:768px){
-  nav.sidebar{display:none}main{margin-left:0;padding-bottom:50px}
-  .bottom-nav{display:flex}.dash{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}
-  .ticker{gap:10px;padding:4px 8px}.ticker .item .sym{display:none}
+  nav.sidebar{display:none}
+  main{margin-left:0;padding:0 12px 60px;max-width:100%}
+  .bottom-nav{display:flex}
+  .ai-summary{font-size:14px}
+  .opps{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -99,259 +80,155 @@ main{margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;min-heig
 </nav>
 
 <main>
-  <div class="ticker" id="ticker"></div>
-  <div id="alertZone"></div>
-  <div class="content" id="content"></div>
+  <header class="topbar">
+    <div class="page-title" id="pageTitle">全景</div>
+    <div class="update-badge" id="updateBadge">—</div>
+  </header>
+  <div id="content"></div>
 </main>
 
 <nav class="bottom-nav" id="bottomNav"></nav>
 
 <script>
-const DATA={};
-const ETFS={
-  '电力设备':'sh561560','有色金属':'sh512400','电网设备':'sh561380','电池':'sz159840','工业金属':'sh512400',
-  '能源金属':'sz159840','化工':'sz159870','汽车':'sh516110','半导体':'sh512480','芯片':'sz159995',
-  '通信':'sh515050','计算机':'sh512720','软件':'sh515230','人工智能':'sz159819','机器人':'sh562500',
-  '医药':'sh512010','医疗':'sh512170','军工':'sh512660','证券':'sh512880','银行':'sh512800',
-  '白酒':'sh512690','消费':'sh515170','光伏':'sh515790'
-};
+const DATA={analysis:null,ov:null};
+const PAGES=['global','astock','overseas','crypto'];
+const TITLES={global:'全景',astock:'🇨🇳 A股',overseas:'🌏 港美股',crypto:'₿ 加密'};
 
 async function init(){
-  try{const r=await fetch('data/terminal/overview.json');if(r.ok)DATA.ov=await r.json()}catch(e){}
-  try{const r=await fetch('data/stock/fund_flows-'+new Date().toISOString().slice(0,10)+'.json');if(r.ok)DATA.ff=await r.json()}catch(e){}
-  try{const r=await fetch('data/crypto/market.json');if(r.ok)DATA.crypto=await r.json()}catch(e){}
-  try{const r=await fetch('data/us/market.json');if(r.ok)DATA.us=await r.json()}catch(e){}
-  try{const r=await fetch('data/us/live.json');if(r.ok)DATA.usLive=await r.json()}catch(e){}
-  try{const r=await fetch('data/hk/market.json');if(r.ok)DATA.hk=await r.json()}catch(e){}
-  renderTicker();renderAlerts();renderPage('global');setupNav();
-  updateClock();setInterval(updateClock,30000);setInterval(refreshData,300000);
+  await refreshAll();
+  renderPage('global');
+  setupNav();
+  updateClock();setInterval(updateClock,30000);
+  setInterval(refreshAll,300000);
+  // Also trigger AI analysis cron
+  try{await fetch('data/terminal/analysis.json?t='+Date.now())}catch(e){}
 }
-function fmoney(v){if(v==null||isNaN(v))return'—';return v>=0?'+'+v.toFixed(0)+'亿':v.toFixed(0)+'亿'}
-function fpct(v){if(v==null||isNaN(v))return'—';const n=parseFloat(v);return (n>=0?'+':'')+n.toFixed(2)+'%'}
-function updown(v){if(v==null||isNaN(v))return'';return parseFloat(v)>=0?'up':'dn'}
+
+async function refreshAll(){
+  try{
+    const r=await fetch('data/terminal/analysis.json?t='+Date.now());
+    if(r.ok)DATA.analysis=await r.json();
+  }catch(e){}
+  try{const r=await fetch('data/terminal/overview.json?t='+Date.now());if(r.ok)DATA.ov=await r.json()}catch(e){}
+  try{const r=await fetch('data/crypto/market.json?t='+Date.now());if(r.ok)DATA.crypto=await r.json()}catch(e){}
+  try{const r=await fetch('data/us/live.json?t='+Date.now());if(r.ok)DATA.usLive=await r.json()}catch(e){}
+  updateBadge();
+}
+
+function updateBadge(){
+  const a=DATA.analysis;
+  document.getElementById('updateBadge').textContent=a&&a.updated?'更新于 '+a.updated:'分析生成中…';
+}
+
+function fpct(v){if(v==null||isNaN(v))return'—';const n=parseFloat(v);return(n>=0?'+':'')+n.toFixed(2)+'%'}
 function fprice(v,d){if(v==null)return'—';return v.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||2})}
-function makeCard(label,tag,big,sub,chg){
-  const n=chg!=null&&!isNaN(chg)?parseFloat(chg):null;
-  return `<div class="card"><div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div><div class="big ${n!=null?updown(n):''}">${big!=null?big:'—'}</div>${sub?`<div class="sub">${sub}</div>`:''}${n!=null?`<span class="chg-badge ${updown(n)}">${fpct(n)}</span>`:''}</div>`;
-}
-function barChart(items,key){
-  const max=Math.max(...items.map(i=>Math.abs(i[key])),1);
-  return items.map(i=>{
-    const pct=Math.abs(i[key])/max*100,cls=i[key]>=0?'green':'red';
-    return `<div class="bar-row"><span class="sector-name">${i.name}</span><div class="bar-wrap"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-val ${updown(i[key])}">${i[key]>=0?'+':''}${i[key].toFixed(1)}%</span></div>`;
-  }).join('');
-}
-function insightBox(text){return `<div class="insight">${text}</div>`;}
-function oppCard(tag,signal,action){
-  return `<div class="opp-card"><span class="opp-tag">${tag}</span>${signal} <span class="opp-action">→ ${action}</span></div>`;
-}
+function updown(v){if(v==null||isNaN(v))return'';return parseFloat(v)>=0?'up':'dn'}
 
-/* ── Ticker ── */
-function renderTicker(){
-  const ov=DATA.ov;if(!ov||!ov.indices)return;const idx=ov.indices;let h='';
-  (idx.a||[]).forEach(x=>h+=`<span class="item"><span class="flag">🇨🇳</span><span class="sym">${x.name}</span><span class="val">${x.val}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
-  if(idx.hk)h+=`<span class="item"><span class="flag">🇭🇰</span><span class="sym">${idx.hk.name}</span><span class="val">${idx.hk.val}</span><span class="chg ${updown(idx.hk.chg)}">${fpct(idx.hk.chg)}</span></span>`;
-  (idx.us||[]).forEach(x=>h+=`<span class="item"><span class="flag">🇺🇸</span><span class="sym">${x.name}</span><span class="val">${fprice(x.val)}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
-  (idx.crypto||[]).forEach(x=>h+=`<span class="item"><span class="flag">₿</span><span class="sym">${x.name}</span><span class="val">${fprice(x.val)}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
-  document.getElementById('ticker').innerHTML=h;
-}
-function renderAlerts(){
-  const ov=DATA.ov;if(!ov||!ov.alerts||!ov.alerts.length)return;
-  const a=ov.alerts[0];const cls=a.priority==='high'?'high':'med';
-  document.getElementById('alertZone').innerHTML=`<div class="alert-banner ${cls}" onclick="this.remove()"><span>${a.priority==='high'?'⚡':'⚠'}</span><span class="msg"><b>${a.title}</b> ${a.desc||''}</span></div>`;
-}
-
-/* ── Router ── */
+/* ── Render ── */
 function renderPage(id){
-  const c=document.getElementById('content');
-  c.innerHTML={'global':renderGlobal,'astock':renderAStock,'overseas':renderOverseas,'crypto':renderCrypto}[id]();
+  document.getElementById('pageTitle').textContent=TITLES[id];
+  const a=DATA.analysis;const c=document.getElementById('content');
+  if(!a||!a.markets){
+    c.innerHTML='<div class="empty">🧠 AI分析生成中…<br><em>每15分钟自动更新，请稍候</em></div>';
+    return;
+  }
+  const m=a.markets;
+
+  switch(id){
+    case 'global':
+      c.innerHTML=renderSection(m.global,'🌍 全球')+
+        '<div class="ai-block">'+quickDataChips()+'</div>';
+      break;
+    case 'astock':
+      c.innerHTML=renderSection(m.astock,'🇨🇳 A股')+
+        '<div class="ai-block">'+aStockDataChips()+'</div>';
+      break;
+    case 'overseas':
+      c.innerHTML=renderSection(m.overseas,'🌏 港美股')+
+        '<div class="ai-block">'+overseasDataChips()+'</div>';
+      break;
+    case 'crypto':
+      c.innerHTML=renderSection(m.crypto,'₿ 加密')+
+        '<div class="ai-block">'+cryptoDataChips()+'</div>';
+      break;
+  }
 }
 
-/* ═══ GLOBAL ═══ */
-function renderGlobal(){
-  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
-  const idx=ov.indices||{};let h='<div class="sec-title">📊 全球市场</div><div class="dash">';
-  (idx.a||[]).forEach(x=>h+=makeCard('🇨🇳 '+x.name,'live',x.val,'',x.chg));
-  if(idx.hk)h+=makeCard('🇭🇰 '+idx.hk.name,'closed',idx.hk.val,'',idx.hk.chg);
-  (idx.us||[]).forEach(x=>h+=makeCard('🇺🇸 '+x.name,'closed',fprice(x.val),'',x.chg));
-  (idx.crypto||[]).forEach(x=>h+=makeCard('₿ '+x.name,'live',fprice(x.val),'USDT',x.chg));
+function renderSection(m,label){
+  if(!m)return'<div class="empty">数据收集中…</div>';
+  let h='<div class="ai-block">';
+  h+=`<div class="market-label">${m.status==='open'||m.status==='live'||m.status==='us_live'?'<span class="live-dot"></span>':''}${label} · ${m.status==='open'?'盘中':m.status==='us_live'?'美股盘中':m.status==='live'?'实时':'已收盘'}</div>`;
+  h+=`<div class="ai-summary">${m.summary||''}</div>`;
+  
+  const details=[m.key_moves,m.us_analysis,m.hk_analysis,m.signals,m.narrative,m.cross_market].filter(Boolean);
+  if(details.length)h+=`<div class="ai-detail">${details.map(d=>'<p>'+d+'</p>').join('')}</div>`;
+
+  // Opportunities
+  const oppTexts=m.opportunities?m.opportunities.split(/[。；;]/).filter(Boolean):[];
+  const riskText=m.risk?`⚠ ${m.risk}`:null;
+  if(oppTexts.length||riskText){
+    h+='<div class="opps">';
+    oppTexts.forEach(t=>{if(t.trim())h+=`<div class="opp"><span class="opp-tag">机会</span><div class="opp-text">${t.trim()}</div></div>`});
+    if(riskText)h+=`<div class="opp" style="border-left-color:var(--red)"><span class="opp-tag" style="background:var(--red-dim);color:var(--red)">风险</span><div class="opp-text">${riskText}</div></div>`;
+    h+='</div>';
+  }
   h+='</div>';
-  if(ov.flow){
-    const f=ov.flow;
-    h+=`<div class="sec-title">💵 A股资金流 ${f.total_inflow>0?'🟢':'🔴'} ${fmoney(f.total_inflow)}</div><div class="cols"><div class="card"><div class="card-header"><span class="label">主力流入 TOP5</span></div>`;
-    (f.top_inflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow in">+${x.amount.toFixed(0)}亿</span></div>`);
-    h+=`</div><div class="card"><div class="card-header"><span class="label">主力流出 TOP5</span></div>`;
-    (f.top_outflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow out">${x.amount.toFixed(0)}亿</span></div>`);
-    h+='</div></div>';
-  }
-  if(ov.cross_market){
-    h+='<div class="sec-title">🔗 跨市场异常</div>';
-    if(ov.cross_market.anomaly)h+=insightBox(ov.cross_market.anomaly);
-  }
   return h;
 }
 
-/* ═══ A STOCK ═══ */
-function renderAStock(){
-  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
-  let h='<div class="sec-title">🇨🇳 A股指数</div><div class="dash">';
-  (ov.indices?.a||[]).forEach(x=>h+=makeCard(x.name,'live',x.val,'',x.chg));
-  h+='</div>';
-
-  if(DATA.ff&&DATA.ff.sectors){
-    const arr=Object.entries(DATA.ff.sectors).map(([n,v])=>({name:n,flow:v.fund_flow,chg:v.current})).sort((a,b)=>b.flow-a.flow);
-    const byChg=[...arr].sort((a,b)=>b.chg-a.chg);
-    h+='<div class="sec-title">📈 板块涨跌 TOP10</div><div class="card">'+barChart(byChg.slice(0,10),'chg')+'</div>';
-    h+='<div class="sec-title">📉 板块涨跌 BOTTOM10</div><div class="card">'+barChart(byChg.slice(-10).reverse(),'chg')+'</div>';
-    h+='<div class="sec-title">💵 主力净流入 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>净流入(亿)</th><th>涨跌</th></tr></thead><tbody>';
-    arr.slice(0,10).forEach(x=>h+=`<tr><td>${x.name}</td><td class="in">+${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
-    h+='</tbody></table>';
-    h+='<div class="sec-title">🔻 主力净流出 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>净流出(亿)</th><th>涨跌</th></tr></thead><tbody>';
-    arr.slice(-10).reverse().forEach(x=>h+=`<tr><td>${x.name}</td><td class="out">${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
-    h+='</tbody></table>';
-
-    // OPPORTUNITIES
-    const opps=[];
-    byChg.filter(x=>x.chg>5&&x.flow>5).slice(0,3).forEach(x=>{
-      const etf=Object.keys(ETFS).find(k=>x.name.includes(k));
-      opps.push({tag:'🔥 强势',signal:`${x.name} 涨${fpct(x.chg)} 流入${x.flow.toFixed(0)}亿`,action:etf?`关注ETF ${ETFS[etf]}`:'关注该板块'});
-    });
-    arr.filter(x=>x.chg<-5&&x.flow<-3).slice(0,3).forEach(x=>{
-      opps.push({tag:'⚠ 弱势',signal:`${x.name} 跌${fpct(x.chg)} 流出${Math.abs(x.flow).toFixed(0)}亿`,action:'回避或等企稳'});
-    });
-    if(arr.filter(x=>x.chg>0).length>arr.length*0.7)opps.push({tag:'📊 广度',signal:'超70%板块上涨',action:'市场偏多，可积极操作'});
-    else if(arr.filter(x=>x.chg<0).length>arr.length*0.7)opps.push({tag:'📊 广度',signal:'超70%板块下跌',action:'市场偏空，控制仓位'});
-
-    if(opps.length){
-      h+='<div class="sec-title">🎯 机会雷达</div>';
-      opps.forEach(o=>h+=oppCard(o.tag,o.signal,o.action));
-    }
+/* ── Data Chips ── */
+function quickDataChips(){
+  let h='';
+  const ov=DATA.ov;if(!ov||!ov.indices)return h;
+  const idx=ov.indices;
+  (idx.a||[]).slice(0,2).forEach(x=>h+=chip('🇨🇳 '+x.name,x.val,x.chg));
+  if(idx.hk)h+=chip('🇭🇰 '+idx.hk.name,idx.hk.val,idx.hk.chg);
+  (idx.us||[]).slice(0,2).forEach(x=>h+=chip('🇺🇸 '+x.name,fprice(x.val),x.chg));
+  (idx.crypto||[]).slice(0,2).forEach(x=>h+=chip('₿ '+x.name,fprice(x.val),x.chg));
+  return '<div class="data-row">'+h+'</div>';
+}
+function aStockDataChips(){
+  let h='';const ov=DATA.ov;if(!ov||!ov.indices)return h;
+  (ov.indices.a||[]).forEach(x=>h+=chip(x.name,x.val,x.chg));
+  if(ov.flow)h+=chip('净流入',ov.flow.total_inflow>0?'+'+ov.flow.total_inflow.toFixed(0)+'亿':ov.flow.total_inflow.toFixed(0)+'亿',null);
+  return '<div class="data-row">'+h+'</div>';
+}
+function overseasDataChips(){
+  let h='';const ov=DATA.ov;
+  if(ov&&ov.indices&&ov.indices.hk)h+=chip('🇭🇰 恒指',ov.indices.hk.val,ov.indices.hk.chg);
+  (ov?.indices?.us||[]).slice(0,3).forEach(x=>h+=chip('🇺🇸 '+x.name,fprice(x.val),x.chg));
+  const usLive=DATA.usLive;if(usLive&&usLive.indices){
+    const vix=usLive.indices.find(i=>i.symbol==='VIX');
+    if(vix)h+=chip('VIX',fprice(vix.price,2));
   }
-  return h;
+  return '<div class="data-row">'+h+'</div>';
+}
+function cryptoDataChips(){
+  let h='';
+  (DATA.crypto?.prices||[]).forEach(x=>h+=chip(x.symbol,fprice(x.price),x.chg_24h));
+  return '<div class="data-row">'+h+'</div>';
+}
+function chip(label,val,chg){
+  const cv=chg!=null&&!isNaN(chg)?fpct(chg):'';
+  return `<div class="data-chip"><div class="chip-label">${label}</div><div class="chip-val ${cv.startsWith('+')?'up':cv.startsWith('-')?'dn':''}">${val||'—'}</div>${cv?'<div style="font-size:9px;margin-top:1px" class="'+updown(chg)+'">'+cv+'</div>':''}</div>`;
 }
 
-/* ═══ HK + US MERGED ═══ */
-function renderOverseas(){
-  const ov=DATA.ov;let h='';
-  const usData=DATA.usLive||DATA.us;
-  const isLive=!!DATA.usLive;
-
-  /* ── US Section ── */
-  h+=`<div class="sec-title">🇺🇸 美股 ${isLive?'🟢 盘中 LIVE':'🔴 已收盘'}</div>`;
-  if(usData&&usData.indices){
-    h+='<div class="dash">';
-    usData.indices.filter(i=>['SPY','QQQ','DIA'].includes(i.symbol)).forEach(x=>h+=makeCard(x.symbol,isLive?'live':'closed',fprice(x.price),'',x.chg_pct));
-    h+='</div>';
-    const vix=usData.indices.find(i=>i.symbol==='VIX');
-    const tny=usData.indices.find(i=>i.symbol==='10Y');
-    if(vix||tny){
-      h+='<div class="dash" style="margin-top:8px">';
-      if(vix)h+=makeCard('VIX','',fprice(vix.price,2),'恐慌指数');
-      if(tny)h+=makeCard('10Y美债','',tny.price.toFixed(2)+'%','收益率');
-      h+='</div>';
-    }
-  }
-  if(usData&&usData.sectors&&Object.keys(usData.sectors).length>0){
-    h+='<div class="sec-title">🔄 美股板块</div><div class="dash">';
-    Object.entries(usData.sectors).sort((a,b)=>b[1].chg_pct-a[1].chg_pct).forEach(([n,v])=>h+=makeCard(n,isLive?'live':'',fprice(v.price),'',v.chg_pct));
-    h+='</div>';
-  }
-
-  /* ── HK Section ── */
-  h+='<div class="sec-title" style="margin-top:16px">🇭🇰 港股 已收盘</div>';
-  if(ov&&ov.indices&&ov.indices.hk){
-    h+=`<div class="dash">${makeCard('恒生指数','closed',ov.indices.hk.val,'',ov.indices.hk.chg)}`;
-    if(DATA.hk&&DATA.hk.index){
-      if(DATA.hk.index.high)h+=makeCard('日内最高','',DATA.hk.index.high);
-      if(DATA.hk.index.low)h+=makeCard('日内最低','',DATA.hk.index.low);
-    }
-    h+='</div>';
-  }
-
-  /* ── Opportunities ── */
-  let opps=[];
-  // US signals
-  const nas=ov?.indices?.us?.find(i=>i.name==='QQQ');
-  const sp=ov?.indices?.us?.find(i=>i.name==='SPY');
-  if(nas&&sp){
-    const spread=nas.chg-sp.chg;
-    if(spread>1)opps.push({tag:'📈 科技领先',signal:`QQQ ${fpct(nas.chg)} vs SPY ${fpct(sp.chg)}`,action:'关注NVDA/AVGO/MSFT'});
-    else if(spread<-1)opps.push({tag:'🛡 防御轮动',signal:`SPY ${fpct(sp.chg)} vs QQQ ${fpct(nas.chg)}`,action:'关注XLV/XLU等防御ETF'});
-  }
-  if(usData&&usData.opportunities)usData.opportunities.forEach(o=>opps.push({tag:'🎯 信号',signal:o.signal,action:o.action}));
-  // HK signals
-  const hkIdx=ov?.indices?.hk;
-  if(hkIdx){
-    if(hkIdx.chg>1.5)opps.push({tag:'🇭🇰 恒指强势',signal:`涨${fpct(hkIdx.chg)}`,action:'关注恒生科技ETF(3032)'});
-    else if(hkIdx.chg<-1.5)opps.push({tag:'🇭🇰 恒指承压',signal:`跌${fpct(hkIdx.chg)}`,action:'防御为主'});
-  }
-  // Asia impact
-  if(nas&&Math.abs(nas.chg)>1){
-    opps.push({tag:'📡 传导',signal:`美股${nas.chg>0?'涨':'跌'}${fpct(nas.chg)}`,action:nas.chg>0?'利好明日港股/A股高开':'明日亚洲市场承压'});
-  }
-
-  if(opps.length){
-    h+='<div class="sec-title">🎯 机会雷达</div>';
-    opps.forEach(o=>h+=oppCard(o.tag,o.signal,o.action));
-  }
-  return h||'<div class="empty">数据收集中…</div>';
-}
-
-/* ═══ CRYPTO ═══ */
-function renderCrypto(){
-  const ov=DATA.ov;let h='';
-  if(DATA.crypto&&DATA.crypto.prices){
-    h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
-    DATA.crypto.prices.forEach(x=>h+=makeCard(x.symbol,'live',fprice(x.price),'USDT',x.chg_24h));
-    h+='</div>';
-  }else if(ov&&ov.indices&&ov.indices.crypto){
-    h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
-    ov.indices.crypto.forEach(x=>h+=makeCard(x.name,'live',fprice(x.val),'USDT',x.chg));
-    h+='</div>';
-  }
-
-  if(DATA.crypto&&DATA.crypto.funding){
-    h+='<div class="sec-title">💰 资金费率</div><table class="tbl"><thead><tr><th>币种</th><th>费率</th><th>信号</th></tr></thead><tbody>';
-    DATA.crypto.funding.forEach(x=>{
-      h+=`<tr><td class="sym">${x.symbol}</td><td class="${x.rate>=0?'up':'dn'}">${(x.rate*100).toFixed(4)}%</td><td>${Math.abs(x.rate)>0.0005?(x.rate>0?'⚠ 偏空':'🟢 偏多'):'—'}</td></tr>`;
-    });
-    h+='</tbody></table>';
-  }
-
-  let opps=[];
-  if(DATA.crypto&&DATA.crypto.funding){
-    DATA.crypto.funding.filter(x=>Math.abs(x.rate)>0.0003).forEach(x=>{
-      opps.push({tag:x.rate>0?'🔴 偏空':'🟢 偏多',signal:`${x.symbol} 费率${(x.rate*100).toFixed(3)}%`,action:x.rate>0?`做空${x.symbol}或对冲`:`做多${x.symbol}，费率有利`});
-    });
-  }
-  if(DATA.crypto&&DATA.crypto.recommendations){
-    DATA.crypto.recommendations.slice(0,3).forEach(r=>opps.push({tag:'🎯 策略',signal:r.symbol+' '+r.signal,action:r.reason||''}));
-  }
-  if(opps.length){h+='<div class="sec-title">🎯 策略信号</div>';opps.forEach(o=>h+=oppCard(o.tag,o.signal,o.action));}
-
-  return h||'<div class="empty">数据收集中…</div>';
-}
-
-/* ── Nav ── */
+/* ── Navigation ── */
 function setupNav(){
-  const pages=[{id:'global',ico:'🌍',label:'全景'},{id:'astock',ico:'🇨🇳',label:'A股'},{id:'overseas',ico:'🌏',label:'港美股'},{id:'crypto',ico:'₿',label:'加密'}];
-  const activate=(id)=>{
-    document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
-    document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+  const activate=id=>{
+    PAGES.forEach(p=>{
+      document.querySelectorAll(`nav.sidebar a[data-page="${p}"]`).forEach(x=>x.classList.toggle('active',p===id));
+      document.querySelectorAll(`.bottom-nav a[data-page="${p}"]`).forEach(x=>x.classList.toggle('active',p===id));
+    });
     renderPage(id);
   };
   document.querySelectorAll('nav.sidebar a[data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();activate(a.dataset.page)}));
-  document.getElementById('bottomNav').innerHTML=pages.map(p=>`<a href="#" data-page="${p.id}" class="${p.id==='global'?'active':''}"><span class="ico">${p.ico}</span>${p.label}</a>`).join('');
-  document.querySelectorAll('.bottom-nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();activate(a.dataset.page)}));
+  const btm=document.getElementById('bottomNav');
+  btm.innerHTML=PAGES.map(p=>`<a href="#" data-page="${p}" class="${p==='global'?'active':''}"><span class="ico">${{global:'🌍',astock:'🇨🇳',overseas:'🌏',crypto:'₿'}[p]}</span>${TITLES[p]}</a>`).join('');
+  btm.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();activate(a.dataset.page)}));
 }
 
 function updateClock(){document.getElementById('clock').textContent=new Date().toTimeString().slice(0,5)+' CST'}
-async function refreshData(){
-  try{const r=await fetch('data/terminal/overview.json');if(r.ok)DATA.ov=await r.json()}catch(e){}
-  try{const r=await fetch('data/crypto/market.json');if(r.ok)DATA.crypto=await r.json()}catch(e){}
-  try{const r=await fetch('data/us/live.json');if(r.ok)DATA.usLive=await r.json()}catch(e){}
-  renderTicker();renderAlerts();
-}
 init();
 </script>
 </body>
