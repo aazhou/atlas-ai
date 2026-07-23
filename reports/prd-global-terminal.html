@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PRD: Atlas AI 全球金融投研终端</title>
+<style>
+  :root {
+    --canvas: #0a0a0a;
+    --surface: #121212;
+    --surface-2: #1a1a1a;
+    --hairline: #2a2a2a;
+    --primary: #f0b90b;
+    --primary-dim: rgba(240,185,11,0.12);
+    --ink: #e8e8e8;
+    --muted: #999;
+    --muted-soft: #666;
+    --accent-green: #22c55e;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+    --danger: #dc2626;
+    --font-sans: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+    scroll-behavior: smooth;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* Layout */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .doc-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--hairline);
+    padding: 48px 0 40px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .doc-header .badge {
+    display: inline-block;
+    background: var(--primary-dim);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(240,185,11,0.25);
+  }
+  .doc-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .doc-header .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .doc-header .meta-row {
+    display: flex; gap: 24px; margin-top: 16px;
+    font-size: 12px; color: var(--muted-soft);
+    flex-wrap: wrap;
+  }
+  .doc-header .meta-row span { display: flex; align-items: center; gap: 6px; }
+
+  /* TOC */
+  .toc {
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 40px 0;
+  }
+  .toc h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
+  .toc ol { list-style: none; counter-reset: toc; }
+  .toc li { counter-increment: toc; font-size: 14px; margin-bottom: 8px; }
+  .toc li a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--hairline); padding-bottom: 1px; }
+  .toc li a:hover { color: var(--primary); border-color: var(--primary); }
+  .toc li::before { content: counter(toc) ". "; color: var(--primary); font-family: var(--font-mono); font-size: 12px; }
+
+  /* Sections */
+  section { margin: 48px 0; }
+  section h2 {
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    padding-bottom: 10px; border-bottom: 2px solid var(--hairline);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  section h2 .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; background: var(--primary-dim);
+    color: var(--primary); font-size: 13px; font-weight: 800;
+    border-radius: 4px; flex-shrink: 0;
+  }
+  section h3 {
+    font-size: 17px; font-weight: 700; color: var(--ink);
+    margin: 28px 0 12px;
+  }
+  section p { margin-bottom: 14px; color: #ccc; }
+
+  /* Tables */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 16px 0 24px; font-size: 13px;
+    background: var(--surface-2);
+  }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface); color: var(--muted);
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--hairline);
+  }
+  td {
+    padding: 10px 14px; color: var(--ink);
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-mono); font-size: 12px;
+  }
+  tr:last-child td { border-bottom: none; }
+  table caption { color: var(--muted-soft); font-size: 12px; margin-bottom: 8px; text-align: left; }
+
+  /* Lists */
+  ul, ol { margin: 0 0 16px 20px; }
+  li { margin-bottom: 6px; color: #ccc; }
+  li code { background: var(--surface-2); padding: 1px 6px; border-radius: 3px; font-family: var(--font-mono); font-size: 13px; color: var(--primary); }
+
+  /* Code */
+  code { font-family: var(--font-mono); }
+  pre {
+    background: #0d0d0d; color: #ddd; padding: 16px 20px;
+    border-radius: 6px; overflow-x: auto; margin: 12px 0 20px;
+    border: 1px solid var(--hairline); font-size: 13px; line-height: 1.7;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+
+  /* Tags */
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 11px; font-weight: 700; font-family: var(--font-mono);
+    margin-right: 6px;
+  }
+  .tag-p0 { background: var(--danger); color: #fff; }
+  .tag-p1 { background: #ea580c; color: #fff; }
+  .tag-p2 { background: var(--accent-blue); color: #fff; }
+  .tag-p3 { background: #555; color: #ddd; }
+  .tag-new  { background: var(--accent-green); color: #000; }
+  .tag-del  { background: var(--accent-red); color: #fff; }
+  .tag-keep { background: #555; color: #fff; }
+
+  /* Tree */
+  .tree {
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.9;
+    background: var(--surface-2); padding: 16px 20px;
+    border-radius: 6px; border: 1px solid var(--hairline);
+    margin: 12px 0 20px; color: var(--muted);
+  }
+  .tree .dir  { color: var(--accent-blue); }
+  .tree .file { color: var(--ink); }
+  .tree .del  { color: var(--accent-red); text-decoration: line-through; }
+  .tree .new  { color: var(--accent-green); }
+
+  /* Callouts */
+  .callout {
+    padding: 14px 18px; border-radius: 6px; margin: 16px 0;
+    border-left: 4px solid; font-size: 13px; background: var(--surface-2);
+  }
+  .callout.info  { border-color: var(--accent-blue); }
+  .callout.warn  { border-color: var(--primary); }
+  .callout.danger{ border-color: var(--accent-red); }
+
+  /* Footer */
+  .doc-footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted-soft); font-size: 12px;
+    border-top: 1px solid var(--hairline); margin-top: 60px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    .doc-header { padding: 32px 0 28px; }
+    .doc-header h1 { font-size: 24px; }
+    section h2 { font-size: 18px; }
+    table { font-size: 11px; }
+    td, th { padding: 8px 10px; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; color: #111; }
+    .doc-header { position: static; }
+    pre, .tree, table { background: #f5f5f5; border-color: #ddd; }
+    .callout { background: #f9f9f9; }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="container">
+    <div class="badge">Product Requirements Document</div>
+    <h1>Atlas AI 全球金融投研终端</h1>
+    <p class="subtitle">从A股+加密+足球混杂站点 → 纯粹的全球金融AI投研工作台</p>
+    <div class="meta-row">
+      <span>📋 文档类型：PRD</span>
+      <span>👤 作者：诸葛（Atlas PM）</span>
+      <span>📅 日期：2026-07-23</span>
+      <span>🏷️ 版本：v1.0</span>
+      <span>👥 执行：鲁班 · 铁锤</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- TOC -->
+<nav class="toc" id="toc">
+  <h3>目录</h3>
+  <ol>
+    <li><a href="#sec1">产品定位</a></li>
+    <li><a href="#sec2">现状分析</a></li>
+    <li><a href="#sec3">改造清单</a></li>
+    <li><a href="#sec4">目标页面结构</a></li>
+    <li><a href="#sec5">数据流设计</a></li>
+    <li><a href="#sec6">功能清单</a></li>
+    <li><a href="#sec7">UI/UX 规范</a></li>
+    <li><a href="#sec8">验收标准</a></li>
+    <li><a href="#sec9">里程碑排期</a></li>
+  </ol>
+</nav>
+
+<!-- 1. 产品定位 -->
+<section id="sec1">
+  <h2><span class="num">1</span>产品定位</h2>
+  <p><strong>一句话：</strong>Atlas AI 是龙哥团队内部使用的<strong>全球金融AI投研终端</strong>——覆盖A股/港股/美股/加密四大市场，以DuckDB为数据底座、cron自动采集、纯静态前端部署，一屏纵览全球资产。</p>
+  <p><strong>目标用户：</strong>龙哥 + Atlas 团队内部（不对外，无注册/登录需求）</p>
+  <p><strong>核心价值：</strong></p>
+  <ul>
+    <li>一个页面看完全球市场状态（跨市场仪表盘）</li>
+    <li>每个市场的核心子页面完整保留并整合</li>
+    <li>数据全自动（cron采集 → DuckDB → JSON → 前端直接fetch）</li>
+    <li>暗色专业终端风格，信息密度高，一屏决策</li>
+  </ul>
+</section>
+
+<!-- 2. 现状分析 -->
+<section id="sec2">
+  <h2><span class="num">2</span>当前网站现状分析</h2>
+
+  <h3>2.1 网站入口</h3>
+  <p>在线地址：<code>https://atlas-ai-brown.vercel.app</code>（Vercel已废弃，实际使用 <code>aazhou.github.io/atlas-ai/</code> 和 <code>atlas.ifin.fun</code>）</p>
+  <p>首页 <code>index.html</code>：4个导航卡片（A股📈 / 加密₿ / 足球⚽ / 系统⚙️），副标题包含"足球"，状态栏显示A股/港股/加密/V11/Pages状态。</p>
+
+  <h3>2.2 目录结构（现状）</h3>
+  <div class="tree">
+<span class="dir">atlas-ai/</span>
+├── <span class="file">index.html</span>                    ← 首页（4入口）
+├── <span class="file">style.css</span>                     ← 全局样式
+├── <span class="file">header.js</span>                    ← 全局导航（A股/足球/加密/看板）
+├── <span class="file">review.html</span>                  ← 每日复盘
+├── <span class="file">system.html</span>                  ← 系统看板
+├── <span class="dir">stock/</span>                         ← A股模块
+│   ├── <span class="file">index.html</span>                ← 仪表盘
+│   ├── <span class="file">portfolio.html</span>            ← 持仓（密码保护）
+│   ├── <span class="file">sectors.html</span>              ← 板块资金流
+│   └── <span class="file">ai.html</span>                   ← AI研判
+├── <span class="dir">crypto/</span>                        ← 加密模块
+│   ├── <span class="file">index.html</span>                ← 策略回测
+│   ├── <span class="file">live.html</span>                 ← 模拟交易
+│   └── <span class="file">quant.html</span>                ← 量化面板
+├── <span class="dir del">football/</span>                  <span class="del">← 🔴 待删除</span>
+│   <span class="del">├── predict.html / results.html / bracket.html</span>
+│   <span class="del">├── csl.html / final.html / intel.html</span>
+│   <span class="del">├── picks.html / ai-copilot.html / agent-proto.html</span>
+├── <span class="dir">betmind/</span>                       ← BetMind独立站点
+│   └── <span class="file">index.html</span>
+├── <span class="dir">quant/</span>                         ← Python量化模块
+│   └── <span class="file">strategies/ backtest/ execution/ data/</span>
+├── <span class="dir">reports/</span>                       ← 研报/日报
+│   └── <span class="file">index.html</span>
+├── <span class="dir">scripts/</span>                       ← 采集脚本（cron调度）
+├── <span class="dir">data/</span>                          ← 数据底座
+│   ├── <span class="file">atlas.duckdb</span>              ← A股 DuckDB
+│   ├── <span class="dir">stock/</span>                     ← A股 JSON导出
+│   ├── <span class="dir">crypto/</span>                   ← 加密 JSON导出
+│   └── <span class="dir del">football/</span>             <span class="del">← 🔴 待删除</span></div>
+
+  <h3>2.3 当前问题</h3>
+  <table>
+    <tr><th>问题</th><th>细节</th></tr>
+    <tr><td>定位混乱</td><td>A股/加密/足球三种完全不相关的领域混在一起，"足球"在首页副标题中显得突兀</td></tr>
+    <tr><td>足球冗余</td><td>足球目录下有9个HTML页面，但足球数据已全部迁移至 BetMind (football.ifin.fun)</td></tr>
+    <tr><td>市场覆盖不全</td><td>只有A股和加密，缺少港股和美股入口</td></tr>
+    <tr><td>无跨市场视图</td><td>无法在一个页面看到全球资产全景</td></tr>
+    <tr><td>导航耦合</td><td>header.js 硬编码了足球链接，删除足球需要改header.js</td></tr>
+    <tr><td>首页信息密度低</td><td>只有4个卡片，没有实时市场快照</td></tr>
+  </table>
+
+  <h3>2.4 保留资产</h3>
+  <table>
+    <tr><th>模块</th><th>保留内容</th><th>说明</th></tr>
+    <tr><td>A股</td><td>仪表盘 · 板块资金流 · AI研判 · 持仓</td><td>全保留，不动</td></tr>
+    <tr><td>加密</td><td>策略回测 · 模拟交易 · 量化面板</td><td>全保留，不动</td></tr>
+    <tr><td>系统</td><td>Cron看板 · 运行状态</td><td>保留，更新结构以反映新市场</td></tr>
+    <tr><td>复盘</td><td>review.html（大盘+板块）</td><td>保留，品牌页面不动</td></tr>
+    <tr><td>报告</td><td>reports/ 目录</td><td>保留</td></tr>
+    <tr><td>BetMind</td><td>betmind/index.html</td><td>保留，独立站点</td></tr>
+    <tr><td>量化</td><td>quant/ 目录（Python）</td><td>保留，不动</td></tr>
+    <tr><td>数据底座</td><td>DuckDB + JSON导出 + cron采集</td><td>保留并扩展</td></tr>
+  </table>
+</section>
+
+<!-- 3. 改造清单 -->
+<section id="sec3">
+  <h2><span class="num">3</span>改造清单</h2>
+
+  <h3>3.1 删除项 <span class="tag tag-del">DELETE</span></h3>
+  <table>
+    <tr><th>文件/目录</th><th>操作</th><th>说明</th></tr>
+    <tr><td><code>football/</code> 目录</td><td>删除全部9个HTML</td><td>足球预测等全部迁移BetMind，不从Atlas入口</td></tr>
+    <tr><td><code>data/football/</code></td><td>删除全部足球数据文件</td><td>数据已在BetMind独立管理</td></tr>
+    <tr><td><code>index.html</code> 足球卡片</td><td>删除足球导航卡片</td><td>替换为美股+港股入口</td></tr>
+    <tr><td><code>index.html</code> 副标题</td><td>去掉"足球"字样</td><td>改为"覆盖A股、港股、美股、加密，AI驱动全球投研"</td></tr>
+    <tr><td><code>header.js</code> 足球链接</td><td>删除足球导航项</td><td>新增港股+美股导航项</td></tr>
+    <tr><td><code>system.html</code> 足球分类</td><td>删除足球cron分类</td><td>足球cron已全部暂停</td></tr>
+  </table>
+
+  <h3>3.2 新增项 <span class="tag tag-new">NEW</span></h3>
+  <table>
+    <tr><th>文件</th><th>功能</th><th>数据源</th></tr>
+    <tr><td><code>cross-market.html</code></td><td>跨市场仪表盘（首页替代）</td><td>各市场JSON聚合</td></tr>
+    <tr><td><code>us/</code> 目录</td><td>美股入口页</td><td>Yahoo Finance / Alpha Vantage → DuckDB → JSON</td></tr>
+    <tr><td><code>hk/</code> 目录</td><td>港股入口页</td><td>港股数据源 → DuckDB → JSON（已有hk_watch_kline.py）</td></tr>
+    <tr><td><code>data/us/</code></td><td>美股JSON导出目录</td><td>cron脚本写入</td></tr>
+    <tr><td><code>data/hk/</code></td><td>港股JSON导出目录</td><td>cron脚本写入</td></tr>
+  </table>
+
+  <h3>3.3 修改项 <span class="tag tag-keep">MODIFY</span></h3>
+  <table>
+    <tr><th>文件</th><th>改动</th></tr>
+    <tr><td><code>index.html</code></td><td>改为单一大入口（跳转 cross-market.html）或直接作为仪表盘首页</td></tr>
+    <tr><td><code>header.js</code></td><td>导航改为：A股 | 港股 | 美股 | 加密 | 报告 | 系统（去掉足球，新增加港/美/报告）</td></tr>
+    <tr><td><code>style.css</code></td><td>新增跨市场热力图样式、多市场颜色变量</td></tr>
+    <tr><td><code>system.html</code></td><td>cron分类从[足球/A股/加密]改为[A股/港股/美股/加密]，增加hk_watch采集状态</td></tr>
+  </table>
+</section>
+
+<!-- 4. 目标页面结构 -->
+<section id="sec4">
+  <h2><span class="num">4</span>目标页面结构</h2>
+
+  <h3>4.1 新目录树</h3>
+  <div class="tree">
+<span class="dir">atlas-ai/</span>
+├── <span class="file">index.html</span>                    <span class="tag-new">NEW</span> 跨市场仪表盘（全局首页）
+├── <span class="file">style.css</span>
+├── <span class="file">header.js</span>                    <span class="tag-keep">MODIFY</span> 导航更新
+├── <span class="file">review.html</span>
+├── <span class="file">system.html</span>                  <span class="tag-keep">MODIFY</span> 新增市场
+├── <span class="dir">stock/</span>                         <span class="tag-keep">KEEP</span> A股（不动）
+├── <span class="dir">hk/</span>                           <span class="tag-new">NEW</span>
+│   └── <span class="file">index.html</span>                ← 港股仪表盘
+├── <span class="dir">us/</span>                           <span class="tag-new">NEW</span>
+│   └── <span class="file">index.html</span>                ← 美股仪表盘
+├── <span class="dir">crypto/</span>                        <span class="tag-keep">KEEP</span> 加密（不动）
+├── <span class="dir">reports/</span>                       <span class="tag-keep">KEEP</span>
+├── <span class="dir">betmind/</span>                       <span class="tag-keep">KEEP</span>
+├── <span class="dir">quant/</span>                         <span class="tag-keep">KEEP</span>
+├── <span class="dir">scripts/</span>                       <span class="tag-keep">KEEP + NEW</span>
+│   ├── <span class="file">hk_watch_kline.py</span>         ← 已有脚本，保留
+│   └── <span class="file">us_watch.py</span>               <span class="tag-new">NEW</span>
+└── <span class="dir">data/</span>
+    ├── <span class="file">atlas.duckdb</span>              <span class="tag-keep">KEEP</span> 可能新增表
+    ├── <span class="dir">stock/</span>
+    ├── <span class="dir">hk/</span>                       <span class="tag-new">NEW</span>
+    ├── <span class="dir">us/</span>                       <span class="tag-new">NEW</span>
+    └── <span class="dir">crypto/</span>
+</div>
+
+  <h3>4.2 新主页（index.html = 跨市场仪表盘）</h3>
+  <p>首页从"4个入口卡片"改为<strong>跨市场实时仪表盘</strong>：</p>
+  <ul>
+    <li><strong>顶部：</strong>4个市场快速状态卡片（美/港/A/加密），显示当日涨跌、关键指数</li>
+    <li><strong>中部：</strong>市场入口区（4个链接卡片跳到各市场子页面）</li>
+    <li><strong>底部：</strong>系统状态条（cron运行状态 + 最后更新时间）</li>
+  </ul>
+
+  <h3>4.3 导航栏（header.js v4）</h3>
+  <table>
+    <tr><th>一级导航</th><th>emoji</th><th>链接</th><th>二级（子页面内联）</th></tr>
+    <tr><td>A股</td><td>🇨🇳</td><td><code>stock/</code></td><td>仪表盘 · 板块 · AI研判 · 持仓</td></tr>
+    <tr><td>港股</td><td>🇭🇰</td><td><code>hk/</code></td><td>仪表盘（首期仅这一页）</td></tr>
+    <tr><td>美股</td><td>🇺🇸</td><td><code>us/</code></td><td>仪表盘（首期仅这一页）</td></tr>
+    <tr><td>加密</td><td>₿</td><td><code>crypto/</code></td><td>回测 · 实盘 · 量化</td></tr>
+    <tr><td>报告</td><td>📋</td><td><code>reports/</code></td><td>—</td></tr>
+    <tr><td>系统</td><td>⚙️</td><td><code>system.html</code></td><td>—</td></tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>⚠️ 导航原则：</strong>所有页面引入同一个 <code>header.js</code>，改导航只改这一个文件。emoji用于一级导航快速识别市场（规则：国旗+资产符号）。子页面二级菜单由各页面内联。
+  </div>
+
+  <h3>4.4 各市场子页面详情</h3>
+  <table>
+    <tr><th>市场</th><th>页面</th><th>内容</th><th>优先级</th></tr>
+    <tr><td>🇨🇳 A股</td><td><code>stock/index.html</code></td><td>仪表盘：三大指数+板块涨跌TOP+资金流</td><td>已有</td></tr>
+    <tr><td></td><td><code>stock/sectors.html</code></td><td>板块资金流：双Tab（日内涨跌+每日资金流）</td><td>已有</td></tr>
+    <tr><td></td><td><code>stock/portfolio.html</code></td><td>持仓分析：密码保护</td><td>已有</td></tr>
+    <tr><td></td><td><code>stock/ai.html</code></td><td>AI研判</td><td>已有</td></tr>
+    <tr><td>🇭🇰 港股</td><td><code>hk/index.html</code></td><td>恒指+国企指数+自选股+南向资金</td><td><span class="tag tag-p0">P0</span></td></tr>
+    <tr><td>🇺🇸 美股</td><td><code>us/index.html</code></td><td>纳斯达克+标普500+道琼斯+自选股+VIX</td><td><span class="tag tag-p0">P0</span></td></tr>
+    <tr><td>₿ 加密</td><td><code>crypto/index.html</code></td><td>策略回测</td><td>已有</td></tr>
+    <tr><td></td><td><code>crypto/live.html</code></td><td>模拟交易</td><td>已有</td></tr>
+    <tr><td></td><td><code>crypto/quant.html</code></td><td>量化面板</td><td>已有</td></tr>
+  </table>
+</section>
+
+<!-- 5. 数据流设计 -->
+<section id="sec5">
+  <h2><span class="num">5</span>数据流设计</h2>
+
+  <h3>5.1 整体架构</h3>
+  <pre><code>cron脚本(Python) ──→ DuckDB 写入 ──→ JSON导出 ──→ git push ──→ GitHub Pages / Aliyun
+  （每5/10分钟）     （本地）        （data/目录）    （自动）       （静态CDN）</code></pre>
+  <p><strong>铁律：</strong>数据底座是 DuckDB，JSON 只是给静态网站的导出层。所有采集脚本写 DuckDB，不直接写 JSON。JSON 由脚本在 DuckDB 写入后导出。网站只读 JSON，不直接访问 DuckDB（GitHub Pages 无法运行 Python）。</p>
+
+  <h3>5.2 数据表设计（新增）</h3>
+  <table>
+    <tr><th>表名</th><th>DB</th><th>字段</th><th>说明</th></tr>
+    <tr><td><code>hk_indices</code></td><td>atlas.duckdb</td><td>date, time, symbol(HSI/HSCEI), price, chg</td><td>港股指数快照</td></tr>
+    <tr><td><code>hk_watch</code></td><td>atlas.duckdb</td><td>date, time, code, name, price, chg, volume</td><td>港股自选股（已有hk_watch_kline.py）</td></tr>
+    <tr><td><code>us_indices</code></td><td>atlas.duckdb</td><td>date, time, symbol(NDX/SPX/DJI/VIX), price, chg</td><td>美股指数快照</td></tr>
+    <tr><td><code>us_watch</code></td><td>atlas.duckdb</td><td>date, time, ticker, name, price, chg, volume</td><td>美股自选股</td></tr>
+    <tr><td><code>cross_market</code></td><td>atlas.duckdb</td><td>date, time, market(cn/hk/us/crypto), idx_name, price, chg, chg_pct</td><td>跨市场汇总（供首页仪表盘）</td></tr>
+  </table>
+
+  <h3>5.3 Cron 任务矩阵</h3>
+  <table>
+    <tr><th>市场</th><th>脚本</th><th>频率</th><th>时段</th><th>输出JSON</th><th>状态</th></tr>
+    <tr><td>🇨🇳 A股</td><td>sector_logger.py</td><td>5min</td><td>9:00-15:00</td><td>data/stock/fund_flows-*.json</td><td>✅ 运行中</td></tr>
+    <tr><td>🇨🇳 A股</td><td>portfolio_logger.py</td><td>5min</td><td>9:00-15:00</td><td>data/stock/portfolio.json</td><td>✅ 运行中</td></tr>
+    <tr><td>🇭🇰 港股</td><td>hk_watch_kline.py</td><td>5min</td><td>9:30-16:00</td><td>data/hk/indices.json + watch.json</td><td>⚠️ 已有脚本，需挂cron</td></tr>
+    <tr><td>🇺🇸 美股</td><td>us_watch.py（新建）</td><td>5min</td><td>21:30-04:00</td><td>data/us/indices.json + watch.json</td><td>🔴 待开发</td></tr>
+    <tr><td>₿ 加密</td><td>crypto_logger.py</td><td>5min</td><td>24/7</td><td>data/crypto/*.json</td><td>✅ 运行中</td></tr>
+    <tr><td>🌍 跨市场</td><td>cross_market.py（新建）</td><td>5min</td><td>24/7</td><td>data/cross-market.json</td><td>🔴 待开发</td></tr>
+  </table>
+
+  <h3>5.4 前端数据流</h3>
+  <pre><code>// 首页跨市场仪表盘
+fetch('data/cross-market.json')
+  → { markets: [{name, idx, price, chg_pct, signal}, ...] }
+  → 渲染4市场卡片 + 热力图
+
+// 各市场子页面（以港股为例）
+fetch('../data/hk/indices.json')
+fetch('../data/hk/watch.json')
+  → 渲染恒指走势 + 自选股列表</code></pre>
+
+  <div class="callout warn">
+    <strong>路径注意：</strong>根目录页面用 <code>data/...</code>，子目录页面（hk/, us/）用 <code>../data/...</code>。GitHub Pages 项目站点路径为 <code>/atlas-ai/...</code>，不能用绝对路径。
+  </div>
+</section>
+
+<!-- 6. 功能清单 -->
+<section id="sec6">
+  <h2><span class="num">6</span>功能清单</h2>
+
+  <h3>6.1 P0 —— 必须交付（Week 1）</h3>
+  <table>
+    <tr><th>#</th><th>功能</th><th>说明</th><th>负责人</th></tr>
+    <tr><td>P0-1</td><td><strong>删除足球</strong></td><td>删除 football/ 目录、data/football/、主页足球卡片、header.js足球链接、system.html足球分类</td><td>鲁班</td></tr>
+    <tr><td>P0-2</td><td><strong>主页改版</strong></td><td>index.html 从4入口卡片改为跨市场仪表盘：4市场实时状态卡片 + 市场入口 + 系统状态</td><td>鲁班</td></tr>
+    <tr><td>P0-3</td><td><strong>header.js v4</strong></td><td>导航改为 [A股/港股/美股/加密/报告/系统]，去掉足球</td><td>鲁班</td></tr>
+    <tr><td>P0-4</td><td><strong>港股入口页</strong></td><td>hk/index.html：恒指+国企指数+自选股+南向资金，复用hk_watch_kline.py数据</td><td>铁锤</td></tr>
+    <tr><td>P0-5</td><td><strong>美股入口页</strong></td><td>us/index.html：纳指+标普+道琼斯+VIX+自选股</td><td>铁锤</td></tr>
+    <tr><td>P0-6</td><td><strong>美股数据采集</strong></td><td>新建 us_watch.py，yahoo_fin 拉取美股指数+自选 → DuckDB → JSON</td><td>铁锤</td></tr>
+    <tr><td>P0-7</td><td><strong>跨市场JSON</strong></td><td>新建 cross_market.py，聚合四大市场关键指标 → data/cross-market.json</td><td>铁锤</td></tr>
+    <tr><td>P0-8</td><td><strong>system.html更新</strong></td><td>cron分类增加港股/美股/跨市场，反映新采集任务状态</td><td>鲁班</td></tr>
+  </table>
+
+  <h3>6.2 P1 —— 重要（Week 2）</h3>
+  <table>
+    <tr><th>#</th><th>功能</th><th>说明</th></tr>
+    <tr><td>P1-1</td><td><strong>跨市场热力图</strong></td><td>首页增加热力图组件：4大市场 × 行业/板块 实时涨跌矩阵，一眼看资金流向</td></tr>
+    <tr><td>P1-2</td><td><strong>港股自选股K线</strong></td><td>hk/index.html 增加自选股K线图（轻量Canvas/ECharts），5分钟刷新</td></tr>
+    <tr><td>P1-3</td><td><strong>美股自选股K线</strong></td><td>us/index.html 增加自选股K线图</td></tr>
+    <tr><td>P1-4</td><td><strong>移动端适配</strong></td><td>跨市场仪表盘移动端适配（≤480px单列，480-640双列）</td></tr>
+    <tr><td>P1-5</td><td><strong>跨市场相关性</strong></td><td>首页增加A-H溢价、BTC相关性等跨市场指标卡片</td></tr>
+  </table>
+
+  <h3>6.3 P2 —— 增强（Week 3）</h3>
+  <table>
+    <tr><th>#</th><th>功能</th><th>说明</th></tr>
+    <tr><td>P2-1</td><td><strong>量化信号面板</strong></td><td>跨市场统一信号面板：多空信号、RSI超买超卖、MACD金叉死叉、异常波动告警</td></tr>
+    <tr><td>P2-2</td><td><strong>市场情绪指数</strong></td><td>综合VIX/融资融券/南向资金/加密恐慌贪婪指数，统一情绪仪表</td></tr>
+    <tr><td>P2-3</td><td><strong>数据导出</strong></td><td>跨市场数据支持CSV/JSON下载（供龙哥本地分析）</td></tr>
+    <tr><td>P2-4</td><td><strong>暗色主题切换</strong></td><td>暗色（默认）/ 亮色主题切换（P2做亮色，不急）</td></tr>
+  </table>
+
+  <h3>6.4 P3 —— 未来（Week 4+）</h3>
+  <table>
+    <tr><th>#</th><th>功能</th><th>说明</th></tr>
+    <tr><td>P3-1</td><td><strong>AI对话面板</strong></td><td>接入AI对话，根据当前市场数据回答投研问题（如"今天哪些板块有异动？"）</td></tr>
+    <tr><td>P3-2</td><td><strong>智能预警</strong></td><td>自定义条件预警（如"港股恒指跌超2%"→弹窗/声音）</td></tr>
+    <tr><td>P3-3</td><td><strong>历史回放</strong></td><td>跨市场历史某日的回放（选择日期→还原当天市场状态）</td></tr>
+    <tr><td>P3-4</td><td><strong>报告自动生成</strong></td><td>每日收盘后自动生成跨市场日报（类似于review.html）</td></tr>
+  </table>
+</section>
+
+<!-- 7. UI/UX 规范 -->
+<section id="sec7">
+  <h2><span class="num">7</span>UI/UX 规范</h2>
+
+  <h3>7.1 设计原则</h3>
+  <ul>
+    <li><strong>暗色终端风：</strong>深色底 + 高对比文字 + 黄/金主色调（#f0b90b）= 金融终端专业感</li>
+    <li><strong>信息密度：</strong>一屏看完全球市场核心指标，不翻页</li>
+    <li><strong>数据即时：</strong>每5分钟自动刷新，时间戳可见</li>
+    <li><strong>绿涨红跌：</strong>全站统一 PnL 颜色（#22c55e / #ef4444）</li>
+    <li><strong>不花哨：</strong>少动画、少渐变、少装饰。实用第一</li>
+  </ul>
+
+  <h3>7.2 色彩变量</h3>
+  <pre><code>--canvas:      #0a0a0a    /* 页面底色 */
+--surface:     #121212    /* 卡片/面板底色 */
+--surface-2:   #1a1a1a    /* 次级面板 */
+--hairline:    #2a2a2a    /* 边框/分隔线 */
+--primary:     #f0b90b    /* 主色调：黄金/亮黄 */
+--ink:         #e8e8e8    /* 正文 */
+--muted:       #999       /* 次要文字 */
+--accent-green:#22c55e    /* 涨/正 */
+--accent-red:  #ef4444    /* 跌/负 */
+--accent-blue: #3b82f6    /* 链接/信息 */</code></pre>
+
+  <h3>7.3 市场配色</h3>
+  <table>
+    <tr><th>市场</th><th>标识色</th><th>用途</th></tr>
+    <tr><td>🇨🇳 A股</td><td><code>#ef4444</code>（中国红）</td><td>卡片边框、图表线</td></tr>
+    <tr><td>🇭🇰 港股</td><td><code>#eab308</code>（金）</td><td>卡片边框、图表线</td></tr>
+    <tr><td>🇺🇸 美股</td><td><code>#3b82f6</code>（蓝）</td><td>卡片边框、图表线</td></tr>
+    <tr><td>₿ 加密</td><td><code>#f97316</code>（橙）</td><td>卡片边框、图表线</td></tr>
+  </table>
+
+  <h3>7.4 字体</h3>
+  <ul>
+    <li><strong>正文/标题：</strong>Inter + Noto Sans SC（中文回退）</li>
+    <li><strong>数字/价格：</strong>JetBrains Mono（等宽，方便对比数字）</li>
+  </ul>
+
+  <h3>7.5 响应式断点</h3>
+  <ul>
+    <li><strong>桌面（&gt;640px）：</strong>多列布局，max-width 1320px</li>
+    <li><strong>平板（480–640px）：</strong>双列布局，内边距调整</li>
+    <li><strong>手机（≤480px）：</strong>单列布局，导航简化（只显示SVG图标）</li>
+  </ul>
+
+  <h3>7.6 SVG图标规范</h3>
+  <div class="callout info">
+    <strong>铁律：</strong>导航所有图标使用 inline SVG，禁止 emoji（跨平台渲染不一致）。SVG使用 <code>stroke="currentColor"</code> 跟随主题色。14x14尺寸，<code>viewBox="0 0 24 24"</code>，stroke-width=2。
+  </div>
+  <p>需要新增的SVG图标：</p>
+  <table>
+    <tr><th>用途</th><th>描述</th></tr>
+    <tr><td>港股</td><td>香港区旗简化/或港交所建筑轮廓</td></tr>
+    <tr><td>美股</td><td>华尔街公牛简化/或星条旗元素</td></tr>
+    <tr><td>报告</td><td>文档/文件 icon（现有clipboard可复用）</td></tr>
+    <tr><td>跨市场</td><td>地球+连线（globe + network）</td></tr>
+  </table>
+</section>
+
+<!-- 8. 验收标准 -->
+<section id="sec8">
+  <h2><span class="num">8</span>验收标准</h2>
+
+  <table>
+    <tr><th>#</th><th>验收项</th><th>验证方法</th></tr>
+    <tr><td>AC-1</td><td>足球相关全部移除</td><td>在代码库中 grep "football" 应为0结果（除betmind/独立站点外）</td></tr>
+    <tr><td>AC-2</td><td>新主页为跨市场仪表盘</td><td>打开 index.html → 看到4市场实时状态卡片 + 市场入口 + 系统状态</td></tr>
+    <tr><td>AC-3</td><td>港股页可访问</td><td>打开 hk/index.html → 显示恒指+国企指数+自选股+南向资金</td></tr>
+    <tr><td>AC-4</td><td>美股页可访问</td><td>打开 us/index.html → 显示三大指数+VIX+自选股</td></tr>
+    <tr><td>AC-5</td><td>导航6项正确</td><td>任何一个页面顶部导航均显示 [A股/港股/美股/加密/报告/系统]，无足球</td></tr>
+    <tr><td>AC-6</td><td>现有页面不受影响</td><td>stock/、crypto/、review.html、system.html、reports/ 功能正常</td></tr>
+    <tr><td>AC-7</td><td>数据实时更新</td><td>交易时段内数据≤10分钟延迟，非交易时段显示最后收盘数据+时间戳</td></tr>
+    <tr><td>AC-8</td><td>JSON数据就绪</td><td>data/cross-market.json、data/hk/、data/us/ 文件存在且格式正确</td></tr>
+    <tr><td>AC-9</td><td>双通道部署成功</td><td>aazhou.github.io/atlas-ai/ 和 atlas.ifin.fun 均能访问到新版</td></tr>
+    <tr><td>AC-10</td><td>system.html更新</td><td>系统看板显示 A股/港股/美股/加密 四类cron状态，无足球分类</td></tr>
+    <tr><td>AC-11</td><td>颜色一致性</td><td>全站涨=绿(#22c55e)、跌=红(#ef4444)，无其他颜色混用</td></tr>
+    <tr><td>AC-12</td><td>移动端可用</td><td>iPhone上打开首页 → 单列布局，可读可用，无横向滚动</td></tr>
+  </table>
+</section>
+
+<!-- 9. 里程碑排期 -->
+<section id="sec9">
+  <h2><span class="num">9</span>里程碑排期</h2>
+
+  <table>
+    <tr><th>里程碑</th><th>交付物</th><th>日期</th><th>负责人</th></tr>
+    <tr>
+      <td><strong>M0: 清理</strong></td>
+      <td>删除所有足球文件、更新header.js去足球、主页去掉足球卡片</td>
+      <td>Week 1 — Day 1</td>
+      <td>鲁班</td>
+    </tr>
+    <tr>
+      <td><strong>M1: 美股数据</strong></td>
+      <td>us_watch.py 上线cron → DuckDB → JSON导出 → 验证</td>
+      <td>Week 1 — Day 1-2</td>
+      <td>铁锤</td>
+    </tr>
+    <tr>
+      <td><strong>M2: 港股数据接入</strong></td>
+      <td>hk_watch_kline.py 挂cron → JSON导出到 data/hk/ → 验证</td>
+      <td>Week 1 — Day 2-3</td>
+      <td>铁锤</td>
+    </tr>
+    <tr>
+      <td><strong>M3: 跨市场JSON</strong></td>
+      <td>cross_market.py 上线 → data/cross-market.json 自动生成</td>
+      <td>Week 1 — Day 3</td>
+      <td>铁锤</td>
+    </tr>
+    <tr>
+      <td><strong>M4: 美股页 + 港股页</strong></td>
+      <td>us/index.html + hk/index.html，数据fetch正常，页面可访问</td>
+      <td>Week 1 — Day 3-4</td>
+      <td>铁锤</td>
+    </tr>
+    <tr>
+      <td><strong>M5: 主页改版</strong></td>
+      <td>index.html → 跨市场仪表盘，4市场状态卡片，system.html更新</td>
+      <td>Week 1 — Day 4-5</td>
+      <td>鲁班</td>
+    </tr>
+    <tr>
+      <td><strong>M6: 集成测试 + 部署</strong></td>
+      <td>全部页面功能验证 → git push → GitHub Pages + Aliyun SCP部署</td>
+      <td>Week 1 — Day 5</td>
+      <td>鲁班+铁锤</td>
+    </tr>
+    <tr><td colspan="4" style="background:var(--primary-dim);"><strong>🏁 P0 交付截止：Week 1 周五</strong></td></tr>
+    <tr>
+      <td><strong>M7: 跨市场热力图</strong></td>
+      <td>首页热力图组件 + 移动端适配</td>
+      <td>Week 2</td>
+      <td>鲁班</td>
+    </tr>
+    <tr>
+      <td><strong>M8: K线图 + 相关性</strong></td>
+      <td>港股/美股自选股K线 + 跨市场相关性指标</td>
+      <td>Week 2</td>
+      <td>铁锤</td>
+    </tr>
+    <tr><td colspan="4" style="background:rgba(234,88,12,0.12);"><strong>🏁 P1 交付截止：Week 2 周五</strong></td></tr>
+    <tr>
+      <td><strong>M9: 信号面板</strong></td>
+      <td>量化信号面板 + 市场情绪指数</td>
+      <td>Week 3</td>
+      <td>铁锤+鲁班</td>
+    </tr>
+    <tr><td colspan="4" style="background:rgba(59,130,246,0.12);"><strong>🏁 P2 交付截止：Week 3 周五</strong></td></tr>
+    <tr>
+      <td><strong>M10: AI对话 + 预警</strong></td>
+      <td>AI投研对话面板 + 智能预警</td>
+      <td>Week 4+</td>
+      <td>铁锤</td>
+    </tr>
+    <tr><td colspan="4"><strong>🏁 P3 持续迭代 · 无硬性截止</strong></td></tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>⚠️ 风险提示：</strong>
+    <ul>
+      <li>美股数据源（Yahoo Finance）可能有速率限制，需确认API额度</li>
+      <li>港股数据源需确认实时性（hk_watch_kline.py 当前用akshare？需验证）</li>
+      <li>GitHub Pages CDN缓存可能导致数据延迟1-3分钟——可接受</li>
+      <li>删除足球前确认 BetMind 已完全独立，数据无依赖</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Appendix -->
+<section>
+  <h2><span class="num">A</span>附录：DuckDB 现有表结构（参考）</h2>
+  <table>
+    <tr><th>表</th><th>字段</th><th>说明</th></tr>
+    <tr><td><code>stock_sectors</code></td><td>date, time, sector, chg</td><td>30个行业ETF每5分钟涨跌幅</td></tr>
+    <tr><td><code>stock_fund_flows</code></td><td>date, time, sector, fund_flow, chg</td><td>50个东财板块主力净流入(亿元)</td></tr>
+    <tr><td><code>stock_portfolio</code></td><td>date, time, code, name, price, chg, pnl, cost, status, action</td><td>持仓快照</td></tr>
+  </table>
+  <p>加密数据在独立 <code>data/crypto/market.duckdb</code>（87MB），不存入 atlas.duckdb。</p>
+</section>
+
+<section>
+  <h2><span class="num">B</span>附录：部署命令速查</h2>
+  <pre><code># GitHub Pages（自动化）
+cd /c/Users/admin/aazhous-projects/atlas-ai
+git add -A && git commit -m "v2: global terminal" && git push
+
+# Aliyun SCP（国内通道）
+tar --exclude='.git' --exclude='*.duckdb' -czf /tmp/atlas-sync.tar.gz .
+scp -i ~/.ssh/betmind_deploy /tmp/atlas-sync.tar.gz ubuntu@43.156.187.193:/tmp/
+ssh -i ~/.ssh/betmind_deploy ubuntu@43.156.187.193 \
+  "cd /var/www/atlas && tar -xzf /tmp/atlas-sync.tar.gz && rm /tmp/atlas-sync.tar.gz"
+
+# 验证
+curl -sL https://atlas.ifin.fun/ | grep "全球金融"
+curl -sL https://aazhou.github.io/atlas-ai/ | grep "全球金融"</code></pre>
+</section>
+
+</div>
+
+<footer class="doc-footer">
+  <p>Atlas AI · 全球金融投研终端 PRD v1.0 · 诸葛 · 2026-07-23</p>
+  <p>本文档仅供Atlas团队内部使用。部署路径：atlas-ai/reports/prd-global-terminal.html</p>
+</footer>
+
+</body>
+</html>

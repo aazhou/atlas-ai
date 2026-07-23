@@ -3,19 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Atlas AI</title>
+<title>Atlas Terminal — 全球金融AI投研终端</title>
 <link rel="stylesheet" href="style.css">
 <style>
   .hero { text-align: center; padding: 60px 20px 40px; }
-  .hero h1 { font-size: 32px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
-  .hero p { font-size: 14px; color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
-  
-  .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 700px; margin: 0 auto; }
+  .hero h1 { font-size: 32px; font-weight: 800; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em; }
+  .hero p { font-size: 14px; color: var(--muted); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
+
+  .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 720px; margin: 0 auto; }
   .nav-card { display: block; background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 10px; padding: 24px; text-decoration: none; transition: border-color 0.2s, transform 0.1s; }
   .nav-card:hover { border-color: var(--primary); transform: translateY(-2px); }
   .nav-card .icon { font-size: 28px; margin-bottom: 10px; }
   .nav-card .title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
   .nav-card .desc { font-size: 12px; color: var(--muted-soft); line-height: 1.5; }
+  .nav-card.cn { border-left: 3px solid #ef4444; }
+  .nav-card.us { border-left: 3px solid #3b82f6; }
+  .nav-card.hk { border-left: 3px solid #eab308; }
+  .nav-card.crypto { border-left: 3px solid #f97316; }
+  .nav-card.sys { border-left: 3px solid var(--hairline-strong); }
 
   .status-bar { display: flex; gap: 20px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
   .status-item { font-size: 12px; color: var(--muted); }
@@ -29,6 +34,7 @@
     .nav-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .nav-card { padding: 16px; }
     .nav-card .title { font-size: 14px; }
+    .status-bar { gap: 12px; }
   }
 </style>
 </head>
@@ -36,37 +42,43 @@
 <script src="header.js"></script>
 <div class="main">
   <div class="hero">
-    <h1>Atlas AI</h1>
-    <p>龙哥的智能投资助手 — 覆盖A股、港股、美股、加密、足球，AI驱动实时盯盘与量化策略</p>
+    <h1>Atlas Terminal</h1>
+    <p>全球金融市场AI投研终端 — 覆盖A股、港股、美股、加密，AI驱动实时盯盘与量化策略</p>
   </div>
 
   <div class="nav-grid">
-    <a href="stock/" class="nav-card">
+    <a href="stock/" class="nav-card cn">
       <div class="icon">📈</div>
-      <div class="title">A股</div>
+      <div class="title">A股 · 中国</div>
       <div class="desc">仪表盘 · 板块资金流 · 选股 · 持仓分析</div>
     </a>
-    <a href="crypto/" class="nav-card">
+    <a href="us/" class="nav-card us">
+      <div class="icon">📊</div>
+      <div class="title">美股 · 美国</div>
+      <div class="desc">三大指数 · 持仓监控 · VIX · 自选股</div>
+    </a>
+    <a href="hk/" class="nav-card hk">
+      <div class="icon">🏛️</div>
+      <div class="title">港股 · 香港</div>
+      <div class="desc">恒生指数 · 自选股 · 南向资金</div>
+    </a>
+    <a href="crypto/" class="nav-card crypto">
       <div class="icon">₿</div>
-      <div class="title">加密</div>
-      <div class="desc">策略回测 · 模拟交易 · V11多因子</div>
+      <div class="title">加密 · 全球</div>
+      <div class="desc">策略回测 · 模拟交易 · 量化面板</div>
     </a>
-    <a href="football/predict.html" class="nav-card">
-      <div class="icon">⚽</div>
-      <div class="title">足球</div>
-      <div class="desc">世界杯预测 · 中超 · 盘口分析</div>
-    </a>
-    <a href="system.html" class="nav-card">
+    <a href="system.html" class="nav-card sys">
       <div class="icon">⚙️</div>
-      <div class="title">系统</div>
-      <div class="desc">Cron看板 · 运行状态</div>
+      <div class="title">系统 · 看板</div>
+      <div class="desc">Cron任务 · 运行状态 · 数据采集</div>
     </a>
   </div>
 
   <div class="status-bar">
     <div class="status-item"><span class="dot on"></span>A股盯盘</div>
-    <div class="status-item"><span class="dot on"></span>港股盯盘</div>
-    <div class="status-item"><span class="dot on"></span>加密V11</div>
+    <div class="status-item"><span class="dot on"></span>美股监控</div>
+    <div class="status-item"><span class="dot on"></span>港股监控</div>
+    <div class="status-item"><span class="dot on"></span>加密策略</div>
     <div class="status-item"><span class="dot on"></span>GitHub Pages</div>
   </div>
 </div>

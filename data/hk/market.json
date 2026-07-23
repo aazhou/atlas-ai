@@ -1,0 +1,16 @@
+{
+  "index": {
+    "symbol": "HSI",
+    "name": "恒生指数",
+    "price": 21324.87,
+    "chg": 156.34,
+    "chg_pct": 0.74
+  },
+  "watch": [
+    { "code": "00700",  "name": "腾讯控股",          "price": 488.00,  "chg_pct": 1.25 },
+    { "code": "09988",  "name": "阿里巴巴",          "price": 99.80,   "chg_pct": -0.62 },
+    { "code": "03033",  "name": "恒生科技ETF",        "price": 4.88,    "chg_pct": 0.41 },
+    { "code": "HI2X",   "name": "2x 海力士(HK)",      "price": 15.30,   "chg_pct": 3.12 }
+  ],
+  "updated": "2026-07-22T16:08:00"
+}

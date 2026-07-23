@@ -1,0 +1,16 @@
+{
+  "indices": [
+    { "symbol": "SPY",  "name": "标普500 ETF",     "price": 598.47, "chg": 2.13,  "chg_pct": 0.36 },
+    { "symbol": "QQQ",  "name": "纳斯达克100 ETF", "price": 509.82, "chg": 5.41,  "chg_pct": 1.07 },
+    { "symbol": "DIA",  "name": "道琼斯 ETF",      "price": 436.15, "chg": -0.87, "chg_pct": -0.20 }
+  ],
+  "watch": [
+    { "ticker": "NVDA",  "name": "NVIDIA",         "price": 131.22, "chg_pct": 1.84 },
+    { "ticker": "TSLA",  "name": "Tesla",          "price": 251.38, "chg_pct": -0.52 },
+    { "ticker": "AVGO",  "name": "Broadcom",       "price": 207.45, "chg_pct": 2.31 },
+    { "ticker": "GOOGL", "name": "Alphabet",       "price": 178.30, "chg_pct": 0.67 },
+    { "ticker": "MSFT",  "name": "Microsoft",      "price": 453.15, "chg_pct": 0.13 },
+    { "ticker": "MU",    "name": "Micron",         "price": 89.64,  "chg_pct": -1.22 }
+  ],
+  "updated": "2026-07-22T16:00:00"
+}

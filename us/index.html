@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>美股 · Atlas Terminal</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  :root {
+    --us-blue: #3b82f6;
+    --us-blue-dim: rgba(59,130,246,0.12);
+    --us-blue-border: rgba(59,130,246,0.25);
+  }
+  .page-header-us {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 2px solid var(--us-blue-border);
+  }
+  .page-header-us h1 { font-size: 22px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .page-header-us .update-time { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  .indices-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;
+  }
+  .index-card {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 10px; padding: 20px; text-align: center;
+    border-top: 3px solid var(--us-blue);
+  }
+  .index-card .idx-symbol {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+  }
+  .index-card .idx-name {
+    font-size: 13px; color: var(--ink); margin-bottom: 12px; font-weight: 600;
+  }
+  .index-card .idx-price {
+    font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; color: var(--ink);
+  }
+  .index-card .idx-chg {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; margin-top: 6px;
+  }
+  .index-card .idx-chg.up { color: var(--accent-emerald); }
+  .index-card .idx-chg.down { color: var(--accent-rose); }
+
+  .section-title {
+    font-size: 15px; font-weight: 700; color: var(--ink);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--hairline);
+  }
+
+  .watch-table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px;
+  }
+  .watch-table th {
+    text-align: left; font-size: 10px; font-weight: 600; color: var(--muted);
+    padding: 8px 12px; border-bottom: 1px solid var(--hairline);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .watch-table td {
+    padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .watch-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .watch-table .ticker { color: var(--ink); font-weight: 700; }
+  .watch-table .name { color: var(--body); font-family: 'Inter', sans-serif; }
+  .watch-table .price { color: var(--ink); font-weight: 600; }
+  .watch-table .chg.up { color: var(--accent-emerald); }
+  .watch-table .chg.down { color: var(--accent-rose); }
+
+  .data-note {
+    font-size: 11px; color: var(--muted-soft); text-align: center; padding: 20px 0 40px;
+    border-top: 1px solid var(--hairline); margin-top: 20px;
+  }
+  .data-note a { color: var(--accent-blue); }
+
+  .loading {
+    text-align: center; padding: 40px; color: var(--muted); font-size: 13px;
+  }
+  .loading .spinner {
+    display: inline-block; width: 16px; height: 16px; border: 2px solid var(--hairline);
+    border-top-color: var(--us-blue); border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin-right: 8px; vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 640px) {
+    .indices-grid { grid-template-columns: 1fr; }
+    .index-card .idx-price { font-size: 20px; }
+    .watch-table { font-size: 11px; }
+    .watch-table th, .watch-table td { padding: 8px 6px; }
+    .watch-table .name { display: none; }
+  }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+<div class="main">
+  <div class="page-header-us">
+    <h1>📊 美股 · United States</h1>
+    <div class="update-time" id="updateTime">加载中…</div>
+  </div>
+
+  <!-- 三大指数 -->
+  <div class="section-title">📉 三大指数</div>
+  <div id="indicesPanel" class="indices-grid">
+    <div class="loading"><span class="spinner"></span>加载指数数据…</div>
+  </div>
+
+  <!-- 自选股持仓 -->
+  <div class="section-title">💼 龙哥美股持仓</div>
+  <div id="watchPanel">
+    <div class="loading"><span class="spinner"></span>加载持仓数据…</div>
+  </div>
+
+  <div class="data-note">
+    📡 数据来源：Yahoo Finance · 非交易时段显示最近收盘价 · 
+    <a href="../data/us/">查看原始数据</a>
+  </div>
+</div>
+
+<script>
+// ======== 预设数据（兜底） ========
+const FALLBACK = {
+  indices: [
+    { symbol: 'SPY',  name: '标普500 ETF',     price: 598.47, chg: 2.13,  chg_pct: 0.36 },
+    { symbol: 'QQQ',  name: '纳斯达克100 ETF', price: 509.82, chg: 5.41,  chg_pct: 1.07 },
+    { symbol: 'DIA',  name: '道琼斯 ETF',      price: 436.15, chg: -0.87, chg_pct: -0.20 },
+  ],
+  watch: [
+    { ticker: 'NVDA',  name: 'NVIDIA',         price: 131.22, chg_pct: 1.84 },
+    { ticker: 'TSLA',  name: 'Tesla',          price: 251.38, chg_pct: -0.52 },
+    { ticker: 'AVGO',  name: 'Broadcom',       price: 207.45, chg_pct: 2.31 },
+    { ticker: 'GOOGL', name: 'Alphabet',       price: 178.30, chg_pct: 0.67 },
+    { ticker: 'MSFT',  name: 'Microsoft',      price: 453.15, chg_pct: 0.13 },
+    { ticker: 'MU',    name: 'Micron',         price:  89.64, chg_pct: -1.22 },
+  ],
+  updated: '2026-07-22T16:00:00'
+};
+
+// ======== 渲染 ========
+function fmtPrice(p) { return p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtChg(v)   { return (v >= 0 ? '+' : '') + v.toFixed(2); }
+function fmtPct(v)   { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+
+function renderIndices(data) {
+  let html = '';
+  for (const d of data) {
+    const cls = d.chg_pct >= 0 ? 'up' : 'down';
+    html += `<div class="index-card">
+      <div class="idx-symbol">${d.symbol}</div>
+      <div class="idx-name">${d.name}</div>
+      <div class="idx-price">${fmtPrice(d.price)}</div>
+      <div class="idx-chg ${cls}">${fmtChg(d.chg)} (${fmtPct(d.chg_pct)})</div>
+    </div>`;
+  }
+  document.getElementById('indicesPanel').innerHTML = html;
+}
+
+function renderWatch(data) {
+  let html = `<table class="watch-table">
+    <thead><tr><th>代码</th><th>名称</th><th>昨收价</th><th>涨跌</th></tr></thead><tbody>`;
+  for (const d of data) {
+    const cls = d.chg_pct >= 0 ? 'up' : 'down';
+    html += `<tr>
+      <td class="ticker">${d.ticker}</td>
+      <td class="name">${d.name}</td>
+      <td class="price">$${fmtPrice(d.price)}</td>
+      <td class="chg ${cls}">${fmtPct(d.chg_pct)}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  document.getElementById('watchPanel').innerHTML = html;
+}
+
+function fmtTime(iso) {
+  try { return new Date(iso).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }); }
+  catch(e) { return iso; }
+}
+
+// ======== 加载 ========
+async function load() {
+  let data = null;
+  try {
+    const r = await fetch('../data/us/market.json');
+    if (r.ok) data = await r.json();
+  } catch(e) { /* use fallback */ }
+
+  if (data) {
+    renderIndices(data.indices || FALLBACK.indices);
+    renderWatch(data.watch || FALLBACK.watch);
+    document.getElementById('updateTime').textContent = '🕐 ' + (data.updated ? fmtTime(data.updated) : '未知');
+  } else {
+    renderIndices(FALLBACK.indices);
+    renderWatch(FALLBACK.watch);
+    document.getElementById('updateTime').textContent = '🕐 ' + fmtTime(FALLBACK.updated) + ' (预设数据)';
+  }
+}
+
+load();
+</script>
+</body>
+</html>

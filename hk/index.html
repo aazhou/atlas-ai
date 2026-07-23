@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>港股 · Atlas Terminal</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  :root {
+    --hk-gold: #eab308;
+    --hk-gold-dim: rgba(234,179,8,0.12);
+    --hk-gold-border: rgba(234,179,8,0.25);
+  }
+  .page-header-hk {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 2px solid var(--hk-gold-border);
+  }
+  .page-header-hk h1 { font-size: 22px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+  .page-header-hk .update-time { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  .index-hero {
+    background: var(--surface-card); border: 1px solid var(--hairline);
+    border-radius: 10px; padding: 28px; text-align: center; margin-bottom: 24px;
+    border-top: 3px solid var(--hk-gold);
+  }
+  .index-hero .hsi-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .index-hero .hsi-name { font-size: 14px; color: var(--ink); margin-bottom: 14px; font-weight: 600; }
+  .index-hero .hsi-price {
+    font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 800; color: var(--ink);
+  }
+  .index-hero .hsi-chg {
+    font-family: 'JetBrains Mono', monospace; font-size: 16px; margin-top: 8px; font-weight: 600;
+  }
+  .hsi-chg.up { color: var(--accent-emerald); }
+  .hsi-chg.down { color: var(--accent-rose); }
+
+  .section-title {
+    font-size: 15px; font-weight: 700; color: var(--ink);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--hairline);
+  }
+
+  .watch-table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px;
+  }
+  .watch-table th {
+    text-align: left; font-size: 10px; font-weight: 600; color: var(--muted);
+    padding: 8px 12px; border-bottom: 1px solid var(--hairline);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .watch-table td {
+    padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .watch-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .watch-table .code { color: var(--ink); font-weight: 700; }
+  .watch-table .name { color: var(--body); font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+  .watch-table .price { color: var(--ink); font-weight: 600; }
+  .watch-table .chg.up { color: var(--accent-emerald); }
+  .watch-table .chg.down { color: var(--accent-rose); }
+
+  .data-note {
+    font-size: 11px; color: var(--muted-soft); text-align: center; padding: 20px 0 40px;
+    border-top: 1px solid var(--hairline); margin-top: 20px;
+  }
+  .data-note a { color: var(--accent-blue); }
+
+  .loading {
+    text-align: center; padding: 40px; color: var(--muted); font-size: 13px;
+  }
+  .loading .spinner {
+    display: inline-block; width: 16px; height: 16px; border: 2px solid var(--hairline);
+    border-top-color: var(--hk-gold); border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin-right: 8px; vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 640px) {
+    .index-hero { padding: 20px; }
+    .index-hero .hsi-price { font-size: 28px; }
+    .watch-table { font-size: 11px; }
+    .watch-table th, .watch-table td { padding: 8px 6px; }
+    .watch-table .name { display: none; }
+  }
+</style>
+<script src="../header.js"></script>
+</head>
+<body>
+<div class="main">
+  <div class="page-header-hk">
+    <h1>🏛️ 港股 · Hong Kong</h1>
+    <div class="update-time" id="updateTime">加载中…</div>
+  </div>
+
+  <!-- 恒生指数 -->
+  <div id="indexPanel">
+    <div class="loading"><span class="spinner"></span>加载恒指数据…</div>
+  </div>
+
+  <!-- 自选股持仓 -->
+  <div class="section-title">💼 龙哥港股持仓</div>
+  <div id="watchPanel">
+    <div class="loading"><span class="spinner"></span>加载持仓数据…</div>
+  </div>
+
+  <div class="data-note">
+    📡 数据来源：腾讯行情 · 非交易时段显示最近收盘价 · 
+    <a href="../data/hk/">查看原始数据</a>
+  </div>
+</div>
+
+<script>
+// ======== 预设数据（兜底） ========
+const FALLBACK = {
+  index: {
+    symbol: 'HSI',
+    name: '恒生指数',
+    price: 21324.87,
+    chg: 156.34,
+    chg_pct: 0.74,
+  },
+  watch: [
+    { code: '00700',  name: '腾讯控股',          price: 488.00,  chg_pct:  1.25 },
+    { code: '09988',  name: '阿里巴巴',          price:  99.80,  chg_pct: -0.62 },
+    { code: '03033',  name: '恒生科技ETF',        price:   4.88,  chg_pct:  0.41 },
+    { code: 'HI2X',   name: '2x 海力士(HK)',      price:  15.30,  chg_pct:  3.12 },
+  ],
+  updated: '2026-07-22T16:08:00'
+};
+
+// ======== 渲染 ========
+function fmtPrice(p) { return p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtPriceHK(p) { return p.toFixed(2); }
+function fmtChg(v)   { return (v >= 0 ? '+' : '') + v.toFixed(2); }
+function fmtPct(v)   { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+
+function renderIndex(data) {
+  const cls = data.chg_pct >= 0 ? 'up' : 'down';
+  const html = `<div class="index-hero">
+    <div class="hsi-label">${data.symbol}</div>
+    <div class="hsi-name">${data.name}</div>
+    <div class="hsi-price">${fmtPrice(data.price)}</div>
+    <div class="hsi-chg ${cls}">${fmtChg(data.chg)} (${fmtPct(data.chg_pct)})</div>
+  </div>`;
+  document.getElementById('indexPanel').innerHTML = html;
+}
+
+function renderWatch(data) {
+  let html = `<table class="watch-table">
+    <thead><tr><th>代码</th><th>名称</th><th>价格(HKD)</th><th>涨跌</th></tr></thead><tbody>`;
+  for (const d of data) {
+    const cls = d.chg_pct >= 0 ? 'up' : 'down';
+    html += `<tr>
+      <td class="code">${d.code}</td>
+      <td class="name">${d.name}</td>
+      <td class="price">HK$${fmtPriceHK(d.price)}</td>
+      <td class="chg ${cls}">${fmtPct(d.chg_pct)}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  document.getElementById('watchPanel').innerHTML = html;
+}
+
+function fmtTime(iso) {
+  try { return new Date(iso).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }); }
+  catch(e) { return iso; }
+}
+
+// ======== 加载 ========
+async function load() {
+  let data = null;
+  try {
+    const r = await fetch('../data/hk/market.json');
+    if (r.ok) data = await r.json();
+  } catch(e) { /* use fallback */ }
+
+  if (data) {
+    renderIndex(data.index || FALLBACK.index);
+    renderWatch(data.watch || FALLBACK.watch);
+    document.getElementById('updateTime').textContent = '🕐 ' + (data.updated ? fmtTime(data.updated) : '未知');
+  } else {
+    renderIndex(FALLBACK.index);
+    renderWatch(FALLBACK.watch);
+    document.getElementById('updateTime').textContent = '🕐 ' + fmtTime(FALLBACK.updated) + ' (预设数据)';
+  }
+}
+
+load();
+</script>
+</body>
+</html>
