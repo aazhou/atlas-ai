@@ -182,10 +182,11 @@ function renderAlerts(){
   const a=ov.alerts[0];const cls=a.priority==='high'?'high':'med';
   document.getElementById('alertZone').innerHTML=`<div class="alert-banner ${cls}" onclick="this.remove()"><span>${a.priority==='high'?'⚡':'⚠'}</span><span class="msg"><b>${a.title}</b> ${a.desc||''}</span></div>`;
 }
-
-/* ── Helpers ── */
+function fpct(v){if(v==null||isNaN(v))return'—';const n=parseFloat(v);const s=n>=0?'+':'';return s+n.toFixed(2)+'%'}
+function updown(v){if(v==null||isNaN(v))return'';return parseFloat(v)>=0?'up':'dn'}
 function makeCard(label,tag,big,sub,chg){
-  return `<div class="card"><div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div><div class="big ${big!=null?updown(chg!=null?chg:0):''}">${big!=null?big:'—'}</div>${sub?`<div class="sub">${sub}</div>`:''}${chg!=null?`<span class="chg-badge ${updown(chg)}">${fpct(chg)}</span>`:''}</div>`;
+  const chgNum=chg!=null&&!isNaN(chg)?parseFloat(chg):null;
+  return `<div class="card"><div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div><div class="big ${chgNum!=null?updown(chgNum):''}">${big!=null?big:'—'}</div>${sub?`<div class="sub">${sub}</div>`:''}${chgNum!=null?`<span class="chg-badge ${updown(chgNum)}">${fpct(chgNum)}</span>`:''}</div>`;
 }
 function barChart(items,key,label){
   const max=Math.max(...items.map(i=>Math.abs(i[key])),1);
