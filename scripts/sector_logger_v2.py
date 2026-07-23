@@ -46,19 +46,35 @@ for line in r.text.strip().split('\n'):
     name = ETFS.get(code, code)
     sectors[name] = round((cur/yest-1)*100, 2)
 
-# 2. 拉东财资金流
+# 2. 拉东财资金流 — 全量9页，覆盖450+板块
 fund_flows = {}
-try:
-    em_url = 'https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=50&po=1&np=1&fltt=2&invt=2&fid=f62&fs=m:90+t:2&fields=f14,f62,f184'
-    em_r = urllib.request.urlopen(em_url, timeout=10)
-    em_data = json.loads(em_r.read())
-    for item in em_data.get('data',{}).get('diff',[]):
-        name = item.get('f14','')
-        flow = item.get('f62',0) or 0
-        chg = item.get('f184',0) or 0
-        if name:
-            fund_flows[name] = {'flow': round(flow/1e8,2), 'chg': round(chg,2)}
-except: pass
+total_flow = {'in': 0, 'out': 0, 'up': 0, 'down': 0}
+for pn in range(1, 10):
+    try:
+        em_url = f'https://push2.eastmoney.com/api/qt/clist/get?pn={pn}&pz=50&po=1&np=1&fltt=2&invt=2&fid=f62&fs=m:90+t:2&fields=f14,f62,f184,f3'
+        em_r = urllib.request.urlopen(em_url, timeout=10)
+        em_data = json.loads(em_r.read())
+        items = em_data.get('data',{}).get('diff',[])
+        if not items:
+            break
+        for item in items:
+            name = item.get('f14','')
+            flow = item.get('f62',0) or 0
+            chg = item.get('f184',0) or 0
+            if name and name not in fund_flows:
+                fval = round(flow/1e8, 2)
+                fund_flows[name] = {'flow': fval, 'chg': round(chg, 2)}
+                if fval > 0: total_flow['in'] += fval
+                else: total_flow['out'] += fval
+                if chg > 0: total_flow['up'] += 1
+                elif chg < 0: total_flow['down'] += 1
+    except Exception as e:
+        if pn == 1:
+            print(f'[WARN] 资金流API失败: {e}')
+        break
+
+if fund_flows:
+    print(f'📊 板块资金: {total_flow["in"]:+.0f}/{total_flow["out"]:+.0f}亿 涨{total_flow["up"]}/跌{total_flow["down"]}/{len(fund_flows)}板块')
 
 # 3. 写入 DuckDB
 con = duckdb.connect(DB_PATH)

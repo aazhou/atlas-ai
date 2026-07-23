@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas AI · A股研判</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  .direction-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 12px; font-size: 18px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .direction-badge.bear { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+  .direction-badge.bull { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+  .direction-badge.neutral { background: rgba(250,255,105,0.08); color: var(--primary); border: 1px solid rgba(250,255,105,0.2); }
+
+  .score-bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg,#ef4444,#f59e0b,#faff69,#22c55e); margin: 12px 0; position: relative; }
+  .score-dot { position: absolute; top: -5px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--ink); transform: translateX(-50%); }
+
+  .market-stats { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .stat { background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 8px; padding: 12px 16px; text-align: center; flex: 1; min-width: 90px; }
+  .stat .val { font-size: 18px; font-weight: 700; font-family: 'JetBrains Mono',monospace; }
+  .stat .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .ai-card { background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 10px; padding: 20px; margin-bottom: 14px; }
+  .ai-card h3 { font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .ai-card h3 .icon { font-size: 18px; }
+  .ai-card p { font-size: 14px; line-height: 1.7; color: var(--body); margin: 6px 0; }
+
+  .flow-tag { display: inline-block; padding: 3px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; margin: 2px 4px; }
+  .flow-tag.in { background: rgba(34,197,94,0.1); color: #22c55e; }
+  .flow-tag.out { background: rgba(239,68,68,0.1); color: #ef4444; }
+
+  .action-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+  .action-item:last-child { border-bottom: none; }
+  .action-num { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: #000; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .action-num.avoid { background: #ef4444; color: #fff; }
+  .action-num.reduce { background: #f59e0b; color: #000; }
+  .action-num.focus { background: #3b82f6; color: #fff; }
+  .action-title { font-weight: 600; font-size: 14px; }
+  .action-detail { font-size: 12px; color: var(--muted); }
+
+  .risk-item { padding: 6px 0; font-size: 13px; }
+
+  .tomorrow-item { padding: 6px 0 6px 16px; border-left: 2px solid var(--primary); margin: 4px 0; font-size: 13px; line-height: 1.6; }
+
+  .style-bar { display: flex; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+  .style-item { flex: 1; min-width: 70px; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; }
+  .style-item .name { font-weight: 600; }
+  .style-item .flow { font-family: 'JetBrains Mono',monospace; font-size: 11px; margin-top: 2px; }
+  .style-item.active { border: 1px solid var(--primary); }
+
+  .footer-note { text-align: center; font-size: 11px; color: var(--muted-soft); margin-top: 24px; padding: 12px; }
+
+  @media (max-width: 480px) {
+    .stat { padding: 10px 8px; min-width: 60px; }
+    .stat .val { font-size: 15px; }
+    .direction-badge { font-size: 16px; padding: 8px 16px; }
+  }
+</style>
+</head>
+<body>
+<script src="../header.js"></script>
+<div class="main">
+  <div class="page-header"><h1>🧠 A股 AI 研判</h1><span style="font-size:11px;color:var(--muted-soft)" id="updated"></span></div>
+  <div id="content"><div class="loading">加载中...</div></div>
+</div>
+
+<script>
+async function load() {
+  const d = new Date().toISOString().slice(0,10);
+  let data = null;
+  try {
+    const r = await fetch('../data/stock/ai_analysis-'+d+'.json');
+    if (r.ok) data = await r.json();
+  } catch(e) {}
+  
+  if (!data) {
+    document.getElementById('content').innerHTML = '<div class="ai-card"><p style="color:var(--muted)">⏳ 分析数据尚未生成。每日收盘后自动更新。</p></div>';
+    return;
+  }
+  
+  document.getElementById('updated').textContent = data.updated + ' 更新';
+  render(data);
+}
+
+function render(d) {
+  const dirClass = d.direction.includes('🔴') ? 'bear' : d.direction.includes('🟢') ? 'bull' : 'neutral';
+  const scorePct = (d.emotion_score + 100) / 2; // -100..100 → 0..100%
+  
+  let h = '';
+  
+  // ===== 方向 + 情绪 =====
+  h += '<div style="text-align:center;margin-bottom:20px">';
+  h += '<div class="direction-badge '+dirClass+'">'+d.direction+' · '+d.emotion_score+'分</div>';
+  h += '<p style="font-size:15px;color:var(--body);margin:8px 0">'+d.direction_desc+'</p>';
+  h += '<div class="score-bar"><div class="score-dot" style="left:'+Math.max(2,Math.min(98,scorePct))+'%"></div></div>';
+  h += '<p style="font-size:13px;color:var(--muted)">'+d.summary+'</p>';
+  h += '</div>';
+  
+  // ===== 核心指标 =====
+  const m = d.market;
+  h += '<div class="market-stats">';
+  h += '<div class="stat"><div class="val" style="color:#22c55e">'+m.up+'</div><div class="lbl">上涨板块</div></div>';
+  h += '<div class="stat"><div class="val" style="color:#ef4444">'+m.down+'</div><div class="lbl">下跌板块</div></div>';
+  h += '<div class="stat"><div class="val" style="color:'+(m.net_flow>0?'#22c55e':'#ef4444')+'">'+(m.net_flow>0?'+':'')+m.net_flow+'亿</div><div class="lbl">净流向</div></div>';
+  h += '<div class="stat"><div class="val" style="color:var(--ink)">'+m.limit_up+'</div><div class="lbl">涨停</div></div>';
+  h += '<div class="stat"><div class="val" style="color:#ef4444">'+m.limit_down+'</div><div class="lbl">跌停</div></div>';
+  h += '</div>';
+  
+  // ===== 风格轮动 =====
+  const st = d.style_rotation;
+  h += '<div class="ai-card"><h3>🔄 资金风格轮动</h3>';
+  h += '<p style="font-size:13px;color:var(--muted);margin-bottom:8px">今日主导风格：<b style="color:var(--primary)">'+st.leading+'</b></p>';
+  h += '<div class="style-bar">';
+  const styles = Object.entries(st.styles);
+  const maxNet = Math.max(...styles.map(([,v]) => Math.abs((v.inflow||0)-(v.outflow||0))), 1);
+  styles.forEach(([name, v]) => {
+    const net = (v.inflow||0) - (v.outflow||0);
+    const pct = Math.abs(net) / maxNet;
+    const bg = net > 0 ? 'rgba(34,197,94,'+(0.05+0.12*pct)+')' : 'rgba(239,68,68,'+(0.05+0.12*pct)+')';
+    const cl = net > 0 ? '#22c55e' : '#ef4444';
+    const active = name === st.leading;
+    h += '<div class="style-item'+(active?' active':'')+'" style="background:'+bg+'">';
+    h += '<div class="name" style="color:'+cl+'">'+name+'</div>';
+    h += '<div class="flow" style="color:'+cl+'">'+(net>0?'+':'')+net.toFixed(0)+'亿</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  
+  // 主线
+  if (st.main_line && st.main_line.length) {
+    h += '<p style="margin-top:10px"><b>资金集中流入：</b>';
+    st.main_line.forEach(n => h += '<span class="flow-tag in">'+n+'</span>');
+    h += '</p>';
+  }
+  if (st.escape_from && st.escape_from.length) {
+    h += '<p><b>资金撤离：</b>';
+    st.escape_from.forEach(n => h += '<span class="flow-tag out">'+n+'</span>');
+    h += '</p>';
+  }
+  h += '</div>';
+  
+  // ===== 风险信号 =====
+  if (d.risks && d.risks.length) {
+    h += '<div class="ai-card"><h3>⚠️ 风险信号</h3>';
+    d.risks.forEach(r => {
+      h += '<div class="risk-item">'+r.level+' '+r.msg+'</div>';
+    });
+    h += '</div>';
+  }
+  
+  // ===== 操作建议 =====
+  if (d.actions && d.actions.length) {
+    h += '<div class="ai-card"><h3>🎯 操作建议</h3>';
+    d.actions.forEach((a,i) => {
+      h += '<div class="action-item">';
+      h += '<div class="action-num '+a.type+'">'+(i+1)+'</div>';
+      h += '<div><div class="action-title">'+a.action+'</div>';
+      h += '<div class="action-detail">'+a.detail+'</div></div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+  
+  // ===== 持仓操作 =====
+  if (d.portfolio_actions && d.portfolio_actions.length) {
+    h += '<div class="ai-card"><h3>📋 持仓操作</h3>';
+    d.portfolio_actions.forEach(a => {
+      h += '<p style="font-size:13px;line-height:1.6">• '+a+'</p>';
+    });
+    h += '</div>';
+  }
+  
+  // ===== 明日预判 =====
+  if (d.tomorrow && d.tomorrow.length) {
+    h += '<div class="ai-card"><h3>🔮 明日预判</h3>';
+    d.tomorrow.forEach(t => {
+      h += '<div class="tomorrow-item">'+t+'</div>';
+    });
+    h += '</div>';
+  }
+  
+  h += '<div class="footer-note">Atlas AI · 数据驱动的投资决策引擎 · '+d.last_updated+'</div>';
+  
+  document.getElementById('content').innerHTML = h;
+}
+
+load();
+setInterval(load, 300000); // 5分钟刷新
+</script>
+</body>
+</html>

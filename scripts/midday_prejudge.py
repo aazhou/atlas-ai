@@ -1,130 +1,114 @@
-import requests, json, os, re, sys
-from datetime import datetime
+import requests, re, json, os, sys
+from datetime import datetime, time
 
-today = datetime.now().strftime('%Y-%m-%d')
-now = datetime.now().strftime('%H:%M')
-print(f"{'='*60}")
-print(f"MIDDAY PREJUDGE @ {now} | DATE: {today}")
-print(f"{'='*60}")
+now = datetime.now()
+today = now.strftime('%Y-%m-%d')
+print(f"🕐 {now.strftime('%H:%M')} 盘中预判 | {today} 周{['一','二','三','四','五','六','日'][now.weekday()]}")
 
-# ── Step 0: Sina Real-time ──
-print("\n── SINA REAL-TIME ──")
+# 交易日检查
+t = now.time()
+morning = time(9,30) <= t <= time(11,30)
+afternoon = time(13,0) <= t <= time(15,0)
+if not (morning or afternoon):
+    print("[SILENT] 非交易时段")
+    sys.exit(0)
+
+# Step 0: 新浪实时行情
 codes = 'sz300236,sh688099,sz002475,sz000963,sz300034'
 try:
-    r = requests.get(f'https://hq.sinajs.cn/list={codes}', 
-                     headers={'Referer':'https://finance.sina.com.cn/'}, timeout=10)
+    headers = {'Referer': 'https://finance.sina.com.cn/'}
+    r = requests.get(f'https://hq.sinajs.cn/list={codes}', headers=headers, timeout=10)
     r.encoding = 'gbk'
-    lines = r.text.strip().split('\n')
-    holdings = {}
-    for line in lines:
-        if not line.strip():
-            continue
-        # var hq_str_sz300236="name, open, yest, cur, high, low, ..."
-        m = re.match(r'var hq_str_(\w+)="(.+)"', line)
-        if m:
-            code = m.group(1)
-            fields = m.group(2).split(',')
-            if len(fields) >= 4:
-                name = fields[0]
-                open_p = float(fields[1]) if fields[1] else 0
-                yest = float(fields[2]) if fields[2] else 0
-                cur = float(fields[3]) if fields[3] else 0
-                chg_pct = ((cur - yest) / yest * 100) if yest > 0 else 0
-                holdings[code] = {
-                    'name': name, 'open': open_p, 'yest': yest, 'cur': cur,
-                    'chg_pct': round(chg_pct, 2)
-                }
-                print(f"  {code} {name}: 昨收{yest} 现价{cur} 涨跌{chg_pct:+.2f}% 开{open_p}")
+    stocks = {}
+    for line in r.text.strip().split('\n'):
+        if not line.strip(): continue
+        parts = line.split('"')
+        if len(parts) < 2: continue
+        name = parts[0].split('=')[0].replace('var hq_str_', '')
+        fields = parts[1].split(',')
+        if len(fields) < 4: continue
+        cur = float(fields[3]) if fields[3] else 0
+        yest = float(fields[2]) if fields[2] else cur
+        chg = round((cur/yest - 1) * 100, 2) if yest else 0
+        stocks[name] = {'cur': cur, 'yest': yest, 'chg': chg, 'name': fields[0]}
+    print("\n📊 实时行情:")
+    for k, v in stocks.items():
+        print(f"  {k}: {v['cur']:.2f}  涨跌:{v['chg']:+.2f}%  昨收:{v['yest']:.2f}")
 except Exception as e:
-    print(f"  SINA ERROR: {e}")
+    print(f"❌ 新浪行情拉取失败: {e}")
+    sys.exit(1)
+BASE = r"C:\Users\admin\aazhous-projects\atlas-ai\data\stock"
 
-# ── Step 1: Momentum Data ──
-print("\n── SECTOR MOMENTUM ──")
-momentum_path = f'C:/Users/admin/aazhous-projects/atlas-ai/data/stock/sector_momentum-{today}.json'
-try:
-    with open(momentum_path, 'r', encoding='utf-8') as f:
-        momentum = json.load(f)
-    print(f"  updated: {momentum.get('updated','N/A')}")
-    
-    accel_up = momentum.get('accel_up', [])
-    accel_down = momentum.get('accel_down', [])
-    rotation = momentum.get('rotation', [])
-    
+# Step 1: 动量数据
+momentum_file = os.path.join(BASE, f'sector_momentum-{today}.json')
+if os.path.exists(momentum_file):
+    with open(momentum_file, 'r', encoding='utf-8') as f:
+        mom = json.load(f)
+    print(f"\n📈 板块动量:")
+    accel_up = mom.get('accel_up', [])[:3]
+    accel_down = mom.get('accel_down', [])[:3]
+    rotation = mom.get('rotation', '')
     if accel_up:
-        print(f"  🔥 加速流入({len(accel_up)}):")
-        for s in accel_up[:5]:
-            print(f"    {s.get('name','?')}: chg={s.get('change_pct',0)}% flow={s.get('main_flow',0)}")
+        print(f"  加速流入: {', '.join(accel_up)}")
     if accel_down:
-        print(f"  🔻 加速流出({len(accel_down)}):")
-        for s in accel_down[:5]:
-            print(f"    {s.get('name','?')}: chg={s.get('change_pct',0)}% flow={s.get('main_flow',0)}")
+        print(f"  加速流出: {', '.join(accel_down)}")
     if rotation:
-        print(f"  🔄 轮动信号:")
-        for r in rotation[:3]:
-            print(f"    {r}")
-    
-    # Check sectors matching holdings
-    holdings_sector_map = {
-        '300236': ['半导体', '电子'],
-        '688099': ['半导体', 'SoC', '芯片'],
-        '002475': ['消费电子', '电子'],
-        '000963': ['医药'],
-        '300034': ['军工', '航天航空'],
-    }
-    all_sectors = momentum.get('sectors', [])
-    for code, keywords in holdings_sector_map.items():
-        if code in holdings:
-            for s in all_sectors:
-                s_name = s.get('name', '')
-                for kw in keywords:
-                    if kw in s_name:
-                        flow = s.get('main_flow', 0)
-                        chg = s.get('change_pct', 0)
-                        direction = s.get('direction', '?')
-                        print(f"  [{code}] {holdings[code]['name']} → 板块{s_name}: flow={flow} chg={chg}% dir={direction}")
-                        break
-except FileNotFoundError:
-    print(f"  FILE NOT FOUND: {momentum_path}")
-except Exception as e:
-    print(f"  ERROR: {e}")
+        print(f"  轮动信号: {rotation}")
+else:
+    print(f"\n⚠️ 动量文件缺失: {momentum_file}")
+    mom = {}
 
-# ── Step 2: Sectors raw data ──
-print("\n── SECTOR RAW ──")
-sectors_path = f'C:/Users/admin/aazhous-projects/atlas-ai/data/stock/sectors-{today}.json'
-try:
-    with open(sectors_path, 'r', encoding='utf-8') as f:
-        sectors = json.load(f)
-    print(f"  updated: {sectors.get('updated','N/A')}")
-    alerts = sectors.get('alerts', [])
-    if alerts:
-        print(f"  最近异动({len(alerts)}条):")
-        for a in alerts[-5:]:
-            print(f"    {a}")
-    
-    cur = sectors.get('current', [])
-    if cur:
-        # Sort by change_pct
-        sorted_by_chg = sorted(cur, key=lambda x: float(x.get('change_pct', 0) or 0) if x.get('change_pct') else 0, reverse=True)
-        print(f"\n  TOP5 涨幅:")
-        for s in sorted_by_chg[:5]:
-            chg = float(s.get('change_pct', 0) or 0)
-            flow = float(s.get('main_flow', 0) or 0)
-            print(f"    {s.get('name','?')}: {chg:+.2f}% flow={flow:.1f}亿")
-        print(f"  BOTTOM5 跌幅:")
-        for s in sorted_by_chg[-5:]:
-            chg = float(s.get('change_pct', 0) or 0)
-            flow = float(s.get('main_flow', 0) or 0)
-            print(f"    {s.get('name','?')}: {chg:+.2f}% flow={flow:.1f}亿")
-except FileNotFoundError:
-    print(f"  FILE NOT FOUND: {sectors_path}")
-except Exception as e:
-    print(f"  ERROR: {e}")
+# Step 2: 板块数据
+sectors_file = os.path.join(BASE, f'sectors-{today}.json')
+if os.path.exists(sectors_file):
+    with open(sectors_file, 'r', encoding='utf-8') as f:
+        sec = json.load(f)
+    print(f"\n📋 板块数据:")
+    top = sec.get('top', [])[:3]
+    bottom = sec.get('bottom', [])[:3]
+    if top:
+        names = [t.get('name','?') for t in top]
+        print(f"  TOP3: {', '.join(names)}")
+    if bottom:
+        names = [b.get('name','?') for b in bottom]
+        print(f"  BOTTOM3: {', '.join(names)}")
+else:
+    print(f"\n⚠️ 板块数据文件缺失: {sectors_file}")
+    sec = {}
 
-# ── Summary ──
-print("\n── HOLDINGS SUMMARY ──")
-for code, h in holdings.items():
-    status = '🟢' if h['chg_pct'] > 0 else ('🔴' if h['chg_pct'] < 0 else '⚪')
-    print(f"  {status} {code} {h['name']}: {h['cur']} ({h['chg_pct']:+.2f}%)")
+# 持仓-板块映射
+holdings_sector = {
+    'sz300236': '半导体材料',
+    'sh688099': '半导体/SoC',
+    'sz002475': '消费电子',
+    'sz000963': '医药',
+    'sz300034': '军工/高温合金'
+}
 
-print(f"\n{'='*60}")
-print("DONE")
+# 成本
+costs = {
+    'sz300236': 121.9,
+    'sh688099': 99.4,
+    'sz002475': 63.1,
+    'sz000963': 30.3,
+    'sz300034': 17.1
+}
+
+print(f"\n💰 盈亏分析:")
+alerts = []
+for code, v in stocks.items():
+    cost = costs.get(code, 0)
+    pnl = round((v['cur']/cost - 1)*100, 1) if cost else 0
+    sector = holdings_sector.get(code, '未知')
+    tag = ""
+    if v['chg'] > 3:
+        tag = " 🔴涨超3%建议锁利"
+        alerts.append(f"{code}: +{v['chg']}% 建议减半仓锁利")
+    elif v['chg'] < -3:
+        tag = " 🚨跌超3%"
+        alerts.append(f"{code}: {v['chg']}% 关注是否破位")
+    print(f"  {code} {v['name']}: {v['cur']:.2f} ({v['chg']:+.1f}%) | 成本{cost} | 盈亏{pnl:+.1f}% | {sector}{tag}")
+
+print(f"\n{'='*50}")
+print(f"🎯 预判结论:")
+print(f"{'='*50}")
