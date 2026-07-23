@@ -6,9 +6,7 @@
 <title>Atlas Terminal</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   Atlas Terminal — Bloomberg × Modern Dark
-   ═══════════════════════════════════════════ */
+/* ═══ Atlas Terminal v5 ═══ */
 :root{
   --bg:#0a0a0c; --bg-panel:#0f1014; --bg-card:#14161b; --bg-hover:#1a1c22;
   --border:rgba(255,255,255,0.06); --border-active:rgba(255,255,255,0.10);
@@ -23,22 +21,10 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:11
 body{min-height:100dvh;display:flex}
 
 /* ── Sidebar ── */
-nav.sidebar{
-  width:var(--nav-w);min-width:var(--nav-w);background:var(--bg-panel);
-  border-right:1px solid var(--border);display:flex;flex-direction:column;
-  padding:12px 0;position:fixed;top:0;left:0;bottom:0;z-index:50;
-}
-nav.sidebar .logo{
-  font-family:var(--sans);font-size:15px;font-weight:600;color:var(--amber);
-  padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px;
-  letter-spacing:-0.3px;
-}
+nav.sidebar{width:var(--nav-w);min-width:var(--nav-w);background:var(--bg-panel);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:12px 0;position:fixed;top:0;left:0;bottom:0;z-index:50}
+nav.sidebar .logo{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--amber);padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px;letter-spacing:-0.3px}
 nav.sidebar .logo span{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px}
-nav.sidebar a{
-  display:flex;align-items:center;gap:8px;padding:8px 16px;color:var(--text-dim);
-  text-decoration:none;font-size:11px;font-family:var(--sans);font-weight:500;
-  border-left:2px solid transparent;transition:all 0.15s;
-}
+nav.sidebar a{display:flex;align-items:center;gap:8px;padding:8px 16px;color:var(--text-dim);text-decoration:none;font-size:11px;font-family:var(--sans);font-weight:500;border-left:2px solid transparent;transition:all 0.15s}
 nav.sidebar a:hover{color:var(--text);background:var(--bg-hover)}
 nav.sidebar a.active{color:var(--amber);border-left-color:var(--amber);background:var(--amber-dim)}
 nav.sidebar a .dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
@@ -47,17 +33,10 @@ nav.sidebar .spacer{flex:1}
 nav.sidebar .time{font-size:9px;color:var(--text-muted);padding:8px 16px;font-family:var(--font)}
 
 /* ── Main ── */
-main{
-  margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;
-  min-height:100dvh;overflow-x:hidden;
-}
+main{margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;min-height:100dvh;overflow-x:hidden}
 
-/* ── Top Ticker Bar ── */
-.ticker{
-  background:var(--bg-panel);border-bottom:1px solid var(--border);
-  padding:6px 12px;display:flex;gap:16px;overflow-x:auto;
-  position:sticky;top:0;z-index:40;white-space:nowrap;
-}
+/* ── Ticker ── */
+.ticker{background:var(--bg-panel);border-bottom:1px solid var(--border);padding:6px 12px;display:flex;gap:16px;overflow-x:auto;position:sticky;top:0;z-index:40;white-space:nowrap}
 .ticker::-webkit-scrollbar{display:none}
 .ticker .item{display:inline-flex;align-items:center;gap:6px;font-size:10px;flex-shrink:0}
 .ticker .item .flag{font-size:12px}
@@ -67,90 +46,73 @@ main{
 .ticker .item .chg.up{color:var(--green)}
 .ticker .item .chg.dn{color:var(--red)}
 
-/* ── Alert Banner ── */
-.alert-banner{
-  margin:0 16px;padding:8px 14px;border-radius:4px;font-size:11px;
-  display:flex;align-items:center;gap:8px;cursor:pointer;
-}
+/* ── Alert ── */
+.alert-banner{margin:0 16px;padding:8px 14px;border-radius:4px;font-size:11px;display:flex;align-items:center;gap:8px;cursor:pointer}
 .alert-banner.high{background:var(--red-dim);border:1px solid rgba(244,67,54,0.15);color:#f44336}
 .alert-banner.med{background:var(--amber-dim);border:1px solid rgba(240,160,48,0.15);color:#f0a030}
 .alert-banner .msg{flex:1}
 
-/* ── Content Area ── */
+/* ── Content ── */
 .content{padding:12px 16px 24px;flex:1}
-.page{display:none}
-.page.active{display:block}
 
-/* ── Dashboard Grid ── */
-.dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:12px}
-.card{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:4px;
-  padding:12px;transition:border-color 0.15s;
-}
+/* ── Dashboard ── */
+.dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:12px}
+
+/* ── Card ── */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:12px;transition:border-color 0.15s}
 .card:hover{border-color:var(--border-active)}
-.card-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);
-}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .card-header .label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
 .card-header .tag{font-size:9px;padding:1px 6px;border-radius:2px}
 .card-header .tag.live{background:var(--green-dim);color:var(--green)}
-.card-header .tag.closed{background:var(--text-muted);color:var(--bg)}
-.card .big{
-  font-family:var(--font);font-size:22px;font-weight:600;line-height:1.1;
-  margin-bottom:4px;
-}
+.card-header .tag.closed{background:rgba(255,255,255,0.05);color:var(--text-muted)}
+.card .big{font-family:var(--font);font-size:22px;font-weight:600;line-height:1.1;margin-bottom:4px}
 .card .big.up{color:var(--green)}.card .big.dn{color:var(--red)}
 .card .sub{font-size:9px;color:var(--text-dim)}
 .card .chg-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px}
 .card .chg-badge.up{color:var(--green);background:var(--green-dim)}
 .card .chg-badge.dn{color:var(--red);background:var(--red-dim)}
 
+/* ── Bar Chart ── */
+.bar-row{display:flex;align-items:center;gap:8px;padding:2px 0;font-size:10px}
+.bar-row .sector-name{width:70px;flex-shrink:0;text-align:right;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-row .bar-wrap{flex:1;height:14px;background:var(--bg-hover);border-radius:2px;overflow:hidden;position:relative}
+.bar-row .bar-fill{height:100%;border-radius:2px;transition:width 0.3s}
+.bar-row .bar-fill.green{background:var(--green-dim);border-right:2px solid var(--green)}
+.bar-row .bar-fill.red{background:var(--red-dim);border-right:2px solid var(--red)}
+.bar-row .bar-val{width:50px;flex-shrink:0;font-size:9px;text-align:right}
+
 /* ── Table ── */
 .tbl{width:100%;border-collapse:collapse;font-size:10px}
-.tbl th{
-  text-align:left;padding:4px 8px;color:var(--text-muted);font-weight:500;
-  text-transform:uppercase;font-size:9px;letter-spacing:0.3px;
-  border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg-card)
-}
+.tbl th{text-align:left;padding:4px 8px;color:var(--text-muted);font-weight:500;text-transform:uppercase;font-size:9px;letter-spacing:0.3px;border-bottom:1px solid var(--border)}
 .tbl td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.03)}
 .tbl tr:hover td{background:var(--bg-hover)}
 .tbl .up{color:var(--green)}.tbl .dn{color:var(--red)}
 .tbl .sym{font-family:var(--sans);font-weight:500;color:var(--text)}
 
-/* ── Section Title ── */
-.sec-title{
-  font-size:10px;color:var(--amber);text-transform:uppercase;
-  letter-spacing:1px;margin:16px 0 8px;padding-bottom:4px;
-  border-bottom:1px solid var(--border);font-weight:500;
-}
+/* ── Section ── */
+.sec-title{font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);font-weight:500}
 
 /* ── Two Column ── */
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* ── Flow List ── */
-.flow-item{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:3px 0;font-size:10px;border-bottom:1px solid rgba(255,255,255,0.02)
-}
+/* ── Flow ── */
+.flow-item{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:10px;border-bottom:1px solid rgba(255,255,255,0.02)}
 .flow-item .sector{color:var(--text-dim)}
 .flow-item .flow{font-weight:500}
 .flow-item .flow.in{color:var(--green)}.flow-item .flow.out{color:var(--red)}
 
-/* ── Empty State ── */
+/* ── Insight Box ── */
+.insight{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:8px;font-size:11px;line-height:1.6;color:var(--text-dim)}
+.insight b{color:var(--amber)}
+.insight .up{color:var(--green)}.insight .dn{color:var(--red)}
+
+/* ── Empty ── */
 .empty{padding:40px;text-align:center;color:var(--text-muted);font-size:12px}
 
 /* ── Bottom Nav (mobile) ── */
-.bottom-nav{
-  display:none;position:fixed;bottom:0;left:0;right:0;
-  background:var(--bg-panel);border-top:1px solid var(--border);
-  justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:50
-}
-.bottom-nav a{
-  display:flex;flex-direction:column;align-items:center;gap:1px;
-  color:var(--text-muted);text-decoration:none;font-size:9px;
-  padding:4px 8px;border-radius:4px;transition:all 0.15s
-}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg-panel);border-top:1px solid var(--border);justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:50}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--text-muted);text-decoration:none;font-size:9px;padding:4px 8px;border-radius:4px}
 .bottom-nav a.active{color:var(--amber)}
 .bottom-nav a .ico{font-size:16px}
 
@@ -168,7 +130,6 @@ main{
 </head>
 <body>
 
-<!-- ══ Sidebar Nav ══ -->
 <nav class="sidebar">
   <div class="logo">ATLAS<span>TERMINAL</span></div>
   <a href="#" class="active" data-page="global"><span class="dot"></span>全景</a>
@@ -180,60 +141,31 @@ main{
   <div class="time" id="clock">00:00 CST</div>
 </nav>
 
-<!-- ══ Main ══ -->
 <main>
   <div class="ticker" id="ticker"></div>
   <div id="alertZone"></div>
   <div class="content" id="content"></div>
 </main>
 
-<!-- ══ Bottom Nav (mobile) ══ -->
 <nav class="bottom-nav" id="bottomNav"></nav>
 
 <script>
-/* ═══════════════════════════════════════════
-   Atlas Terminal — Data Engine
-   ═══════════════════════════════════════════ */
-const DATA = {};
-
+const DATA={};
 async function init(){
-  try{
-    const r = await fetch('data/terminal/overview.json');
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    DATA.ov = await r.json();
-  }catch(e){ DATA.ov = null }
-
-  try{
-    const r = await fetch('data/stock/fund_flows-'+new Date().toISOString().slice(0,10)+'.json');
-    if(r.ok) DATA.ff = await r.json();
-  }catch(e){}
-
-  try{
-    const r = await fetch('data/crypto/market.json');
-    if(r.ok) DATA.crypto = await r.json();
-  }catch(e){}
-
-  renderTicker();
-  renderAlerts();
-  renderPage('global');
-  setupNav();
-  updateClock();setInterval(updateClock,30000);
-  setInterval(refreshData, 300000); // refresh every 5min
+  try{const r=await fetch('data/terminal/overview.json');if(r.ok)DATA.ov=await r.json()}catch(e){}
+  try{const r=await fetch('data/stock/fund_flows-'+new Date().toISOString().slice(0,10)+'.json');if(r.ok)DATA.ff=await r.json()}catch(e){}
+  try{const r=await fetch('data/crypto/market.json');if(r.ok)DATA.crypto=await r.json()}catch(e){}
+  try{const r=await fetch('data/us/market.json');if(r.ok)DATA.us=await r.json()}catch(e){}
+  try{const r=await fetch('data/hk/market.json');if(r.ok)DATA.hk=await r.json()}catch(e){}
+  renderTicker();renderAlerts();renderPage('global');setupNav();
+  updateClock();setInterval(updateClock,30000);setInterval(refreshData,300000);
 }
-
 function fmoney(v){if(v==null)return'—';return v>=0?'+'+v.toFixed(0)+'亿':v.toFixed(0)+'亿'}
 function fpct(v){if(v==null)return'—';const s=v>=0?'+':'';return s+v.toFixed(2)+'%'}
 function fprice(v,d){if(v==null)return'—';return v.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||2})}
 function updown(v){if(v==null)return'';return v>=0?'up':'dn'}
-function card(cls,label,tag,big,sub,chg){return`
-<div class="card">
-  <div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div>
-  <div class="big ${big!=null?updown(big):''}">${big!=null?big:'—'}</div>
-  ${sub?`<div class="sub">${sub}</div>`:''}
-  ${chg!=null?`<span class="chg-badge ${updown(chg)}">${fpct(chg)}</span>`:''}
-</div>`}
 
-/* ── Ticker Bar ── */
+/* ── Ticker ── */
 function renderTicker(){
   const ov=DATA.ov;if(!ov||!ov.indices)return;
   const idx=ov.indices;let h='';
@@ -248,14 +180,24 @@ function renderTicker(){
 function renderAlerts(){
   const ov=DATA.ov;if(!ov||!ov.alerts||!ov.alerts.length)return;
   const a=ov.alerts[0];const cls=a.priority==='high'?'high':'med';
-  document.getElementById('alertZone').innerHTML=`
-    <div class="alert-banner ${cls}" onclick="this.remove()">
-      <span>${a.priority==='high'?'⚡':'⚠'}</span>
-      <span class="msg"><b>${a.title}</b> ${a.desc||''}</span>
-    </div>`;
+  document.getElementById('alertZone').innerHTML=`<div class="alert-banner ${cls}" onclick="this.remove()"><span>${a.priority==='high'?'⚡':'⚠'}</span><span class="msg"><b>${a.title}</b> ${a.desc||''}</span></div>`;
 }
 
-/* ── Pages ── */
+/* ── Helpers ── */
+function makeCard(label,tag,big,sub,chg){
+  return `<div class="card"><div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div><div class="big ${big!=null?updown(chg!=null?chg:0):''}">${big!=null?big:'—'}</div>${sub?`<div class="sub">${sub}</div>`:''}${chg!=null?`<span class="chg-badge ${updown(chg)}">${fpct(chg)}</span>`:''}</div>`;
+}
+function barChart(items,key,label){
+  const max=Math.max(...items.map(i=>Math.abs(i[key])),1);
+  return items.map(i=>{
+    const pct=Math.abs(i[key])/max*100;
+    const cls=i[key]>=0?'green':'red';
+    return `<div class="bar-row"><span class="sector-name">${i.name}</span><div class="bar-wrap"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-val ${updown(i[key])}">${i[key]>=0?'+':''}${i[key].toFixed(1)}%</span></div>`;
+  }).join('');
+}
+function insightBox(text){return `<div class="insight">${text}</div>`;}
+
+/* ── Page Router ── */
 function renderPage(id){
   const c=document.getElementById('content');
   switch(id){
@@ -267,110 +209,188 @@ function renderPage(id){
   }
 }
 
-/* ── Global Dashboard ── */
+/* ═══ GLOBAL ═══ */
 function renderGlobal(){
   const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
-  const idx=ov.indices||{};
-  let h='<div class="sec-title">📊 全球市场</div><div class="dash">';
-  (idx.a||[]).forEach(x=>h+=card(x.name,'🇨🇳 A股','live',x.val,'',x.chg));
-  if(idx.hk)h+=card(idx.hk.name,'🇭🇰 港股','closed',idx.hk.val,'',idx.hk.chg);
-  (idx.us||[]).forEach(x=>h+=card(x.name,'🇺🇸 美股','closed',fprice(x.val),'',x.chg));
-  (idx.crypto||[]).forEach(x=>h+=card(x.name,'₿ 加密','live',fprice(x.val),'USDT',x.chg));
+  const idx=ov.indices||{};let h='';
+  
+  h+='<div class="sec-title">📊 全球市场</div><div class="dash">';
+  (idx.a||[]).forEach(x=>h+=makeCard('🇨🇳 '+x.name,'live',x.val,'',x.chg));
+  if(idx.hk)h+=makeCard('🇭🇰 '+idx.hk.name,'closed',idx.hk.val,'',idx.hk.chg);
+  (idx.us||[]).forEach(x=>h+=makeCard('🇺🇸 '+x.name,'closed',fprice(x.val),'',x.chg));
+  (idx.crypto||[]).forEach(x=>h+=makeCard('₿ '+x.name,'live',fprice(x.val),'USDT',x.chg));
   h+='</div>';
 
   if(ov.flow){
     const f=ov.flow;
-    h+='<div class="sec-title">💵 A股资金流 '+(f.total_inflow>0?'🟢':'🔴')+' '+fmoney(f.total_inflow)+'</div>';
-    h+='<div class="cols"><div class="card"><div class="card-header"><span class="label">主力流入 TOP5</span></div>';
+    h+=`<div class="sec-title">💵 A股资金流 ${f.total_inflow>0?'🟢':'🔴'} ${fmoney(f.total_inflow)}</div>`;
+    h+=`<div class="cols"><div class="card"><div class="card-header"><span class="label">主力流入 TOP5</span></div>`;
     (f.top_inflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow in">+${x.amount.toFixed(0)}亿</span></div>`);
-    h+='</div><div class="card"><div class="card-header"><span class="label">主力流出 TOP5</span></div>';
+    h+=`</div><div class="card"><div class="card-header"><span class="label">主力流出 TOP5</span></div>`;
     (f.top_outflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow out">${x.amount.toFixed(0)}亿</span></div>`);
     h+='</div></div>';
-    h+=`<div class="card" style="margin-top:8px"><span style="color:var(--text-dim)">${f.rotation_text||''}</span></div>`;
+    if(f.rotation_text)h+=insightBox(f.rotation_text);
   }
 
   if(ov.cross_market){
     const cm=ov.cross_market;
     h+='<div class="sec-title">🔗 跨市场联动</div><div class="dash">';
-    (cm.chain||[]).forEach(c=>h+=card(c.from,c.to,'',fpct(c.chg).replace('%',''),'',c.chg));
+    (cm.chain||[]).forEach(c=>h+=makeCard(c.to,c.direction==='up'?'📈':'📉','',fpct(c.chg),c.direction));
     h+='</div>';
-    if(cm.anomaly)h+=`<div class="alert-banner med"><span>⚠</span><span class="msg">${cm.anomaly}</span></div>`;
-  }
-
-  if(ov.holdings&&ov.holdings.length){
-    h+='<div class="sec-title">💼 持仓概览</div><table class="tbl"><thead><tr><th>标的</th><th>市场</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
-    ov.holdings.forEach(hh=>{
-      h+=`<tr><td class="sym">${hh.symbol||''}</td><td>${hh.market||''}</td><td>${hh.price!=null?fprice(hh.price):'—'}</td><td class="${updown(hh.pnl_pct)}">${fpct(hh.pnl_pct)}</td></tr>`;
-    });
-    h+='</tbody></table>';
+    if(cm.anomaly)h+=insightBox(`<b>⚠ 异常信号：</b>${cm.anomaly}`);
   }
 
   return h;
 }
 
-/* ── A Stock ── */
+/* ═══ A STOCK ═══ */
 function renderAStock(){
   const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
   let h='<div class="sec-title">🇨🇳 A股指数</div><div class="dash">';
-  (ov.indices?.a||[]).forEach(x=>h+=card(x.name,'指数','live',x.val,'',x.chg));
+  (ov.indices?.a||[]).forEach(x=>h+=makeCard(x.name,'live',x.val,'',x.chg));
   h+='</div>';
 
   if(DATA.ff&&DATA.ff.sectors){
     const ss=DATA.ff.sectors;
     const arr=Object.entries(ss).map(([n,v])=>({name:n,flow:v.fund_flow,chg:v.current})).sort((a,b)=>b.flow-a.flow);
-    h+='<div class="sec-title">📈 板块资金 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>资金(亿)</th><th>涨跌</th></tr></thead><tbody>';
+    
+    // Bar chart: TOP10 by chg%
+    const byChg=[...arr].sort((a,b)=>b.chg-a.chg);
+    h+='<div class="sec-title">📈 板块涨跌 TOP10</div><div class="card">';
+    h+=barChart(byChg.slice(0,10),'chg','涨跌');
+    h+='</div>';
+    h+='<div class="sec-title" style="margin-top:16px">📉 板块涨跌 BOTTOM10</div><div class="card">';
+    h+=barChart(byChg.slice(-10).reverse(),'chg','涨跌');
+    h+='</div>';
+
+    // Flow table
+    h+='<div class="sec-title">💵 主力净流入 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>净流入(亿)</th><th>涨跌</th></tr></thead><tbody>';
     arr.slice(0,10).forEach(x=>h+=`<tr><td>${x.name}</td><td class="in">+${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
     h+='</tbody></table>';
-    h+='<div class="sec-title">📉 板块资金 BOT10</div><table class="tbl"><thead><tr><th>板块</th><th>资金(亿)</th><th>涨跌</th></tr></thead><tbody>';
+    h+='<div class="sec-title">🔻 主力净流出 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>净流出(亿)</th><th>涨跌</th></tr></thead><tbody>';
     arr.slice(-10).reverse().forEach(x=>h+=`<tr><td>${x.name}</td><td class="out">${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
     h+='</tbody></table>';
   }
 
+  if(ov.flow&&ov.flow.rotation_text)h+=insightBox(`<b>📊 板块轮动：</b>${ov.flow.rotation_text}`);
+
   return h;
 }
 
-/* ── HK ── */
+/* ═══ HK ═══ */
 function renderHK(){
-  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
-  let h='<div class="sec-title">🇭🇰 恒生指数</div>';
-  if(ov.indices?.hk){
+  const ov=DATA.ov;let h='';
+  
+  if(ov&&ov.indices&&ov.indices.hk){
     const hk=ov.indices.hk;
-    h+=`<div class="dash">${card('恒生指数','','live',hk.val,'',hk.chg)}</div>`;
+    h+='<div class="sec-title">🇭🇰 恒生指数</div>';
+    h+=makeCard('恒生指数','live',hk.val,'',hk.chg);
   }
-  const hks=(ov.holdings||[]).filter(x=>x.market==='港股');
-  if(hks.length){
-    h+='<div class="sec-title">💼 港股持仓</div><table class="tbl"><thead><tr><th>标的</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
-    hks.forEach(x=>h+=`<tr><td class="sym">${x.symbol}</td><td>HK$${fprice(x.price)}</td><td class="${updown(x.pnl_pct)}">${fpct(x.pnl_pct)}</td></tr>`);
-    h+='</tbody></table>';
+
+  if(DATA.hk){
+    const d=DATA.hk;
+    // Index detail
+    if(d.index){
+      h+=`<div class="sec-title" style="margin-top:16px">📊 市场概况</div><div class="dash">`;
+      h+=makeCard('恒指','',d.index.price,'',d.index.chg_pct);
+      if(d.index.high)h+=makeCard('日内最高','',d.index.high);
+      if(d.index.low)h+=makeCard('日内最低','',d.index.low);
+      h+='</div>';
+    }
+    // Market analysis
+    if(d.analysis){
+      h+=`<div class="sec-title">🧠 AI分析</div>`;
+      h+=insightBox(d.analysis);
+    } else {
+      // Auto-generate basic analysis
+      const idx=ov?.indices?.hk;
+      let analysis='';
+      if(idx){
+        if(idx.chg>0.5)analysis=`恒指今日走强 <span class="up">${fpct(idx.chg)}</span>，市场情绪积极。关注南向资金流向及科技板块表现。`;
+        else if(idx.chg<-0.5)analysis=`恒指今日承压 <span class="dn">${fpct(idx.chg)}</span>，注意防御板块轮动。密切关注美股期货走势及内地政策面变化。`;
+        else analysis=`恒指窄幅震荡 ${fpct(idx.chg)}，市场等待方向选择。成交量是后续走势的关键观察指标。`;
+      }
+      if(analysis)h+=`<div class="sec-title">🧠 市场判断</div>${insightBox(analysis)}`;
+    }
+    // Cross-market context
+    if(ov?.cross_market?.anomaly){
+      h+=`<div class="sec-title">⚠ 跨市场信号</div>${insightBox(ov.cross_market.anomaly)}`;
+    }
   }
-  return h;
+
+  return h||'<div class="empty">数据收集中…</div>';
 }
 
-/* ── US ── */
+/* ═══ US ═══ */
 function renderUS(){
-  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
-  let h='<div class="sec-title">🇺🇸 美股指数</div><div class="dash">';
-  (ov.indices?.us||[]).forEach(x=>h+=card(x.name,'','closed',fprice(x.val),'',x.chg));
-  h+='</div>';
-  const uss=(ov.holdings||[]).filter(x=>x.market==='美股');
-  if(uss.length){
-    h+='<div class="sec-title">💼 美股持仓</div><table class="tbl"><thead><tr><th>标的</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
-    uss.forEach(x=>h+=`<tr><td class="sym">${x.symbol}</td><td>$${fprice(x.price)}</td><td class="${updown(x.pnl_pct)}">${fpct(x.pnl_pct)}</td></tr>`);
-    h+='</tbody></table>';
+  const ov=DATA.ov;let h='';
+  
+  if(ov&&ov.indices&&ov.indices.us){
+    h+='<div class="sec-title">🇺🇸 美股指数</div><div class="dash">';
+    ov.indices.us.forEach(x=>h+=makeCard(x.name,'closed',fprice(x.val),'',x.chg));
+    h+='</div>';
   }
-  return h;
+
+  if(DATA.us){
+    const d=DATA.us;
+    // Rotation analysis
+    h+=`<div class="sec-title">🔄 板块轮动</div>`;
+    let rotText='';
+    if(d.indices&&d.indices.length>=3){
+      const spy=d.indices.find(i=>i.symbol==='SPY');
+      const qqq=d.indices.find(i=>i.symbol==='QQQ');
+      if(spy&&qqq){
+        if(qqq.chg_pct>spy.chg_pct+0.5)rotText=`科技股领涨 <span class="up">QQQ ${fpct(qqq.chg_pct)}</span> vs <span>SPY ${fpct(spy.chg_pct)}</span>，风险偏好上升，资金涌入成长股。`;
+        else if(spy.chg_pct>qqq.chg_pct+0.5)rotText=`防御板块走强 <span>SPY ${fpct(spy.chg_pct)}</span> vs <span class="dn">QQQ ${fpct(qqq.chg_pct)}</span>，资金从科技轮出，市场避险情绪升温。`;
+        else rotText=`市场均衡，SPY ${fpct(spy.chg_pct)} 与 QQQ ${fpct(qqq.chg_pct)} 同步。`;
+      }
+    }
+    if(!rotText) rotText='等待更多数据以判断板块轮动方向。';
+    h+=insightBox(rotText);
+
+    // Macro
+    if(d.macro){
+      h+=`<div class="sec-title">🌐 宏观指标</div><div class="dash">`;
+      if(d.macro.vix)h+=makeCard('VIX','',d.macro.vix,'恐慌指数');
+      if(d.macro.us10y)h+=makeCard('10Y美债','',d.macro.us10y+'%','收益率');
+      if(d.macro.dxy)h+=makeCard('美元指数','',d.macro.dxy);
+      h+='</div>';
+    }
+
+    // AI analysis
+    if(d.analysis){
+      h+=`<div class="sec-title">🧠 AI分析</div>${insightBox(d.analysis)}`;
+    }
+
+    // Asia impact
+    if(d.impact_asia){
+      h+=`<div class="sec-title">📡 对亚洲影响</div>${insightBox(d.impact_asia)}`;
+    } else {
+      const nas=ov?.indices?.us?.find(i=>i.name==='QQQ');
+      if(nas){
+        let impact='';
+        if(nas.chg>1)impact=`美股科技大涨 <span class="up">${fpct(nas.chg)}</span>，利好明日港股科技板块及A股创业板。预计高开概率较大。`;
+        else if(nas.chg<-1)impact=`美股科技下挫 <span class="dn">${fpct(nas.chg)}</span>，明日港股及A股科技板块承压。关注A股开盘后北向资金动向。`;
+        else impact=`美股窄幅波动，对亚洲市场影响中性。A股将更多受到自身资金面和政策面驱动。`;
+        h+=`<div class="sec-title">📡 对亚洲影响</div>${insightBox(impact)}`;
+      }
+    }
+  }
+
+  return h||'<div class="empty">数据收集中…</div>';
 }
 
-/* ── Crypto ── */
+/* ═══ CRYPTO ═══ */
 function renderCrypto(){
   const ov=DATA.ov;let h='';
+  
   if(DATA.crypto&&DATA.crypto.prices){
     h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
-    DATA.crypto.prices.forEach(x=>h+=card(x.symbol,'','live',fprice(x.price),'USDT',x.chg_24h));
+    DATA.crypto.prices.forEach(x=>h+=makeCard(x.symbol,'live',fprice(x.price),'USDT',x.chg_24h));
     h+='</div>';
   }else if(ov&&ov.indices&&ov.indices.crypto){
     h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
-    ov.indices.crypto.forEach(x=>h+=card(x.name,'','live',fprice(x.val),'USDT',x.chg));
+    ov.indices.crypto.forEach(x=>h+=makeCard(x.name,'live',fprice(x.val),'USDT',x.chg));
     h+='</div>';
   }
 
@@ -404,8 +424,6 @@ function setupNav(){
       if(mb)mb.classList.add('active');
     });
   });
-
-  // Mobile bottom nav
   const pages=[{id:'global',ico:'🌍',label:'全景'},{id:'astock',ico:'🇨🇳',label:'A股'},{id:'hk',ico:'🇭🇰',label:'港股'},{id:'us',ico:'🇺🇸',label:'美股'},{id:'crypto',ico:'₿',label:'加密'}];
   document.getElementById('bottomNav').innerHTML=pages.map(p=>
     `<a href="#" data-page="${p.id}" class="${p.id==='global'?'active':''}"><span class="ico">${p.ico}</span>${p.label}</a>`
@@ -423,16 +441,12 @@ function setupNav(){
   });
 }
 
-function updateClock(){
-  document.getElementById('clock').textContent=new Date().toTimeString().slice(0,5)+' CST';
-}
-
+function updateClock(){document.getElementById('clock').textContent=new Date().toTimeString().slice(0,5)+' CST'}
 async function refreshData(){
   try{const r=await fetch('data/terminal/overview.json');if(r.ok)DATA.ov=await r.json()}catch(e){}
   try{const r=await fetch('data/crypto/market.json');if(r.ok)DATA.crypto=await r.json()}catch(e){}
   renderTicker();renderAlerts();
 }
-
 init();
 </script>
 </body>
