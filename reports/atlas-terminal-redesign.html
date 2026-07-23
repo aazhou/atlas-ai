@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal 全球金融AI投研终端 · 设计文档 v2</title>
+<style>
+  :root {
+    --canvas: #0b0e11;
+    --surface: #14171c;
+    --surface-2: #1a1e24;
+    --card: #1e2229;
+    --card-hover: #242830;
+    --hairline: #2a2f38;
+    --hairline-soft: #22262e;
+    --primary: #00d4aa;
+    --primary-dim: rgba(0,212,170,0.10);
+    --primary-glow: rgba(0,212,170,0.25);
+    --accent-gold: #f0b90b;
+    --accent-gold-dim: rgba(240,185,11,0.12);
+    --danger: #f43f5e;
+    --danger-dim: rgba(244,63,94,0.12);
+    --success: #10b981;
+    --success-dim: rgba(16,185,129,0.12);
+    --warning: #f59e0b;
+    --warning-dim: rgba(245,158,11,0.12);
+    --info: #3b82f6;
+    --info-dim: rgba(59,130,246,0.12);
+    --ink: #e4e7ec;
+    --ink-soft: #b0b8c4;
+    --muted: #6b7280;
+    --font-sans: -apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+    --font-mono: 'JetBrains Mono','Cascadia Code','Fira Code','Consolas',monospace;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    scroll-behavior: smooth;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ===== Base ===== */
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--canvas); }
+  ::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 3px; }
+
+  /* ===== Layout containers ===== */
+  .doc-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* ===== Section headers ===== */
+  .section-hdr {
+    margin: 48px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section-hdr h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .section-hdr .sm {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .section-hdr h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-top: 32px;
+  }
+
+  /* ===== Doc header ===== */
+  .doc-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--hairline);
+    padding: 40px 0 32px;
+    margin-bottom: 32px;
+  }
+  .doc-header .badge {
+    display: inline-block;
+    background: var(--primary-dim);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border: 1px solid var(--primary-glow);
+  }
+  .doc-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .doc-header .sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ===== Info Architecture ===== */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .arch-card {
+    background: var(--card);
+    border: 1px solid var(--hairline-soft);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .arch-card .num {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    opacity: 0.3;
+  }
+  .arch-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 8px 0 4px;
+  }
+  .arch-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ===== Scene flow ===== */
+  .scene-flow {
+    display: flex;
+    gap: 0;
+    margin: 24px 0;
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+  .scene-step {
+    flex: 0 0 200px;
+    background: var(--card);
+    border: 1px solid var(--hairline-soft);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    position: relative;
+  }
+  .scene-step + .scene-step { margin-left: -1px; }
+  .scene-step .icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .scene-step:nth-child(1) .icon { background: var(--info-dim); }
+  .scene-step:nth-child(2) .icon { background: var(--warning-dim); }
+  .scene-step:nth-child(3) .icon { background: var(--success-dim); }
+  .scene-step:nth-child(4) .icon { background: var(--primary-dim); }
+  .scene-step .label {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .scene-step .desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .scene-step .time {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--primary);
+    margin-top: 4px;
+  }
+
+  /* ===== Prototype area ===== */
+  .proto-outer {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 24px 0;
+  }
+  .proto-toolbar {
+    background: var(--surface-2);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .proto-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .proto-dot.r { background: #f43f5e; }
+  .proto-dot.y { background: #f0b90b; }
+  .proto-dot.g { background: #10b981; }
+  .proto-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: auto;
+    font-family: var(--font-mono);
+  }
+
+  /* ---- mockup phone frame ---- */
+  .phone-frame {
+    width: 375px;
+    margin: 24px auto;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  /* Status bar */
+  .term-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    gap: 6px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .term-status .mkt {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .term-status .mkt .flag {
+    font-size: 12px;
+  }
+  .term-status .mkt .name {
+    color: var(--muted);
+  }
+  .term-status .mkt .val {
+    font-weight: 700;
+  }
+  .term-status .mkt .chg {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  .term-status .mkt .chg.up {
+    color: var(--success);
+    background: var(--success-dim);
+  }
+  .term-status .mkt .chg.down {
+    color: var(--danger);
+    background: var(--danger-dim);
+  }
+  .term-status .mkt .status-dot {
+    width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+  }
+  .term-status .mkt .status-dot.live { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .term-status .mkt .status-dot.closed { background: var(--muted); }
+
+  /* Alert strip */
+  .alert-strip {
+    background: var(--danger-dim);
+    border-left: 3px solid var(--danger);
+    padding: 10px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .alert-strip.warn {
+    background: var(--warning-dim);
+    border-left-color: var(--warning);
+  }
+  .alert-strip .alert-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .alert-strip .alert-body {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .alert-strip .alert-body strong {
+    color: var(--ink);
+  }
+  .alert-strip .alert-body .muted {
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  /* Content area */
+  .term-content {
+    padding: 0 0 60px;
+  }
+
+  /* Card */
+  .term-card {
+    margin: 10px 14px;
+    background: var(--card);
+    border: 1px solid var(--hairline-soft);
+    border-radius: var(--radius);
+    padding: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .term-card:active { background: var(--card-hover); }
+  .term-card .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .term-card .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .term-card .card-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .term-card .card-body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .term-card .card-main {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .term-card .card-main .chg {
+    font-size: 14px;
+    margin-left: 6px;
+  }
+  .term-card .card-stats {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    line-height: 1.6;
+  }
+
+  /* Mini grid */
+  .mini-grid {
+    margin: 10px 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .mini-item {
+    background: var(--card);
+    border: 1px solid var(--hairline-soft);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+  .mini-item .sym {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .mini-item .price {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .mini-item .chg {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* Section divider */
+  .term-divider {
+    margin: 6px 14px;
+    padding: 8px 0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-top: 1px solid var(--hairline-soft);
+  }
+
+  /* Tab bar — bottom nav */
+  .term-tabs {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 0 env(safe-area-inset-bottom,6px);
+    z-index: 10;
+  }
+  .term-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 12px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: color 0.15s;
+  }
+  .term-tab .tab-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .term-tab.active {
+    color: var(--primary);
+  }
+
+  /* ===== Data mapping table ===== */
+  .map-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0 32px;
+  }
+  .map-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--surface);
+    border-bottom: 2px solid var(--hairline);
+    font-weight: 700;
+    color: var(--ink-soft);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .map-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--hairline-soft);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .map-table tbody tr:hover td {
+    background: var(--surface-2);
+  }
+  .map-table .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag-a { background: var(--danger-dim); color: var(--danger); }
+  .tag-hk { background: var(--info-dim); color: var(--info); }
+  .tag-us { background: var(--primary-dim); color: var(--primary); }
+  .tag-cr { background: var(--accent-gold-dim); color: var(--accent-gold); }
+  .tag-sys { background: rgba(255,255,255,0.06); color: var(--muted); }
+  .page-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+  .pt-pano { color: var(--info); border-color: var(--info-dim); }
+  .pt-sign { color: var(--warning); border-color: var(--warning-dim); }
+  .pt-pos { color: var(--success); border-color: var(--success-dim); }
+  .pt-tool { color: var(--muted); border-color: var(--hairline); }
+
+  /* ===== Tech cards ===== */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 16px 0 32px;
+  }
+  .tech-card {
+    background: var(--card);
+    border: 1px solid var(--hairline-soft);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+  }
+  .tech-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .tech-card p, .tech-card li {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .tech-card ul {
+    padding-left: 16px;
+  }
+  .tech-card code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: var(--surface);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--primary);
+  }
+
+  /* ===== Util ===== */
+  .up { color: var(--success) !important; }
+  .down { color: var(--danger) !important; }
+  .gold { color: var(--accent-gold) !important; }
+  .muted { color: var(--muted) !important; }
+
+  /* ===== Page tab switcher ===== */
+  .page-switcher {
+    display: flex;
+    gap: 4px;
+    margin: 14px;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 3px;
+  }
+  .page-switch-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-sans);
+  }
+  .page-switch-btn.active {
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow);
+  }
+
+  /* Signal card */
+  .sig-card {
+    margin: 10px 14px;
+    border-left: 3px solid var(--danger);
+    background: var(--card);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 12px 14px;
+  }
+  .sig-card.warn { border-left-color: var(--warning); }
+  .sig-card.info { border-left-color: var(--info); }
+  .sig-card .sig-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .sig-card .sig-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .sig-card .sig-tag.red { background: var(--danger-dim); color: var(--danger); }
+  .sig-card .sig-tag.amber { background: var(--warning-dim); color: var(--warning); }
+  .sig-card .sig-tag.blue { background: var(--info-dim); color: var(--info); }
+  .sig-card .sig-time {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+  }
+  .sig-card .sig-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .sig-card .sig-desc {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Detail row */
+  .detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--hairline-soft);
+    font-size: 12px;
+  }
+  .detail-row .label { color: var(--muted); }
+  .detail-row .value { font-family: var(--font-mono); font-weight: 600; }
+  .detail-row .sub { font-size: 10px; color: var(--muted); }
+
+  /* Kline mini bar */
+  .mini-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 1px;
+    height: 28px;
+  }
+  .mini-bar span {
+    width: 3px;
+    border-radius: 0.5px;
+  }
+
+  /* ===== Page prototypes ===== */
+  .page-proto { display: none; }
+  .page-proto.visible { display: block; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 480px) {
+    .doc-header h1 { font-size: 22px; }
+    .arch-grid { grid-template-columns: 1fr; }
+    .scene-flow { flex-wrap: nowrap; }
+    .phone-frame { width: 100%; max-width: 375px; }
+  }
+
+  /* code block */
+  pre.code-block {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin: 12px 0;
+  }
+  pre.code-block .c { color: var(--muted); }
+  pre.code-block .k { color: var(--info); }
+  pre.code-block .s { color: var(--accent-gold); }
+  pre.code-block .n { color: var(--primary); }
+
+  .highlight-box {
+    background: var(--primary-dim);
+    border: 1px solid var(--primary-glow);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .highlight-box strong { color: var(--primary); }
+
+  .footer-note {
+    text-align: center;
+    padding: 48px 0 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--hairline);
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== DOC HEADER ===== -->
+<div class="doc-header">
+  <div class="doc-wrap">
+    <div class="badge">Design Document v2</div>
+    <h1>Atlas Terminal<br>全球金融AI投研终端</h1>
+    <p class="sub">从零重新设计 · 信息架构先行 · 移动端优先 · 只展示需要行动的数据</p>
+  </div>
+</div>
+
+<div class="doc-wrap">
+
+<!-- ====================================================================== -->
+<!-- 1. 信息架构 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>① 信息架构</h2>
+  <p class="sm">先搞清楚「谁、何时、看什么、做什么」，再设计页面。</p>
+</div>
+
+<div class="arch-grid">
+  <div class="arch-card">
+    <div class="num">01</div>
+    <h4>用户：龙哥</h4>
+    <p>
+      个人投资者 × 社群发起人。<br>
+      持仓覆盖 A股·港股·美股·加密 四大市场。<br>
+      不盯盘，不做日内高频，但需要「关键信号不过夜」。<br>
+      偏好手机看盘，电脑做深度研究。
+    </p>
+  </div>
+  <div class="arch-card">
+    <div class="num">02</div>
+    <h4>三大场景</h4>
+    <p>
+      <strong>🌅 开盘前检查</strong> — 2分钟扫完全球，决定今天盯不盯<br>
+      <strong>📡 盘中监控</strong> — 被动接收预警，信号触发才深入看<br>
+      <strong>🌙 收盘复盘</strong> — 30分钟深度分析，决定是否调仓
+    </p>
+  </div>
+  <div class="arch-card">
+    <div class="num">03</div>
+    <h4>信息四层金字塔</h4>
+    <p>
+      L1 <strong style="color:var(--danger)">预警信号</strong> — 需要立刻行动的（费率反转、OI背离、关键破位）<br>
+      L2 <strong style="color:var(--warning)">全球总览</strong> — 各市场今天整体怎么样<br>
+      L3 <strong style="color:var(--info)">市场深入</strong> — 单一市场/板块/持仓的详细分析<br>
+      L4 <strong style="color:var(--muted)">研究工具</strong> — DuckDB查询、回测、策略调试
+    </p>
+  </div>
+  <div class="arch-card">
+    <div class="num">04</div>
+    <h4>设计铁律</h4>
+    <p>
+      ✅ 一屏看完关键信息（不滚动）<br>
+      ✅ 预警最醒目（红色边框 + 独立区域）<br>
+      ✅ 红涨绿跌，全球统一<br>
+      ✅ 不堆砌数据，只展示需要行动的信息<br>
+      ✅ 移动端375px首发设计
+    </p>
+  </div>
+</div>
+
+<h3>场景 → 页面 映射</h3>
+<div class="scene-flow">
+  <div class="scene-step">
+    <div class="icon">🌅</div>
+    <div class="label">开盘前</div>
+    <div class="time">08:30-09:00</div>
+    <div class="desc">看全景 → 有无预警 → 决定行动</div>
+  </div>
+  <div class="scene-step">
+    <div class="icon">📡</div>
+    <div class="label">盘中</div>
+    <div class="time">09:00-16:00</div>
+    <div class="desc">收预警推送 → 看信号页 → 查持仓</div>
+  </div>
+  <div class="scene-step">
+    <div class="icon">🌙</div>
+    <div class="label">收盘后</div>
+    <div class="time">16:00-22:00</div>
+    <div class="desc">看复盘 → 深研个股 → 用工具分析</div>
+  </div>
+  <div class="scene-step">
+    <div class="icon">🔧</div>
+    <div class="label">研究时段</div>
+    <div class="time">周末/晚间</div>
+    <div class="desc">策略回测 → DuckDB查询 → 数据探索</div>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 2. 页面结构与交互原型 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>② 四个核心页面</h2>
+  <p class="sm">移动端375px交互原型。点击 Tab 切换查看四个页面的设计。</p>
+</div>
+
+<div class="proto-outer">
+  <div class="proto-toolbar">
+    <span class="proto-dot r"></span>
+    <span class="proto-dot y"></span>
+    <span class="proto-dot g"></span>
+    <span class="proto-label">Atlas Terminal · 375px Mockup</span>
+  </div>
+
+  <div class="phone-frame">
+    <!-- Page Switcher (inside phone) -->
+    <div class="page-switcher" id="pageSwitcher">
+      <button class="page-switch-btn active" onclick="showPage('pano')">全景</button>
+      <button class="page-switch-btn" onclick="showPage('signal')">信号</button>
+      <button class="page-switch-btn" onclick="showPage('pos')">持仓</button>
+      <button class="page-switch-btn" onclick="showPage('tool')">工具</button>
+    </div>
+
+    <!-- ═══════ PAGE 1: 全景 Panorama ═══════ -->
+    <div class="page-proto visible" id="page-pano">
+      <!-- 1a. Global Status Bar -->
+      <div class="term-status">
+        <div class="mkt"><span class="status-dot live"></span><span class="flag">🇨🇳</span><span class="name">上证</span><span class="val">3,258</span><span class="chg up">+0.8%</span></div>
+        <div class="mkt"><span class="flag">🇭🇰</span><span class="name">恒指</span><span class="val">19,842</span><span class="chg up">+1.2%</span></div>
+        <div class="mkt"><span class="flag">🇺🇸</span><span class="name">SPY</span><span class="val">592.4</span><span class="chg down">-0.3%</span></div>
+        <div class="mkt"><span class="flag">₿</span><span class="name">BTC</span><span class="val">67,250</span><span class="chg up">+2.1%</span></div>
+      </div>
+
+      <!-- 1b. Alert Strip -->
+      <div class="alert-strip">
+        <span class="alert-icon">⚡</span>
+        <div class="alert-body">
+          <strong>BTC 费率反转信号触发</strong><br>
+          <span class="muted">OI Δ +18% | 资金费率 -0.08% → -0.03% | 15分钟前</span>
+        </div>
+      </div>
+
+      <!-- 1c. Portfolio Total Card -->
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">💰 总资产</span>
+          <span class="card-badge" style="background:var(--success-dim);color:var(--success)">今日</span>
+        </div>
+        <div class="card-body">
+          <div class="card-main">¥1,847,200<span class="chg up">+1.86%</span></div>
+          <div class="card-stats">
+            <div>日盈亏 <span class="up">+¥33,800</span></div>
+            <div>周盈亏 <span class="up">+¥52,100</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1d. Cross-Market Mini Grid -->
+      <div class="term-divider">🇨🇳 A股 持仓</div>
+      <div class="mini-grid">
+        <div class="mini-item">
+          <div class="sym">创业板ETF</div>
+          <div class="price up">2.486</div>
+          <div class="chg up">+1.88%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">科创50ETF</div>
+          <div class="price up">1.092</div>
+          <div class="chg up">+2.15%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">半导体ETF</div>
+          <div class="price down">0.874</div>
+          <div class="chg down">-0.68%</div>
+        </div>
+      </div>
+
+      <div class="term-divider">🇭🇰 港股 · 🇺🇸 美股</div>
+      <div class="mini-grid">
+        <div class="mini-item">
+          <div class="sym">腾讯 00700</div>
+          <div class="price up">385.2</div>
+          <div class="chg up">+2.3%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">NVDA</div>
+          <div class="price down">142.8</div>
+          <div class="chg down">-1.5%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">恒生科技ETF</div>
+          <div class="price up">4.82</div>
+          <div class="chg up">+1.1%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">TSLA</div>
+          <div class="price down">248.6</div>
+          <div class="chg down">-2.8%</div>
+        </div>
+      </div>
+
+      <div class="term-divider">₿ 加密</div>
+      <div class="mini-grid">
+        <div class="mini-item">
+          <div class="sym">BTC/USDT</div>
+          <div class="price up">67,250</div>
+          <div class="chg up">+2.1%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">ETH/USDT</div>
+          <div class="price up">3,482</div>
+          <div class="chg up">+1.4%</div>
+        </div>
+        <div class="mini-item">
+          <div class="sym">SOL/USDT</div>
+          <div class="price up">183.5</div>
+          <div class="chg up">+3.8%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ PAGE 2: 信号 Signals ═══════ -->
+    <div class="page-proto" id="page-signal">
+      <!-- Priority header -->
+      <div class="term-card" style="border-color:var(--danger);background:var(--danger-dim)">
+        <div class="card-top">
+          <span class="card-title" style="color:var(--danger)">🔴 需要行动 · 2条</span>
+        </div>
+        <div class="card-body" style="font-size:12px;color:var(--muted)">
+          费率反转 + OI背离同时触发，概率最高
+        </div>
+      </div>
+
+      <!-- Signal 1: Critical -->
+      <div class="sig-card">
+        <div class="sig-head">
+          <span class="sig-tag red">高优先级</span>
+          <span class="sig-time">14:35</span>
+        </div>
+        <div class="sig-title">BTC 费率反转信号</div>
+        <div class="sig-desc">资金费率从 -0.08% 急拉到 -0.03%，OI +18%，空头踩踏启动。历史上该模式4h胜率 68%。</div>
+        <div style="margin-top:6px;font-size:11px;color:var(--primary)">💡 建议：轻仓追多，止损设在 65,800</div>
+      </div>
+
+      <!-- Signal 2: Warning -->
+      <div class="sig-card warn">
+        <div class="sig-head">
+          <span class="sig-tag amber">中优先级</span>
+          <span class="sig-time">14:20</span>
+        </div>
+        <div class="sig-title">半导体板块资金大幅流出</div>
+        <div class="sig-desc">主力净流出 -12.8亿，排名倒数第3。半导体ETF持仓注意风险。</div>
+      </div>
+
+      <!-- Signal 3: Info -->
+      <div class="sig-card info">
+        <div class="sig-head">
+          <span class="sig-tag blue">提示</span>
+          <span class="sig-time">11:00</span>
+        </div>
+        <div class="sig-title">科创50ETF 突破20日均线</div>
+        <div class="sig-desc">MA20: 1.074 → 现价 1.092，放量突破，MACD金叉确认。</div>
+      </div>
+
+      <div class="term-divider">📊 板块资金异动（Top/Bottom 3）</div>
+      <div class="detail-row"><span class="label">🏆 软件开发</span><span class="value up">+8.2亿</span><span class="sub up">+3.1%</span></div>
+      <div class="detail-row"><span class="label">🏆 通信设备</span><span class="value up">+5.6亿</span><span class="sub up">+2.4%</span></div>
+      <div class="detail-row"><span class="label">🏆 汽车零部件</span><span class="value up">+4.1亿</span><span class="sub up">+1.9%</span></div>
+      <div class="detail-row"><span class="label">⚠️ 半导体</span><span class="value down">-12.8亿</span><span class="sub down">-1.5%</span></div>
+      <div class="detail-row"><span class="label">⚠️ 房地产开发</span><span class="value down">-8.3亿</span><span class="sub down">-1.2%</span></div>
+      <div class="detail-row"><span class="label">⚠️ 银行</span><span class="value down">-6.5亿</span><span class="sub down">-0.4%</span></div>
+    </div>
+
+    <!-- ═══════ PAGE 3: 持仓 Positions ═══════ -->
+    <div class="page-proto" id="page-pos">
+      <!-- Market tabs -->
+      <div class="page-switcher" style="margin:14px">
+        <button class="page-switch-btn active" style="font-size:11px">A股</button>
+        <button class="page-switch-btn" style="font-size:11px">港股</button>
+        <button class="page-switch-btn" style="font-size:11px">美股</button>
+        <button class="page-switch-btn" style="font-size:11px">加密</button>
+      </div>
+
+      <!-- A股 positions -->
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">创业板ETF华夏</span>
+          <span class="card-badge" style="background:var(--success-dim);color:var(--success)">持仓</span>
+        </div>
+        <div class="card-body">
+          <div class="card-main">2.486<span class="chg up">+1.88%</span></div>
+          <div class="card-stats">
+            <div>成本 2.312</div>
+            <div>盈亏 <span class="up">+7.5%</span></div>
+          </div>
+        </div>
+        <!-- mini kline placeholder -->
+        <div class="mini-bar" style="margin-top:8px">
+          <span style="height:18px;background:var(--success)"></span><span style="height:20px;background:var(--success)"></span>
+          <span style="height:14px;background:var(--danger)"></span><span style="height:16px;background:var(--success)"></span>
+          <span style="height:22px;background:var(--success)"></span><span style="height:24px;background:var(--success)"></span>
+          <span style="height:19px;background:var(--success)"></span><span style="height:23px;background:var(--success)"></span>
+          <span style="height:26px;background:var(--success)"></span><span style="height:28px;background:var(--success)"></span>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px">MACD金叉 | MA5上穿MA20 | RSI 62</div>
+      </div>
+
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">科创50ETF易方达</span>
+          <span class="card-badge" style="background:var(--success-dim);color:var(--success)">持仓</span>
+        </div>
+        <div class="card-body">
+          <div class="card-main">1.092<span class="chg up">+2.15%</span></div>
+          <div class="card-stats">
+            <div>成本 1.028</div>
+            <div>盈亏 <span class="up">+6.2%</span></div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px">突破MA20 | 放量 | RSI 58</div>
+      </div>
+
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">半导体ETF南方</span>
+          <span class="card-badge" style="background:var(--danger-dim);color:var(--danger)">⚠️ 板块流出</span>
+        </div>
+        <div class="card-body">
+          <div class="card-main">0.874<span class="chg down">-0.68%</span></div>
+          <div class="card-stats">
+            <div>成本 0.912</div>
+            <div>盈亏 <span class="down">-4.2%</span></div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--danger);margin-top:4px">板块资金流出 -12.8亿 | 跌破MA10 | 注意风险</div>
+      </div>
+
+      <!-- AI analysis -->
+      <div class="term-card" style="border-color:var(--primary-glow);background:var(--primary-dim)">
+        <div class="card-top">
+          <span class="card-title" style="color:var(--primary)">🤖 AI 持仓研判</span>
+        </div>
+        <div style="font-size:11px;color:var(--ink-soft);line-height:1.7">
+          今日A股持仓整体偏强。创业板+科创50受益于科技成长风格，半导体承压但中期逻辑未破。建议继续持有，半导体若再跌3%考虑减仓。
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ PAGE 4: 工具 Tools ═══════ -->
+    <div class="page-proto" id="page-tool">
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">📋 今日复盘</span>
+          <span class="card-badge" style="background:var(--info-dim);color:var(--info)">16:30生成</span>
+        </div>
+        <div style="font-size:11px;color:var(--ink-soft);line-height:1.7">
+          2026-07-23 复盘已生成。三大指数收涨，科技成长领涨，半导体板块资金流出值得关注。明日预判：震荡偏强。
+        </div>
+      </div>
+
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">🗄️ DuckDB 数据底座</span>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);line-height:1.6">
+          atlas.duckdb (A股) — stock_sectors, stock_fund_flows, stock_portfolio<br>
+          market.duckdb (加密) — 1m/5m/1h K线, 费率, OI<br>
+          今日采集: <span style="color:var(--success)">● 正常运行</span> · 248条记录
+        </div>
+      </div>
+
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">📈 策略回测</span>
+          <span class="card-badge" style="background:var(--accent-gold-dim);color:var(--accent-gold)">加密量化</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7">
+          费率反转策略 · 最近30天胜率 64% · 平均收益 +2.3%<br>
+          OI背离策略 · 最近30天信号 12次 · 胜率 58%
+        </div>
+      </div>
+
+      <div class="term-card">
+        <div class="card-top">
+          <span class="card-title">⚙️ 系统状态</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7">
+          Cron: 9活跃 · 0异常 · 0暂停<br>
+          数据: A股✅ 美股✅ 港股✅ 加密✅<br>
+          部署: 阿里云✅ Vercel✅ GH Pages✅<br>
+          上次采集: 14:35 · 下次: 14:40
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Tab Bar -->
+    <div class="term-tabs">
+      <button class="term-tab active" id="tab-pano" onclick="showPage('pano')">
+        <span class="tab-icon">🏠</span>全景
+      </button>
+      <button class="term-tab" id="tab-signal" onclick="showPage('signal')">
+        <span class="tab-icon">⚡</span>信号
+      </button>
+      <button class="term-tab" id="tab-pos" onclick="showPage('pos')">
+        <span class="tab-icon">💼</span>持仓
+      </button>
+      <button class="term-tab" id="tab-tool" onclick="showPage('tool')">
+        <span class="tab-icon">🔧</span>工具
+      </button>
+    </div>
+  </div><!-- /phone-frame -->
+</div><!-- /proto-outer -->
+
+<!-- ====================================================================== -->
+<!-- 3. 页面设计详述 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>③ 页面设计详述</h2>
+  <p class="sm">每页的卡片布局、数据来源、交互行为。</p>
+</div>
+
+<h3>Page 1：全景 Panorama（默认首页）</h3>
+<div class="arch-grid">
+  <div class="arch-card">
+    <h4>顶部状态条</h4>
+    <p>
+      四大市场实时快照。<br>
+      格式：国旗 + 指数名 + 点位 + 涨跌幅。<br>
+      绿色点=交易中，灰色点=已收盘。<br>
+      数据源：A股指数API + 恒指API + SPY/QQQ + Binance BTC。<br>
+      始终可见，不随页面切换消失。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>预警横幅</h4>
+    <p>
+      最醒目的位置，红色左边框。<br>
+      只显示最高优先级的 1-2 条信号。<br>
+      点击跳转到「信号」页面查看详情。<br>
+      无信号时不显示此区域，不占地方。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>总资产卡片</h4>
+    <p>
+      第一大卡片。总市值 + 日盈亏 + 周盈亏。<br>
+      数字大、醒目，一眼看到今天赚/亏多少。<br>
+      数据源：portfolio.json 汇总计算。<br>
+      红涨绿跌，颜色即信息。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>跨市场持仓网格</h4>
+    <p>
+      2列 mini 卡片网格。每张卡片：代码+价格+涨跌幅。<br>
+      按市场分区：A股 → 港股·美股 → 加密。<br>
+      一屏看完所有持仓表现。点击跳转到持仓详情。<br>
+      数据源：portfolio.json + Binance API + yfinance。
+    </p>
+  </div>
+</div>
+
+<h3>Page 2：信号 Signals</h3>
+<div class="arch-grid">
+  <div class="arch-card">
+    <h4>优先级分层</h4>
+    <p>
+      🔴 高优（红色）：需要立即行动 — 费率反转、OI背离等量化信号。<br>
+      🟡 中优（黄色）：需要关注 — 板块资金异常流出、持仓技术破位。<br>
+      🔵 提示（蓝色）：了解即可 — 均线突破、金叉等常规信号。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>每条信号包含</h4>
+    <p>
+      信号标签（高/中/低优先级）<br>
+      触发时间<br>
+      信号标题<br>
+      数据描述<br>
+      💡 建议行动（仅高优信号有）
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>板块资金异动</h4>
+    <p>
+      Top 3 流入 + Bottom 3 流出。<br>
+      数据源：fund_flows-{date}.json。<br>
+      只显示极端值，中间80%不展示。<br>
+      每行：板块名 + 净流入(亿) + 涨跌幅。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>信号生成逻辑</h4>
+    <p>
+      量化策略自动扫描（费率反转+OI背离）。<br>
+      板块资金流异常检测（>2σ偏离）。<br>
+      技术指标突破/跌破（MA20、MACD金叉死叉）。<br>
+      通过cron脚本生成 → 写入JSON → 前端读取。
+    </p>
+  </div>
+</div>
+
+<h3>Page 3：持仓 Positions</h3>
+<div class="arch-grid">
+  <div class="arch-card">
+    <h4>市场Tab切换</h4>
+    <p>
+      顶部4个Tab：A股 | 港股 | 美股 | 加密。<br>
+      每个Tab下展示该市场所有持仓。<br>
+      默认显示A股（龙哥主要市场）。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>持仓卡片结构</h4>
+    <p>
+      名称 + 现价 + 涨跌幅（大字）<br>
+      成本 + 持仓盈亏（小字）<br>
+      Mini K线柱状图（最近20根）<br>
+      技术指标摘要（MACD/MA/RSI）<br>
+      如有预警：红色角标提示
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>AI研判卡片</h4>
+    <p>
+      每市场底部有一张AI分析卡。<br>
+      综合该市场所有持仓的技术面、资金面、消息面。<br>
+      给出持有/加仓/减仓建议。<br>
+      数据源：portfolio.json中的AI分析字段。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>详情展开（P2）</h4>
+    <p>
+      点击任一持仓卡片 → 展开完整K线图（Canvas绘制）。<br>
+      显示日K + 均线 + 成交量。<br>
+      P1 MVP中暂不做，先做静态展示。
+    </p>
+  </div>
+</div>
+
+<h3>Page 4：工具 Tools</h3>
+<div class="arch-grid">
+  <div class="arch-card">
+    <h4>复盘入口</h4>
+    <p>
+      链接到 review.html（每日自动生成）。<br>
+      显示最新复盘摘要 + 生成时间。<br>
+      收盘后自动出现，盘中不显示。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>DuckDB状态</h4>
+    <p>
+      显示数据底座运行状态。<br>
+      表结构概览 + 今日采集记录数。<br>
+      方便龙哥确认数据采集正常。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>策略回测概览</h4>
+    <p>
+      显示量化策略近期表现。<br>
+      胜率、平均收益、信号频率。<br>
+      点击跳转到 crypto/quant.html 详情。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>系统健康面板</h4>
+    <p>
+      链接到 system.html。<br>
+      Cron任务状态汇总。<br>
+      部署通道状态（阿里云/Vercel/GH Pages）。
+    </p>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 4. 导航结构 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>④ 导航结构</h2>
+  <p class="sm">移动端底部Tab + 桌面端顶栏，两种形态。</p>
+</div>
+
+<div class="arch-grid">
+  <div class="arch-card">
+    <h4>📱 移动端</h4>
+    <p>
+      <strong>底部固定Tab栏</strong>（4个图标+文字）<br>
+      全景 | 信号(Qty) | 持仓 | 工具<br><br>
+      <strong>顶部状态条</strong>（固定）<br>
+      四大市场快照，横向滚动。<br><br>
+      <strong>预警横幅</strong>（条件显示）<br>
+      有高优信号时出现在状态条下方。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>🖥️ 桌面端</h4>
+    <p>
+      <strong>左侧导航栏</strong>（固定180px）<br>
+      4个图标+文字，纵向排列。<br>
+      选中的高亮 + 左侧色条。<br><br>
+      <strong>右侧内容区</strong>（流体宽度）<br>
+      3列卡片网格，一屏看完。<br>
+      全景页：总资产卡（全宽）+ 3列卡片。<br>
+      信号页：左列高优 + 右列列表。
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>全局元素</h4>
+    <p>
+      <strong>始终可见：</strong><br>
+      · 顶部状态条（4市场快照）<br>
+      · 底部/左侧导航<br>
+      · 预警横幅（有信号时）<br><br>
+      <strong>页面内：</strong><br>
+      · 全景：总资产卡 + 持仓网格<br>
+      · 信号：信号列表 + 板块异动<br>
+      · 持仓：Tab切换 + 持仓列表<br>
+      · 工具：入口卡片列表
+    </p>
+  </div>
+  <div class="arch-card">
+    <h4>与现有页面的关系</h4>
+    <p>
+      Atlas Terminal 是<strong>新首页</strong>，替换现有 index.html。<br>
+      子页面保留：review.html, stock/*, us/*, hk/*, crypto/*, system.html。<br>
+      从 Terminal 的卡片/入口点击跳转到子页面。<br>
+      子页面也加回 Terminal 的导航，保证体验一致。
+    </p>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 5. 数据→页面→卡片 映射表 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>⑤ 数据 → 页面 → 卡片 映射表</h2>
+</div>
+
+<div style="overflow-x:auto">
+<table class="map-table">
+  <thead>
+    <tr>
+      <th style="min-width:60px">市场</th>
+      <th style="min-width:180px">数据源</th>
+      <th style="min-width:60px">页面</th>
+      <th style="min-width:140px">卡片/区域</th>
+      <th style="min-width:200px">展示内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- A股 -->
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>指数API（上证/深证/创业板/科创50）</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>顶部状态条</td>
+      <td>4个指数实时点位+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>fund_flows-{date}.json</td>
+      <td><span class="page-tag pt-sign">信号</span></td>
+      <td>板块资金异动区</td>
+      <td>Top 3 净流入 + Bottom 3 净流出（主力净流入+涨跌幅）</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>fund_flows-{date}.json</td>
+      <td><span class="page-tag pt-sign">信号</span></td>
+      <td>信号卡片</td>
+      <td>板块资金异常流出信号（>2σ偏离）</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>3只ETF实时价+K线+技术指标</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>A股持仓 mini 网格</td>
+      <td>创业板ETF/科创50ETF/半导体ETF — 现价+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>3只ETF实时价+K线+技术指标</td>
+      <td><span class="page-tag pt-pos">持仓</span></td>
+      <td>持仓卡片（A股Tab）</td>
+      <td>现价+涨跌幅+成本+盈亏+mini K线+MACD/MA/RSI</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>portfolio.json</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>总资产卡片</td>
+      <td>总市值+日盈亏+周盈亏（汇总计算）</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>portfolio.json → AI分析字段</td>
+      <td><span class="page-tag pt-pos">持仓</span></td>
+      <td>AI研判卡片</td>
+      <td>综合技术面+资金面+消息面的持有/加减仓建议</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-a">A股</span></td>
+      <td>portfolio.json → 技术指标</td>
+      <td><span class="page-tag pt-sign">信号</span></td>
+      <td>信号卡片</td>
+      <td>持仓ETF技术破位/突破信号（MA20/MACD金叉死叉）</td>
+    </tr>
+
+    <!-- 港股 -->
+    <tr>
+      <td><span class="tag tag-hk">港股</span></td>
+      <td>恒指API + 腾讯qt实时行情</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>顶部状态条</td>
+      <td>恒生指数实时点位+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-hk">港股</span></td>
+      <td>腾讯(00700)/阿里(09988)/恒生科技ETF/2x海力士</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>港股·美股 mini 网格</td>
+      <td>持仓代码+现价+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-hk">港股</span></td>
+      <td>港股K线日线数据</td>
+      <td><span class="page-tag pt-pos">持仓</span></td>
+      <td>持仓卡片（港股Tab）</td>
+      <td>现价+涨跌幅+成本+盈亏+mini K线</td>
+    </tr>
+
+    <!-- 美股 -->
+    <tr>
+      <td><span class="tag tag-us">美股</span></td>
+      <td>SPY/QQQ/DIA (yfinance)</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>顶部状态条</td>
+      <td>SPY/QQQ/DIA 收盘价+涨跌幅（盘前用昨收）</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-us">美股</span></td>
+      <td>NVDA/TSLA/AVGO/GOOGL/MSFT/MU (yfinance)</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>港股·美股 mini 网格</td>
+      <td>持仓代码+收盘价+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-us">美股</span></td>
+      <td>yfinance 收盘数据</td>
+      <td><span class="page-tag pt-pos">持仓</span></td>
+      <td>持仓卡片（美股Tab）</td>
+      <td>收盘价+涨跌幅+成本+持仓盈亏</td>
+    </tr>
+
+    <!-- 加密 -->
+    <tr>
+      <td><span class="tag tag-cr">加密</span></td>
+      <td>Binance 实时价格</td>
+      <td><span class="page-tag pt-pano">全景</span></td>
+      <td>顶部状态条 + 加密 mini 网格</td>
+      <td>BTC/ETH/SOL 实时价+涨跌幅</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-cr">加密</span></td>
+      <td>Binance 费率/OI数据</td>
+      <td><span class="page-tag pt-sign">信号</span></td>
+      <td>量化信号卡片（高优）</td>
+      <td>费率反转信号 / OI背离信号 / 综合研判</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-cr">加密</span></td>
+      <td>量化策略信号</td>
+      <td><span class="page-tag pt-sign">信号</span></td>
+      <td>量化信号卡片（高优）</td>
+      <td>费率反转+OI背离合并检测，含建议行动</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-cr">加密</span></td>
+      <td>量化策略信号</td>
+      <td><span class="page-tag pt-tool">工具</span></td>
+      <td>策略回测卡片</td>
+      <td>近期胜率+平均收益+信号频率</td>
+    </tr>
+
+    <!-- 系统 -->
+    <tr>
+      <td><span class="tag tag-sys">系统</span></td>
+      <td>DuckDB (atlas.duckdb + market.duckdb)</td>
+      <td><span class="page-tag pt-tool">工具</span></td>
+      <td>DuckDB状态卡片</td>
+      <td>表结构概览+今日采集记录数</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-sys">系统</span></td>
+      <td>Cron 状态</td>
+      <td><span class="page-tag pt-tool">工具</span></td>
+      <td>系统健康卡片</td>
+      <td>活跃/异常/暂停任务数</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-sys">系统</span></td>
+      <td>review.html</td>
+      <td><span class="page-tag pt-tool">工具</span></td>
+      <td>复盘入口卡片</td>
+      <td>最新复盘摘要+生成时间</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 6. 技术实现方案 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>⑥ 技术实现方案</h2>
+</div>
+
+<div class="tech-grid">
+  <div class="tech-card">
+    <h4>🏗️ 架构原则</h4>
+    <ul>
+      <li><strong>纯静态站</strong> — HTML+CSS+JS，无运行时依赖</li>
+      <li><strong>数据通过JSON注入</strong> — cron脚本定期导出JSON → 前端fetch</li>
+      <li><strong>渐进增强</strong> — 预设数据兜底，JSON不可用时降级展示</li>
+      <li><strong>三通道部署</strong> — 阿里云(主) + Vercel + GitHub Pages</li>
+      <li>DuckDB 为数据底座，JSON 仅为静态导出层</li>
+    </ul>
+  </div>
+
+  <div class="tech-card">
+    <h4>📱 移动端策略</h4>
+    <ul>
+      <li>375px 首发设计，CSS Grid + Flexbox</li>
+      <li>断点：<code>480px</code>（窄布局）、<code>768px</code>（2列）、<code>1024px</code>（3列+侧栏）</li>
+      <li>底部固定 Tab 栏（移动端）/ 左侧导航（桌面端）</li>
+      <li>所有卡片 <code>max-width: 100%</code>，不允许水平溢出</li>
+      <li>字体：系统字体栈，数字用等宽</li>
+    </ul>
+  </div>
+
+  <div class="tech-card">
+    <h4>🔄 数据流</h4>
+    <pre class="code-block">
+<span class="c"># 采集</span>
+cron 脚本(每5-10分钟)
+  → DuckDB 写入
+  → JSON 导出
+  → git push / SCP 阿里云
+
+<span class="c"># 前端</span>
+index.html (Atlas Terminal)
+  → fetch('data/...json')
+  → 解析 → 渲染卡片
+  → 404 → 降级到预设值</pre>
+    <p style="margin-top:8px">与当前 atals-ai 数据架构完全一致，无需改动 cron 脚本。</p>
+  </div>
+
+  <div class="tech-card">
+    <h4>📂 新增/修改文件</h4>
+    <pre class="code-block">
+<span class="c"># 新建</span>
+index.html          ← 重写为 Atlas Terminal
+terminal.css        ← Terminal 专属样式
+terminal.js         ← Terminal 交互逻辑
+
+<span class="c"># 新建前端数据JSON</span>
+data/terminal/
+  overview.json     ← 全景页数据
+  signals.json      ← 信号页数据
+  portfolio.json    ← （复用现有）
+
+<span class="c"># 修改</span>
+header.js           ← 更新导航链接
+scripts/            ← 新增 overview/signals 导出脚本</pre>
+  </div>
+
+  <div class="tech-card">
+    <h4>📋 分阶段实施</h4>
+    <p style="margin-bottom:8px"><strong>Week 1 (P0)：核心上线</strong></p>
+    <ul>
+      <li>index.html 重写：全景页 + 导航</li>
+      <li>4页Tab切换框架</li>
+      <li>全局状态条（4市场实时）</li>
+      <li>预设数据兜底，立即可部署</li>
+    </ul>
+    <p style="margin:12px 0 8px"><strong>Week 2 (P1)：信号 + 实时</strong></p>
+    <ul>
+      <li>信号页：量化信号 + 板块异动</li>
+      <li>持仓页：4市场Tab + 持仓卡片</li>
+      <li>hover/click 交互 + mini K线</li>
+    </ul>
+    <p style="margin:12px 0 8px"><strong>Week 3 (P2)：完善</strong></p>
+    <ul>
+      <li>工具页：复盘/DuckDB/系统入口</li>
+      <li>桌面端左侧导航布局</li>
+      <li>暗色/亮色主题切换（默认暗色）</li>
+    </ul>
+  </div>
+
+  <div class="tech-card">
+    <h4>🔌 数据JSON格式约定</h4>
+    <pre class="code-block">
+<span class="c">// data/terminal/overview.json</span>
+{
+  "updated": "2026-07-23 14:35:00",
+  "indices": {
+    "a": [
+      {"name":"上证","val":3258,"chg":0.8},
+      {"name":"深证","val":11240,"chg":1.2},
+      {"name":"创业板","val":2186,"chg":1.5},
+      {"name":"科创50","val":1028,"chg":2.1}
+    ],
+    "hk": {"name":"恒指","val":19842,"chg":1.2},
+    "us": [
+      {"name":"SPY","val":592.4,"chg":-0.3},
+      {"name":"QQQ","val":481.2,"chg":-0.5},
+      {"name":"DIA","val":421.8,"chg":0.1}
+    ],
+    "crypto": [
+      {"name":"BTC","val":67250,"chg":2.1},
+      {"name":"ETH","val":3482,"chg":1.4}
+    ]
+  },
+  "alerts": [
+    {
+      "priority": "high",
+      "title": "BTC 费率反转信号",
+      "desc": "...",
+      "time": "14:35",
+      "action": "轻仓追多，止损 65,800"
+    }
+  ],
+  "portfolio_total": {
+    "value": 1847200,
+    "daily_pnl": 33800,
+    "daily_pnl_pct": 1.86,
+    "weekly_pnl": 52100
+  },
+  "holdings": {
+    "a_stock": [...],
+    "hk": [...],
+    "us": [...],
+    "crypto": [...]
+  }
+}</pre>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 核心设计差异 vs v1 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>⑦ vs v1 的核心差异</h2>
+</div>
+
+<div class="arch-grid">
+  <div class="arch-card" style="border-left:3px solid var(--danger)">
+    <div style="font-size:11px;color:var(--muted);margin-bottom:4px">v1 问题</div>
+    <h4 style="font-size:14px">旧 index.html 只是在旧页面上删足球入口</h4>
+    <p style="font-size:12px;color:var(--muted)">• 5个入口卡片，无信息密度<br>• 没有全局状态条<br>• 没有预警系统<br>• 没有移动端优化<br>• 需要点3-4次才能看到关键数据</p>
+  </div>
+  <div class="arch-card" style="border-left:3px solid var(--success)">
+    <div style="font-size:11px;color:var(--primary);margin-bottom:4px">v2 全新设计</div>
+    <h4 style="font-size:14px">从零重新思考信息架构，不是改旧页面</h4>
+    <p style="font-size:12px;color:var(--muted)">• 4页Tab，每页一屏看完<br>• 全局状态条始终可见<br>• 预警信号最醒目位置<br>• 移动端375px首发设计<br>• 首屏直接看到总资产+持仓+预警</p>
+  </div>
+  <div class="arch-card" style="grid-column:1/-1">
+    <h4>关键区别总结</h4>
+    <table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:8px">
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <th style="text-align:left;padding:6px;color:var(--muted)">维度</th>
+        <th style="text-align:left;padding:6px;color:var(--danger)">v1 (旧)</th>
+        <th style="text-align:left;padding:6px;color:var(--success)">v2 (新)</th>
+      </tr>
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <td style="padding:6px;font-weight:600">首屏信息</td>
+        <td style="padding:6px">5个入口链接</td>
+        <td style="padding:6px">总资产+持仓+预警+4市场快照</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <td style="padding:6px;font-weight:600">预警系统</td>
+        <td style="padding:6px">无</td>
+        <td style="padding:6px">独立信号页，优先级分层，含行动建议</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <td style="padding:6px;font-weight:600">移动端</td>
+        <td style="padding:6px">桌面端缩放</td>
+        <td style="padding:6px">375px首发，底部Tab导航</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <td style="padding:6px;font-weight:600">全局状态</td>
+        <td style="padding:6px">无</td>
+        <td style="padding:6px">顶部固定状态条，4市场实时</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--hairline-soft)">
+        <td style="padding:6px;font-weight:600">数据展示</td>
+        <td style="padding:6px">链接到各子页面</td>
+        <td style="padding:6px">首页直接展示关键数据，一键可达</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;font-weight:600">信息架构</td>
+        <td style="padding:6px">按市场分入口</td>
+        <td style="padding:6px">按场景分层：全景→信号→持仓→工具</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<!-- 8. 设计决策记录 -->
+<!-- ====================================================================== -->
+<div class="section-hdr">
+  <h2>⑧ 关键设计决策</h2>
+</div>
+
+<div class="highlight-box">
+  <strong>决策1：为什么是4个页面而不是3个或5个？</strong><br>
+  龙哥的4个核心场景（开盘检查→盘中监控→收盘复盘→深度研究）恰好对应4个页面。3个太少（无法覆盖所有场景），5个太散（持仓和工具可拆但没必要）。
+</div>
+
+<div class="highlight-box">
+  <strong>决策2：为什么「全景」页直接展示持仓，而不只是市场指数？</strong><br>
+  龙哥是个人投资者，不是宏观分析师。他需要第一眼看到「我今天赚了还是亏了」，而不是「上证涨了多少」。总资产+持仓网格比指数列表更有用。
+</div>
+
+<div class="highlight-box">
+  <strong>决策3：为什么信号页独立出来，而不是嵌在全景页里？</strong><br>
+  预警信号需要独立空间展示详情+历史+建议行动。嵌在全景页会挤压其他信息。独立页面 = 更好的信息密度 + 更专注的体验。高优信号通过顶部横幅在全景页可见。
+</div>
+
+<div class="highlight-box">
+  <strong>决策4：为什么用底部Tab而不是顶部Tab？</strong><br>
+  移动端拇指操作区在底部。4个Tab放底部比顶部更容易单手操作。桌面端改为左侧纵向导航。
+</div>
+
+<div class="highlight-box">
+  <strong>决策5：不重新发明轮子</strong><br>
+  子页面（stock/*, us/*, hk/*, crypto/*, system.html, review.html）保持现有实现不变。Terminal 是新首页+信号聚合层，不替代子页面的深度功能。导航保持双向连通。
+</div>
+
+<!-- Footer -->
+<div class="footer-note">
+  Atlas Terminal Design Document v2 · 诸葛（产品经理）· 2026-07-23<br>
+  状态：设计阶段 · 待龙哥审核后进入开发
+</div>
+
+</div><!-- /doc-wrap -->
+
+<script>
+  // ---- Page Switcher (both inside mockup and doc demo) ----
+  function showPage(name) {
+    // Hide all pages
+    document.querySelectorAll('.page-proto').forEach(p => p.classList.remove('visible'));
+    // Show target
+    const page = document.getElementById('page-' + name);
+    if (page) page.classList.add('visible');
+
+    // Update top switcher buttons
+    document.querySelectorAll('#pageSwitcher .page-switch-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.trim().indexOf(
+        name === 'pano' ? '全景' :
+        name === 'signal' ? '信号' :
+        name === 'pos' ? '持仓' : '工具'
+      ) !== -1) btn.classList.add('active');
+    });
+
+    // Update bottom tab bar
+    ['pano','signal','pos','tool'].forEach(n => {
+      const tab = document.getElementById('tab-' + n);
+      if (tab) tab.classList.toggle('active', n === name);
+    });
+  }
+</script>
+
+</body>
+</html>

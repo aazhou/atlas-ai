@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>工具 · Atlas Terminal</title>
+<link rel="stylesheet" href="terminal.css">
+</head>
+<body>
+<div class="mobile-shell">
+  <nav class="desktop-nav">
+    <div class="nav-brand">ATLAS<br>TERMINAL</div>
+    <a class="nav-item" href="index.html"><span class="nav-icon">🏠</span> 全景</a>
+    <a class="nav-item" href="signals.html"><span class="nav-icon">⚡</span> 信号</a>
+    <a class="nav-item" href="portfolio.html"><span class="nav-icon">💼</span> 持仓</a>
+    <a class="nav-item active" href="tools.html"><span class="nav-icon">🔧</span> 工具</a>
+  </nav>
+
+  <div class="main-area">
+    <div class="global-status" id="globalStatus">
+      <span class="mkt-pill"><span class="mkt-dot live"></span>加载中...</span>
+    </div>
+
+    <div class="page-content">
+      <section class="active" id="section-tool">
+        <!-- Review -->
+        <div class="term-card" id="reviewCard">
+          <div class="card-top"><span class="card-title">📋 今日复盘</span></div>
+          <div class="tool-card desc">加载中...</div>
+        </div>
+
+        <!-- DuckDB -->
+        <div class="term-card" id="duckdbCard">
+          <div class="card-top"><span class="card-title">🗄️ DuckDB 数据底座</span></div>
+          <div class="tool-card desc">加载中...</div>
+        </div>
+
+        <!-- Backtest -->
+        <div class="term-card" id="backtestCard">
+          <div class="card-top"><span class="card-title">📈 策略回测</span></div>
+          <div class="tool-card desc">加载中...</div>
+        </div>
+
+        <!-- System -->
+        <div class="term-card" id="systemCard">
+          <div class="card-top"><span class="card-title">⚙️ 系统状态</span></div>
+          <div class="tool-card desc">加载中...</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<nav class="term-tabs">
+  <a class="term-tab" href="index.html"><span class="tab-icon">🏠</span>全景</a>
+  <a class="term-tab" href="signals.html"><span class="tab-icon">⚡</span>信号</a>
+  <a class="term-tab" href="portfolio.html"><span class="tab-icon">💼</span>持仓</a>
+  <a class="term-tab active" href="tools.html"><span class="tab-icon">🔧</span>工具</a>
+</nav>
+
+<script src="terminal.js"></script>
+<script>T.init('tool');</script>
+</body>
+</html>

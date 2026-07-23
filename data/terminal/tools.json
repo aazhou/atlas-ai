@@ -1,0 +1,26 @@
+{
+  "updated": "2026-07-23 14:35:00",
+  "review": {
+    "available": true,
+    "date": "2026-07-23",
+    "time": "16:30",
+    "summary": "三大指数收涨，科技成长领涨，半导体板块资金流出值得关注。明日预判：震荡偏强。"
+  },
+  "duckdb": {
+    "atlas_db": "atlas.duckdb (A股) — stock_sectors, stock_fund_flows, stock_portfolio",
+    "market_db": "market.duckdb (加密) — 1m/5m/1h K线, 费率, OI",
+    "status": "normal",
+    "today_records": 248
+  },
+  "backtest": {
+    "funding_rate": {"name": "费率反转策略", "win_rate": 64, "avg_return": 2.3, "signals_30d": 18},
+    "oi_divergence": {"name": "OI背离策略", "win_rate": 58, "avg_return": 1.8, "signals_30d": 12}
+  },
+  "system": {
+    "cron": {"active": 9, "error": 0, "paused": 0},
+    "data": {"a_stock": true, "us": true, "hk": true, "crypto": true},
+    "deploy": {"aliyun": true, "vercel": true, "github_pages": true},
+    "last_collect": "14:35",
+    "next_collect": "14:40"
+  }
+}
