@@ -1,0 +1,77 @@
+{
+  "updated": "2026-07-23T14:45:14+00:00",
+  "prices": [
+    {
+      "symbol": "BTC",
+      "price": 65006.1,
+      "chg_24h": -0.97,
+      "vol_24h": "7.8B"
+    },
+    {
+      "symbol": "ETH",
+      "price": 1898.63,
+      "chg_24h": -1.58,
+      "vol_24h": "6.6B"
+    },
+    {
+      "symbol": "SOL",
+      "price": 76.61,
+      "chg_24h": -1.34,
+      "vol_24h": "1.1B"
+    }
+  ],
+  "funding": [
+    {
+      "symbol": "BTC",
+      "rate": 5.6e-05,
+      "percentile": 50
+    },
+    {
+      "symbol": "ETH",
+      "rate": -4.8e-05,
+      "percentile": 50
+    },
+    {
+      "symbol": "SOL",
+      "rate": -2.3e-05,
+      "percentile": 50
+    }
+  ],
+  "oi": [
+    {
+      "symbol": "BTC",
+      "oi_change_pct": -2.0,
+      "price_direction": "down"
+    },
+    {
+      "symbol": "ETH",
+      "oi_change_pct": -2.0,
+      "price_direction": "down"
+    },
+    {
+      "symbol": "SOL",
+      "oi_change_pct": -2.0,
+      "price_direction": "down"
+    }
+  ],
+  "recommendations": [
+    {
+      "symbol": "BTC",
+      "action": "持有",
+      "confidence": "",
+      "stop_loss": ""
+    },
+    {
+      "symbol": "ETH",
+      "action": "持有",
+      "confidence": "",
+      "stop_loss": ""
+    },
+    {
+      "symbol": "SOL",
+      "action": "持有",
+      "confidence": "",
+      "stop_loss": ""
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal · 港股深度</title>
+<link rel="stylesheet" href="../css/terminal.css">
+</head>
+<body>
+<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
+<script src="../js/terminal.js"></script>
+<script>
+T.loadPage({
+  activeTab: 'hk',
+  rootId: 'app',
+  dataPath: '../data/hk/market.json',
+  render: function(hkData, overview) {
+
+    var html = '';
+    html += '<a class="back-link" href="../index.html">← 返回全局</a>';
+
+    // ─── 1. 恒生指数实时 ───
+    if (hkData && hkData.index) {
+      var idx = hkData.index;
+      var idxColor = idx.chg_pct >= 0 ? 'var(--up)' : 'var(--down)';
+      html += '<div class="card">'+
+        '<div class="card-title">🇭🇰 恒生指数 · 实时</div>'+
+        '<div class="card-val" style="color:'+idxColor+'">'+idx.price.toLocaleString('en-US')+'</div>'+
+        '<div class="card-sub">'+
+          '<span style="color:'+idxColor+';font-weight:600">'+(idx.chg_pct>=0?'+':'')+idx.chg_pct.toFixed(2)+'%</span>'+
+          ' 涨跌 '+idx.chg.toFixed(2)+
+        '</div>'+
+        '<div style="font-size:10px;color:var(--muted);margin-top:4px">数据来源: 腾讯qt行情 · '+(hkData.updated||'—')+'</div>'+
+        '</div>';
+
+      // ─── 2. 恒生科技 + 板块 ───
+      if (overview && overview.indices && overview.indices.a) {
+        var kc50 = overview.indices.a.find(function(x){return x.name==='科创50';});
+        if (kc50) {
+          html += '<div class="card">'+
+            '<div class="card-title">📊 恒生科技 vs A股科创50</div>'+
+            '<div class="row2">'+
+              '<div class="idx-mini"><div class="name">恒生科技</div><div class="val" style="color:'+idxColor+'">'+idx.price+'</div><div class="chg" style="color:'+idxColor+'">'+T.fmtPct(idx.chg_pct)+'</div></div>'+
+              '<div class="idx-mini"><div class="name">科创50</div><div class="val" style="color:'+(kc50.chg>=0?'var(--up)':'var(--down)')+'">'+kc50.val+'</div><div class="chg" style="color:'+(kc50.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(kc50.chg)+'</div></div>'+
+            '</div>'+
+            (idx.chg_pct * kc50.chg > 0 ? '<div class="sowhat">💡 港股与A股科技方向'+(idx.chg_pct>0?'同步上涨':'同步下跌')+'——趋势确认，'+(idx.chg_pct>0?'可以跟随':'谨慎观望')+'。</div>' : '<div class="sowhat" style="border-left-color:var(--warn)">⚠ 港股与A股科技方向背离——市场分歧，轻仓参与。</div>')+
+            '</div>';
+        }
+      }
+
+    } else {
+      html += '<div class="card"><div class="card-title">🇭🇰 恒生指数</div>'+T.noData('港股数据收集中 · 等待腾讯qt行情cron产出')+'</div>';
+    }
+
+    // ─── 3. 港股持仓实时价 ───
+    if (hkData && hkData.watch && hkData.watch.length) {
+      var watchHTML = hkData.watch.map(function(w) {
+        var c = w.chg_pct >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="flow-row">'+
+          '<span class="flow-name">'+w.name+' <span style="color:var(--muted);font-size:9px">'+w.code+'</span></span>'+
+          '<span style="font-weight:600;font-family:var(--font-mono);color:'+c+'">'+w.price.toFixed(2)+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(w.chg_pct)+'</span>'+
+          '</div>';
+      }).join('');
+      html += '<div class="card">'+
+        '<div class="card-title">💼 港股持仓实时价</div>'+
+        watchHTML +
+        '<div style="font-size:9px;color:var(--muted);margin-top:6px">腾讯qt行情 · '+(hkData.updated||'—')+'</div>'+
+        '</div>';
+    }
+
+    // ─── 4. 南向资金 (如果有) ───
+    if (hkData && hkData.southbound) {
+      var sb = hkData.southbound;
+      var sbColor = sb.net_flow >= 0 ? 'var(--up)' : 'var(--down)';
+      html += '<div class="card">'+
+        '<div class="card-title">💰 南向资金</div>'+
+        '<div class="card-val" style="font-size:18px;color:'+sbColor+'">'+(sb.net_flow>=0?'↑':'↓')+' 净流入 '+(sb.net_flow||0).toFixed(1)+'亿港元</div>'+
+        (sb.trend_days ? '<div class="card-sub">连续'+(sb.trend_days||0)+'日净流入</div>' : '')+
+        (sb.top_buys ? '<div style="margin-top:6px;font-size:10px;color:var(--ink-soft)">主要买入: '+(sb.top_buys||[]).join(' / ')+'</div>' : '')+
+        '<div class="sowhat">💡 南向资金持续买入→港股有资金支撑，跟买信号。</div>'+
+        '</div>';
+    }
+
+    // ─── 5. 港股持仓信号 ───
+    if (overview && overview.holdings && overview.holdings.hk && overview.holdings.hk.length) {
+      var hkHolds = overview.holdings.hk;
+      var holdHTML = hkHolds.map(function(h) {
+        var c = h.chg >= 0 ? 'var(--up)' : 'var(--down)';
+        var alertIcon = '';
+        if (h.pnl_pct < -5) alertIcon = ' 🔴';
+        else if (h.pnl_pct < -2) alertIcon = ' 🟡';
+        return '<div class="flow-row">'+
+          '<span class="flow-name">'+h.sym+'</span>'+
+          '<span style="font-family:var(--font-mono);color:'+c+'">'+h.price+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(h.chg)+'</span>'+
+          '<span style="font-size:10px;color:'+(h.pnl_pct>=0?'var(--up)':'var(--down)')+'">盈亏 '+T.fmtPct(h.pnl_pct)+'</span>'+
+          alertIcon+
+          '</div>';
+      }).join('');
+      html += '<div class="card">'+
+        '<div class="card-title">📋 港股持仓详情</div>'+
+        holdHTML +
+        '</div>';
+    }
+
+    html += '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+    return html;
+  }
+});
+</script>
+</body>
+</html>

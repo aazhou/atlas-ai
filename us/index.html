@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal · 美股深度</title>
+<link rel="stylesheet" href="../css/terminal.css">
+</head>
+<body>
+<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
+<script src="../js/terminal.js"></script>
+<script>
+T.loadPage({
+  activeTab: 'us',
+  rootId: 'app',
+  dataPath: '../data/us/market.json',
+  render: function(usData, overview) {
+
+    var html = '';
+    html += '<a class="back-link" href="../index.html">← 返回全局</a>';
+
+    // ─── 1. 三大指数 ───
+    if (usData && usData.indices && usData.indices.length) {
+      var idxItems = usData.indices.map(function(x) {
+        var c = x.chg_pct >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+c+'">'+x.price+'</div><div class="chg" style="color:'+c+'">'+T.fmtPct(x.chg_pct)+'</div></div>';
+      }).join('');
+      html += '<div class="card">'+
+        '<div class="card-title">🇺🇸 三大指数 · 收盘</div>'+
+        '<div class="row3">'+idxItems+'</div>'+
+        '<div style="font-size:10px;color:var(--muted);margin-top:6px">📊 yfinance · 收盘数据 · '+(usData.updated||'—')+'</div>'+
+        '</div>';
+    } else if (overview && overview.indices && overview.indices.us) {
+      var idxItems = overview.indices.us.map(function(x) {
+        var c = x.chg >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+c+'">'+x.val+'</div><div class="chg" style="color:'+c+'">'+T.fmtPct(x.chg)+'</div></div>';
+      }).join('');
+      html += '<div class="card"><div class="card-title">🇺🇸 三大指数 · 收盘</div><div class="row3">'+idxItems+'</div></div>';
+    } else {
+      html += '<div class="card"><div class="card-title">🇺🇸 三大指数</div>'+T.noData('美股数据收集中 · 等待yfinance cron产出')+'</div>';
+    }
+
+    // ─── 2. 科技 vs 防御 ───
+    if (usData && usData.rotation) {
+      var r = usData.rotation;
+      var signalColor = r.signal === 'risk_on' ? 'var(--up)' : 'var(--down)';
+      var signalText = r.signal === 'risk_on' ? 'Risk-ON 信号：科技领涨，防御失血' : 'Risk-OFF 信号：防御领涨，科技失血';
+      html += '<div class="card">'+
+        '<div class="card-title">📊 板块轮动：科技 vs 防御</div>'+
+        '<div class="flow-row"><span class="flow-name" style="color:var(--up)">科技 XLK</span><span class="flow-amt" style="color:var(--up)">'+T.fmtPct(r.tech_chg)+'</span></div>'+
+        '<div class="flow-row"><span class="flow-name" style="color:var(--down)">公用 XLU</span><span class="flow-amt" style="color:var(--down)">'+T.fmtPct(r.defense_chg)+'</span></div>'+
+        '<div style="font-size:11px;margin-top:6px;color:'+signalColor+'">→ '+signalText+'</div>'+
+        '<div class="sowhat">💡 '+(r.signal==='risk_on' ? '科技领涨=市场风险偏好上升，利好A股科创50/港股恒生科技。' : '防御领涨=市场避险，A股/港股次日大概率承压。')+'</div>'+
+        '</div>';
+    }
+
+    // ─── 3. 宏观指标 ───
+    if (usData && usData.macro) {
+      var m = usData.macro;
+      var vixColor = m.vix > 25 ? 'var(--danger)' : m.vix < 15 ? 'var(--warn)' : 'var(--up)';
+      var vixLabel = m.vix > 25 ? '恐慌' : m.vix < 15 ? '安逸' : '正常';
+
+      html += '<div class="card">'+
+        '<div class="card-title">🏛 宏观指标</div>'+
+        '<div class="row3">'+
+          '<div class="sentiment"><div class="label" style="color:var(--muted)">VIX</div><div class="num" style="font-size:16px;color:'+vixColor+'">'+(m.vix||'—')+'</div><div class="label" style="color:'+vixColor+'">'+vixLabel+'</div></div>'+
+          '<div class="sentiment"><div class="label" style="color:var(--muted)">US 10Y</div><div class="num" style="font-size:16px">'+(m.us10y||'—')+'%</div><div class="label" style="color:var(--muted)">'+(m.us10y_dir||'—')+'</div></div>'+
+          '<div class="sentiment"><div class="label" style="color:var(--muted)">DXY</div><div class="num" style="font-size:16px">'+(m.dxy||'—')+'</div><div class="label" style="color:var(--muted)">'+(m.dxy_dir||'—')+'</div></div>'+
+        '</div>'+
+        '<div class="sowhat">💡 '+(m.vix < 20 ? 'VIX低位+美债下行=市场安逸，美元弱利好新兴市场。' : m.vix > 25 ? 'VIX恐慌=避险模式，减仓或观望。' : '市场中性，等待方向选择。')+'</div>'+
+        '</div>';
+    }
+
+    // ─── 4. 对A/港股预判 ───
+    if (usData && usData.impact_asia) {
+      var imp = usData.impact_asia;
+      html += '<div class="card" style="border-left:2px solid var(--warn)">'+
+        '<div class="card-title">🔮 对明日A股/港股预判</div>'+
+        '<div style="font-size:11px;color:var(--ink-soft);line-height:1.7">'+imp.text+'</div>'+
+        (imp.risk ? '<div style="font-size:10px;color:var(--warn);margin-top:4px">⚠ '+imp.risk+'</div>' : '')+
+        '</div>';
+    } else {
+      // Auto derive from indices
+      if (overview && overview.indices && overview.indices.us) {
+        var qqq = overview.indices.us.find(function(x){return x.name==='QQQ';}) || overview.indices.us[0];
+        if (qqq) {
+          var sentiment = qqq.chg > 0.5 ? '✅ 美股科技领涨 → A股科创50/港股恒生科技大概率高开' : qqq.chg < -0.5 ? '⚠ 美股科技下跌 → A股/港股明日承压' : '— 美股方向不明 → A股/港股预计平开';
+          html += '<div class="card" style="border-left:2px solid var(--warn)">'+
+            '<div class="card-title">🔮 对明日A股/港股预判</div>'+
+            '<div style="font-size:11px;color:var(--ink-soft);line-height:1.7">'+sentiment+'</div>'+
+            '</div>';
+        }
+      }
+    }
+
+    // ─── 5. 美股持仓 ───
+    if (usData && usData.watch && usData.watch.length) {
+      var watchHTML = usData.watch.map(function(w) {
+        var c = w.chg_pct >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="flow-row">'+
+          '<span class="flow-name">'+w.name+' <span style="color:var(--muted);font-size:9px">'+w.ticker+'</span></span>'+
+          '<span style="font-weight:600;font-family:var(--font-mono);color:'+c+'">'+w.price.toFixed(2)+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(w.chg_pct)+'</span>'+
+          '</div>';
+      }).join('');
+      html += '<div class="card">'+
+        '<div class="card-title">💼 美股持仓</div>'+
+        watchHTML +
+        '<div style="font-size:9px;color:var(--muted);margin-top:6px">yfinance · '+(usData.updated||'—')+'</div>'+
+        '</div>';
+    }
+
+    html += '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+    return html;
+  }
+});
+</script>
+</body>
+</html>

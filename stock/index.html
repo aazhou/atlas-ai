@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal · A股深度</title>
+<link rel="stylesheet" href="../css/terminal.css">
+</head>
+<body>
+<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
+<script src="../js/terminal.js"></script>
+<script>
+T.loadPage({
+  activeTab: 'stock',
+  rootId: 'app',
+  dataPath: '../data/stock/fund_flows-' + T.TODAY + '.json',
+  render: function(flowsData, overview) {
+
+    var html = '';
+
+    // ─── 1. A股四大指数 ───
+    html += '<a class="back-link" href="../index.html">← 返回全局</a>';
+    if (overview && overview.indices && overview.indices.a) {
+      var aIdx = overview.indices.a;
+      var idxItems = aIdx.map(function(x) {
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+x.val+'</div><div class="chg" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
+      }).join('');
+      html += '<div class="card"><div class="card-title">🇨🇳 A股四大指数 · 实时</div><div class="row4">'+idxItems+'</div>' +
+        '<div style="font-size:10px;color:var(--muted);margin-top:6px">📊 数据来源: moontdx · 每5分钟刷新</div></div>';
+    } else {
+      html += '<div class="card"><div class="card-title">🇨🇳 A股四大指数</div>'+T.noData('指数数据收集中')+'</div>';
+    }
+
+    // ─── 2. 板块资金流 TOP10流入 + BOTTOM10流出 ───
+    if (flowsData && flowsData.sectors) {
+      var sectors = flowsData.sectors;
+      // Extract flow data
+      var sectorList = [];
+      for (var name in sectors) {
+        if (sectors.hasOwnProperty(name)) {
+          var s = sectors[name];
+          sectorList.push({name: name, flow: s.fund_flow || 0, chg: s.current || 0});
+        }
+      }
+      // Sort by flow
+      sectorList.sort(function(a,b) { return b.flow - a.flow; });
+
+      var top10 = sectorList.filter(function(s) { return s.flow > 0; }).slice(0, 10);
+      var bottom10 = sectorList.filter(function(s) { return s.flow < 0; }).sort(function(a,b) { return a.flow - b.flow; }).slice(0, 10);
+
+      if (!top10.length && !bottom10.length) {
+        top10 = sectorList.slice(0, 10);
+        bottom10 = sectorList.slice(-10).reverse();
+      }
+
+      var topHTML = top10.map(function(s) {
+        return '<div class="flow-row"><span class="flow-name">'+s.name+'</span><span class="flow-amt" style="color:var(--up)">+'+(s.flow||0).toFixed(1)+'亿</span><span style="color:var(--muted);font-size:9px">'+(s.chg>=0?'+':'')+(s.chg||0).toFixed(1)+'%</span></div>';
+      }).join('');
+
+      var bottomHTML = bottom10.map(function(s) {
+        return '<div class="flow-row"><span class="flow-name">'+s.name+'</span><span class="flow-amt" style="color:var(--down)">'+(s.flow||0).toFixed(1)+'亿</span><span style="color:var(--muted);font-size:9px">'+(s.chg>=0?'+':'')+(s.chg||0).toFixed(1)+'%</span></div>';
+      }).join('');
+
+      // Total flow
+      var totalFlow = sectorList.reduce(function(sum, s) { return sum + (s.flow || 0); }, 0);
+
+      html += '<div class="card">'+
+        '<div class="card-title">📊 板块资金流 · 全市场</div>'+
+        '<div class="card-val" style="color:'+(totalFlow>=0?'var(--up)':'var(--down)')+'">'+(totalFlow>=0?'↑':'↓')+' 主力净流入 '+Math.abs(totalFlow).toFixed(1)+'亿</div>'+
+        '<div class="card-sub" style="color:var(--muted)">覆盖 '+sectorList.length+' 个板块</div>'+
+        '<div class="row2" style="margin-top:10px">'+
+          '<div><div style="font-size:10px;color:var(--up);margin-bottom:6px;font-weight:600">💰 主力买入 TOP10</div>'+topHTML+'</div>'+
+          '<div><div style="font-size:10px;color:var(--down);margin-bottom:6px;font-weight:600">📉 主力卖出 TOP10</div>'+bottomHTML+'</div>'+
+        '</div>'+
+        '</div>';
+
+      // ─── 3. AI轮动方向判断 ───
+      var rotationText = flowsData.rotation_ai_text || '';
+      if (!rotationText) {
+        // Auto-generate simple rotation summary
+        var topNames = top10.slice(0,3).map(function(s){return s.name;}).join('/');
+        var bottomNames = bottom10.slice(0,3).map(function(s){return s.name;}).join('/');
+        rotationText = '今日资金趋势：主力流入集中在'+(topNames||'—')+'方向，流出集中在'+(bottomNames||'—')+'方向。';
+      }
+
+      html += '<div class="card" style="border-left:2px solid var(--info)">'+
+        '<div class="card-title">🤖 AI轮动判断</div>'+
+        '<div class="rotate-ai">「'+rotationText+'」</div>'+
+        '<div style="font-size:9px;color:var(--muted);margin-top:4px">cron产出 · '+(flowsData.updated||'—')+'更新</div>'+
+        '</div>';
+
+      // ─── 4. 板块异动信号 ───
+      var signals = flowsData.signals || [];
+      if (signals.length) {
+        var sigHTML = signals.slice(0, 5).map(function(s) {
+          var icon = s.confidence === 'high' ? '🟢' : '🟡';
+          return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+icon+' <strong>'+s.sector+'</strong> — '+s.desc+' <span style="color:var(--muted);font-size:10px">置信度 '+s.confidence+'</span></div>';
+        }).join('');
+        html += '<div class="card" style="border-left:2px solid var(--primary)">'+
+          '<div class="card-title" style="color:var(--primary)">🎯 A股机会信号</div>'+sigHTML+
+          '<div class="sowhat">💡 关注资金异动板块——主力资金突然进出的方向往往有消息驱动。</div>'+
+          '</div>';
+      }
+
+    } else {
+      html += '<div class="card"><div class="card-title">📊 板块资金流</div>'+T.noData('资金流数据收集中 · 等待cron产出')+'</div>';
+    }
+
+    html += '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+    return html;
+  }
+});
+</script>
+</body>
+</html>

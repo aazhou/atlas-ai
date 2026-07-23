@@ -2,55 +2,127 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>全景 · Atlas Terminal</title>
-<link rel="stylesheet" href="terminal.css">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal v3 · 全球投研终端</title>
+<link rel="stylesheet" href="css/terminal.css">
 </head>
 <body>
-<div class="mobile-shell">
-  <!-- Desktop Left Nav -->
-  <nav class="desktop-nav">
-    <div class="nav-brand">ATLAS<br>TERMINAL</div>
-    <a class="nav-item active" href="index.html"><span class="nav-icon">🏠</span> 全景</a>
-    <a class="nav-item" href="signals.html"><span class="nav-icon">⚡</span> 信号</a>
-    <a class="nav-item" href="portfolio.html"><span class="nav-icon">💼</span> 持仓</a>
-    <a class="nav-item" href="tools.html"><span class="nav-icon">🔧</span> 工具</a>
-  </nav>
+<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
+<script src="js/terminal.js"></script>
+<script>
+T.loadPage({
+  activeTab: 'global',
+  rootId: 'app',
+  render: function(pageData, overview) {
 
-  <div class="main-area">
-    <!-- Global Status Bar (always visible) -->
-    <div class="global-status" id="globalStatus">
-      <span class="mkt-pill"><span class="mkt-dot live"></span>加载中...</span>
-    </div>
+    // ─── 第一部分: 四市场关键指标卡片 ───
+    var idxHTML = '';
+    if (overview && overview.indices) {
+      var idx = overview.indices;
+      // A股
+      var aItems = (idx.a || []).map(function(x) {
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+x.val+'</div><div class="chg '+(x.chg>=0?'up':'down')+'" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
+      }).join('');
+      // HK
+      var hkItem = idx.hk ? '<div class="idx-mini"><div class="name">'+idx.hk.name+'</div><div class="val" style="color:'+(idx.hk.chg>=0?'var(--up)':'var(--down)')+'">'+idx.hk.val+'</div><div class="chg" style="color:'+(idx.hk.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(idx.hk.chg)+'</div></div>' : '';
+      // US
+      var usItems = (idx.us || []).slice(0,3).map(function(x) {
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+x.val+'</div><div class="chg" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
+      }).join('');
+      // Crypto
+      var cryptoItems = (idx.crypto || []).map(function(x) {
+        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.formatCrypto(x.val)+'</div><div class="chg" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
+      }).join('');
 
-    <!-- Alert Strip -->
-    <div class="alert-strip" id="alertStrip" style="display:none"></div>
+      idxHTML = ''+
+        '<div class="card"><div class="card-title">🇨🇳 A股 · 四大指数</div><div class="row4">'+aItems+'</div></div>'+
+        '<div class="card"><div class="card-title">🇭🇰 港股</div><div class="row3">'+hkItem+'</div></div>'+
+        '<div class="card"><div class="card-title">🇺🇸 美股 · 收盘</div><div class="row3">'+(usItems || T.noData('美股数据收集中'))+'</div></div>'+
+        '<div class="card"><div class="card-title">₿ 加密 · 实时</div><div class="row3">'+cryptoItems+'</div></div>';
+    } else {
+      idxHTML = '<div class="card">'+T.noData('全球指数数据收集中')+'</div>';
+    }
 
-    <!-- Page Content -->
-    <div class="page-content">
-      <section class="active" id="section-pano">
-        <!-- Total Asset Card -->
-        <div class="term-card" id="totalCard">
-          <div class="card-top"><span class="card-title">💰 总资产</span></div>
-          <div class="card-body"><div class="card-main">加载中...</div></div>
-        </div>
+    // ─── 第二部分: 全球资金流向判断 ───
+    var flowHTML = '';
+    if (overview && overview.flow) {
+      var f = overview.flow;
+      var flowColor = f.total_inflow >= 0 ? 'var(--up)' : 'var(--down)';
+      var arrow = f.total_inflow >= 0 ? '↑' : '↓';
+      var topIn = (f.top_inflow || []).slice(0,5).map(function(s) {
+        return '<div class="flow-row"><span class="flow-name" style="color:var(--up)">'+s.name+'</span><span class="flow-amt" style="color:var(--up)">+'+s.amount+'亿</span></div>';
+      }).join('');
+      var topOut = (f.top_outflow || []).slice(0,5).map(function(s) {
+        return '<div class="flow-row"><span class="flow-name" style="color:var(--down)">'+s.name+'</span><span class="flow-amt" style="color:var(--down)">'+s.amount+'亿</span></div>';
+      }).join('');
 
-        <!-- Holdings Grid -->
-        <div id="holdingsGrid"></div>
-      </section>
-    </div>
-  </div>
-</div>
+      flowHTML = '<div class="card">'+
+        '<div class="card-title">💰 今日资金方向</div>'+
+        '<div class="card-val" style="color:'+flowColor+'">'+arrow+' 主力净流入 '+Math.abs(f.total_inflow)+'亿</div>'+
+        '<div class="card-sub" style="color:'+flowColor+'">全市场资金方向: '+(f.total_inflow>=0?'净流入':'净流出')+'</div>'+
+        (topIn ? '<div style="margin-top:8px"><div style="font-size:10px;color:var(--up);margin-bottom:4px">🔥 主力买入TOP5</div>'+topIn+'</div>' : '')+
+        (topOut ? '<div style="margin-top:8px"><div style="font-size:10px;color:var(--down);margin-bottom:4px">📉 主力卖出TOP5</div>'+topOut+'</div>' : '')+
+        ((f.rotation_text) ? '<div class="sowhat">💡 '+f.rotation_text+'</div>' : '')+
+        '</div>';
+    } else {
+      // Try fund_flows data
+      flowHTML = '<div class="card"><div class="card-title">💰 资金流向</div>'+T.noData('资金流数据收集中')+'</div>';
+    }
 
-<!-- Mobile Bottom Tabs -->
-<nav class="term-tabs">
-  <a class="term-tab active" href="index.html"><span class="tab-icon">🏠</span>全景</a>
-  <a class="term-tab" href="signals.html"><span class="tab-icon">⚡</span>信号</a>
-  <a class="term-tab" href="portfolio.html"><span class="tab-icon">💼</span>持仓</a>
-  <a class="term-tab" href="tools.html"><span class="tab-icon">🔧</span>工具</a>
-</nav>
+    // ─── 第三部分: 跨市场预警 ───
+    var crossHTML = '';
+    if (overview && overview.cross_market) {
+      var cm = overview.cross_market;
+      crossHTML = '<div class="card">'+
+        '<div class="card-title">🔗 跨市场资金链</div>'+
+        '<div class="cross-chain">'+
+        (cm.chain || []).map(function(c) {
+          var cls = c.direction === 'up' ? 'link-up' : 'link-down';
+          return '<span class="'+cls+'">'+c.from+' → '+c.to+'</span>';
+        }).join('')+
+        '</div>'+
+        (cm.anomaly ? '<div class="sowhat" style="border-left-color:var(--warn)">⚠ '+cm.anomaly+'</div>' : '')+
+        '</div>';
+    } else {
+      // Build chain from index data
+      var chainParts = [];
+      if (overview && overview.indices) {
+        var i = overview.indices;
+        if (i.us && i.us.length) {
+          var qqq = i.us.find(function(x){return x.name==='QQQ'}) || i.us[0];
+          chainParts.push('🇺🇸<span class="'+(qqq.chg>=0?'link-up':'link-down')+'">'+qqq.name+' '+T.fmtPct(qqq.chg)+'</span>');
+        }
+        if (i.hk) {
+          chainParts.push('→ 🇭🇰<span class="'+(i.hk.chg>=0?'link-up':'link-down')+'">'+i.hk.name+' '+T.fmtPct(i.hk.chg)+'</span>');
+        }
+        if (i.a && i.a.length) {
+          var kc50 = i.a.find(function(x){return x.name==='科创50'}) || i.a[0];
+          chainParts.push('→ 🇨🇳<span class="'+(kc50.chg>=0?'link-up':'link-down')+'">'+kc50.name+' '+T.fmtPct(kc50.chg)+'</span>');
+        }
+      }
+      crossHTML = '<div class="card"><div class="card-title">🔗 跨市场资金链</div><div class="cross-chain">'+(chainParts.length ? chainParts.join(' ') : T.noData('跨市场数据收集中'))+'</div></div>';
+    }
 
-<script src="terminal.js"></script>
-<script>T.init('pano');</script>
+    // ─── 第四部分: 预警信号 ───
+    var alertListHTML = '';
+    if (overview && overview.alerts && overview.alerts.length) {
+      alertListHTML = '<div class="card">'+
+        '<div class="card-title">⚡ 跨市场预警信号</div>'+
+        overview.alerts.map(function(a, i) {
+          var icon = a.priority === 'high' ? '🔴' : a.priority === 'medium' ? '🟡' : '🟢';
+          return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+icon+' <strong style="color:'+(a.priority==='high'?'var(--danger)':'var(--warn)')+'">'+a.title+'</strong> <span style="color:var(--muted);font-size:10px">'+a.time+'</span>'+(a.desc ? '<div style="color:var(--ink-soft);margin-top:2px">'+a.desc+'</div>' : '')+'</div>';
+        }).join('')+
+        '</div>';
+    } else {
+      alertListHTML = '<div class="card"><div class="card-title">⚡ 跨市场预警</div>'+T.noData('暂无预警信号')+'</div>';
+    }
+
+    // ─── 最后更新 ───
+    var timeHTML = '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+
+    return idxHTML + flowHTML + crossHTML + alertListHTML + timeHTML;
+  }
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal v3 · 全球投研终端 — 信息架构与页面布局设计</title>
+<style>
+:root {
+  --canvas:#080b10; --surface:#0f1319; --surface2:#151a22;
+  --card:#1a1f28; --card-hover:#1f2430; --hairline:#252a34;
+  --primary:#00d4aa; --primary-dim:rgba(0,212,170,0.08); --primary-glow:rgba(0,212,170,0.20);
+  --danger:#f43f5e; --danger-dim:rgba(244,63,94,0.10); --danger-glow:rgba(244,63,94,0.25);
+  --warn:#f59e0b; --warn-dim:rgba(245,158,11,0.10);
+  --info:#3b82f6; --info-dim:rgba(59,130,246,0.10);
+  --up:#10b981; --down:#f43f5e;
+  --ink:#e4e7ec; --ink-soft:#b0b8c4; --muted:#6b7280;
+  --font-sans:-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-mono:'JetBrains Mono','Cascadia Code','Consolas',monospace;
+  --radius:6px; --radius-lg:10px;
+  scroll-behavior:smooth;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--canvas);color:var(--ink);font-family:var(--font-sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--canvas)}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:3px}
+
+/* ===== Layout ===== */
+.doc{max-width:1100px;margin:0 auto;padding:0 20px 80px}
+
+/* ===== Hero Header ===== */
+.hero{background:var(--surface);border-bottom:1px solid var(--hairline);padding:48px 0 40px;margin-bottom:0;text-align:center}
+.hero .badge{display:inline-block;background:var(--primary-dim);color:var(--primary);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.05em;margin-bottom:16px;border:1px solid rgba(0,212,170,0.2)}
+.hero h1{font-size:clamp(24px,5vw,38px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:10px}
+.hero h1 span{color:var(--primary)}
+.hero .sub{font-size:15px;color:var(--ink-soft);margin-top:6px}
+.hero .meta{font-size:12px;color:var(--muted);margin-top:12px}
+.hero .meta span{margin:0 8px;color:var(--hairline)}
+
+/* ===== Philosophy Banner ===== */
+.philosophy{background:linear-gradient(135deg,var(--danger-dim) 0%,var(--surface) 60%);border:1px solid rgba(244,63,94,0.15);border-radius:var(--radius-lg);padding:20px 24px;margin:32px 0}
+.philosophy h3{font-size:13px;color:var(--danger);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.philosophy p{font-size:14px;color:var(--ink-soft);line-height:1.7}
+
+/* ===== Section Headers ===== */
+.sec{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--hairline);display:flex;align-items:baseline;gap:10px}
+.sec h2{font-size:20px;font-weight:700}
+.sec .id{font-family:var(--font-mono);font-size:12px;color:var(--primary);background:var(--primary-dim);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.sec .sub{font-size:13px;color:var(--muted)}
+
+/* ===== Cards ===== */
+.card{background:var(--card);border:1px solid var(--hairline);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;transition:border-color .2s}
+.card:hover{border-color:#2d3540}
+
+/* Info Architecture Diagram */
+.arch-diagram{font-family:var(--font-mono);font-size:12px;line-height:1.9;padding:24px;background:var(--surface2);border-radius:var(--radius-lg);border:1px solid var(--hairline);overflow-x:auto;white-space:pre;color:var(--ink-soft)}
+.arch-diagram .hl{color:var(--primary)}
+.arch-diagram .dl{color:var(--danger)}
+.arch-diagram .wl{color:var(--warn)}
+.arch-diagram .il{color:var(--info)}
+.arch-diagram .ml{color:var(--muted)}
+
+/* Tables */
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:10px 12px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--hairline);font-weight:600}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--hairline);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tbody tr:hover{background:rgba(255,255,255,0.02)}
+
+/* Badges */
+.badge-p0{background:var(--danger-dim);color:var(--danger);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.03em}
+.badge-p1{background:var(--warn-dim);color:var(--warn);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.03em}
+.badge-p2{background:var(--info-dim);color:var(--info);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.03em}
+.badge-red{background:var(--danger-dim);color:var(--danger);font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px}
+.badge-green{background:rgba(16,185,129,0.12);color:var(--up);font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px}
+
+/* Page Layout Demo */
+.page-demo{background:var(--canvas);border:2px solid var(--hairline);border-radius:var(--radius-lg);overflow:hidden;margin:20px 0}
+.page-demo .phone-frame{width:375px;margin:24px auto;background:var(--surface);border:2px solid var(--hairline);border-radius:20px;padding:16px 12px;min-height:700px}
+.page-demo .phone-frame .status-bar{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:12px;font-family:var(--font-mono)}
+.page-demo .page-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:14px;letter-spacing:.02em;display:flex;justify-content:space-between;align-items:center}
+.page-demo .page-title .time{font-size:10px;color:var(--muted);font-family:var(--font-mono)}
+.page-demo .widget{background:var(--card);border:1px solid var(--hairline);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px}
+.page-demo .widget.pulse{border-color:rgba(244,63,94,0.3);animation:pulse-border 2s ease-in-out infinite}
+.page-demo .widget-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.page-demo .widget .val{font-size:20px;font-weight:700;font-family:var(--font-mono)}
+.page-demo .widget .sub-val{font-size:11px;color:var(--ink-soft);margin-top:2px}
+.page-demo .widget .chg{font-size:12px}
+.page-demo .widget .up{color:var(--up)} .page-demo .widget .down{color:var(--down)}
+.page-demo .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.page-demo .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@keyframes pulse-border{0%,100%{border-color:rgba(244,63,94,0.3)}50%{border-color:rgba(244,63,94,0.7)}}
+
+/* Navigation mock */
+.nav-mock{display:flex;background:var(--surface2);border:1px solid var(--hairline);border-radius:var(--radius-lg);padding:6px;gap:2px;margin:16px 0;overflow-x:auto}
+.nav-mock .nav-item{flex:1;text-align:center;padding:8px 6px;border-radius:var(--radius);font-size:11px;color:var(--muted);cursor:default;white-space:nowrap;min-width:60px}
+.nav-mock .nav-item.active{background:var(--primary-dim);color:var(--primary);font-weight:600}
+.nav-mock .nav-item .icon{display:block;font-size:16px;margin-bottom:2px}
+
+/* Priority grid */
+.priority-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+
+/* So-what section */
+.sowhat{font-size:12px;color:var(--ink-soft);background:var(--surface2);border-left:3px solid var(--primary);padding:8px 12px;margin-top:8px;border-radius:0 var(--radius) var(--radius) 0;font-style:italic;line-height:1.6}
+
+/* Section content */
+.content-block{margin:20px 0 32px}
+.content-block h3{font-size:16px;font-weight:600;margin:28px 0 10px;color:var(--ink)}
+.content-block h4{font-size:13px;font-weight:600;margin:18px 0 8px;color:var(--ink-soft)}
+.content-block p{margin:10px 0;line-height:1.7;color:var(--ink-soft)}
+.content-block ul, .content-block ol{padding-left:20px;margin:10px 0;color:var(--ink-soft)}
+.content-block li{margin:6px 0;line-height:1.6}
+
+/* Color legend */
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin:12px 0}
+.legend span{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.legend .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.legend .dot.red{background:var(--danger)} .legend .dot.green{background:var(--primary)} .legend .dot.yellow{background:var(--warn)}
+
+/* Divider */
+hr{display:block;border:none;border-top:1px solid var(--hairline);margin:24px 0}
+
+/* Final sign-off */
+.signoff{padding:32px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--hairline);margin-top:40px}
+.signoff strong{color:var(--primary)}
+
+@media(max-width:600px){
+  .doc{padding:0 12px 60px}
+  .hero{padding:32px 0 28px}
+  .priority-grid{grid-template-columns:1fr}
+  .nav-mock .nav-item{font-size:10px;padding:6px 4px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HERO ══════ -->
+<header class="hero">
+  <div class="doc">
+    <div class="badge">DESIGN DOC · V3</div>
+    <h1>Atlas <span>Terminal</span> v3</h1>
+    <div class="sub">全球投研终端 — 信息架构与页面布局设计</div>
+    <div class="meta">诸葛设计 <span>|</span> 2026-07-23 <span>|</span> 定位变更：持仓监控 → 全球机会发现</div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ PHILOSOPHY ════════ -->
+<div class="doc">
+  <div class="philosophy">
+    <h3>🎯 设计哲学 — 龙哥的底线</h3>
+    <p>
+      <strong>这是一个投研终端，不是持仓监控台。</strong> 核心价值是帮龙哥<em>看到全球资金往哪走、机会在哪、风险在哪</em>。
+      持仓只是顺便扫一眼的东西。每个数字必须回答「所以呢？」——数据是手段，决策才是目的。预警信号必须最醒目（红色脉冲），不能淹没在数据堆里。
+      一屏看完所有关键信息。移动端375px优先。深色金融终端风格。
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 1 ════════ -->
+  <div class="sec"><h2>一、信息架构图</h2><span class="id">INFO-ARCH</span></div>
+
+  <div class="content-block">
+    <p>Atlas Terminal v3 是一个 <strong>三层架构</strong>：数据层（cron产出JSON）→ 服务层（数据聚合+信号引擎）→ 展示层（四页面 + 全局组件）。</p>
+    <div class="legend">
+      <span><span class="dot green"></span> 实时数据源</span>
+      <span><span class="dot yellow"></span> 信号引擎</span>
+      <span><span class="dot red"></span> 预警系统</span>
+    </div>
+  </div>
+
+  <div class="arch-diagram" style="font-size:11px;line-height:2.1">
+┌─────────────────────────────────────────────────────────────┐
+│                    <span class="ml">DATA LAYER · cron 产出 (5min ~ daily)</span>             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="hl">fund_flows-{date}.json</span>    <span class="hl">portfolio.json</span>        <span class="hl">scanner.json</span>      │
+│  A股板块实时资金流          持仓+技术指标+AI分析    技术面扫描结果           │
+│  每5分钟刷新               盘中哨兵更新             盘后/盘中                   │
+│                                                             │
+│  <span class="hl">sector_momentum-{date}.json</span>   <span class="hl">sectors-{date}.json</span>    <span class="hl">limit_data-{date}.json</span> │
+│  板块涨跌+加速度+趋势        板块涨跌幅排行            涨跌停/强势股               │
+│  每5分钟                       每5分钟                     每5分钟                      │
+│                                                             │
+│  <span class="hl">hk/market.json</span>           <span class="hl">us/market.json</span>          <span class="hl">cron: Binance API</span>      │
+│  港股指数+持仓实时价        美股收盘指数+持仓        加密实时价+费率+OI         │
+│  腾讯qt行情                    yfinance早间cron           Binance futures API       │
+│                                                             │
+│  <span class="hl">terminal/overview.json</span>    <span class="hl">terminal/signals.json</span>   <span class="hl">terminal/portfolio.json</span> │
+│  聚合视图(已聚合)            信号汇总(已聚合)          持仓详情(已聚合)              │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                    <span class="wl">SERVICE LAYER · 数据聚合 + 信号引擎</span>               │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  <span class="wl">MarketAggregator</span>          <span class="wl">SignalEngine</span>            <span class="wl">RiskEngine</span>             │
+│  · 四市场指数聚合            · 费率反转信号               · 止损距离计算            │
+│  · 资金流TOP/BOTTOM         · OI背离信号                 · 板块暴跌检测            │
+│  · 跨市场涨跌统计            · MACD/MA技术信号           · 跨市场联动风险          │
+│  · 实时→terminal/overview   · 信号→terminal/signals     · 预警→alert strip       │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                    <span class="dl">PRESENTATION LAYER · 4页面 + 全局组件</span>              │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   <span class="dl">[全局状态栏]</span> 四市场指数滚动条 · 实时 · 固定在顶部                    │
+│   <span class="dl">[预警横幅]</span>   红色脉冲 · 最高优先级 · 全局可展开                       │
+│                                                             │
+│   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────┐ │
+│   │  <span class="hl">P0 市场全局</span> │  │  <span class="wl">P1 机会雷达</span> │  │  <span class="dl">P0 风险预警</span> │  │ <span class="ml">P1 持仓</span>  │ │
+│   │  Home/首页   │  │  Signals     │  │  Risk Alerts │  │Portfolio │ │
+│   │             │  │             │  │             │  │         │ │
+│   │ 资金流向     │  │ 板块轮动信号  │  │ 止损逼近列表  │  │ 盈亏概览 │ │
+│   │ 市场热度     │  │ 技术买点     │  │ 板块暴跌预警  │  │ AI分析  │ │
+│   │ 全球指数     │  │ 资金异动     │  │ 跨市场风险    │  │ 操作建议 │ │
+│   └──────────────┘  └──────────────┘  └──────────────┘  └──────────┘ │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 2 ════════ -->
+  <div class="sec"><h2>二、首页布局设计</h2><span class="id">HOME-LAYOUT</span><span class="sub">一屏看完 — 移动端375px优先</span></div>
+
+  <div class="content-block">
+    <p>首页 = <strong>市场全局视图</strong>。这是龙哥每天打开终端看到的第一屏，也是最核心的页面。设计目标：<em>3秒内看清全球资金在往哪走，5秒内看到最高的风险和最大的机会。</em></p>
+    <p>布局采用卡片堆叠式（移动端优先），从上到下按信息优先级排列：</p>
+    <ol>
+      <li><strong>预警横幅</strong> — 红色脉冲，最高优先级消息（全局组件，但首页置顶）</li>
+      <li><strong>全球指数条</strong> — 四市场关键指数，一行滚动</li>
+      <li><strong>资金流方向卡</strong> — A股主力资金：今日整体方向 + TOP/BOTTOM板块</li>
+      <li><strong>机会/风险速览</strong> — 2列网格：今日最强板块 vs 今日最弱板块</li>
+      <li><strong>跨市场联动卡</strong> — 美股收盘→港股开盘→A股盘中 资金传导链</li>
+      <li><strong>今日关键信号</strong> — 最新3条信号摘要（点击进入机会雷达）</li>
+    </ol>
+  </div>
+
+  <!-- Mobile mock -->
+  <div class="page-demo">
+    <div class="phone-frame">
+      <div class="status-bar"><span>ATLAS</span><span>14:35 CST</span></div>
+      <div class="page-title">市场全局 <span class="time">实时</span></div>
+
+      <!-- Alert strip -->
+      <div class="widget pulse" style="border-left:3px solid var(--danger)">
+        <div class="widget-title" style="color:var(--danger)">⚡ 高优先级预警</div>
+        <div class="val" style="font-size:13px;color:var(--danger)">BTC 费率反转 — 空头踩踏启动</div>
+        <div class="sub-val" style="color:var(--danger)">OI Δ +18% | 费率 -0.08%→-0.03% | 建议轻仓追多</div>
+      </div>
+
+      <!-- Global indices -->
+      <div class="widget" style="overflow-x:auto">
+        <div class="widget-title">全球指数</div>
+        <div style="display:flex;gap:10px;font-size:11px;font-family:var(--font-mono);white-space:nowrap">
+          <span>🇨🇳上证 <span style="color:var(--up)">3258 +0.8%</span></span>
+          <span>🇨🇳科创50 <span style="color:var(--up)">1028 +2.1%</span></span>
+          <span>🇭🇰恒指 <span style="color:var(--up)">19842 +1.2%</span></span>
+          <span>🇺🇸SPY <span style="color:var(--down)">592 -0.3%</span></span>
+          <span>₿BTC <span style="color:var(--up)">67250 +2.1%</span></span>
+        </div>
+      </div>
+
+      <!-- Fund flow -->
+      <div class="widget">
+        <div class="widget-title">今日资金方向</div>
+        <div class="val" style="font-size:16px"><span style="color:var(--up)">↑ 主力净流入 542亿</span> <span style="font-size:10px;color:var(--muted)">创近期新高</span></div>
+        <div style="font-size:10px;color:var(--warn);margin-top:2px">⚠ 高度集中于新能源/电力，科技失血</div>
+        <div style="display:flex;gap:8px;margin-top:8px;font-size:10px">
+          <span style="color:var(--up)">电力+5.6%</span>
+          <span style="color:var(--up)">电网+9.7%</span>
+          <span style="color:var(--up)">有色+4.1%</span>
+          <span style="color:var(--muted)">|</span>
+          <span style="color:var(--down)">半导体-1.7%</span>
+          <span style="color:var(--down)">机器人-5.9%</span>
+        </div>
+        <div class="sowhat">💡 钱从科技流向新能源——若持仓偏科技，注意轮动风险；新能源ETF是当下方向。</div>
+      </div>
+
+      <!-- Opportunity/Risk grid -->
+      <div class="row2">
+        <div class="widget">
+          <div class="widget-title" style="color:var(--up)">🔥 今日最强板块</div>
+          <div style="font-size:11px"><span style="color:var(--up);font-weight:700">电网设备</span> <span style="color:var(--up)">+9.7%</span></div>
+          <div style="font-size:11px"><span style="color:var(--up);font-weight:700">电力设备</span> <span style="color:var(--up)">+5.6%</span></div>
+          <div style="font-size:11px"><span style="color:var(--up);font-weight:700">新能源车</span> <span style="color:var(--up)">+3.5%</span></div>
+        </div>
+        <div class="widget">
+          <div class="widget-title" style="color:var(--down)">📉 今日最弱板块</div>
+          <div style="font-size:11px"><span style="color:var(--down);font-weight:700">机器人</span> <span style="color:var(--down)">-5.9%</span></div>
+          <div style="font-size:11px"><span style="color:var(--down);font-weight:700">模拟芯片</span> <span style="color:var(--down)">-4.1%</span></div>
+          <div style="font-size:11px"><span style="color:var(--down);font-weight:700">半导体</span> <span style="color:var(--down)">-1.7%</span></div>
+        </div>
+      </div>
+
+      <!-- Cross-market chain -->
+      <div class="widget">
+        <div class="widget-title">跨市场资金链</div>
+        <div style="font-size:10px;font-family:var(--font-mono);line-height:1.8;color:var(--ink-soft)">
+          🇺🇸<span style="color:var(--up)">QQQ +1.1%</span> → 🇭🇰<span style="color:var(--up)">恒生科技 +1.3%</span> → 🇨🇳<span style="color:var(--up)">科创50 +2.1%</span>
+        </div>
+        <div class="sowhat">💡 美股科技反弹 → 港股科技跟涨 → A股科创50受益。今晚关注NVDA/AVGO财报。</div>
+      </div>
+
+      <!-- Latest signals -->
+      <div class="widget">
+        <div class="widget-title">最新信号 <span style="color:var(--muted);font-weight:400">· 点击进入机会雷达 →</span></div>
+        <div style="font-size:11px;line-height:1.8">
+          <div>🔴 <strong style="color:var(--danger)">MU逼近止损</strong> — 距95.0仅-3.6%</div>
+          <div>🟡 <strong style="color:var(--warn)">半导体资金流出-12.8亿</strong></div>
+          <div>🟢 <strong style="color:var(--up)">科创50突破MA20</strong> — MACD金叉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 3 ════════ -->
+  <div class="sec"><h2>三、数据 → 页面 → 卡片映射表</h2><span class="id">DATA-MAP</span></div>
+
+  <div class="content-block">
+    <p>所有数据 <strong>100%实时</strong> 从 cron 产出的 JSON 读取，无静态 fallback 兜底。每个卡片标注了数据源路径。</p>
+  </div>
+
+  <div style="overflow-x:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>页面</th><th>卡片名称</th><th>数据源 (实时JSON)</th><th>刷新频率</th><th>给龙哥的行动信号</th></tr>
+    </thead>
+    <tbody>
+      <!-- Home / 市场全局 -->
+      <tr>
+        <td rowspan="6"><strong>市场全局<br>(首页)</strong></td>
+        <td>全球指数滚动条</td>
+        <td><code>terminal/overview.json</code> → indices<br><code>us/market.json</code> → indices<br><code>hk/market.json</code> → index<br>Binance API → crypto</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">一眼看清四个市场是红是绿，全球资金情绪方向</span></td>
+      </tr>
+      <tr>
+        <td>资金流方向卡</td>
+        <td><code>fund_flows-{date}.json</code> → 全板块资金流汇总<br><code>terminal/overview.json</code> → 已聚合版本</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">主力在进还是出？钱去了哪个方向？持仓是否在资金流出板块？</span></td>
+      </tr>
+      <tr>
+        <td>板块强弱双栏</td>
+        <td><code>sector_momentum-{date}.json</code> → 涨跌幅+趋势<br><code>sectors-{date}.json</code> → 排行</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">今天该买什么方向、避开什么方向？板块是否在轮动？</span></td>
+      </tr>
+      <tr>
+        <td>跨市场联动卡</td>
+        <td><code>us/market.json</code> + <code>hk/market.json</code> + <code>terminal/overview.json</code> → 聚合后推导</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">昨晚美股科技涨了吗→港股跟了吗→A股今天科技是追还是等？</span></td>
+      </tr>
+      <tr>
+        <td>市场情绪指标</td>
+        <td><code>limit_data-{date}.json</code> → 涨停数/跌停数<br><code>fund_flows</code> → 涨跌比/量比</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">市场是亢奋、平静还是恐慌？该激进还是保守？</span></td>
+      </tr>
+      <tr>
+        <td>今日关键信号摘要</td>
+        <td><code>terminal/signals.json</code> → signals[] (top 3)</td>
+        <td>实时</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">当前最重要的3件事——一眼看完，点击展开详情</span></td>
+      </tr>
+
+      <!-- 机会雷达 -->
+      <tr>
+        <td rowspan="4"><strong>机会雷达</strong></td>
+        <td>板块轮动信号</td>
+        <td><code>sector_momentum-{date}.json</code> → trend+accel<br><code>fund_flows-{date}.json</code> → 资金拐点</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">有没有板块从跌转涨（拐点信号）？趋势加速还是减速？上车时机到了吗？</span></td>
+      </tr>
+      <tr>
+        <td>资金异动列表</td>
+        <td><code>fund_flows-{date}.json</code> → 单板块30分钟内流入/流出加速</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">有没有板块突然有大资金进场或撤退？主力在悄悄布局什么？</span></td>
+      </tr>
+      <tr>
+        <td>技术买点信号</td>
+        <td><code>scanner.json</code> → MACD金叉/突破MA20/放量<br><code>portfolio.json</code> → 持仓技术指标</td>
+        <td>盘中</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">持仓或自选里有没有刚出现的技术买入信号？立刻执行还是等确认？</span></td>
+      </tr>
+      <tr>
+        <td>加密费率/OI信号</td>
+        <td>Binance futures API → 费率 + OI (cron拉取)<br>历史回测: <code>atlas.duckdb</code></td>
+        <td>实时</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">费率反转/OI背离出现了吗？历史上这个模式4h胜率多少？该追还是该等？</span></td>
+      </tr>
+
+      <!-- 风险预警 -->
+      <tr>
+        <td rowspan="4"><strong>风险预警</strong></td>
+        <td>止损逼近列表</td>
+        <td><code>portfolio.json</code> → holdings[].status=warn<br><code>terminal/portfolio.json</code> → positions[].alerts</td>
+        <td>实时</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">哪支票快触发止损了？距离还有多少？要不要提前行动？</span></td>
+      </tr>
+      <tr>
+        <td>板块暴跌预警</td>
+        <td><code>sector_momentum-{date}.json</code> → cur跌幅>3%<br><code>fund_flows</code> → 持续流出板块</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">有没有板块在持续暴跌？持仓是否在这些板块里？需要减仓避险吗？</span></td>
+      </tr>
+      <tr>
+        <td>跨市场风险联动</td>
+        <td><code>us/market.json</code> → 美股大跌信号<br><code>hk/market.json</code> → 港股跟跌<br>+ 聚合判断</td>
+        <td>5min</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">美股跌了→明天A股和港股大概率低开。今晚提前做好预案。</span></td>
+      </tr>
+      <tr>
+        <td>技术破位列表</td>
+        <td><code>portfolio.json</code> → 跌破MA20/MA60/MACD死叉<br><code>terminal/portfolio.json</code> → alerts:["技术破位"]</td>
+        <td>盘中</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">持仓里哪些技术面已经走坏了？该割肉还是该扛？</span></td>
+      </tr>
+
+      <!-- 持仓概览 -->
+      <tr>
+        <td rowspan="3"><strong>持仓概览</strong><br><span style="font-size:10px;color:var(--muted)">非核心页面</span></td>
+        <td>盈亏汇总卡</td>
+        <td><code>terminal/overview.json</code> → portfolio_total<br><code>terminal/portfolio.json</code> → 各市场</td>
+        <td>实时</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">今天赚了还是赔了？日盈亏/周盈亏一瞥即知。</span></td>
+      </tr>
+      <tr>
+        <td>持仓操作建议</td>
+        <td><code>portfolio.json</code> → analysis.actions[]<br><code>terminal/portfolio.json</code> → ai_analysis</td>
+        <td>收盘/盘中</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">AI分析的持仓建议——今天该做什么？持有/减仓/加仓？</span></td>
+      </tr>
+      <tr>
+        <td>持仓详情表</td>
+        <td><code>terminal/portfolio.json</code> → markets.*.positions</td>
+        <td>实时</td>
+        <td><span class="sowhat" style="margin:0;display:inline-block">每支持仓的详细盈亏+技术指标+预警状态。</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 4 ════════ -->
+  <div class="sec"><h2>四、导航结构</h2><span class="id">NAVIGATION</span></div>
+
+  <div class="content-block">
+    <p>底部Tab导航（移动端优先），4个主入口 + 1个汉堡菜单（设置/工具）。</p>
+    <p><strong>设计原则：</strong>市场全局是默认首页，机会雷达和风险预警是同级别的核心功能，持仓在最右边——不是主角，扫一眼就行。</p>
+  </div>
+
+  <div class="nav-mock">
+    <div class="nav-item active">
+      <span class="icon">🌍</span>
+      市场
+    </div>
+    <div class="nav-item">
+      <span class="icon">🎯</span>
+      机会
+    </div>
+    <div class="nav-item">
+      <span class="icon">⚠️</span>
+      风险
+    </div>
+    <div class="nav-item">
+      <span class="icon">💼</span>
+      持仓
+    </div>
+    <div class="nav-item">
+      <span class="icon">⚙️</span>
+      更多
+    </div>
+  </div>
+
+  <div class="content-block">
+    <table class="data-table" style="margin-top:16px">
+      <thead><tr><th>Tab</th><th>路由</th><th>页面名</th><th>定位</th><th>核心问题</th></tr></thead>
+      <tbody>
+        <tr><td>🌍 市场</td><td><code>/</code> 或 <code>index.html</code></td><td>市场全局</td><td><span class="badge-p0">P0</span> 默认首页</td><td>全球资金在往哪走？</td></tr>
+        <tr><td>🎯 机会</td><td><code>signals.html</code></td><td>机会雷达</td><td><span class="badge-p1">P1</span> 交易信号</td><td>哪里能赚钱？</td></tr>
+        <tr><td>⚠️ 风险</td><td><code>alerts.html</code></td><td>风险预警</td><td><span class="badge-p0">P0</span> 风控核心</td><td>哪里会亏钱？</td></tr>
+        <tr><td>💼 持仓</td><td><code>portfolio.html</code></td><td>持仓概览</td><td><span class="badge-p1">P1</span> 辅助</td><td>我的仓位怎么样？</td></tr>
+        <tr><td>⚙️ 更多</td><td><code>tools.html</code></td><td>工具箱</td><td><span class="badge-p2">P2</span> 工具</td><td>DuckDB查询/回测/设置</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 5 ════════ -->
+  <div class="sec"><h2>五、卡片设计详案</h2><span class="id">CARD-SPECS</span><span class="sub">每个卡片的数据结构、视觉规则、行动信号</span></div>
+
+  <div class="content-block">
+    <h3>5.1 全局状态栏（Global Status Bar）</h3>
+    <p><strong>位置：</strong>页面顶部固定，所有页面可见<br>
+    <strong>数据源：</strong><code>terminal/overview.json → indices</code><br>
+    <strong>设计：</strong>水平滚动 pill 条。每个市场一个 pill，显示国旗+指数名+数值+涨跌幅。实时市场显示绿色呼吸点，已收盘市场显示灰色点。</p>
+    <table class="data-table">
+      <tr><th>市场</th><th>显示内容</th><th>数据字段</th></tr>
+      <tr><td>🇨🇳 A股</td><td>上证、深证、创业板、科创50 (4 pill)</td><td>indices.a[].name/val/chg</td></tr>
+      <tr><td>🇭🇰 港股</td><td>恒生指数</td><td>indices.hk.name/val/chg</td></tr>
+      <tr><td>🇺🇸 美股</td><td>SPY、QQQ、DIA</td><td>indices.us[].name/val/chg</td></tr>
+      <tr><td>₿ 加密</td><td>BTC、ETH</td><td>indices.crypto[].name/val/chg</td></tr>
+    </table>
+    <div class="sowhat">💡 红色一片→全球risk-off，减仓避险；绿色一片→risk-on，积极进攻；分化→结构性行情，选对方向。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.2 预警横幅（Alert Strip）</h3>
+    <p><strong>位置：</strong>状态栏下方，全局可见<br>
+    <strong>数据源：</strong><code>terminal/signals.json → signals[0]</code> (最高优先级)<br>
+    <strong>设计：</strong>红色脉冲边框（CSS animation），左侧红色竖线，显示信号标题+描述+时间+建议动作。可点击展开完整信号列表。无预警时折叠为一行，有高优先级预警时展开。<br>
+    <strong>视觉规则：</strong></p>
+    <ul>
+      <li><code>priority=high</code>: 红色背景+脉冲边框，显示 "⚡ 高优先级预警"</li>
+      <li><code>priority=medium</code>: 黄色背景，"⚠ 关注"</li>
+      <li><code>priority=info</code>: 蓝色背景，"ℹ 提示"</li>
+    </ul>
+    <div class="sowhat">💡 看到红色脉冲→立即点击查看详情并行动。这是最紧急的信号，不能忽略。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.3 资金流方向卡（Fund Flow Direction）</h3>
+    <p><strong>位置：</strong>首页第三位（预警横幅→全球指数→资金流）<br>
+    <strong>数据源：</strong><code>fund_flows-{date}.json</code> → 全板块汇总 → 主力净流入总额 + TOP5/BOTTOM5<br>
+    <strong>设计：</strong></p>
+    <ul>
+      <li>左上角大字：今日主力净流入XX亿（绿色/红色）</li>
+      <li>下方小字：与昨日/5日均值对比</li>
+      <li>TOP3流入板块（绿色）+ BOTTOM3流出板块（红色），水平排列</li>
+      <li>一句话总结：资金是集中还是分散？去了哪个方向？</li>
+    </ul>
+    <div class="sowhat">💡 净流入550亿且集中→跟主力方向；净流出→减仓等待。资金集中度越高，方向越明确。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.4 板块强弱双栏（Sector Strength/Weakness）</h3>
+    <p><strong>位置：</strong>首页第四位<br>
+    <strong>数据源：</strong><code>sector_momentum-{date}.json</code> → sectors[].cur + trend<br>
+    <strong>设计：</strong>2列网格，左栏「🔥 今日最强」右栏「📉 今日最弱」，各列TOP5。每行显示板块名+涨跌幅，右侧显示趋势标签（up_steady → "↑持续"、down_accel → "↓加速"）。</p>
+    <div class="sowhat">💡 左栏=该买的方向；右栏=该避的方向。如果持仓集中在右栏→立即审视是否需要减仓。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.5 跨市场联动卡（Cross-Market Chain）</h3>
+    <p><strong>位置：</strong>首页第五位<br>
+    <strong>数据源：</strong><code>us/market.json</code> + <code>hk/market.json</code> + <code>terminal/overview.json</code><br>
+    <strong>设计：</strong>箭头链式可视化：🇺🇸美股收盘 → 🇭🇰港股开盘 → 🇨🇳A股盘中，每条链路显示指数名+涨跌幅，箭头颜色表示传导方向（涨→绿箭头，跌→红箭头）。自动标注异常：如美股大跌但A股不跌→"A股抗跌，内资托底"。</p>
+    <div class="sowhat">💡 如果3个市场方向一致→趋势确认，大胆操作；方向不一致→市场分歧，轻仓观望。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.6 市场情绪指标（Market Sentiment）</h3>
+    <p><strong>位置：</strong>首页第六位<br>
+    <strong>数据源：</strong><code>limit_data-{date}.json</code> 涨停/跌停统计 + fund_flows涨跌比<br>
+    <strong>设计：</strong>三格迷你卡片并排：涨停家数 | 跌停家数 | 涨跌比。配情绪词：亢奋(>150涨停)、积极(80-150)、平静(30-80)、谨慎(10-30)、恐慌(<10涨停或>20跌停)。</p>
+    <div class="sowhat">💡 亢奋→注意过热，随时可能回调；恐慌→可能是抄底机会，但也可能继续跌。结合资金流判断。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.7 板块轮动信号卡（机会雷达）</h3>
+    <p><strong>位置：</strong>机会雷达页第一卡<br>
+    <strong>数据源：</strong><code>sector_momentum-{date}.json</code> → trend + accel_15_30 / accel_30_60<br>
+    <strong>设计：</strong>列表形式，每行一个板块信号。显示：板块名 | 当前趋势标签 | 加速度方向 | 15/30/60分钟涨幅。高亮拐点信号（如 trend从down变up，或accel由负转正）。</p>
+    <div class="sowhat">💡 拐点信号=上车时机。趋势加速=加仓时机。趋势减速=准备减仓。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.8 止损逼近列表（风险预警）</h3>
+    <p><strong>位置：</strong>风险预警页第一卡<br>
+    <strong>数据源：</strong><code>portfolio.json → holdings[].status=warn</code> + alert字段<br>
+    <strong>设计：</strong>红色警告样式，每行显示：股票名 | 现价 | 止损价 | 距离% | 进度条。距离越近进度条越红越长。龙哥一眼看到哪些票最危险。</p>
+    <div class="sowhat">💡 距离<3%=红色紧急，立即关注；距离<5%=黄色，提前准备止损单；距离>10%=绿色安全。</div>
+  </div>
+
+  <div class="content-block">
+    <h3>5.9 加密费率/OI信号卡（机会雷达）</h3>
+    <p><strong>位置：</strong>机会雷达页面<br>
+    <strong>数据源：</strong>Binance futures API（cron拉取）→ 费率+OI<br>
+    <strong>设计：</strong>BTC/ETH/SOL 三列。每列显示：当前费率 | OI变化率 | 信号标签（费率反转/OI背离/无信号）。有信号时高亮，附带历史胜率和建议动作。</p>
+    <div class="sowhat">💡 费率反转+OI暴涨=空头踩踏，追多（历史胜率68%）。OI背离=趋势衰竭，准备反向。</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 6 ════════ -->
+  <div class="sec"><h2>六、实现优先级</h2><span class="id">PRIORITIES</span></div>
+
+  <div class="priority-grid">
+    <div class="card" style="border-left:3px solid var(--danger)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="font-size:16px;color:var(--danger)">P0 — 本周必须完成</h3>
+        <span class="badge-red">最高</span>
+      </div>
+      <ul style="font-size:13px;color:var(--ink-soft);line-height:2">
+        <li><strong>市场全局页面</strong> — 含全球指数条+资金流方向+板块强弱+跨市场联动</li>
+        <li><strong>风险预警页面</strong> — 止损逼近列表+板块暴跌预警+技术破位</li>
+        <li><strong>预警横幅</strong>（全局）— 红色脉冲，最高优先级信号，不可折叠</li>
+        <li><strong>全局状态栏</strong>（全局）— 四市场指数滚动条</li>
+        <li><strong>数据管道</strong>：terminal/overview.json + terminal/signals.json 聚合 cron</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left:3px solid var(--warn)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="font-size:16px;color:var(--warn)">P1 — 两周内完成</h3>
+        <span class="badge-p1">重要</span>
+      </div>
+      <ul style="font-size:13px;color:var(--ink-soft);line-height:2">
+        <li><strong>机会雷达页面</strong> — 板块轮动信号+资金异动+技术买点+加密费率信号</li>
+        <li><strong>持仓概览页面</strong>（精简版）— 盈亏汇总+AI操作建议+持仓表</li>
+        <li><strong>信号引擎</strong> — 费率反转/OI背离/技术买点自动检测</li>
+        <li><strong>DuckDB历史回测</strong> — 信号出现后的历史胜率查询</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left:3px solid var(--info)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="font-size:16px;color:var(--info)">P2 — 一个月内完成</h3>
+        <span class="badge-p2">增强</span>
+      </div>
+      <ul style="font-size:13px;color:var(--ink-soft);line-height:2">
+        <li><strong>工具箱页面</strong> — DuckDB查询界面+回测参数调整+系统状态</li>
+        <li><strong>通知推送</strong> — Telegram bot 预警推送（止损触发/费率反转）</li>
+        <li><strong>桌面版布局</strong> — 大屏多栏布局（三栏：市场+信号+持仓）</li>
+        <li><strong>历史复盘</strong> — 信号出现后的实际胜率追踪</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 7 ════════ -->
+  <div class="sec"><h2>七、卡片 → 行动信号映射（完整）</h2><span class="id">ACTION-MAP</span></div>
+
+  <div class="content-block">
+    <p>每个卡片不是数据的堆砌，而是<strong>决策辅助工具</strong>。以下是每张卡片的核心问题、数据来源、和给龙哥的行动信号。</p>
+  </div>
+
+  <div style="overflow-x:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>卡片</th><th>数据回答的核心问题</th><th>给龙哥的行动信号</th><th>决策类型</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>全球指数条</td><td>今天全球市场是红还是绿？</td><td>全红→risk-off减仓；全绿→risk-on加仓；分化→选方向</td><td><span class="badge-red">仓位</span></td></tr>
+      <tr><td>预警横幅</td><td>现在最紧急的事是什么？</td><td>红色脉冲→立刻点击查看并执行；无脉冲→正常操作</td><td><span class="badge-red">紧急</span></td></tr>
+      <tr><td>资金流方向</td><td>主力在买还是卖？</td><td>大额净流入→跟主力方向选板块；净流出→减仓或观望</td><td><span class="badge-red">方向</span></td></tr>
+      <tr><td>板块强弱</td><td>最强和最弱的板块是谁？</td><td>持仓在右栏→考虑减仓；左栏板块→考虑开仓</td><td><span class="badge-p1">选股</span></td></tr>
+      <tr><td>跨市场联动</td><td>美股走势对A股的影响？</td><td>美股大跌→A股明天大概率低开，今晚准备预案</td><td><span class="badge-p1">预案</span></td></tr>
+      <tr><td>市场情绪</td><td>市场现在是贪婪还是恐惧？</td><td>亢奋→警惕回调；恐慌→寻找抄底机会但需确认</td><td><span class="badge-p1">节奏</span></td></tr>
+      <tr><td>板块轮动信号</td><td>有没有板块在拐点？</td><td>趋势从跌转涨→第一时间上车；加速上涨→加仓；减速→减仓</td><td><span class="badge-red">交易</span></td></tr>
+      <tr><td>资金异动</td><td>有没有突然的大资金进出？</td><td>单板块30分钟内资金大幅流入→可能有消息驱动，关注</td><td><span class="badge-p1">关注</span></td></tr>
+      <tr><td>技术买点</td><td>持仓/自选里有没有买入信号？</td><td>MACD金叉+放量突破MA20→可以执行买入</td><td><span class="badge-red">交易</span></td></tr>
+      <tr><td>加密费率信号</td><td>费率反转出现了吗？</td><td>费率从负转正+OI暴增→轻仓追多（历史胜率68%）</td><td><span class="badge-red">交易</span></td></tr>
+      <tr><td>止损逼近列表</td><td>哪些票快触发止损了？</td><td>距止损<3%→挂止损单/提前减仓；<5%→设置提醒</td><td><span class="badge-red">风控</span></td></tr>
+      <tr><td>板块暴跌预警</td><td>有没有板块在崩？</td><td>持仓板块暴跌→立即评估是否要减仓避险</td><td><span class="badge-red">风控</span></td></tr>
+      <tr><td>技术破位列表</td><td>持仓技术面走坏了吗？</td><td>跌破MA20+MACD死叉→评估是否该止损</td><td><span class="badge-red">风控</span></td></tr>
+      <tr><td>盈亏汇总</td><td>今天赚了还是赔了？</td><td>日盈亏>2%→审视是否需要止盈；日亏<-2%→检查风险</td><td><span class="badge-p1">监控</span></td></tr>
+      <tr><td>AI操作建议</td><td>AI对持仓的分析是什么？</td><td>具体操作指令：持有/减仓/加仓，龙哥可以采纳或推翻</td><td><span class="badge-p1">参考</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 8 ════════ -->
+  <div class="sec"><h2>八、设计规则与视觉规范</h2><span class="id">DESIGN-TOKENS</span></div>
+
+  <div class="content-block">
+    <div class="row2" style="grid-template-columns:1fr 1fr;margin-top:16px">
+      <div class="card">
+        <h4 style="color:var(--primary);margin-bottom:10px">🎨 配色系统</h4>
+        <table style="width:100%;font-size:12px;font-family:var(--font-mono)">
+          <tr><td style="color:var(--primary);padding:4px 0">#00d4aa</td><td>主色 — 上涨/买入/正向</td></tr>
+          <tr><td style="color:var(--danger);padding:4px 0">#f43f5e</td><td>危险 — 下跌/预警/止损</td></tr>
+          <tr><td style="color:var(--warn);padding:4px 0">#f59e0b</td><td>警告 — 关注/中优先级</td></tr>
+          <tr><td style="color:var(--info);padding:4px 0">#3b82f6</td><td>信息 — 提示/低优先级</td></tr>
+          <tr><td style="color:var(--muted);padding:4px 0">#6b7280</td><td>辅助文字/分隔</td></tr>
+          <tr><td style="color:var(--canvas);padding:4px 0">#080b10</td><td>背景底色</td></tr>
+          <tr><td style="color:var(--surface);padding:4px 0">#0f1319</td><td>卡片底色</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--primary);margin-bottom:10px">📐 间距系统</h4>
+        <table style="width:100%;font-size:12px;font-family:var(--font-mono)">
+          <tr><td style="padding:4px 0">4px</td><td>超紧密 — 图标与文字间距</td></tr>
+          <tr><td style="padding:4px 0">8px</td><td>紧密 — 卡片内元素间距</td></tr>
+          <tr><td style="padding:4px 0">12px</td><td>默认 — 卡片padding / widget gap</td></tr>
+          <tr><td style="padding:4px 0">16px</td><td>宽松 — 卡片间距</td></tr>
+          <tr><td style="padding:4px 0">20px</td><td>宽松+ — 区块间距</td></tr>
+          <tr><td style="padding:4px 0">375px</td><td>移动端设计基准宽度</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--primary);margin-bottom:10px">⚡ 预警视觉规则</h4>
+      <table style="width:100%;font-size:12px">
+        <tr><td style="padding:6px 0"><span class="badge-red">HIGH</span></td><td>红色脉冲边框 + 红色左侧竖线 + "⚡" 图标 + 自动展开</td></tr>
+        <tr><td style="padding:6px 0"><span class="badge-p1">MEDIUM</span></td><td>黄色/橙色边框 + "⚠" 图标 + 可折叠</td></tr>
+        <tr><td style="padding:6px 0"><span class="badge-p2">INFO</span></td><td>蓝色边框 + "ℹ" 图标 + 折叠</td></tr>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="color:var(--primary);margin-bottom:10px">🖥️ 布局断点</h4>
+      <table style="width:100%;font-size:12px">
+        <tr><td style="padding:6px 0">375px ~ 767px</td><td>单栏堆叠，全宽卡片，底部Tab导航，字体12-14px</td></tr>
+        <tr><td style="padding:6px 0">768px ~ 1023px</td><td>双栏网格，侧栏导航（可选），字体13-15px</td></tr>
+        <tr><td style="padding:6px 0">1024px+</td><td>三栏布局：左(机会雷达) 中(市场全局) 右(风险预警)，字体14-16px</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 9 ════════ -->
+  <div class="sec"><h2>九、数据管道设计</h2><span class="id">DATA-PIPELINE</span></div>
+
+  <div class="content-block">
+    <p>所有数据通过 cron 产出，终端直接读取 JSON，不经过数据库查询。聚合层负责把原始数据转成终端需要的格式。</p>
+  </div>
+
+  <div class="arch-diagram" style="font-size:11px;line-height:2">
+<span class="ml"># Cron 任务 → 原始JSON → 聚合脚本 → terminal JSON → 终端渲染</span>
+
+<span class="hl">[cron: 每5分钟]</span>
+  moontdx pull sectors   → <span class="ml">data/stock/sectors-{date}.json</span>
+  moontdx pull flows     → <span class="ml">data/stock/fund_flows-{date}.json</span>
+  momentum calc          → <span class="ml">data/stock/sector_momentum-{date}.json</span>
+  limit_data pull        → <span class="ml">data/stock/limit_data-{date}.json</span>
+  hk_sentinel collect    → <span class="ml">data/hk/market.json</span> (腾讯qt)
+  crypto_price collect   → Binance API → <span class="ml">内存</span>
+
+<span class="hl">[cron: 早间/晚间]</span>
+  us_close collect       → <span class="ml">data/us/market.json</span> (yfinance)
+  portfolio update       → <span class="ml">data/stock/portfolio.json</span> (哨兵更新)
+  scanner run            → <span class="ml">data/stock/scanner.json</span>
+
+<span class="wl">[聚合脚本: 每次cron后触发]</span>
+  aggregate_overview.py  → <span class="ml">data/terminal/overview.json</span>    ← 指数+持仓+预警聚合
+  aggregate_signals.py   → <span class="ml">data/terminal/signals.json</span>     ← 信号引擎输出
+  aggregate_portfolio.py → <span class="ml">data/terminal/portfolio.json</span>  ← 持仓详情+AI分析
+
+<span class="dl">[终端渲染: JS fetch → JSON → DOM]</span>
+  index.html    → fetch overview.json + signals.json → 市场全局
+  signals.html  → fetch signals.json + scanner.json → 机会雷达
+  alerts.html   → fetch portfolio.json + overview.json → 风险预警
+  portfolio.html→ fetch portfolio.json → 持仓概览
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 10 ═══════ -->
+  <div class="sec"><h2>十、页面级响应式布局设计</h2><span class="id">RESPONSIVE</span></div>
+
+  <div class="content-block">
+    <h3>10.1 手机端 (375px-767px) — 默认布局</h3>
+    <p>单列垂直堆叠。顶部：全局状态栏(横向滚动) → 预警横幅 → 卡片列表(资金流→板块强弱→跨市场→情绪→信号)。底部：4 Tab导航。</p>
+
+    <h3>10.2 平板端 (768px-1023px) — 双栏</h3>
+    <p>左栏(60%)：市场全局主要内容。右栏(40%)：预警+信号摘要。顶部保持全局状态栏。</p>
+
+    <h3>10.3 桌面端 (1024px+) — 三栏投研工作台</h3>
+    <p>三栏并排，模拟专业彭博终端体验：</p>
+    <div class="arch-diagram" style="font-size:11px;line-height:1.8;white-space:normal">
+┌─────────────┬──────────────────────┬─────────────┐
+│  左栏 25%   │     中栏 50%         │  右栏 25%   │
+│             │                      │             │
+│ 板块轮动    │  全球指数条(顶部)     │ ⚡预警横幅  │
+│ 信号列表    │                      │             │
+│             │  资金流方向          │ 止损逼近    │
+│ 资金异动    │                      │ 列表        │
+│             │  板块强弱双栏        │             │
+│ 加密费率    │                      │ 板块暴跌    │
+│ 信号        │  跨市场联动          │             │
+│             │                      │ 技术破位    │
+│             │  市场情绪            │             │
+│             │                      │             │
+│             │  关键信号            │             │
+├─────────────┴──────────────────────┴─────────────┤
+│  底部状态栏: 数据更新时间 | cron状态 | 系统信息    │
+└──────────────────────────────────────────────────┘
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 11 ═══════ -->
+  <div class="sec"><h2>十一、与 v2 的关键差异</h2><span class="id">V2-VS-V3</span></div>
+
+  <table class="data-table">
+    <thead><tr><th>维度</th><th>v2 (旧)</th><th>v3 (新)</th></tr></thead>
+    <tbody>
+      <tr><td>定位</td><td>持仓监控终端</td><td><strong>全球投研终端</strong></td></tr>
+      <tr><td>首页内容</td><td>持仓盈亏大卡片 + 市场指数</td><td><strong>资金流方向 + 板块强弱 + 跨市场联动</strong></td></tr>
+      <tr><td>持仓位置</td><td>首页核心，占据最大卡片</td><td><strong>第4个Tab，非核心页面</strong></td></tr>
+      <tr><td>预警机制</td><td>列表式，无视觉优先级</td><td><strong>红色脉冲横幅，P0不可折叠</strong></td></tr>
+      <tr><td>机会发现</td><td>无</td><td><strong>独立的「机会雷达」页面</strong></td></tr>
+      <tr><td>数据源</td><td>混合静态JSON兜底</td><td><strong>100% cron实时JSON，无兜底</strong></td></tr>
+      <tr><td>设计哲学</td><td>数据展示</td><td><strong>每个数字回答「所以呢？」</strong></td></tr>
+      <tr><td>移动端</td><td>响应式但未优先设计</td><td><strong>375px first，单栏堆叠</strong></td></tr>
+      <tr><td>跨市场</td><td>各自独立展示</td><td><strong>联动分析(美股→港股→A股资金链)</strong></td></tr>
+      <tr><td>信号引擎</td><td>手动判断</td><td><strong>自动检测(费率反转/OI背离/技术买点)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════ SECTION 12 ═══════ -->
+  <div class="sec"><h2>十二、市场独立页面</h2><span class="id">MARKET-PAGES</span><span class="sub">四市场各自独立深度视图——龙哥追加需求</span></div>
+
+  <div class="content-block">
+    <p>在全局首页（市场概览）之外，四个市场各有<strong>独立深度页面</strong>。每个页面聚焦单一市场，一屏看完，回答一个核心问题：「<em>这个市场现在给龙哥什么行动信号？</em>」</p>
+    <p><strong>设计约束（四页统一）：</strong></p>
+    <ul>
+      <li>一屏看完 — 移动端375px单栏，无滚动依赖</li>
+      <li>深色金融终端 — 复用全局配色变量</li>
+      <li>数据从 cron 产出 JSON 实时拉取，<strong>不用静态兜底</strong></li>
+      <li>每个卡片必须回答「给龙哥什么行动信号」</li>
+      <li>顶部固定：该市场核心指数实时条 + 返回全局的链接</li>
+    </ul>
+
+    <h3>12.0 导航入口变更</h3>
+    <p>底部导航从4 Tab扩展为：<strong>市场全局（首页）→ A股 → 港股 → 美股 → 加密 → 机会 → 风险 → 持仓</strong>。其中前5个Tab中，市场全局为默认首页，"A股/港股/美股/加密"四Tab为本次追加的市场独立页面。每个市场Tab点击进入对应市场的深度视图。机会/风险/持仓保持不变。</p>
+    <div class="nav-mock">
+      <div class="nav-item active"><span class="icon">🌍</span>全局</div>
+      <div class="nav-item"><span class="icon">🇨🇳</span>A股</div>
+      <div class="nav-item"><span class="icon">🇭🇰</span>港股</div>
+      <div class="nav-item"><span class="icon">🇺🇸</span>美股</div>
+      <div class="nav-item"><span class="icon">₿</span>加密</div>
+    </div>
+  </div>
+
+  <!-- ========== 12.1 A股 ========== -->
+  <div class="content-block">
+    <h3>12.1 A股深度页面 — <code>stock/index.html</code></h3>
+    <p><strong>核心问题：</strong>今天A股钱往哪走？有没有板块异动或技术买点？</p>
+    <p><strong>数据源：</strong><code>data/stock/fund_flows-{date}.json</code>（板块资金流） + <code>data/stock/sector_momentum-{date}.json</code>（板块动量） + <code>data/stock/sectors-{date}.json</code>（板块排行） + moontdx实时行情</p>
+
+    <h4>卡片布局（从上到下）</h4>
+    <ol>
+      <li><strong>A股四大指数条</strong> — 上证/深证/创业板/科创50，每5分钟刷新。显示现价+涨跌幅+涨跌家数比。</li>
+      <li><strong>板块资金流 TOP10 + BOTTOM10</strong> — 从 fund_flows 读取全板块主力净流入，双栏展示：左栏「💰 主力买入TOP10」、右栏「📉 主力卖出TOP10」。每行显示板块名+净流入额（亿）+占成交额比。</li>
+      <li><strong>板块轮动方向判断</strong> — AI生成文字（由 cron 脚本产出后写入 JSON）。例如：「今日资金从科技向新能源切换，电力设备加速流入，半导体持续失血。轮动方向确认：新能源↑ 科技↓。」</li>
+      <li><strong>A股机会信号</strong> — 聚合板块异动（单板块30分钟内资金大幅流入/流出）+ 技术买点（MACD金叉、突破MA20、放量突破）。每信号标注置信度和建议动作。</li>
+    </ol>
+
+    <!-- Phone mock -->
+    <div class="page-demo">
+      <div class="phone-frame" style="min-height:620px">
+        <div class="status-bar"><span>🇨🇳 A股深度</span><span>14:35 CST</span></div>
+        <div class="page-title">A股 <span class="time">← 返回全局</span></div>
+
+        <!-- 四大指数 -->
+        <div class="widget">
+          <div class="widget-title">四大指数</div>
+          <div class="row2" style="grid-template-columns:1fr 1fr 1fr 1fr;font-size:10px;font-family:var(--font-mono)">
+            <div><div style="color:var(--muted)">上证</div><div style="color:var(--up);font-weight:700">3258.12</div><div style="color:var(--up)">+0.82%</div></div>
+            <div><div style="color:var(--muted)">深证</div><div style="color:var(--up);font-weight:700">10456.3</div><div style="color:var(--up)">+1.15%</div></div>
+            <div><div style="color:var(--muted)">创业板</div><div style="color:var(--up);font-weight:700">2156.8</div><div style="color:var(--up)">+1.43%</div></div>
+            <div><div style="color:var(--muted)">科创50</div><div style="color:var(--up);font-weight:700">1028.3</div><div style="color:var(--up)">+2.10%</div></div>
+          </div>
+          <div style="font-size:9px;color:var(--muted);margin-top:4px">📊 涨跌比 3280:1420 | 涨停 62 跌停 8</div>
+        </div>
+
+        <!-- 资金流 TOP10 + BOTTOM10 -->
+        <div class="widget">
+          <div class="widget-title">板块资金流 TOP/BOTTOM</div>
+          <div class="row2">
+            <div>
+              <div style="font-size:9px;color:var(--up);margin-bottom:4px">💰 主力买入TOP5</div>
+              <div style="font-size:10px;font-family:var(--font-mono)">
+                <div style="color:var(--up)">电网设备 +42.8亿</div>
+                <div style="color:var(--up)">电力 +31.2亿</div>
+                <div style="color:var(--up)">新能源车 +18.5亿</div>
+                <div style="color:var(--up)">有色 +14.1亿</div>
+                <div style="color:var(--up)">军工 +9.7亿</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:9px;color:var(--down);margin-bottom:4px">📉 主力卖出TOP5</div>
+              <div style="font-size:10px;font-family:var(--font-mono)">
+                <div style="color:var(--down)">半导体 -22.3亿</div>
+                <div style="color:var(--down)">机器人 -18.6亿</div>
+                <div style="color:var(--down)">光模块 -11.2亿</div>
+                <div style="color:var(--down)">消费电子 -8.4亿</div>
+                <div style="color:var(--down)">传媒 -5.1亿</div>
+              </div>
+            </div>
+          </div>
+          <div class="sowhat">💡 主力从科技向新能源切换——如果持有半导体/机器人，评估是否需要转向电力/电网方向。</div>
+        </div>
+
+        <!-- 轮动方向 AI -->
+        <div class="widget" style="border-left:2px solid var(--info)">
+          <div class="widget-title">🤖 AI轮动判断</div>
+          <div style="font-size:11px;color:var(--ink-soft);line-height:1.6">
+            「今日资金从科技向新能源切换趋势明确。电力设备连续3日净流入加速，已形成主线；半导体连续5日净流出，短期回避。轮动方向：<span style="color:var(--up)">新能源↑</span> <span style="color:var(--down)">科技↓</span>。建议关注电网/电力ETF。」
+          </div>
+          <div style="font-size:9px;color:var(--muted);margin-top:4px">cron产出 · 14:30更新</div>
+        </div>
+
+        <!-- 机会信号 -->
+        <div class="widget pulse" style="border-left:2px solid var(--primary)">
+          <div class="widget-title" style="color:var(--primary)">🎯 A股机会信号</div>
+          <div style="font-size:11px;line-height:1.8">
+            <div>🟢 <strong>电网设备</strong> — 板块异动：30分钟净流入+8.2亿 <span style="color:var(--muted)">置信度 高</span></div>
+            <div>🟢 <strong>科创50ETF</strong> — MACD金叉 + 放量突破MA20 <span style="color:var(--muted)">技术买点</span></div>
+            <div>🟡 <strong>有色</strong> — 资金持续流入第3天，趋势确认中 <span style="color:var(--muted)">关注</span></div>
+          </div>
+          <div class="sowhat">💡 电网设备+科创50是当前最明确的做多方向；有色可加入观察列表等待回调买入。</div>
+        </div>
+      </div>
+    </div>
+
+    <h4>数据字段约定 — <code>data/stock/fund_flows-{date}.json</code></h4>
+    <table class="data-table">
+      <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><code>sectors[]</code></td><td>array</td><td>板块列表，每个板块含 name/code/net_flow(亿)/pct_of_turnover</td></tr>
+        <tr><td><code>top_inflow[]</code></td><td>array(10)</td><td>主力净流入TOP10板块名+金额</td></tr>
+        <tr><td><code>top_outflow[]</code></td><td>array(10)</td><td>主力净流出TOP10板块名+金额</td></tr>
+        <tr><td><code>total_inflow</code></td><td>number</td><td>全市场主力净流入总额（亿）</td></tr>
+        <tr><td><code>rotation_ai_text</code></td><td>string</td><td>AI轮动判断文字（cron脚本产出）</td></tr>
+        <tr><td><code>signals[]</code></td><td>array</td><td>A股机会信号：type(anomaly/tech_buy)/sector/confidence/action</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 12.2 港股 ========== -->
+  <div class="content-block">
+    <h3>12.2 港股深度页面 — <code>hk/index.html</code></h3>
+    <p><strong>核心问题：</strong>港股有没有联动A股的方向？南向资金在买什么？</p>
+    <p><strong>数据源：</strong>腾讯qt行情（实时价） → <code>data/hk/market.json</code> + 南向资金数据（如有）</p>
+
+    <h4>卡片布局（从上到下）</h4>
+    <ol>
+      <li><strong>恒指实时 + 涨跌家数</strong> — 大字显示恒指现价+涨跌幅，附涨跌家数比和成交额。</li>
+      <li><strong>港股板块资金方向</strong> — 主要板块（科技/金融/地产/消费/医药）涨跌幅排行，标注与A股同板块的联动关系。</li>
+      <li><strong>南向资金</strong> — 如有数据源，显示当日南向净流入/流出（亿港元）+ 近期趋势（连续流入/流出天数）。</li>
+      <li><strong>港股机会信号</strong> — 港股特有信号：腾讯/阿里/美团等龙头异动、恒生科技vs恒指偏离度、AH溢价异常。</li>
+    </ol>
+
+    <!-- Phone mock -->
+    <div class="page-demo">
+      <div class="phone-frame" style="min-height:560px">
+        <div class="status-bar"><span>🇭🇰 港股深度</span><span>14:35 HKT</span></div>
+        <div class="page-title">港股 <span class="time">← 返回全局</span></div>
+
+        <div class="widget">
+          <div class="widget-title">恒生指数</div>
+          <div class="val" style="color:var(--up)">19,842.35 <span class="chg up">+1.23%</span></div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">📊 涨 1280 / 跌 620 | 成交 1,280亿</div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">板块涨跌 · 联动A股</div>
+          <div style="font-size:11px;font-family:var(--font-mono)">
+            <div><span style="color:var(--up)">恒生科技 +2.1%</span> <span style="font-size:9px;color:var(--muted)">↗ A股科创50 +2.1% 同步</span></div>
+            <div><span style="color:var(--up)">金融 +0.8%</span> <span style="font-size:9px;color:var(--muted)">↗ A股银行 +0.5%</span></div>
+            <div><span style="color:var(--down)">地产 -1.2%</span></div>
+            <div><span style="color:var(--up)">消费 +0.6%</span></div>
+            <div><span style="color:var(--up)">医药 +1.5%</span></div>
+          </div>
+          <div class="sowhat">💡 恒生科技与A股科创50同步上涨——科技方向在两地共振，确认趋势。</div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">南向资金</div>
+          <div class="val" style="font-size:16px;color:var(--up)">↑ 净流入 58.3亿港元</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">连续3日净流入 | 主要买：腾讯(+12亿) 美团(+8亿) 中芯(+5亿)</div>
+          <div class="sowhat">💡 南向持续买入科技龙头——港股科技有资金支撑，回调即买点。</div>
+        </div>
+
+        <div class="widget pulse" style="border-left:2px solid var(--primary)">
+          <div class="widget-title" style="color:var(--primary)">🎯 港股机会信号</div>
+          <div style="font-size:11px;line-height:1.8">
+            <div>🟢 <strong>腾讯(0700)</strong> — 南向连续大买 + 突破50日线 <span style="color:var(--muted)">跟买</span></div>
+            <div>🟡 <strong>恒生科技ETF</strong> — 与科创50同步共振向上 <span style="color:var(--muted)">关注</span></div>
+            <div>🔴 <strong>AH溢价</strong> — A股溢价率收窄至135%，H股性价比提升</div>
+          </div>
+          <div class="sowhat">💡 腾讯/美团是南向买入主力，跟买胜率高；AH溢价收窄意味着H股补涨空间。</div>
+        </div>
+      </div>
+    </div>
+
+    <h4>数据字段约定 — <code>data/hk/market.json</code></h4>
+    <table class="data-table">
+      <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><code>index.name/val/chg</code></td><td>obj</td><td>恒指实时数据</td></tr>
+        <tr><td><code>sectors[]</code></td><td>array</td><td>港股板块：名称/涨跌幅/与A股联动标注</td></tr>
+        <tr><td><code>southbound</code></td><td>obj</td><td>南向资金：net_flow/trend_days/top_buys[]</td></tr>
+        <tr><td><code>signals[]</code></td><td>array</td><td>港股机会信号：龙头异动/共振/AH溢价</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 12.3 美股 ========== -->
+  <div class="content-block">
+    <h3>12.3 美股深度页面 — <code>us/index.html</code></h3>
+    <p><strong>核心问题：</strong>美股收盘后方向如何？科技vs防御谁在领跑？对明天A股/港股有什么暗示？</p>
+    <p><strong>数据源：</strong>yfinance（收盘后 cron 拉取）→ <code>data/us/market.json</code> + VIX（如有）</p>
+
+    <h4>卡片布局（从上到下）</h4>
+    <ol>
+      <li><strong>SPY/QQQ/DIA 三大指数</strong> — 大字显示三指数收盘价+涨跌幅，标注是否创近期新高/新低。</li>
+      <li><strong>板块轮动：科技 vs 防御</strong> — 科技(XLK)vs防御(XLU/XLP)对比条。显示相对强弱：科技领涨→risk-on信号；防御领涨→risk-off信号。</li>
+      <li><strong>宏观指标</strong> — VIX（如有）+ 美债收益率 + 美元指数。VIX>25=恐慌，VIX<15=过度安逸。</li>
+      <li><strong>对A股/港股的影响预判</strong> — 基于美股收盘方向，预判次日A股/港股开盘方向。</li>
+    </ol>
+
+    <!-- Phone mock -->
+    <div class="page-demo">
+      <div class="phone-frame" style="min-height:540px">
+        <div class="status-bar"><span>🇺🇸 美股深度</span><span>昨收 Jul 22</span></div>
+        <div class="page-title">美股 <span class="time">← 返回全局</span></div>
+
+        <div class="widget">
+          <div class="widget-title">三大指数 · 收盘</div>
+          <div class="row3">
+            <div><div style="font-size:10px;color:var(--muted)">SPY</div><div style="font-weight:700;font-family:var(--font-mono);color:var(--up)">592.3</div><div style="font-size:10px;color:var(--up)">+0.45%</div></div>
+            <div><div style="font-size:10px;color:var(--muted)">QQQ</div><div style="font-weight:700;font-family:var(--font-mono);color:var(--up)">488.7</div><div style="font-size:10px;color:var(--up)">+1.12%</div></div>
+            <div><div style="font-size:10px;color:var(--muted)">DIA</div><div style="font-weight:700;font-family:var(--font-mono);color:var(--down)">402.1</div><div style="font-size:10px;color:var(--down)">-0.28%</div></div>
+          </div>
+          <div style="font-size:9px;color:var(--muted);margin-top:4px">QQQ创近期新高 · SPY逼近前高595</div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">板块轮动：科技 vs 防御</div>
+          <div style="margin:8px 0">
+            <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px">
+              <span style="color:var(--up)">科技 XLK +1.8%</span><span style="color:var(--muted)">← 领涨</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px">
+              <span style="color:var(--down)">公用 XLU -0.5%</span><span style="color:var(--muted)">防御弱</span>
+            </div>
+          </div>
+          <div style="font-size:10px;color:var(--up)">→ Risk-ON 信号：科技领涨，防御失血</div>
+          <div class="sowhat">💡 科技股领涨+防御股走弱=市场风险偏好上升。利好A股科创50/港股恒生科技明日开盘。</div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">宏观指标</div>
+          <div class="row3" style="font-size:10px;font-family:var(--font-mono)">
+            <div><div style="color:var(--muted)">VIX</div><div style="font-weight:700;color:var(--up)">14.2</div><div style="color:var(--muted)">安逸</div></div>
+            <div><div style="color:var(--muted)">10Y</div><div style="font-weight:700">4.18%</div><div style="color:var(--muted)">下行</div></div>
+            <div><div style="color:var(--muted)">DXY</div><div style="font-weight:700">103.5</div><div style="color:var(--muted)">-0.2%</div></div>
+          </div>
+          <div class="sowhat">💡 VIX低位+美债下行=市场安逸，但需警惕过度乐观。美元走弱利好新兴市场（A股/港股）。</div>
+        </div>
+
+        <div class="widget" style="border-left:2px solid var(--warn)">
+          <div class="widget-title">🔮 对明日A股/港股预判</div>
+          <div style="font-size:11px;color:var(--ink-soft);line-height:1.6">
+            ✅ 美股科技领涨 → A股科创50/港股恒生科技大概率高开<br>
+            ✅ VIX低+美元弱 → 外资流入A股条件具备<br>
+            ⚠️ 关注今晚NVDA/AVGO财报——若miss，科技股可能回撤
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>数据字段约定 — <code>data/us/market.json</code></h4>
+    <table class="data-table">
+      <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><code>indices[]</code></td><td>array</td><td>SPY/QQQ/DIA：name/close/chg_pct/high_52w_flag</td></tr>
+        <tr><td><code>rotation</code></td><td>obj</td><td>科技vs防御：tech_chg/defense_chg/signal(risk_on/off)</td></tr>
+        <tr><td><code>macro</code></td><td>obj</td><td>VIX/US10Y/DXY：当前值+方向</td></tr>
+        <tr><td><code>impact_asia</code></td><td>obj</td><td>对次日A股/港股预判文字 + 置信度 + 风险提示</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 12.4 加密 ========== -->
+  <div class="content-block">
+    <h3>12.4 加密深度页面 — <code>crypto/index.html</code></h3>
+    <p><strong>核心问题：</strong>BTC/ETH/SOL 现在什么情况？有没有费率极端信号或OI背离？该追还是该等？</p>
+    <p><strong>数据源：</strong>Binance Futures API（cron 实时拉取）→ 现价 + 永续合约费率 + OI</p>
+
+    <h4>卡片布局（从上到下）</h4>
+    <ol>
+      <li><strong>BTC/ETH/SOL 实时价</strong> — 三列大字显示现价+24h涨跌幅+24h成交量。</li>
+      <li><strong>费率热力图</strong> — 三个币种的当前费率，用颜色编码：极端负(≤-0.05%)→红色(做空拥挤/反转信号)，正常(-0.01%~0.01%)→灰色，极端正(≥0.05%)→绿色(做多拥挤/回调风险)。标注历史分位数。</li>
+      <li><strong>OI背离信号</strong> — 价升OI降=多头衰竭；价跌OI升=空头拥挤。每币种标注当前OI变化率+方向+信号标签。</li>
+      <li><strong>综合交易建议</strong> — 汇总费率+OI+价格方向，给出明确行动建议。</li>
+    </ol>
+
+    <!-- Phone mock -->
+    <div class="page-demo">
+      <div class="phone-frame" style="min-height:560px">
+        <div class="status-bar"><span>₿ 加密深度</span><span>14:35 UTC+8</span></div>
+        <div class="page-title">加密 <span class="time">← 返回全局</span></div>
+
+        <!-- 三币实时价 -->
+        <div class="row3">
+          <div class="widget" style="text-align:center">
+            <div class="widget-title">BTC</div>
+            <div class="val" style="font-size:18px;color:var(--up)">67,250</div>
+            <div style="font-size:10px;color:var(--up)">+2.10%</div>
+            <div style="font-size:9px;color:var(--muted)">24h量 28.5B</div>
+          </div>
+          <div class="widget" style="text-align:center">
+            <div class="widget-title">ETH</div>
+            <div class="val" style="font-size:18px;color:var(--up)">3,480</div>
+            <div style="font-size:10px;color:var(--up)">+1.85%</div>
+            <div style="font-size:9px;color:var(--muted)">24h量 12.1B</div>
+          </div>
+          <div class="widget" style="text-align:center">
+            <div class="widget-title">SOL</div>
+            <div class="val" style="font-size:18px;color:var(--up)">172.5</div>
+            <div style="font-size:10px;color:var(--up)">+3.40%</div>
+            <div style="font-size:9px;color:var(--muted)">24h量 3.2B</div>
+          </div>
+        </div>
+
+        <!-- 费率热力 -->
+        <div class="widget" style="border-left:2px solid var(--danger)">
+          <div class="widget-title">🔥 费率热力 · 极端位信号</div>
+          <div style="font-size:11px;font-family:var(--font-mono);line-height:1.9">
+            <div>BTC 费率 <span style="color:var(--danger);font-weight:700">-0.08%</span> <span style="font-size:9px;color:var(--muted)">分位 2% → 极度做空拥挤</span> <span class="badge-red">反转</span></div>
+            <div>ETH 费率 <span style="color:var(--warn);font-weight:700">-0.03%</span> <span style="font-size:9px;color:var(--muted)">分位 18% → 偏空</span> <span class="badge-p1">关注</span></div>
+            <div>SOL 费率 <span style="color:var(--muted)">-0.01%</span> <span style="font-size:9px;color:var(--muted)">分位 45% → 正常</span></div>
+          </div>
+          <div class="sowhat">💡 BTC费率-0.08%处于历史极端低位——历史上费率从极端负反弹时，4h内上涨概率68%。空头踩踏信号！</div>
+        </div>
+
+        <!-- OI背离 -->
+        <div class="widget">
+          <div class="widget-title">📊 OI背离检测</div>
+          <div style="font-size:11px;font-family:var(--font-mono);line-height:1.9">
+            <div>BTC OI <span style="color:var(--up)">+18%</span> <span style="font-size:9px;color:var(--muted)">| 价 +2.1%</span> → <span style="color:var(--up)">同步上涨</span> 趋势健康</div>
+            <div>ETH OI <span style="color:var(--up)">+8%</span> <span style="font-size:9px;color:var(--muted)">| 价 +1.8%</span> → <span style="color:var(--up)">同步上涨</span></div>
+            <div>SOL OI <span style="color:var(--down)">-5%</span> <span style="font-size:9px;color:var(--muted)">| 价 +3.4%</span> → <span style="color:var(--warn)">价升OI降</span> <span class="badge-p1">背离</span></div>
+          </div>
+          <div class="sowhat">💡 SOL出现价升OI降——多头在获利了结，短期可能回调。BTC/ETH量价配合健康。</div>
+        </div>
+
+        <!-- 综合建议 -->
+        <div class="widget pulse" style="border-left:2px solid var(--primary)">
+          <div class="widget-title" style="color:var(--primary)">🎯 综合交易建议</div>
+          <div style="font-size:11px;line-height:1.8">
+            <div>🟢 <strong>BTC 轻仓追多</strong> — 费率极端负+OI同步增+价格涨=空头踩踏启动 <span style="font-size:9px;color:var(--up)">胜率 68%</span></div>
+            <div>🟢 <strong>ETH 跟涨</strong> — 跟随BTC方向，费率偏空仍有反弹空间</div>
+            <div>🟡 <strong>SOL 观望</strong> — OI背离提示多头止盈，等回调再进</div>
+          </div>
+          <div class="sowhat">💡 核心机会在BTC——费率极端位反转是最强信号。轻仓追多，止损设在-2%下方。</div>
+        </div>
+      </div>
+    </div>
+
+    <h4>数据字段约定 — Binance API cron → <code>data/crypto/market.json</code></h4>
+    <table class="data-table">
+      <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><code>prices[]</code></td><td>array</td><td>BTC/ETH/SOL：symbol/price/chg_24h/vol_24h</td></tr>
+        <tr><td><code>funding[]</code></td><td>array</td><td>费率：symbol/rate/percentile/signal(extreme_short/normal/extreme_long)</td></tr>
+        <tr><td><code>oi[]</code></td><td>array</td><td>OI：symbol/oi_change_pct/price_direction/divergence_flag</td></tr>
+        <tr><td><code>recommendations[]</code></td><td>array</td><td>综合建议：symbol/action(追多/观望/做空)/confidence/stop_loss</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== 12.5 四市场页面数据管道补充 ========== -->
+  <div class="content-block">
+    <h3>12.5 数据管道补充</h3>
+    <p>四个市场独立页面需要补充以下 cron 任务和聚合脚本：</p>
+
+    <div class="arch-diagram" style="font-size:11px;line-height:2">
+<span class="ml"># 新增 cron 任务</span>
+
+<span class="hl">[cron: 每5分钟 — A股]</span>
+  moontdx pull flows     → <span class="ml">data/stock/fund_flows-{date}.json</span> (已有)
+  moontdx pull sectors   → <span class="ml">data/stock/sectors-{date}.json</span> (已有)
+  ai_rotation.py         → <span class="ml">data/stock/fund_flows-{date}.json</span> ← 追加 rotation_ai_text 字段
+  signal_scanner.py      → <span class="ml">data/stock/fund_flows-{date}.json</span> ← 追加 signals[] 字段
+
+<span class="hl">[cron: 每5分钟 — 港股]</span>
+  hk_qt collect          → <span class="ml">data/hk/market.json</span> (已有，需扩展 sectors/southbound)
+  southbound scrape      → <span class="ml">data/hk/market.json</span> ← 追加 southbound 字段
+
+<span class="hl">[cron: 早间07:00 — 美股收盘]</span>
+  us_close collect       → <span class="ml">data/us/market.json</span> (已有，需扩展 rotation/macro/impact_asia)
+  vix fetch              → <span class="ml">data/us/market.json</span> ← 追加 macro.vix 字段
+
+<span class="hl">[cron: 每5分钟 — 加密]</span>
+  binance_ws collect     → <span class="ml">data/crypto/market.json</span> (新增)
+  funding_oi calc        → <span class="ml">data/crypto/market.json</span> ← 追加 funding[]/oi[]/recommendations[]
+
+<span class="wl">[新增聚合脚本]</span>
+  aggregate_stock.py     → 合并 sectors + fund_flows + AI轮动 → 统一输出
+  aggregate_hk.py        → 合并 qt行情 + 南向 + 板块联动
+  aggregate_us.py        → 合并 yfinance + VIX + 板块轮动判断
+  aggregate_crypto.py    → 合并 Binance 现价 + 费率 + OI + 交易建议
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SIGN OFF ════════ -->
+  <div class="signoff">
+    <p><strong>Atlas Terminal v3</strong> — 全球投研终端设计文档</p>
+    <p style="margin-top:4px">诸葛设计 · 2026-07-23 · 待龙哥审阅</p>
+    <p style="margin-top:6px;font-size:11px;color:var(--hairline)">
+      下一步：鲁班按照此设计文档实现 P0 功能（市场全局 + 风险预警 + 数据管道）
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

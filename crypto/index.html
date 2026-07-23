@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atlas Terminal · 加密深度</title>
+<link rel="stylesheet" href="../css/terminal.css">
+</head>
+<body>
+<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
+<script src="../js/terminal.js"></script>
+<script>
+T.loadPage({
+  activeTab: 'crypto',
+  rootId: 'app',
+  dataPath: '../data/crypto/market.json',
+  render: function(cryptoData, overview) {
+
+    var html = '';
+    html += '<a class="back-link" href="../index.html">← 返回全局</a>';
+
+    // ─── 1. BTC/ETH/SOL 实时价 ───
+    if (cryptoData && cryptoData.prices && cryptoData.prices.length) {
+      var priceItems = cryptoData.prices.map(function(p) {
+        var c = p.chg_24h >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="card" style="text-align:center">'+
+          '<div class="card-title">'+p.symbol+'</div>'+
+          '<div class="card-val" style="font-size:18px;color:'+c+'">'+T.formatCrypto(p.price)+'</div>'+
+          '<div class="card-sub" style="color:'+c+'">'+T.fmtPct(p.chg_24h)+'</div>'+
+          (p.vol_24h ? '<div style="font-size:9px;color:var(--muted);margin-top:2px">24h量 '+(typeof p.vol_24h==='number'?p.vol_24h.toFixed(1)+'B':p.vol_24h)+'</div>' : '')+
+          '</div>';
+      }).join('');
+      html += '<div class="row3">'+priceItems+'</div>';
+    } else if (overview && overview.indices && overview.indices.crypto) {
+      var priceItems = overview.indices.crypto.map(function(p) {
+        var c = p.chg >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="card" style="text-align:center">'+
+          '<div class="card-title">'+p.name+'</div>'+
+          '<div class="card-val" style="font-size:18px;color:'+c+'">'+T.formatCrypto(p.val)+'</div>'+
+          '<div class="card-sub" style="color:'+c+'">'+T.fmtPct(p.chg)+'</div>'+
+          '</div>';
+      }).join('');
+      html += '<div class="row3">'+priceItems+'</div>';
+    } else {
+      html += '<div class="card"><div class="card-title">₿ 加密实时价</div>'+T.noData('加密数据收集中 · 等待Binance API cron产出')+'</div>';
+    }
+
+    // ─── 2. 费率热力图 ───
+    if (cryptoData && cryptoData.funding && cryptoData.funding.length) {
+      var fundHTML = cryptoData.funding.map(function(f) {
+        var cls = 'ok', tagText = '正常';
+        var rateColor = 'var(--muted)';
+        if (f.rate <= -0.05) { cls = 'extreme'; tagText = '反转'; rateColor = 'var(--danger)'; }
+        else if (f.rate < -0.01) { cls = 'warn'; tagText = '偏空'; rateColor = 'var(--warn)'; }
+        else if (f.rate >= 0.05) { cls = 'extreme'; tagText = '回调'; rateColor = 'var(--danger)'; }
+        else if (f.rate > 0.01) { cls = 'warn'; tagText = '偏多'; rateColor = 'var(--warn)'; }
+
+        return '<div class="funding-bar">'+
+          '<span style="font-weight:600;width:40px">'+f.symbol+'</span>'+
+          '<span>费率</span>'+
+          '<span style="font-weight:700;color:'+rateColor+'">'+(f.rate*100).toFixed(2)+'%</span>'+
+          (f.percentile != null ? '<span style="font-size:9px;color:var(--muted)">分位 '+f.percentile+'%</span>' : '')+
+          '<span class="tag '+cls+'">'+tagText+'</span>'+
+          '</div>';
+      }).join('');
+
+      var extremeFound = cryptoData.funding.some(function(f){return f.rate <= -0.05 || f.rate >= 0.05;});
+      html += '<div class="card" style="'+(extremeFound?'border-left:2px solid var(--danger);':'')+'">'+
+        '<div class="card-title">🔥 费率热力 · 极端位信号</div>'+
+        fundHTML +
+        (extremeFound ? '<div class="sowhat" style="border-left-color:var(--danger)">💡 费率极端位=强反转信号。极端负→空头踩踏做多；极端正→多头拥挤回调。</div>' : '')+
+        '</div>';
+    }
+
+    // ─── 3. OI背离信号 ───
+    if (cryptoData && cryptoData.oi && cryptoData.oi.length) {
+      var oiHTML = cryptoData.oi.map(function(o) {
+        var oiColor = 'var(--muted)';
+        var oiLabel = '同步';
+        var hasDivergence = false;
+
+        if (o.price_direction === 'up' && o.oi_change_pct < 0) {
+          oiColor = 'var(--warn)'; oiLabel = '价升OI降 ⚠背离'; hasDivergence = true;
+        } else if (o.price_direction === 'down' && o.oi_change_pct > 0) {
+          oiColor = 'var(--warn)'; oiLabel = '价跌OI升 ⚠背离'; hasDivergence = true;
+        } else if (o.oi_change_pct > 0) {
+          oiColor = 'var(--up)'; oiLabel = '同步上涨 健康';
+        } else {
+          oiLabel = '同步下跌';
+        }
+
+        return '<div class="oi-row">'+
+          '<span style="font-weight:600">'+o.symbol+'</span>'+
+          ' OI <span style="color:'+(o.oi_change_pct>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(o.oi_change_pct)+'</span>'+
+          ' | 价 <span style="font-size:9px;color:var(--muted)">'+(o.price_direction||'—')+'</span>'+
+          ' → <span style="color:'+oiColor+';font-weight:'+(hasDivergence?'700':'400')+'">'+oiLabel+'</span>'+
+          '</div>';
+      }).join('');
+
+      html += '<div class="card">'+
+        '<div class="card-title">📊 OI背离检测</div>'+
+        oiHTML +
+        '</div>';
+    }
+
+    // ─── 4. 综合交易建议 ───
+    if (cryptoData && cryptoData.recommendations && cryptoData.recommendations.length) {
+      var recHTML = cryptoData.recommendations.map(function(r) {
+        var icon = r.action === '追多' ? '🟢' : r.action === '做空' ? '🔴' : '🟡';
+        return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+
+          icon+' <strong>'+r.symbol+' '+r.action+'</strong>'+
+          (r.confidence ? ' <span style="font-size:9px;color:var(--muted)">胜率 '+r.confidence+'</span>' : '')+
+          (r.stop_loss ? ' <span style="font-size:9px;color:var(--warn)">止损 '+r.stop_loss+'</span>' : '')+
+          '</div>';
+      }).join('');
+      html += '<div class="card" style="border-left:2px solid var(--primary)">'+
+        '<div class="card-title" style="color:var(--primary)">🎯 综合交易建议</div>'+
+        recHTML +
+        '</div>';
+    }
+
+    // ─── 5. 加密持仓 ───
+    if (overview && overview.holdings && overview.holdings.crypto && overview.holdings.crypto.length) {
+      var holdHTML = overview.holdings.crypto.map(function(h) {
+        var c = h.chg >= 0 ? 'var(--up)' : 'var(--down)';
+        return '<div class="flow-row">'+
+          '<span class="flow-name">'+h.sym+'</span>'+
+          '<span style="font-family:var(--font-mono);color:'+c+'">'+T.formatCrypto(h.price)+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(h.chg)+'</span>'+
+          '</div>';
+      }).join('');
+      html += '<div class="card">'+
+        '<div class="card-title">💼 加密持仓</div>'+
+        holdHTML +
+        '</div>';
+    }
+
+    html += '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+    return html;
+  }
+});
+</script>
+</body>
+</html>

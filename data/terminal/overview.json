@@ -1,21 +1,61 @@
 {
-  "updated": "2026-07-23 14:35:00",
+  "updated": "2026-07-23 22:45:05",
   "indices": {
     "a": [
-      {"name": "上证", "val": 3258, "chg": 0.8},
-      {"name": "深证", "val": 11240, "chg": 1.2},
-      {"name": "创业板", "val": 2186, "chg": 1.5},
-      {"name": "科创50", "val": 1028, "chg": 2.1}
+      {
+        "name": "上证",
+        "val": 3258,
+        "chg": 0.8
+      },
+      {
+        "name": "深证",
+        "val": 11240,
+        "chg": 1.2
+      },
+      {
+        "name": "创业板",
+        "val": 2186,
+        "chg": 1.5
+      },
+      {
+        "name": "科创50",
+        "val": 1028,
+        "chg": 2.1
+      }
     ],
-    "hk": {"name": "恒指", "val": 19842, "chg": 1.2},
+    "hk": {
+      "name": "恒指",
+      "val": 19842,
+      "chg": 1.2
+    },
     "us": [
-      {"name": "SPY", "val": 592.4, "chg": -0.3},
-      {"name": "QQQ", "val": 481.2, "chg": -0.5},
-      {"name": "DIA", "val": 421.8, "chg": 0.1}
+      {
+        "name": "SPY",
+        "val": 592.4,
+        "chg": -0.3
+      },
+      {
+        "name": "QQQ",
+        "val": 481.2,
+        "chg": -0.5
+      },
+      {
+        "name": "DIA",
+        "val": 421.8,
+        "chg": 0.1
+      }
     ],
     "crypto": [
-      {"name": "BTC", "val": 67250, "chg": 2.1},
-      {"name": "ETH", "val": 3482, "chg": 1.4}
+      {
+        "name": "BTC",
+        "val": 67250,
+        "chg": 2.1
+      },
+      {
+        "name": "ETH",
+        "val": 3482,
+        "chg": 1.4
+      }
     ]
   },
   "alerts": [
@@ -35,28 +75,223 @@
   },
   "holdings": {
     "a_stock": [
-      {"sym": "创业板ETF", "price": 2.486, "chg": 1.88, "cost": 2.312, "pnl_pct": 7.5},
-      {"sym": "科创50ETF", "price": 1.092, "chg": 2.15, "cost": 1.028, "pnl_pct": 6.2},
-      {"sym": "半导体ETF", "price": 0.874, "chg": -0.68, "cost": 0.912, "pnl_pct": -4.2}
+      {
+        "sym": "创业板ETF",
+        "price": 2.486,
+        "chg": 1.88,
+        "cost": 2.312,
+        "pnl_pct": 7.5
+      },
+      {
+        "sym": "科创50ETF",
+        "price": 1.092,
+        "chg": 2.15,
+        "cost": 1.028,
+        "pnl_pct": 6.2
+      },
+      {
+        "sym": "半导体ETF",
+        "price": 0.874,
+        "chg": -0.68,
+        "cost": 0.912,
+        "pnl_pct": -4.2
+      }
     ],
     "hk": [
-      {"sym": "腾讯 00700", "price": 385.2, "chg": 2.3, "cost": 342.0, "pnl_pct": 12.6},
-      {"sym": "阿里 09988", "price": 92.5, "chg": 1.8, "cost": 88.3, "pnl_pct": 4.8},
-      {"sym": "恒生科技ETF", "price": 4.82, "chg": 1.1, "cost": 4.56, "pnl_pct": 5.7},
-      {"sym": "2x海力士", "price": 18.6, "chg": -0.5, "cost": 19.2, "pnl_pct": -3.1}
+      {
+        "sym": "腾讯 00700",
+        "price": 385.2,
+        "chg": 2.3,
+        "cost": 342.0,
+        "pnl_pct": 12.6
+      },
+      {
+        "sym": "阿里 09988",
+        "price": 92.5,
+        "chg": 1.8,
+        "cost": 88.3,
+        "pnl_pct": 4.8
+      },
+      {
+        "sym": "恒生科技ETF",
+        "price": 4.82,
+        "chg": 1.1,
+        "cost": 4.56,
+        "pnl_pct": 5.7
+      },
+      {
+        "sym": "2x海力士",
+        "price": 18.6,
+        "chg": -0.5,
+        "cost": 19.2,
+        "pnl_pct": -3.1
+      }
     ],
     "us": [
-      {"sym": "NVDA", "price": 142.8, "chg": -1.5, "cost": 138.2, "pnl_pct": 3.3},
-      {"sym": "TSLA", "price": 248.6, "chg": -2.8, "cost": 255.0, "pnl_pct": -2.5},
-      {"sym": "AVGO", "price": 192.4, "chg": 0.8, "cost": 178.5, "pnl_pct": 7.8},
-      {"sym": "GOOGL", "price": 185.2, "chg": -0.3, "cost": 182.0, "pnl_pct": 1.8},
-      {"sym": "MSFT", "price": 458.6, "chg": 0.5, "cost": 445.0, "pnl_pct": 3.1},
-      {"sym": "MU", "price": 98.4, "chg": -1.2, "cost": 102.5, "pnl_pct": -4.0}
+      {
+        "sym": "NVDA",
+        "price": 142.8,
+        "chg": -1.5,
+        "cost": 138.2,
+        "pnl_pct": 3.3
+      },
+      {
+        "sym": "TSLA",
+        "price": 248.6,
+        "chg": -2.8,
+        "cost": 255.0,
+        "pnl_pct": -2.5
+      },
+      {
+        "sym": "AVGO",
+        "price": 192.4,
+        "chg": 0.8,
+        "cost": 178.5,
+        "pnl_pct": 7.8
+      },
+      {
+        "sym": "GOOGL",
+        "price": 185.2,
+        "chg": -0.3,
+        "cost": 182.0,
+        "pnl_pct": 1.8
+      },
+      {
+        "sym": "MSFT",
+        "price": 458.6,
+        "chg": 0.5,
+        "cost": 445.0,
+        "pnl_pct": 3.1
+      },
+      {
+        "sym": "MU",
+        "price": 98.4,
+        "chg": -1.2,
+        "cost": 102.5,
+        "pnl_pct": -4.0
+      }
     ],
     "crypto": [
-      {"sym": "BTC/USDT", "price": 67250, "chg": 2.1},
-      {"sym": "ETH/USDT", "price": 3482, "chg": 1.4},
-      {"sym": "SOL/USDT", "price": 183.5, "chg": 3.8}
+      {
+        "sym": "BTC/USDT",
+        "price": 67250,
+        "chg": 2.1
+      },
+      {
+        "sym": "ETH/USDT",
+        "price": 3482,
+        "chg": 1.4
+      },
+      {
+        "sym": "SOL/USDT",
+        "price": 183.5,
+        "chg": 3.8
+      }
     ]
+  },
+  "flow": {
+    "total_inflow": 542.4,
+    "top_inflow": [
+      {
+        "name": "电力设备",
+        "amount": 94.3
+      },
+      {
+        "name": "有色金属",
+        "amount": 60.2
+      },
+      {
+        "name": "电网设备",
+        "amount": 48.7
+      },
+      {
+        "name": "电池",
+        "amount": 31.5
+      },
+      {
+        "name": "工业金属",
+        "amount": 29.4
+      },
+      {
+        "name": "输变电设备",
+        "amount": 27.1
+      },
+      {
+        "name": "电池化学品",
+        "amount": 24.0
+      },
+      {
+        "name": "能源金属",
+        "amount": 16.6
+      },
+      {
+        "name": "锂",
+        "amount": 14.0
+      },
+      {
+        "name": "铝",
+        "amount": 13.8
+      }
+    ],
+    "top_outflow": [
+      {
+        "name": "机器人",
+        "amount": -3.6
+      },
+      {
+        "name": "房地产",
+        "amount": -3.4
+      },
+      {
+        "name": "房地产开发",
+        "amount": -3.4
+      },
+      {
+        "name": "军工电子Ⅲ",
+        "amount": -3.4
+      },
+      {
+        "name": "通信线缆及配套",
+        "amount": -3.3
+      },
+      {
+        "name": "玻纤制造",
+        "amount": -3.2
+      },
+      {
+        "name": "玻璃玻纤",
+        "amount": -3.1
+      },
+      {
+        "name": "胶黏剂及胶带",
+        "amount": -3.1
+      },
+      {
+        "name": "商贸零售",
+        "amount": -3.1
+      },
+      {
+        "name": "生物制品",
+        "amount": -2.9
+      }
+    ],
+    "rotation_text": "今日资金趋势：主力流入集中在电力设备/有色金属/电网设备方向，流出集中在机器人/房地产/房地产开发方向。"
+  },
+  "cross_market": {
+    "chain": [
+      {
+        "from": "🇺🇸 QQQ",
+        "to": "🇭🇰 恒生科技",
+        "direction": "up",
+        "chg": 1.07
+      },
+      {
+        "from": "🇭🇰 恒指",
+        "to": "🇨🇳 科创50",
+        "direction": "up",
+        "chg": 0.74
+      }
+    ],
+    "anomaly": null
   }
 }
