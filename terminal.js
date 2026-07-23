@@ -263,10 +263,10 @@ const T = {
     try {
       // Always load overview for status bar
       T._data.overview = await T.fetchJSON(dataDir + 'overview.json', T._fallbackOverview());
+      const ov = T._data.overview;
+      T.renderStatusBar(ov.indices);  // 所有页面都渲染状态栏
 
       if (page === 'pano' || page === 'all') {
-        const ov = T._data.overview;
-        T.renderStatusBar(ov.indices);
         T.renderAlertStrip(ov.alerts);
         T.renderTotalCard(ov.portfolio_total);
         T.renderHoldingsGrid(ov.holdings);
