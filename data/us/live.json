@@ -1,0 +1,69 @@
+{
+  "updated": "2026-07-23 23:37:15",
+  "indices": [
+    {
+      "symbol": "SPY",
+      "price": 736.7,
+      "chg_pct": -0.36
+    },
+    {
+      "symbol": "QQQ",
+      "price": 689.71,
+      "chg_pct": -0.71
+    },
+    {
+      "symbol": "DIA",
+      "price": 515.7,
+      "chg_pct": 0.12
+    },
+    {
+      "symbol": "VIX",
+      "price": 19.73,
+      "chg_pct": 11.66
+    },
+    {
+      "symbol": "10Y",
+      "price": 4.7,
+      "chg_pct": 0.13
+    }
+  ],
+  "sectors": {
+    "科技": {
+      "price": 177.91,
+      "chg_pct": -0.5
+    },
+    "金融": {
+      "price": 55.63,
+      "chg_pct": -0.08
+    },
+    "能源": {
+      "price": 60.1,
+      "chg_pct": -0.21
+    },
+    "医疗": {
+      "price": 161.26,
+      "chg_pct": 0.85
+    },
+    "工业": {
+      "price": 181.83,
+      "chg_pct": 1.53
+    },
+    "消费": {
+      "price": 108.5,
+      "chg_pct": -1.45
+    },
+    "公用事业": {
+      "price": 46.23,
+      "chg_pct": 1.27
+    },
+    "材料": {
+      "price": 50.25,
+      "chg_pct": -0.34
+    },
+    "房地产": {
+      "price": 45.08,
+      "chg_pct": 0.52
+    }
+  },
+  "opportunities": []
+}
