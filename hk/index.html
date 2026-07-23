@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590<meta charset="UTF-8">family=JetBrains+Mono:wght@400;500;600<meta charset="UTF-8">display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Atlas Terminal · 港股深度</title>
 <link rel="stylesheet" href="../css/terminal.css">
@@ -84,18 +84,18 @@ T.loadPage({
     }
 
     // ─── 5. 港股持仓信号 ───
-    if (overview && overview.holdings && overview.holdings.hk && overview.holdings.hk.length) {
-      var hkHolds = overview.holdings.hk;
+    if (overview && overview.holdings && overview.holdings.length) {
+      var hkHolds = overview.holdings.filter(function(h) { return h.market === '港股'; });
       var holdHTML = hkHolds.map(function(h) {
         var c = h.chg >= 0 ? 'var(--up)' : 'var(--down)';
         var alertIcon = '';
         if (h.pnl_pct < -5) alertIcon = ' 🔴';
         else if (h.pnl_pct < -2) alertIcon = ' 🟡';
         return '<div class="flow-row">'+
-          '<span class="flow-name">'+h.sym+'</span>'+
+          '<span class="flow-name">'+h.symbol+'</span>'+
           '<span style="font-family:var(--font-mono);color:'+c+'">'+h.price+'</span>'+
-          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(h.chg)+'</span>'+
-          '<span style="font-size:10px;color:'+(h.pnl_pct>=0?'var(--up)':'var(--down)')+'">盈亏 '+T.fmtPct(h.pnl_pct)+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+(h.chg != null ? T.fmtPct(h.chg) : '—')+'</span>'+
+          '<span style="font-size:10px;color:'+(h.pnl_pct != null && h.pnl_pct>=0?'var(--up)':'var(--down)')+'">盈亏 '+T.fmtPct(h.pnl_pct)+'</span>'+
           alertIcon+
           '</div>';
       }).join('');

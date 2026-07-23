@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590<meta charset="UTF-8">family=JetBrains+Mono:wght@400;500;600<meta charset="UTF-8">display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Atlas Terminal v3 · 全球投研终端</title>
 <link rel="stylesheet" href="css/terminal.css">
@@ -111,7 +111,7 @@ T.loadPage({
         '<div class="card-title">⚡ 跨市场预警信号</div>'+
         overview.alerts.map(function(a, i) {
           var icon = a.priority === 'high' ? '🔴' : a.priority === 'medium' ? '🟡' : '🟢';
-          return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+icon+' <strong style="color:'+(a.priority==='high'?'var(--danger)':'var(--warn)')+'">'+a.title+'</strong> <span style="color:var(--muted);font-size:10px">'+a.time+'</span>'+(a.desc ? '<div style="color:var(--ink-soft);margin-top:2px">'+a.desc+'</div>' : '')+'</div>';
+          return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+icon+' <strong style="color:'+(a.priority==='high'?'var(--danger)':'var(--warn)')+'">'+a.title+'</strong>'+(a.time ? ' <span style="color:var(--muted);font-size:10px">'+a.time+'</span>' : '')+(a.desc ? '<div style="color:var(--ink-soft);margin-top:2px">'+a.desc+'</div>' : '')+'</div>';
         }).join('')+
         '</div>';
     } else {

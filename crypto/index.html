@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590<meta charset="UTF-8">family=JetBrains+Mono:wght@400;500;600<meta charset="UTF-8">display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Atlas Terminal · 加密深度</title>
 <link rel="stylesheet" href="../css/terminal.css">
@@ -121,13 +121,14 @@ T.loadPage({
     }
 
     // ─── 5. 加密持仓 ───
-    if (overview && overview.holdings && overview.holdings.crypto && overview.holdings.crypto.length) {
-      var holdHTML = overview.holdings.crypto.map(function(h) {
+    if (overview && overview.holdings && overview.holdings.length) {
+      var cryptoHolds = overview.holdings.filter(function(h) { return h.market === '加密'; });
+      var holdHTML = cryptoHolds.map(function(h) {
         var c = h.chg >= 0 ? 'var(--up)' : 'var(--down)';
         return '<div class="flow-row">'+
-          '<span class="flow-name">'+h.sym+'</span>'+
+          '<span class="flow-name">'+h.symbol+'</span>'+
           '<span style="font-family:var(--font-mono);color:'+c+'">'+T.formatCrypto(h.price)+'</span>'+
-          '<span style="font-size:10px;color:'+c+'">'+T.fmtPct(h.chg)+'</span>'+
+          '<span style="font-size:10px;color:'+c+'">'+(h.chg != null ? T.fmtPct(h.chg) : '—')+'</span>'+
           '</div>';
       }).join('');
       html += '<div class="card">'+

@@ -33,6 +33,16 @@
   --warn:      #f59e0b;
   --warn-dim:  rgba(245,158,11,0.12);
 
+  /* JS inline-style aliases */
+  --up:        var(--bull);
+  --down:      var(--bear);
+  --info:      #3b82f6;
+  --primary:   var(--accent);
+  --danger:    var(--bear);
+  --hairline:  var(--border-subtle);
+  --ink-soft:  var(--text-tertiary);
+  --font-mono: var(--mono);
+
   /* Typography */
   --sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --mono: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
