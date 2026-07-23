@@ -2,128 +2,438 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Atlas Terminal v3 · 全球投研终端</title>
-<link rel="stylesheet" href="css/terminal.css">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Atlas Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   Atlas Terminal — Bloomberg × Modern Dark
+   ═══════════════════════════════════════════ */
+:root{
+  --bg:#0a0a0c; --bg-panel:#0f1014; --bg-card:#14161b; --bg-hover:#1a1c22;
+  --border:rgba(255,255,255,0.06); --border-active:rgba(255,255,255,0.10);
+  --text:#ddd; --text-dim:#999; --text-muted:#555;
+  --amber:#f0a030; --amber-dim:rgba(240,160,48,0.10);
+  --green:#00c853; --red:#f44336; --green-dim:rgba(0,200,83,0.08); --red-dim:rgba(244,67,54,0.08);
+  --font:'JetBrains Mono',monospace; --sans:'Inter',-apple-system,'PingFang SC',sans-serif;
+  --nav-w:180px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:11px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;display:flex}
+
+/* ── Sidebar ── */
+nav.sidebar{
+  width:var(--nav-w);min-width:var(--nav-w);background:var(--bg-panel);
+  border-right:1px solid var(--border);display:flex;flex-direction:column;
+  padding:12px 0;position:fixed;top:0;left:0;bottom:0;z-index:50;
+}
+nav.sidebar .logo{
+  font-family:var(--sans);font-size:15px;font-weight:600;color:var(--amber);
+  padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px;
+  letter-spacing:-0.3px;
+}
+nav.sidebar .logo span{color:var(--text-dim);font-weight:400;font-size:10px;margin-left:4px}
+nav.sidebar a{
+  display:flex;align-items:center;gap:8px;padding:8px 16px;color:var(--text-dim);
+  text-decoration:none;font-size:11px;font-family:var(--sans);font-weight:500;
+  border-left:2px solid transparent;transition:all 0.15s;
+}
+nav.sidebar a:hover{color:var(--text);background:var(--bg-hover)}
+nav.sidebar a.active{color:var(--amber);border-left-color:var(--amber);background:var(--amber-dim)}
+nav.sidebar a .dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
+nav.sidebar a.active .dot{background:var(--amber)}
+nav.sidebar .spacer{flex:1}
+nav.sidebar .time{font-size:9px;color:var(--text-muted);padding:8px 16px;font-family:var(--font)}
+
+/* ── Main ── */
+main{
+  margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;
+  min-height:100dvh;overflow-x:hidden;
+}
+
+/* ── Top Ticker Bar ── */
+.ticker{
+  background:var(--bg-panel);border-bottom:1px solid var(--border);
+  padding:6px 12px;display:flex;gap:16px;overflow-x:auto;
+  position:sticky;top:0;z-index:40;white-space:nowrap;
+}
+.ticker::-webkit-scrollbar{display:none}
+.ticker .item{display:inline-flex;align-items:center;gap:6px;font-size:10px;flex-shrink:0}
+.ticker .item .flag{font-size:12px}
+.ticker .item .sym{color:var(--text-muted)}
+.ticker .item .val{color:var(--text);font-weight:500}
+.ticker .item .chg{font-weight:600}
+.ticker .item .chg.up{color:var(--green)}
+.ticker .item .chg.dn{color:var(--red)}
+
+/* ── Alert Banner ── */
+.alert-banner{
+  margin:0 16px;padding:8px 14px;border-radius:4px;font-size:11px;
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+}
+.alert-banner.high{background:var(--red-dim);border:1px solid rgba(244,67,54,0.15);color:#f44336}
+.alert-banner.med{background:var(--amber-dim);border:1px solid rgba(240,160,48,0.15);color:#f0a030}
+.alert-banner .msg{flex:1}
+
+/* ── Content Area ── */
+.content{padding:12px 16px 24px;flex:1}
+.page{display:none}
+.page.active{display:block}
+
+/* ── Dashboard Grid ── */
+.dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:12px}
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:4px;
+  padding:12px;transition:border-color 0.15s;
+}
+.card:hover{border-color:var(--border-active)}
+.card-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);
+}
+.card-header .label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.card-header .tag{font-size:9px;padding:1px 6px;border-radius:2px}
+.card-header .tag.live{background:var(--green-dim);color:var(--green)}
+.card-header .tag.closed{background:var(--text-muted);color:var(--bg)}
+.card .big{
+  font-family:var(--font);font-size:22px;font-weight:600;line-height:1.1;
+  margin-bottom:4px;
+}
+.card .big.up{color:var(--green)}.card .big.dn{color:var(--red)}
+.card .sub{font-size:9px;color:var(--text-dim)}
+.card .chg-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px}
+.card .chg-badge.up{color:var(--green);background:var(--green-dim)}
+.card .chg-badge.dn{color:var(--red);background:var(--red-dim)}
+
+/* ── Table ── */
+.tbl{width:100%;border-collapse:collapse;font-size:10px}
+.tbl th{
+  text-align:left;padding:4px 8px;color:var(--text-muted);font-weight:500;
+  text-transform:uppercase;font-size:9px;letter-spacing:0.3px;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg-card)
+}
+.tbl td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.tbl tr:hover td{background:var(--bg-hover)}
+.tbl .up{color:var(--green)}.tbl .dn{color:var(--red)}
+.tbl .sym{font-family:var(--sans);font-weight:500;color:var(--text)}
+
+/* ── Section Title ── */
+.sec-title{
+  font-size:10px;color:var(--amber);text-transform:uppercase;
+  letter-spacing:1px;margin:16px 0 8px;padding-bottom:4px;
+  border-bottom:1px solid var(--border);font-weight:500;
+}
+
+/* ── Two Column ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* ── Flow List ── */
+.flow-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:3px 0;font-size:10px;border-bottom:1px solid rgba(255,255,255,0.02)
+}
+.flow-item .sector{color:var(--text-dim)}
+.flow-item .flow{font-weight:500}
+.flow-item .flow.in{color:var(--green)}.flow-item .flow.out{color:var(--red)}
+
+/* ── Empty State ── */
+.empty{padding:40px;text-align:center;color:var(--text-muted);font-size:12px}
+
+/* ── Bottom Nav (mobile) ── */
+.bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:var(--bg-panel);border-top:1px solid var(--border);
+  justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,6px);z-index:50
+}
+.bottom-nav a{
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  color:var(--text-muted);text-decoration:none;font-size:9px;
+  padding:4px 8px;border-radius:4px;transition:all 0.15s
+}
+.bottom-nav a.active{color:var(--amber)}
+.bottom-nav a .ico{font-size:16px}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  nav.sidebar{display:none}
+  main{margin-left:0;padding-bottom:50px}
+  .bottom-nav{display:flex}
+  .dash{grid-template-columns:repeat(2,1fr)}
+  .cols{grid-template-columns:1fr}
+  .ticker{gap:10px;padding:4px 8px}
+  .ticker .item .sym{display:none}
+}
+</style>
 </head>
 <body>
-<div id="app"><div style="padding:40px;text-align:center;color:var(--muted)">加载中...</div></div>
-<script src="js/terminal.js"></script>
+
+<!-- ══ Sidebar Nav ══ -->
+<nav class="sidebar">
+  <div class="logo">ATLAS<span>TERMINAL</span></div>
+  <a href="#" class="active" data-page="global"><span class="dot"></span>全景</a>
+  <a href="#" data-page="astock"><span class="dot"></span>🇨🇳 A股</a>
+  <a href="#" data-page="hk"><span class="dot"></span>🇭🇰 港股</a>
+  <a href="#" data-page="us"><span class="dot"></span>🇺🇸 美股</a>
+  <a href="#" data-page="crypto"><span class="dot"></span>₿ 加密</a>
+  <div class="spacer"></div>
+  <div class="time" id="clock">00:00 CST</div>
+</nav>
+
+<!-- ══ Main ══ -->
+<main>
+  <div class="ticker" id="ticker"></div>
+  <div id="alertZone"></div>
+  <div class="content" id="content"></div>
+</main>
+
+<!-- ══ Bottom Nav (mobile) ══ -->
+<nav class="bottom-nav" id="bottomNav"></nav>
+
 <script>
-T.loadPage({
-  activeTab: 'global',
-  rootId: 'app',
-  render: function(pageData, overview) {
+/* ═══════════════════════════════════════════
+   Atlas Terminal — Data Engine
+   ═══════════════════════════════════════════ */
+const DATA = {};
 
-    // ─── 第一部分: 四市场关键指标卡片 ───
-    var idxHTML = '';
-    if (overview && overview.indices) {
-      var idx = overview.indices;
-      // A股
-      var aItems = (idx.a || []).map(function(x) {
-        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+x.val+'</div><div class="chg '+(x.chg>=0?'up':'down')+'" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
-      }).join('');
-      // HK
-      var hkItem = idx.hk ? '<div class="idx-mini"><div class="name">'+idx.hk.name+'</div><div class="val" style="color:'+(idx.hk.chg>=0?'var(--up)':'var(--down)')+'">'+idx.hk.val+'</div><div class="chg" style="color:'+(idx.hk.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(idx.hk.chg)+'</div></div>' : '';
-      // US
-      var usItems = (idx.us || []).slice(0,3).map(function(x) {
-        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+x.val+'</div><div class="chg" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
-      }).join('');
-      // Crypto
-      var cryptoItems = (idx.crypto || []).map(function(x) {
-        return '<div class="idx-mini"><div class="name">'+x.name+'</div><div class="val" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.formatCrypto(x.val)+'</div><div class="chg" style="color:'+(x.chg>=0?'var(--up)':'var(--down)')+'">'+T.fmtPct(x.chg)+'</div></div>';
-      }).join('');
+async function init(){
+  try{
+    const r = await fetch('data/terminal/overview.json');
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    DATA.ov = await r.json();
+  }catch(e){ DATA.ov = null }
 
-      idxHTML = ''+
-        '<div class="card"><div class="card-title">🇨🇳 A股 · 四大指数</div><div class="row4">'+aItems+'</div></div>'+
-        '<div class="card"><div class="card-title">🇭🇰 港股</div><div class="row3">'+hkItem+'</div></div>'+
-        '<div class="card"><div class="card-title">🇺🇸 美股 · 收盘</div><div class="row3">'+(usItems || T.noData('美股数据收集中'))+'</div></div>'+
-        '<div class="card"><div class="card-title">₿ 加密 · 实时</div><div class="row3">'+cryptoItems+'</div></div>';
-    } else {
-      idxHTML = '<div class="card">'+T.noData('全球指数数据收集中')+'</div>';
-    }
+  try{
+    const r = await fetch('data/stock/fund_flows-'+new Date().toISOString().slice(0,10)+'.json');
+    if(r.ok) DATA.ff = await r.json();
+  }catch(e){}
 
-    // ─── 第二部分: 全球资金流向判断 ───
-    var flowHTML = '';
-    if (overview && overview.flow) {
-      var f = overview.flow;
-      var flowColor = f.total_inflow >= 0 ? 'var(--up)' : 'var(--down)';
-      var arrow = f.total_inflow >= 0 ? '↑' : '↓';
-      var topIn = (f.top_inflow || []).slice(0,5).map(function(s) {
-        return '<div class="flow-row"><span class="flow-name" style="color:var(--up)">'+s.name+'</span><span class="flow-amt" style="color:var(--up)">+'+s.amount+'亿</span></div>';
-      }).join('');
-      var topOut = (f.top_outflow || []).slice(0,5).map(function(s) {
-        return '<div class="flow-row"><span class="flow-name" style="color:var(--down)">'+s.name+'</span><span class="flow-amt" style="color:var(--down)">'+s.amount+'亿</span></div>';
-      }).join('');
+  try{
+    const r = await fetch('data/crypto/market.json');
+    if(r.ok) DATA.crypto = await r.json();
+  }catch(e){}
 
-      flowHTML = '<div class="card">'+
-        '<div class="card-title">💰 今日资金方向</div>'+
-        '<div class="card-val" style="color:'+flowColor+'">'+arrow+' 主力净流入 '+Math.abs(f.total_inflow)+'亿</div>'+
-        '<div class="card-sub" style="color:'+flowColor+'">全市场资金方向: '+(f.total_inflow>=0?'净流入':'净流出')+'</div>'+
-        (topIn ? '<div style="margin-top:8px"><div style="font-size:10px;color:var(--up);margin-bottom:4px">🔥 主力买入TOP5</div>'+topIn+'</div>' : '')+
-        (topOut ? '<div style="margin-top:8px"><div style="font-size:10px;color:var(--down);margin-bottom:4px">📉 主力卖出TOP5</div>'+topOut+'</div>' : '')+
-        ((f.rotation_text) ? '<div class="sowhat">💡 '+f.rotation_text+'</div>' : '')+
-        '</div>';
-    } else {
-      // Try fund_flows data
-      flowHTML = '<div class="card"><div class="card-title">💰 资金流向</div>'+T.noData('资金流数据收集中')+'</div>';
-    }
+  renderTicker();
+  renderAlerts();
+  renderPage('global');
+  setupNav();
+  updateClock();setInterval(updateClock,30000);
+  setInterval(refreshData, 300000); // refresh every 5min
+}
 
-    // ─── 第三部分: 跨市场预警 ───
-    var crossHTML = '';
-    if (overview && overview.cross_market) {
-      var cm = overview.cross_market;
-      crossHTML = '<div class="card">'+
-        '<div class="card-title">🔗 跨市场资金链</div>'+
-        '<div class="cross-chain">'+
-        (cm.chain || []).map(function(c) {
-          var cls = c.direction === 'up' ? 'link-up' : 'link-down';
-          return '<span class="'+cls+'">'+c.from+' → '+c.to+'</span>';
-        }).join('')+
-        '</div>'+
-        (cm.anomaly ? '<div class="sowhat" style="border-left-color:var(--warn)">⚠ '+cm.anomaly+'</div>' : '')+
-        '</div>';
-    } else {
-      // Build chain from index data
-      var chainParts = [];
-      if (overview && overview.indices) {
-        var i = overview.indices;
-        if (i.us && i.us.length) {
-          var qqq = i.us.find(function(x){return x.name==='QQQ'}) || i.us[0];
-          chainParts.push('🇺🇸<span class="'+(qqq.chg>=0?'link-up':'link-down')+'">'+qqq.name+' '+T.fmtPct(qqq.chg)+'</span>');
-        }
-        if (i.hk) {
-          chainParts.push('→ 🇭🇰<span class="'+(i.hk.chg>=0?'link-up':'link-down')+'">'+i.hk.name+' '+T.fmtPct(i.hk.chg)+'</span>');
-        }
-        if (i.a && i.a.length) {
-          var kc50 = i.a.find(function(x){return x.name==='科创50'}) || i.a[0];
-          chainParts.push('→ 🇨🇳<span class="'+(kc50.chg>=0?'link-up':'link-down')+'">'+kc50.name+' '+T.fmtPct(kc50.chg)+'</span>');
-        }
-      }
-      crossHTML = '<div class="card"><div class="card-title">🔗 跨市场资金链</div><div class="cross-chain">'+(chainParts.length ? chainParts.join(' ') : T.noData('跨市场数据收集中'))+'</div></div>';
-    }
+function fmoney(v){if(v==null)return'—';return v>=0?'+'+v.toFixed(0)+'亿':v.toFixed(0)+'亿'}
+function fpct(v){if(v==null)return'—';const s=v>=0?'+':'';return s+v.toFixed(2)+'%'}
+function fprice(v,d){if(v==null)return'—';return v.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||2})}
+function updown(v){if(v==null)return'';return v>=0?'up':'dn'}
+function card(cls,label,tag,big,sub,chg){return`
+<div class="card">
+  <div class="card-header"><span class="label">${label}</span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</div>
+  <div class="big ${big!=null?updown(big):''}">${big!=null?big:'—'}</div>
+  ${sub?`<div class="sub">${sub}</div>`:''}
+  ${chg!=null?`<span class="chg-badge ${updown(chg)}">${fpct(chg)}</span>`:''}
+</div>`}
 
-    // ─── 第四部分: 预警信号 ───
-    var alertListHTML = '';
-    if (overview && overview.alerts && overview.alerts.length) {
-      alertListHTML = '<div class="card">'+
-        '<div class="card-title">⚡ 跨市场预警信号</div>'+
-        overview.alerts.map(function(a, i) {
-          var icon = a.priority === 'high' ? '🔴' : a.priority === 'medium' ? '🟡' : '🟢';
-          return '<div style="padding:4px 0;font-size:11px;border-bottom:1px solid var(--hairline)">'+icon+' <strong style="color:'+(a.priority==='high'?'var(--danger)':'var(--warn)')+'">'+a.title+'</strong>'+(a.time ? ' <span style="color:var(--muted);font-size:10px">'+a.time+'</span>' : '')+(a.desc ? '<div style="color:var(--ink-soft);margin-top:2px">'+a.desc+'</div>' : '')+'</div>';
-        }).join('')+
-        '</div>';
-    } else {
-      alertListHTML = '<div class="card"><div class="card-title">⚡ 跨市场预警</div>'+T.noData('暂无预警信号')+'</div>';
-    }
+/* ── Ticker Bar ── */
+function renderTicker(){
+  const ov=DATA.ov;if(!ov||!ov.indices)return;
+  const idx=ov.indices;let h='';
+  (idx.a||[]).forEach(x=>h+=`<span class="item"><span class="flag">🇨🇳</span><span class="sym">${x.name}</span><span class="val">${x.val}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
+  if(idx.hk)h+=`<span class="item"><span class="flag">🇭🇰</span><span class="sym">${idx.hk.name}</span><span class="val">${idx.hk.val}</span><span class="chg ${updown(idx.hk.chg)}">${fpct(idx.hk.chg)}</span></span>`;
+  (idx.us||[]).forEach(x=>h+=`<span class="item"><span class="flag">🇺🇸</span><span class="sym">${x.name}</span><span class="val">${fprice(x.val)}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
+  (idx.crypto||[]).forEach(x=>h+=`<span class="item"><span class="flag">₿</span><span class="sym">${x.name}</span><span class="val">${fprice(x.val)}</span><span class="chg ${updown(x.chg)}">${fpct(x.chg)}</span></span>`);
+  document.getElementById('ticker').innerHTML=h;
+}
 
-    // ─── 最后更新 ───
-    var timeHTML = '<div class="last-updated">数据更新: <span id="update-time">'+(overview && overview.updated ? overview.updated : '—')+'</span></div>';
+/* ── Alerts ── */
+function renderAlerts(){
+  const ov=DATA.ov;if(!ov||!ov.alerts||!ov.alerts.length)return;
+  const a=ov.alerts[0];const cls=a.priority==='high'?'high':'med';
+  document.getElementById('alertZone').innerHTML=`
+    <div class="alert-banner ${cls}" onclick="this.remove()">
+      <span>${a.priority==='high'?'⚡':'⚠'}</span>
+      <span class="msg"><b>${a.title}</b> ${a.desc||''}</span>
+    </div>`;
+}
 
-    return idxHTML + flowHTML + crossHTML + alertListHTML + timeHTML;
+/* ── Pages ── */
+function renderPage(id){
+  const c=document.getElementById('content');
+  switch(id){
+    case 'global': c.innerHTML=renderGlobal();break;
+    case 'astock': c.innerHTML=renderAStock();break;
+    case 'hk': c.innerHTML=renderHK();break;
+    case 'us': c.innerHTML=renderUS();break;
+    case 'crypto': c.innerHTML=renderCrypto();break;
   }
-});
+}
+
+/* ── Global Dashboard ── */
+function renderGlobal(){
+  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
+  const idx=ov.indices||{};
+  let h='<div class="sec-title">📊 全球市场</div><div class="dash">';
+  (idx.a||[]).forEach(x=>h+=card(x.name,'🇨🇳 A股','live',x.val,'',x.chg));
+  if(idx.hk)h+=card(idx.hk.name,'🇭🇰 港股','closed',idx.hk.val,'',idx.hk.chg);
+  (idx.us||[]).forEach(x=>h+=card(x.name,'🇺🇸 美股','closed',fprice(x.val),'',x.chg));
+  (idx.crypto||[]).forEach(x=>h+=card(x.name,'₿ 加密','live',fprice(x.val),'USDT',x.chg));
+  h+='</div>';
+
+  if(ov.flow){
+    const f=ov.flow;
+    h+='<div class="sec-title">💵 A股资金流 '+(f.total_inflow>0?'🟢':'🔴')+' '+fmoney(f.total_inflow)+'</div>';
+    h+='<div class="cols"><div class="card"><div class="card-header"><span class="label">主力流入 TOP5</span></div>';
+    (f.top_inflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow in">+${x.amount.toFixed(0)}亿</span></div>`);
+    h+='</div><div class="card"><div class="card-header"><span class="label">主力流出 TOP5</span></div>';
+    (f.top_outflow||[]).slice(0,5).forEach(x=>h+=`<div class="flow-item"><span class="sector">${x.name}</span><span class="flow out">${x.amount.toFixed(0)}亿</span></div>`);
+    h+='</div></div>';
+    h+=`<div class="card" style="margin-top:8px"><span style="color:var(--text-dim)">${f.rotation_text||''}</span></div>`;
+  }
+
+  if(ov.cross_market){
+    const cm=ov.cross_market;
+    h+='<div class="sec-title">🔗 跨市场联动</div><div class="dash">';
+    (cm.chain||[]).forEach(c=>h+=card(c.from,c.to,'',fpct(c.chg).replace('%',''),'',c.chg));
+    h+='</div>';
+    if(cm.anomaly)h+=`<div class="alert-banner med"><span>⚠</span><span class="msg">${cm.anomaly}</span></div>`;
+  }
+
+  if(ov.holdings&&ov.holdings.length){
+    h+='<div class="sec-title">💼 持仓概览</div><table class="tbl"><thead><tr><th>标的</th><th>市场</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
+    ov.holdings.forEach(hh=>{
+      h+=`<tr><td class="sym">${hh.symbol||''}</td><td>${hh.market||''}</td><td>${hh.price!=null?fprice(hh.price):'—'}</td><td class="${updown(hh.pnl_pct)}">${fpct(hh.pnl_pct)}</td></tr>`;
+    });
+    h+='</tbody></table>';
+  }
+
+  return h;
+}
+
+/* ── A Stock ── */
+function renderAStock(){
+  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
+  let h='<div class="sec-title">🇨🇳 A股指数</div><div class="dash">';
+  (ov.indices?.a||[]).forEach(x=>h+=card(x.name,'指数','live',x.val,'',x.chg));
+  h+='</div>';
+
+  if(DATA.ff&&DATA.ff.sectors){
+    const ss=DATA.ff.sectors;
+    const arr=Object.entries(ss).map(([n,v])=>({name:n,flow:v.fund_flow,chg:v.current})).sort((a,b)=>b.flow-a.flow);
+    h+='<div class="sec-title">📈 板块资金 TOP10</div><table class="tbl"><thead><tr><th>板块</th><th>资金(亿)</th><th>涨跌</th></tr></thead><tbody>';
+    arr.slice(0,10).forEach(x=>h+=`<tr><td>${x.name}</td><td class="in">+${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
+    h+='</tbody></table>';
+    h+='<div class="sec-title">📉 板块资金 BOT10</div><table class="tbl"><thead><tr><th>板块</th><th>资金(亿)</th><th>涨跌</th></tr></thead><tbody>';
+    arr.slice(-10).reverse().forEach(x=>h+=`<tr><td>${x.name}</td><td class="out">${x.flow.toFixed(1)}</td><td class="${updown(x.chg)}">${fpct(x.chg)}</td></tr>`);
+    h+='</tbody></table>';
+  }
+
+  return h;
+}
+
+/* ── HK ── */
+function renderHK(){
+  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
+  let h='<div class="sec-title">🇭🇰 恒生指数</div>';
+  if(ov.indices?.hk){
+    const hk=ov.indices.hk;
+    h+=`<div class="dash">${card('恒生指数','','live',hk.val,'',hk.chg)}</div>`;
+  }
+  const hks=(ov.holdings||[]).filter(x=>x.market==='港股');
+  if(hks.length){
+    h+='<div class="sec-title">💼 港股持仓</div><table class="tbl"><thead><tr><th>标的</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
+    hks.forEach(x=>h+=`<tr><td class="sym">${x.symbol}</td><td>HK$${fprice(x.price)}</td><td class="${updown(x.pnl_pct)}">${fpct(x.pnl_pct)}</td></tr>`);
+    h+='</tbody></table>';
+  }
+  return h;
+}
+
+/* ── US ── */
+function renderUS(){
+  const ov=DATA.ov;if(!ov)return'<div class="empty">数据收集中…</div>';
+  let h='<div class="sec-title">🇺🇸 美股指数</div><div class="dash">';
+  (ov.indices?.us||[]).forEach(x=>h+=card(x.name,'','closed',fprice(x.val),'',x.chg));
+  h+='</div>';
+  const uss=(ov.holdings||[]).filter(x=>x.market==='美股');
+  if(uss.length){
+    h+='<div class="sec-title">💼 美股持仓</div><table class="tbl"><thead><tr><th>标的</th><th>现价</th><th>盈亏</th></tr></thead><tbody>';
+    uss.forEach(x=>h+=`<tr><td class="sym">${x.symbol}</td><td>$${fprice(x.price)}</td><td class="${updown(x.pnl_pct)}">${fpct(x.pnl_pct)}</td></tr>`);
+    h+='</tbody></table>';
+  }
+  return h;
+}
+
+/* ── Crypto ── */
+function renderCrypto(){
+  const ov=DATA.ov;let h='';
+  if(DATA.crypto&&DATA.crypto.prices){
+    h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
+    DATA.crypto.prices.forEach(x=>h+=card(x.symbol,'','live',fprice(x.price),'USDT',x.chg_24h));
+    h+='</div>';
+  }else if(ov&&ov.indices&&ov.indices.crypto){
+    h+='<div class="sec-title">₿ 实时行情</div><div class="dash">';
+    ov.indices.crypto.forEach(x=>h+=card(x.name,'','live',fprice(x.val),'USDT',x.chg));
+    h+='</div>';
+  }
+
+  if(DATA.crypto&&DATA.crypto.funding){
+    h+='<div class="sec-title">💰 资金费率</div><table class="tbl"><thead><tr><th>币种</th><th>费率</th><th>信号</th></tr></thead><tbody>';
+    DATA.crypto.funding.forEach(x=>{
+      const extreme=Math.abs(x.rate)>0.0005;
+      h+=`<tr><td class="sym">${x.symbol}</td><td class="${x.rate>=0?'up':'dn'}">${(x.rate*100).toFixed(4)}%</td><td>${extreme?x.rate>0?'⚠ 偏空':'🟢 偏多':'—'}</td></tr>`;
+    });
+    h+='</tbody></table>';
+  }
+
+  if(DATA.crypto&&DATA.crypto.recommendations&&DATA.crypto.recommendations.length){
+    h+='<div class="sec-title">🎯 策略信号</div>';
+    DATA.crypto.recommendations.slice(0,5).forEach(r=>h+=`<div class="card" style="margin-bottom:4px"><b>${r.symbol||''}</b> ${r.signal||''}: ${r.reason||''}</div>`);
+  }
+
+  return h||'<div class="empty">数据收集中…</div>';
+}
+
+/* ── Navigation ── */
+function setupNav(){
+  document.querySelectorAll('nav.sidebar a[data-page]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.remove('active'));
+      a.classList.add('active');
+      renderPage(a.dataset.page);
+      document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
+      const mb=document.querySelector(`.bottom-nav a[data-page="${a.dataset.page}"]`);
+      if(mb)mb.classList.add('active');
+    });
+  });
+
+  // Mobile bottom nav
+  const pages=[{id:'global',ico:'🌍',label:'全景'},{id:'astock',ico:'🇨🇳',label:'A股'},{id:'hk',ico:'🇭🇰',label:'港股'},{id:'us',ico:'🇺🇸',label:'美股'},{id:'crypto',ico:'₿',label:'加密'}];
+  document.getElementById('bottomNav').innerHTML=pages.map(p=>
+    `<a href="#" data-page="${p.id}" class="${p.id==='global'?'active':''}"><span class="ico">${p.ico}</span>${p.label}</a>`
+  ).join('');
+  document.querySelectorAll('.bottom-nav a').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
+      a.classList.add('active');
+      renderPage(a.dataset.page);
+      document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.remove('active'));
+      const sb=document.querySelector(`nav.sidebar a[data-page="${a.dataset.page}"]`);
+      if(sb)sb.classList.add('active');
+    });
+  });
+}
+
+function updateClock(){
+  document.getElementById('clock').textContent=new Date().toTimeString().slice(0,5)+' CST';
+}
+
+async function refreshData(){
+  try{const r=await fetch('data/terminal/overview.json');if(r.ok)DATA.ov=await r.json()}catch(e){}
+  try{const r=await fetch('data/crypto/market.json');if(r.ok)DATA.crypto=await r.json()}catch(e){}
+  renderTicker();renderAlerts();
+}
+
+init();
 </script>
 </body>
 </html>
