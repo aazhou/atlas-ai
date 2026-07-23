@@ -16,9 +16,10 @@ def load_json(path):
             return json.load(f)
     except: return None
 
-def fetch_sina_indices():
-    """拉A股四大指数实时价"""
+def fetch_a_indices():
+    """A股指数：从新浪获取，注意指数格式与个股不同"""
     try:
+        # 新浪指数格式: parts[1]=当前点位, parts[2]=涨跌额, parts[3]=涨跌幅%
         codes = 's_sh000001,s_sz399001,s_sz399006,s_sh000688'
         url = f'https://hq.sinajs.cn/list={codes}'
         req = urllib.request.Request(url, headers={
@@ -32,12 +33,22 @@ def fetch_sina_indices():
             if '=' not in line: continue
             ticker, data = line.split('=', 1)
             parts = data.strip('"').split(',')
-            if len(parts) < 4 or not parts[3]: continue
+            if len(parts) < 4: continue
             ticker = ticker.split('_')[-1]
-            result[ticker] = {
-                'price': float(parts[3]),
-                'chg_pct': round((float(parts[3])/float(parts[2]) - 1)*100, 2)
-            }
+            try:
+                # 指数: parts[1]=当前价, parts[2]=昨收(部分), parts[3]=涨跌幅
+                price = float(parts[1])
+                # 涨跌幅计算：优先用 parts[3]（百分比），备选自己算
+                if len(parts) > 3 and parts[3]:
+                    chg_pct = float(parts[3])
+                elif len(parts) > 2 and parts[2]:
+                    prev = float(parts[2])
+                    chg_pct = round((price/prev - 1)*100, 2) if prev > 0 else 0
+                else:
+                    chg_pct = 0
+                result[ticker] = {'price': price, 'chg_pct': chg_pct}
+            except (ValueError, IndexError):
+                continue
         return result
     except Exception as e:
         print(f"  [sina indices] {e}")
@@ -49,38 +60,37 @@ def main():
     overview = load_json(ov_path) or {}
     overview["updated"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # ─── 1. indices：从各数据源实时读取 ───
-    sina = fetch_sina_indices()
+    # ─── 1. indices：从各数据源实时读取，输出 name/val/chg 格式(匹配前端JS) ───
+    sina = fetch_a_indices()
     
     # A-share indices from Sina
-    a_indices = [
-        {"symbol": "上证", "price": sina.get("sh000001", {}).get("price"), "chg_pct": sina.get("sh000001", {}).get("chg_pct")},
-        {"symbol": "深证", "price": sina.get("sz399001", {}).get("price"), "chg_pct": sina.get("sz399001", {}).get("chg_pct")},
-        {"symbol": "创业板", "price": sina.get("sz399006", {}).get("price"), "chg_pct": sina.get("sz399006", {}).get("chg_pct")},
-        {"symbol": "科创50", "price": sina.get("sh000688", {}).get("price"), "chg_pct": sina.get("sh000688", {}).get("chg_pct")},
-    ]
+    idx_names = {"sh000001": "上证", "sz399001": "深证", "sz399006": "创业板", "sh000688": "科创50"}
+    a_indices = []
+    for code, name in idx_names.items():
+        s = sina.get(code, {})
+        a_indices.append({"name": name, "val": s.get("price"), "chg": s.get("chg_pct")})
 
     # HK from hk/market.json
     hk = load_json(os.path.join(DATA, "hk", "market.json"))
-    hk_idx = {"symbol": "恒指", "price": hk["index"]["price"] if hk and hk.get("index") else None,
-              "chg_pct": hk["index"]["chg_pct"] if hk and hk.get("index") else None}
+    hk_idx = {"name": "恒指", "val": hk["index"]["price"] if hk and hk.get("index") else None,
+              "chg": hk["index"]["chg_pct"] if hk and hk.get("index") else None}
 
     # US from us/market.json
     us = load_json(os.path.join(DATA, "us", "market.json"))
     us_indices = []
     if us and us.get("indices"):
         for idx in us["indices"]:
-            us_indices.append({"symbol": idx.get("symbol", ""), "price": idx.get("price"), "chg_pct": idx.get("chg_pct")})
+            us_indices.append({"name": idx.get("symbol", ""), "val": idx.get("price"), "chg": idx.get("chg_pct")})
 
     # Crypto from data/crypto/market.json (real Binance data)
     crypto = load_json(os.path.join(DATA, "crypto", "market.json"))
     crypto_indices = []
     if crypto and crypto.get("prices"):
         for p in crypto["prices"]:
-            crypto_indices.append({"symbol": p.get("symbol"), "price": p.get("price"), "chg_pct": p.get("chg_24h")})
+            crypto_indices.append({"name": p.get("symbol"), "val": p.get("price"), "chg": p.get("chg_24h")})
 
     overview["indices"] = {
-        "a_stock": a_indices,
+        "a": a_indices,
         "hk": hk_idx,
         "us": us_indices,
         "crypto": crypto_indices
@@ -163,24 +173,26 @@ def main():
             })
     overview["holdings"] = holdings
 
-    # ─── 5. alerts：聚合各市场预警 ───
+    # ─── 5. alerts：聚合各市场预警，匹配前端{title,desc,priority}格式 ───
     alerts = []
-    # crypto signals
+    # crypto extreme funding
     if crypto and crypto.get("funding"):
         for fr in crypto["funding"]:
             if abs(fr.get("rate", 0)) > 0.0005:
-                alerts.append(f"₿ {fr['symbol']} 费率极端 {fr['rate']:+.4%}")
-    if crypto and crypto.get("recommendations"):
-        for r in crypto["recommendations"][:3]:
-            alerts.append(f"₿ {r.get('symbol','')} {r.get('signal','')}: {r.get('reason','')}")
-    # portfolio止损
+                alerts.append({"title": f"₿ {fr['symbol']} 费率极端", "desc": f"资金费率 {fr['rate']:+.4%}", "priority": "high" if abs(fr['rate'])>0.001 else "medium"})
+    # portfolio stop-loss
     if pf and pf.get("holdings"):
         for h in pf["holdings"]:
-            if h.get("status") == "warn" or (h.get("pnl", 0) <= -5):
-                alerts.append(f"📉 {h['name']} 浮亏{h.get('pnl',0):.1f}% {'⚠️止损逼近' if h.get('status')=='warn' else ''}")
+            if h.get("status") == "warn":
+                alerts.append({"title": f"📉 {h['name']} 止损逼近", "desc": f"浮亏{h.get('pnl',0):.1f}%", "priority": "high"})
+            elif h.get("pnl", 0) <= -5:
+                alerts.append({"title": f"📉 {h['name']} 浮亏", "desc": f"浮亏{h.get('pnl',0):.1f}%", "priority": "medium"})
     # flow anomaly
-    if overview.get("flow", {}).get("total_inflow", 0) < -200:
-        alerts.append(f"📊 A股净流出{abs(overview['flow']['total_inflow']):.0f}亿，资金大规模撤离")
+    total_flow = overview.get("flow", {}).get("total_inflow", 0)
+    if total_flow > 300:
+        alerts.append({"title": "📊 A股资金大规模流入", "desc": f"净流入{total_flow:.0f}亿", "priority": "medium"})
+    elif total_flow < -200:
+        alerts.append({"title": "📊 A股资金大规模流出", "desc": f"净流出{abs(total_flow):.0f}亿", "priority": "high"})
     overview["alerts"] = alerts
 
     # ─── 6. portfolio_total ───
