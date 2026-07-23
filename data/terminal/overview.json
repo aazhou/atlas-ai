@@ -1,194 +1,161 @@
 {
-  "updated": "2026-07-23 22:45:05",
+  "updated": "2026-07-23 22:54:43",
   "indices": {
-    "a": [
+    "a_stock": [
       {
-        "name": "上证",
-        "val": 3258,
-        "chg": 0.8
+        "symbol": "上证",
+        "price": 0.25,
+        "chg_pct": -97.43
       },
       {
-        "name": "深证",
-        "val": 11240,
-        "chg": 1.2
+        "symbol": "深证",
+        "price": 0.44,
+        "chg_pct": -99.29
       },
       {
-        "name": "创业板",
-        "val": 2186,
-        "chg": 1.5
+        "symbol": "创业板",
+        "price": 0.25,
+        "chg_pct": -97.16
       },
       {
-        "name": "科创50",
-        "val": 1028,
-        "chg": 2.1
+        "symbol": "科创50",
+        "price": -3.78,
+        "chg_pct": -94.63
       }
     ],
     "hk": {
-      "name": "恒指",
-      "val": 19842,
-      "chg": 1.2
+      "symbol": "恒指",
+      "price": 21324.87,
+      "chg_pct": 0.74
     },
     "us": [
       {
-        "name": "SPY",
-        "val": 592.4,
-        "chg": -0.3
+        "symbol": "SPY",
+        "price": 598.47,
+        "chg_pct": 0.36
       },
       {
-        "name": "QQQ",
-        "val": 481.2,
-        "chg": -0.5
+        "symbol": "QQQ",
+        "price": 509.82,
+        "chg_pct": 1.07
       },
       {
-        "name": "DIA",
-        "val": 421.8,
-        "chg": 0.1
+        "symbol": "DIA",
+        "price": 436.15,
+        "chg_pct": -0.2
       }
     ],
     "crypto": [
       {
-        "name": "BTC",
-        "val": 67250,
-        "chg": 2.1
+        "symbol": "BTC",
+        "price": 65006.1,
+        "chg_pct": -0.97
       },
       {
-        "name": "ETH",
-        "val": 3482,
-        "chg": 1.4
+        "symbol": "ETH",
+        "price": 1898.63,
+        "chg_pct": -1.58
+      },
+      {
+        "symbol": "SOL",
+        "price": 76.61,
+        "chg_pct": -1.34
       }
     ]
   },
   "alerts": [
+    "₿ BTC : ",
+    "₿ ETH : ",
+    "₿ SOL : ",
+    "📉 半导体ETF南方 浮亏-2.6% ⚠️止损逼近"
+  ],
+  "portfolio_total": 263000,
+  "holdings": [
     {
-      "priority": "high",
-      "title": "BTC 费率反转信号",
-      "desc": "OI Δ +18% | 资金费率 -0.08% → -0.03% | 空头踩踏启动",
-      "time": "14:35",
-      "action": "轻仓追多，止损设在 65,800"
+      "market": "A股",
+      "symbol": "创业板ETF华夏",
+      "price": 2.355,
+      "pnl_pct": 2.0,
+      "rsi": 35.5,
+      "trend": "下跌"
+    },
+    {
+      "market": "A股",
+      "symbol": "科创50ETF易方达",
+      "price": 1.834,
+      "pnl_pct": 0.0,
+      "rsi": 40.8,
+      "trend": "下跌"
+    },
+    {
+      "market": "A股",
+      "symbol": "半导体ETF南方",
+      "price": 2.264,
+      "pnl_pct": -2.6,
+      "rsi": 37.1,
+      "trend": "下跌"
+    },
+    {
+      "market": "港股",
+      "symbol": "腾讯控股",
+      "price": 488.0,
+      "pnl_pct": null
+    },
+    {
+      "market": "港股",
+      "symbol": "阿里巴巴",
+      "price": 99.8,
+      "pnl_pct": null
+    },
+    {
+      "market": "港股",
+      "symbol": "恒生科技ETF",
+      "price": 4.88,
+      "pnl_pct": null
+    },
+    {
+      "market": "港股",
+      "symbol": "2x 海力士(HK)",
+      "price": 15.3,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "NVIDIA",
+      "price": 131.22,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "Tesla",
+      "price": 251.38,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "Broadcom",
+      "price": 207.45,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "Alphabet",
+      "price": 178.3,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "Microsoft",
+      "price": 453.15,
+      "pnl_pct": null
+    },
+    {
+      "market": "美股",
+      "symbol": "Micron",
+      "price": 89.64,
+      "pnl_pct": null
     }
   ],
-  "portfolio_total": {
-    "value": 1847200,
-    "daily_pnl": 33800,
-    "daily_pnl_pct": 1.86,
-    "weekly_pnl": 52100
-  },
-  "holdings": {
-    "a_stock": [
-      {
-        "sym": "创业板ETF",
-        "price": 2.486,
-        "chg": 1.88,
-        "cost": 2.312,
-        "pnl_pct": 7.5
-      },
-      {
-        "sym": "科创50ETF",
-        "price": 1.092,
-        "chg": 2.15,
-        "cost": 1.028,
-        "pnl_pct": 6.2
-      },
-      {
-        "sym": "半导体ETF",
-        "price": 0.874,
-        "chg": -0.68,
-        "cost": 0.912,
-        "pnl_pct": -4.2
-      }
-    ],
-    "hk": [
-      {
-        "sym": "腾讯 00700",
-        "price": 385.2,
-        "chg": 2.3,
-        "cost": 342.0,
-        "pnl_pct": 12.6
-      },
-      {
-        "sym": "阿里 09988",
-        "price": 92.5,
-        "chg": 1.8,
-        "cost": 88.3,
-        "pnl_pct": 4.8
-      },
-      {
-        "sym": "恒生科技ETF",
-        "price": 4.82,
-        "chg": 1.1,
-        "cost": 4.56,
-        "pnl_pct": 5.7
-      },
-      {
-        "sym": "2x海力士",
-        "price": 18.6,
-        "chg": -0.5,
-        "cost": 19.2,
-        "pnl_pct": -3.1
-      }
-    ],
-    "us": [
-      {
-        "sym": "NVDA",
-        "price": 142.8,
-        "chg": -1.5,
-        "cost": 138.2,
-        "pnl_pct": 3.3
-      },
-      {
-        "sym": "TSLA",
-        "price": 248.6,
-        "chg": -2.8,
-        "cost": 255.0,
-        "pnl_pct": -2.5
-      },
-      {
-        "sym": "AVGO",
-        "price": 192.4,
-        "chg": 0.8,
-        "cost": 178.5,
-        "pnl_pct": 7.8
-      },
-      {
-        "sym": "GOOGL",
-        "price": 185.2,
-        "chg": -0.3,
-        "cost": 182.0,
-        "pnl_pct": 1.8
-      },
-      {
-        "sym": "MSFT",
-        "price": 458.6,
-        "chg": 0.5,
-        "cost": 445.0,
-        "pnl_pct": 3.1
-      },
-      {
-        "sym": "MU",
-        "price": 98.4,
-        "chg": -1.2,
-        "cost": 102.5,
-        "pnl_pct": -4.0
-      }
-    ],
-    "crypto": [
-      {
-        "sym": "BTC/USDT",
-        "price": 67250,
-        "chg": 2.1
-      },
-      {
-        "sym": "ETH/USDT",
-        "price": 3482,
-        "chg": 1.4
-      },
-      {
-        "sym": "SOL/USDT",
-        "price": 183.5,
-        "chg": 3.8
-      }
-    ]
-  },
   "flow": {
     "total_inflow": 542.4,
     "top_inflow": [
@@ -275,7 +242,7 @@
         "amount": -2.9
       }
     ],
-    "rotation_text": "今日资金趋势：主力流入集中在电力设备/有色金属/电网设备方向，流出集中在机器人/房地产/房地产开发方向。"
+    "rotation_text": "主力流入集中在电力设备/有色金属/电网设备，流出集中在机器人/房地产/房地产开发"
   },
   "cross_market": {
     "chain": [
