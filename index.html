@@ -92,8 +92,7 @@ main{margin-left:var(--nav-w);flex:1;display:flex;flex-direction:column;min-heig
   <div class="logo">ATLAS<span>TERMINAL</span></div>
   <a href="#" class="active" data-page="global"><span class="dot"></span>全景</a>
   <a href="#" data-page="astock"><span class="dot"></span>🇨🇳 A股</a>
-  <a href="#" data-page="hk"><span class="dot"></span>🇭🇰 港股</a>
-  <a href="#" data-page="us"><span class="dot"></span>🇺🇸 美股</a>
+  <a href="#" data-page="overseas"><span class="dot"></span>🌏 港美股</a>
   <a href="#" data-page="crypto"><span class="dot"></span>₿ 加密</a>
   <div class="spacer"></div>
   <div class="time" id="clock">00:00 CST</div>
@@ -165,7 +164,7 @@ function renderAlerts(){
 /* ── Router ── */
 function renderPage(id){
   const c=document.getElementById('content');
-  c.innerHTML={'global':renderGlobal,'astock':renderAStock,'hk':renderHK,'us':renderUS,'crypto':renderCrypto}[id]();
+  c.innerHTML={'global':renderGlobal,'astock':renderAStock,'overseas':renderOverseas,'crypto':renderCrypto}[id]();
 }
 
 /* ═══ GLOBAL ═══ */
@@ -231,106 +230,70 @@ function renderAStock(){
   return h;
 }
 
-/* ═══ HK ═══ */
-function renderHK(){
+/* ═══ HK + US MERGED ═══ */
+function renderOverseas(){
   const ov=DATA.ov;let h='';
-  if(ov&&ov.indices&&ov.indices.hk){
-    const hk=ov.indices.hk;
-    h+='<div class="sec-title">🇭🇰 恒生指数</div>'+makeCard('恒生指数','live',hk.val,'',hk.chg);
-  }
-  if(DATA.hk&&DATA.hk.index){
-    const d=DATA.hk;
-    h+='<div class="sec-title" style="margin-top:16px">📊 市场数据</div><div class="dash">';
-    h+=makeCard('恒指',d.index.name||'',d.index.price,'',d.index.chg_pct);
-    if(d.index.high)h+=makeCard('日内最高','',d.index.high);
-    if(d.index.low)h+=makeCard('日内最低','',d.index.low);
-    h+='</div>';
-  }
-
-  // HK opportunities
-  let opps=[];
-  const hkIdx=ov?.indices?.hk;
-  if(hkIdx){
-    if(hkIdx.chg>1.5)opps.push({tag:'📈 强势',signal:`恒指涨${fpct(hkIdx.chg)}`,action:'关注恒生科技ETF(3032)、腾讯(0700)'});
-    else if(hkIdx.chg<-1.5)opps.push({tag:'📉 弱势',signal:`恒指跌${fpct(hkIdx.chg)}`,action:'防御为主，关注高息股/公用事业'});
-    else opps.push({tag:'➡ 震荡',signal:`恒指窄幅${fpct(hkIdx.chg)}`,action:'观望，等方向确认'});
-  }
-  // Cross-market
-  if(ov?.cross_market?.anomaly){
-    opps.push({tag:'🔗 联动',signal:ov.cross_market.anomaly,action:'关注跨市场传导'});
-  }
-
-  if(opps.length){
-    h+='<div class="sec-title">🎯 机会雷达</div>';
-    opps.forEach(o=>h+=oppCard(o.tag,o.signal,o.action));
-  }
-
-  return h||'<div class="empty">数据收集中…</div>';
-}
-
-/* ═══ US ═══ */
-function renderUS(){
-  const ov=DATA.ov;let h='';
-
-  // Use live data if available (trading hours), otherwise overview
   const usData=DATA.usLive||DATA.us;
   const isLive=!!DATA.usLive;
 
+  /* ── US Section ── */
+  h+=`<div class="sec-title">🇺🇸 美股 ${isLive?'🟢 盘中 LIVE':'🔴 已收盘'}</div>`;
   if(usData&&usData.indices){
-    h+=`<div class="sec-title">🇺🇸 美股指数 ${isLive?'🟢 LIVE':'🔴 已收盘'}</div><div class="dash">`;
+    h+='<div class="dash">';
     usData.indices.filter(i=>['SPY','QQQ','DIA'].includes(i.symbol)).forEach(x=>h+=makeCard(x.symbol,isLive?'live':'closed',fprice(x.price),'',x.chg_pct));
     h+='</div>';
-
-    // VIX & 10Y
     const vix=usData.indices.find(i=>i.symbol==='VIX');
     const tny=usData.indices.find(i=>i.symbol==='10Y');
     if(vix||tny){
-      h+='<div class="sec-title">🌐 宏观</div><div class="dash">';
+      h+='<div class="dash" style="margin-top:8px">';
       if(vix)h+=makeCard('VIX','',fprice(vix.price,2),'恐慌指数');
       if(tny)h+=makeCard('10Y美债','',tny.price.toFixed(2)+'%','收益率');
       h+='</div>';
     }
-  }else if(ov&&ov.indices&&ov.indices.us){
-    h+='<div class="sec-title">🇺🇸 美股指数 🔴 已收盘</div><div class="dash">';
-    ov.indices.us.forEach(x=>h+=makeCard(x.name,'closed',fprice(x.val),'',x.chg));
-    h+='</div>';
   }
-
-  // Sector rotation (from live data)
   if(usData&&usData.sectors&&Object.keys(usData.sectors).length>0){
-    h+='<div class="sec-title">🔄 板块轮动</div><div class="dash">';
-    Object.entries(usData.sectors).sort((a,b)=>b[1].chg_pct-a[1].chg_pct).forEach(([n,v])=>{
-      h+=makeCard(n,isLive?'live':'',fprice(v.price),'',v.chg_pct);
-    });
+    h+='<div class="sec-title">🔄 美股板块</div><div class="dash">';
+    Object.entries(usData.sectors).sort((a,b)=>b[1].chg_pct-a[1].chg_pct).forEach(([n,v])=>h+=makeCard(n,isLive?'live':'',fprice(v.price),'',v.chg_pct));
     h+='</div>';
   }
 
-  // US opportunities
-  let opps=[];
-  // From live data
-  if(usData&&usData.opportunities){
-    usData.opportunities.forEach(o=>opps.push({tag:'🎯 信号',signal:o.signal,action:o.action}));
-  }
-  // Auto-generated
-  const qqq=ov?.indices?.us?.find(i=>i.name==='QQQ');
-  const spy=ov?.indices?.us?.find(i=>i.name==='SPY');
-  if(qqq&&spy){
-    const spread=qqq.chg-spy.chg;
-    if(spread>1)opps.push({tag:'📈 科技',signal:`QQQ强于SPY ${fpct(spread)}`,action:'关注NVDA/AVGO/MSFT等科技龙头'});
-    else if(spread<-1)opps.push({tag:'🛡 防御',signal:`SPY强于QQQ ${fpct(spread)}`,action:'关注XLV(医疗)/XLU(公用事业)等防御ETF'});
-  }
-  if(ov?.indices?.us){
-    const nas=ov.indices.us.find(i=>i.name==='QQQ');
-    if(nas&&Math.abs(nas.chg)>1.5){
-      opps.push({tag:'📡 亚洲',signal:`美股${nas.chg>0?'涨':'跌'}${fpct(nas.chg)}`,action:nas.chg>0?'明日A股科技板块可能高开':'明日A股承压，注意风险'});
+  /* ── HK Section ── */
+  h+='<div class="sec-title" style="margin-top:16px">🇭🇰 港股 已收盘</div>';
+  if(ov&&ov.indices&&ov.indices.hk){
+    h+=`<div class="dash">${makeCard('恒生指数','closed',ov.indices.hk.val,'',ov.indices.hk.chg)}`;
+    if(DATA.hk&&DATA.hk.index){
+      if(DATA.hk.index.high)h+=makeCard('日内最高','',DATA.hk.index.high);
+      if(DATA.hk.index.low)h+=makeCard('日内最低','',DATA.hk.index.low);
     }
+    h+='</div>';
+  }
+
+  /* ── Opportunities ── */
+  let opps=[];
+  // US signals
+  const nas=ov?.indices?.us?.find(i=>i.name==='QQQ');
+  const sp=ov?.indices?.us?.find(i=>i.name==='SPY');
+  if(nas&&sp){
+    const spread=nas.chg-sp.chg;
+    if(spread>1)opps.push({tag:'📈 科技领先',signal:`QQQ ${fpct(nas.chg)} vs SPY ${fpct(sp.chg)}`,action:'关注NVDA/AVGO/MSFT'});
+    else if(spread<-1)opps.push({tag:'🛡 防御轮动',signal:`SPY ${fpct(sp.chg)} vs QQQ ${fpct(nas.chg)}`,action:'关注XLV/XLU等防御ETF'});
+  }
+  if(usData&&usData.opportunities)usData.opportunities.forEach(o=>opps.push({tag:'🎯 信号',signal:o.signal,action:o.action}));
+  // HK signals
+  const hkIdx=ov?.indices?.hk;
+  if(hkIdx){
+    if(hkIdx.chg>1.5)opps.push({tag:'🇭🇰 恒指强势',signal:`涨${fpct(hkIdx.chg)}`,action:'关注恒生科技ETF(3032)'});
+    else if(hkIdx.chg<-1.5)opps.push({tag:'🇭🇰 恒指承压',signal:`跌${fpct(hkIdx.chg)}`,action:'防御为主'});
+  }
+  // Asia impact
+  if(nas&&Math.abs(nas.chg)>1){
+    opps.push({tag:'📡 传导',signal:`美股${nas.chg>0?'涨':'跌'}${fpct(nas.chg)}`,action:nas.chg>0?'利好明日港股/A股高开':'明日亚洲市场承压'});
   }
 
   if(opps.length){
     h+='<div class="sec-title">🎯 机会雷达</div>';
     opps.forEach(o=>h+=oppCard(o.tag,o.signal,o.action));
   }
-
   return h||'<div class="empty">数据收集中…</div>';
 }
 
@@ -371,7 +334,7 @@ function renderCrypto(){
 
 /* ── Nav ── */
 function setupNav(){
-  const pages=[{id:'global',ico:'🌍',label:'全景'},{id:'astock',ico:'🇨🇳',label:'A股'},{id:'hk',ico:'🇭🇰',label:'港股'},{id:'us',ico:'🇺🇸',label:'美股'},{id:'crypto',ico:'₿',label:'加密'}];
+  const pages=[{id:'global',ico:'🌍',label:'全景'},{id:'astock',ico:'🇨🇳',label:'A股'},{id:'overseas',ico:'🌏',label:'港美股'},{id:'crypto',ico:'₿',label:'加密'}];
   const activate=(id)=>{
     document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
     document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
