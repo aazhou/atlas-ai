@@ -1,5 +1,3 @@
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
 /* ── Atlas Terminal v4 — Linear × Kraken Design System ── */
 :root {
   /* Canvas — Linear dark hierarchy */
@@ -233,4 +231,3 @@ a{color:var(--accent);text-decoration:none;}
 .mt-4{margin-top:var(--space-4);}
 .mb-3{margin-bottom:var(--space-3);}
 .flex-between{display:flex;justify-content:space-between;align-items:center;}
-</style>
